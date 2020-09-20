@@ -5,6 +5,6 @@
 - Install dependencies `npm i`
 - Start the application with `npm run start`
 
-## Swagger document can be found on
+## Swagger document can be found
 
 - at `https://api-globy.herokuapp.com/v1/docs/swagger.json`
