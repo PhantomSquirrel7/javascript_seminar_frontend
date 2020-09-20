@@ -30,7 +30,9 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger
 import { Configuration }                                     from '../../swagger-configs/configuration';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+  })
 export class AuthService {
 
     protected basePath = 'https://api-globy.herokuapp.com/v1';
