@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './utils';
-import { HomeComponent,LoginComponent,RegisterComponent } from './components';
+import { HomeComponent,LoginComponent,RegisterComponent,ForgotPasswordComponent } from './components';;
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { HomeComponent,LoginComponent,RegisterComponent } from './components';
     HttpClientModule,
     AppRoutingModule,
   ],
-  declarations: [AppComponent, HomeComponent, LoginComponent,RegisterComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent],
   providers: [
     // { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [CustomAuthenticationService] },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

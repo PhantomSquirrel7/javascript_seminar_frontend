@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomRegisterService, CustomLoginService } from '@app/services/custom/';
 import { first } from 'rxjs/operators';
@@ -33,11 +33,33 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      schoolName: ['',Validators.required],
-      firstName: ['',Validators.required],
-      lastName: ['',Validators.required]
+      email:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])),
+      password:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('([A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9]*'), // one number and one character
+        Validators.maxLength(25),
+        Validators.minLength(8),
+      ])),
+      schoolName: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(30),
+        Validators.minLength(5),
+      ]))
+      ,
+      firstName:  new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(30),
+        Validators.minLength(5),
+      ]))
+      ,
+      lastName:  new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(30),
+        Validators.minLength(5),
+      ]))
     });
 
     // get return url from route parameters or default to '/'
