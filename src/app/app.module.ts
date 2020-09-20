@@ -5,14 +5,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-import { JwtInterceptor, ErrorInterceptor, appInitializer } from './_helpers';
-import { CustomAuthenticationService } from './_services/custom';
-import { HomeComponent } from './component/home';
-import { LoginComponent } from './component/login';
-
-import { AuthService } from './_services/swagger-api/auth.service';
-import { UserService } from './_services/swagger-api/user.service';
+import { JwtInterceptor, ErrorInterceptor, appInitializer } from './utils';
+import { HomeComponent,LoginComponent,RegisterComponent } from './components';
 
 @NgModule({
   imports: [
@@ -21,14 +15,11 @@ import { UserService } from './_services/swagger-api/user.service';
     HttpClientModule,
     AppRoutingModule,
   ],
-  declarations: [AppComponent, HomeComponent, LoginComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent,RegisterComponent],
   providers: [
     // { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [CustomAuthenticationService] },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    CustomAuthenticationService,
-    AuthService,
-    UserService,
   ],
   bootstrap: [AppComponent],
 })

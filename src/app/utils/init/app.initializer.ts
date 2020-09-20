@@ -1,7 +1,7 @@
-import { CustomAuthenticationService } from '@app/_services/custom';
+import { CustomLoginService } from '@app/services/custom';
 
 export function appInitializer(
-  authenticationService: CustomAuthenticationService
+  authenticationService: CustomLoginService
 ) {
   return () =>
     new Promise((resolve) => {

@@ -13,21 +13,21 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../../swagger-config/encoder';
+import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { AuthTokens } from '../../_models/swagger-model/authTokens';
-import { Body } from '../../_models/swagger-model/body';
-import { Body1 } from '../../_models/swagger-model/body1';
-import { Body2 } from '../../_models/swagger-model/body2';
-import { Body3 } from '../../_models/swagger-model/body3';
-import { Body4 } from '../../_models/swagger-model/body4';
-import { Body5 } from '../../_models/swagger-model/body5';
-import { InlineResponse201 } from '../../_models/swagger-model/inlineResponse201';
+import { AuthTokens } from '../../models/swagger-model/authTokens';
+import { Body } from '../../models/swagger-model/body';
+import { Body1 } from '../../models/swagger-model/body1';
+import { Body2 } from '../../models/swagger-model/body2';
+import { Body3 } from '../../models/swagger-model/body3';
+import { Body4 } from '../../models/swagger-model/body4';
+import { Body5 } from '../../models/swagger-model/body5';
+import { InlineResponse201 } from '../../models/swagger-model/inlineResponse201';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-config/variables';
-import { Configuration }                                     from '../../swagger-config/configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
+import { Configuration }                                     from '../../swagger-configs/configuration';
 
 
 @Injectable()

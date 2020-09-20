@@ -2,7 +2,7 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { CustomAuthenticationService } from '@app/_services/custom';
+import { CustomLoginService } from '@app/services/custom';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -16,10 +16,10 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: CustomAuthenticationService
+    private loginService: CustomLoginService
   ) {
     // redirect to home if already logged in
-    if (this.authenticationService.tokenValue) {
+    if (this.loginService.tokenValue) {
       this.router.navigate(['/']);
     }
   }
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
 
-    this.authenticationService
+    this.loginService
       .login({ email: this.f.email.value, password: this.f.password.value })
       .pipe(first())
       .subscribe({

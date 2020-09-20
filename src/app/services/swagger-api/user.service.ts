@@ -13,11 +13,11 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../../swagger-config/encoder';
+import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
 import { Observable }                                        from 'rxjs';
-import { User } from '../../_models/swagger-model/user';
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-config/variables';
-import { Configuration }                                     from '../../swagger-config/configuration';
+import { User } from '../../models/swagger-model/user';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
+import { Configuration }                                     from '../../swagger-configs/configuration';
 
 
 @Injectable()

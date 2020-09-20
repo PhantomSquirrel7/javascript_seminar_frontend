@@ -2,19 +2,18 @@
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { User,Body1, Body3, Token, AuthTokens } from '@app/_models';
-import { AuthService } from '../swagger-api/api';
+import { User,Body1, Body3, Token, AuthTokens } from '@app/models';
+import { AuthService } from '../../swagger-api/api';
 
 @Injectable({ providedIn: 'root' })
-export class CustomAuthenticationService {
+export class CustomLoginService {
     private userSubject: BehaviorSubject<User>;
     private tokenSubject: BehaviorSubject<AuthTokens>;
     public user: Observable<User>;
 
     constructor(
         private router: Router,
-        private authService: AuthService
+        private authApi: AuthService
     ) {
         this.userSubject = new BehaviorSubject<User>(null);
         this.tokenSubject = new BehaviorSubject<AuthTokens>(null);
@@ -30,7 +29,7 @@ export class CustomAuthenticationService {
     }
 
     login(credentials: Body1) {
-        return this.authService.authLoginPost(credentials)
+        return this.authApi.authLoginPost(credentials)
             .pipe(map(inlineResponse201 => {
                 this.userSubject.next(inlineResponse201.user);
                 this.tokenSubject.next(inlineResponse201.tokens);
@@ -40,7 +39,7 @@ export class CustomAuthenticationService {
     }
 
     logout() {
-        this.authService.authLogoutPost({refreshToken: this.tokenValue.refresh.token}).subscribe();
+        this.authApi.authLogoutPost({refreshToken: this.tokenValue.refresh.token}).subscribe();
         this.stopRefreshTokenTimer();
         this.userSubject.next(null);
         this.router.navigate(['/login']);
@@ -48,7 +47,7 @@ export class CustomAuthenticationService {
 
     refreshToken(credentials: Body3) {
         
-        return this.authService.authRefreshTokensPost(credentials)
+        return this.authApi.authRefreshTokensPost(credentials)
             .pipe(map((tokens) => {
                 this.tokenSubject.next(tokens);
                 this.startRefreshTokenTimer();

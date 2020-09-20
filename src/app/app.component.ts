@@ -1,13 +1,13 @@
 ﻿import { Component } from '@angular/core';
 
-import { CustomAuthenticationService } from './_services/custom';
-import { User } from './_models';
+import { CustomLoginService } from './services/custom';
+import { User } from './models';
 
 @Component({ selector: 'app', templateUrl: 'app.component.html' })
 export class AppComponent {
     user: User;
 
-    constructor(private authenticationService: CustomAuthenticationService) {
+    constructor(private authenticationService: CustomLoginService) {
         this.authenticationService.user.subscribe(x => this.user = x);
     }
 
