@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './utils';
 import { HomeComponent,LoginComponent,RegisterComponent,ForgotPasswordComponent } from './components';;
+import { LandingComponent } from './components/landing/landing.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { HomeComponent,LoginComponent,RegisterComponent,ForgotPasswordComponent 
     HttpClientModule,
     AppRoutingModule,
   ],
-  declarations: [AppComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent],
+  declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent],
   providers: [
     // { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [CustomAuthenticationService] },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
