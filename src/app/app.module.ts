@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './utils';
 import { HomeComponent,LoginComponent,RegisterComponent,ForgotPasswordComponent } from './components';;
 import { LandingComponent } from './components/landing/landing.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { LandingComponent } from './components/landing/landing.component';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    FlexLayoutModule,
   ],
   declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent],
   providers: [
