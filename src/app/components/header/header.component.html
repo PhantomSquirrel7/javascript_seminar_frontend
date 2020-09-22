@@ -1,5 +1,29 @@
-<!-- nav -->
-<div class="navbar-nav">
-    <a class="nav-item nav-link" routerLink="/">Home</a>
-    <a class="nav-item nav-link">Logout</a>
+<div fxLayout="row" fxLayoutAlign="space-around center" class="header-component">
+
+    <img class="logo" src="/assets/logo.png"/>
+
+    <div class="search-form" fxFlex="0 0 60%" >
+        <mat-form-field appearance="outline" fxFlex="0 0 100%" >
+            <mat-label>Search Classes, Assignments...</mat-label>
+            <input matInput placeholder="" />
+        </mat-form-field>
+    </div>
+
+
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle value="">EN</mat-button-toggle>
+        <mat-button-toggle value="">DE</mat-button-toggle>
+    </mat-button-toggle-group>
+
+
+    <button mat-icon-button  [matMenuTriggerFor]="menu">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>My Profile</button>
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item>Logout</button>
+    </mat-menu>
+
 </div>

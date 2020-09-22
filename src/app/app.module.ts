@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './utils';
 import { HomeComponent,LoginComponent,RegisterComponent,ForgotPasswordComponent, LandingComponent, HeaderComponent, FooterComponent } from './components';;
-// import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material-module';
 import { CustomLoginService } from '@app/services/custom';
@@ -18,7 +18,7 @@ import { UserService } from './services/swagger-api/api';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    // FlexLayoutModule,
+    FlexLayoutModule,
     BrowserAnimationsModule,
     DemoMaterialModule
   ],
