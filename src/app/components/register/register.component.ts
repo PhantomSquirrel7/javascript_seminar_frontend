@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     // redirect to home if already logged in
-    if (this.loginService.userValue) {
+    if (localStorage.getItem('access-token')) {
       this.router.navigate(['/']);
     }
   }

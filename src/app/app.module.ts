@@ -10,6 +10,8 @@ import { HomeComponent,LoginComponent,RegisterComponent,ForgotPasswordComponent,
 // import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material-module';
+import { CustomLoginService } from '@app/services/custom';
+import { UserService } from './services/swagger-api/api';
 @NgModule({
   imports: [
     BrowserModule,
@@ -22,7 +24,7 @@ import {DemoMaterialModule} from './material-module';
   ],
   declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent, FooterComponent, HeaderComponent], 
   providers: [
-    // { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [CustomAuthenticationService] },
+    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [CustomLoginService, UserService]},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

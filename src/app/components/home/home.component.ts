@@ -1,7 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { User } from '@app/models';
-import { CustomUserService } from '@app/services/custom';
+import { CustomUserService, CustomLoginService } from '@app/services/custom';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({ templateUrl: 'home.component.html' })
@@ -10,7 +10,7 @@ export class HomeComponent {
     error = '';
     user: User;
 
-    constructor(private userService: CustomUserService, private _snackBar : MatSnackBar) { }
+    constructor(private userService: CustomUserService, private _snackBar : MatSnackBar, private loginService : CustomLoginService) { }
 
     ngOnInit() {
         this.loading = true;

@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
     private loginService: CustomLoginService,
     private _snackBar: MatSnackBar
   ) {
-    // redirect to home if already logged in
-    if (this.loginService.userValue) {
+    // redirect to home if already logged in if memory uservalue is filled that means it is already logged in.
+    if (localStorage.getItem('access-token')) {
       this.router.navigate(['/']);
     }
   }
@@ -35,22 +35,16 @@ export class LoginComponent implements OnInit {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
-
-  // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
   }
 
   onSubmit() {
     this.submitted = true;
-
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
-
     this.loading = true;
-
     this.loginService
       .login({ email: this.f.email.value, password: this.f.password.value })
       .pipe(first())
