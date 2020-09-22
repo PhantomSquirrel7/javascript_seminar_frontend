@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { CustomLoginService } from '@app/services/custom';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -16,10 +17,11 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private loginService: CustomLoginService
+    private loginService: CustomLoginService,
+    private _snackBar: MatSnackBar
   ) {
     // redirect to home if already logged in
-    if (this.loginService.tokenValue) {
+    if (this.loginService.userValue) {
       this.router.navigate(['/']);
     }
   }
@@ -53,11 +55,15 @@ export class LoginComponent implements OnInit {
       .login({ email: this.f.email.value, password: this.f.password.value })
       .pipe(first())
       .subscribe({
-        next: () => {
+        next: (response) => {
+          this.loading = false;          
           this.router.navigate([this.returnUrl]);
         },
         error: (error) => {
           this.error = error;
+          this._snackBar.open(this.error, 'Close', {
+            duration: 3000
+          });
           this.loading = false;
         },
       });

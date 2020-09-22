@@ -23,9 +23,16 @@ export class CustomLoginService {
     public get userValue(): User {
         return this.userSubject.value;
     }
+    public set userValue(data) {
+        this.userSubject.next(data);
+    }
 
     public get tokenValue(): AuthTokens {
         return this.tokenSubject.value;
+    }
+
+    public set tokenValue(data) {
+        this.tokenSubject.next(data);
     }
 
     login(credentials: Body1) {
@@ -59,14 +66,13 @@ export class CustomLoginService {
 
     private refreshTokenTimeout;
 
-    private startRefreshTokenTimer() {
-        // parse json object from base64 encoded jwt token
+    public startRefreshTokenTimer() {
         const jwtAccessToken: Token = this.tokenValue.access; 
         const refreshToken: Token = this.tokenValue.access;
 
         // set a timeout to refresh the token a minute before it expires
         const expires = jwtAccessToken.expires;
-        const timeout = expires.getTime() - Date.now() - (60 * 1000);
+        const timeout = Math.abs(new Date(expires).getTime() - new Date().getTime() - (60*1000));
         this.refreshTokenTimeout = setTimeout(() => this.refreshToken({refreshToken: refreshToken.token}).subscribe(), timeout);
     }
 

@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomRegisterService, CustomLoginService } from '@app/services/custom/';
 import { first } from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -23,10 +24,10 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private registerService: CustomRegisterService,
     private loginService: CustomLoginService,
-    
+    private _snackBar: MatSnackBar
   ) {
     // redirect to home if already logged in
-    if (this.loginService.tokenValue) {
+    if (this.loginService.userValue) {
       this.router.navigate(['/']);
     }
   }
@@ -85,18 +86,20 @@ export class RegisterComponent implements OnInit {
       .register({ email: this.f.email.value, password: this.f.password.value, schoolName: this.f.schoolName.value, firstName: this.f.firstName.value, lastName: this.f.lastName.value  })
       .pipe(first())
       .subscribe({
-        next: () => {
-          this.success = 'User successfully created!';
+        next: (response) => {
+          this._snackBar.open('User successfully created!', 'Close', {
+            duration: 3000
+          });
           this.loading = false;
-          setTimeout(()=>{
-            this.success = null;
-          },5000);
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           this.error = error;
           this.loading = false;
+          this._snackBar.open(this.error, 'Close', {
+            duration: 3000
+          });
         },
       });
   } 
-
 }

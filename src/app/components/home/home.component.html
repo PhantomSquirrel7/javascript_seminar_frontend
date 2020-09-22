@@ -1,10 +1,11 @@
-﻿<div class="card mt-4">
-    <h4 class="card-header">You're logged in with Angular 9 + JWT & Refresh Tokens!!</h4>
+﻿<app-header></app-header>
+<div class="card mt-4">
+    <h4 class="card-header">Welcome to Globy home page !</h4>
     <div class="card-body">
-        <h6>Users from secure api end point</h6>
         <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
         <ul *ngIf="user">
             <li>{{user.firstName}} {{user.schoolName}}</li>
         </ul>
     </div>
 </div>
+<app-footer></app-footer>

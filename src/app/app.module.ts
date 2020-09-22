@@ -6,19 +6,21 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './utils';
-import { HomeComponent,LoginComponent,RegisterComponent,ForgotPasswordComponent } from './components';;
-import { LandingComponent } from './components/landing/landing.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { HomeComponent,LoginComponent,RegisterComponent,ForgotPasswordComponent, LandingComponent, HeaderComponent, FooterComponent } from './components';;
+// import { FlexLayoutModule } from '@angular/flex-layout';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {DemoMaterialModule} from './material-module';
 @NgModule({
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    FlexLayoutModule,
+    // FlexLayoutModule,
+    BrowserAnimationsModule,
+    DemoMaterialModule
   ],
-  declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent],
+  declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent, FooterComponent, HeaderComponent], 
   providers: [
     // { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [CustomAuthenticationService] },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
