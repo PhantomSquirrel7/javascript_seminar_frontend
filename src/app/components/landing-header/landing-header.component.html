@@ -21,10 +21,11 @@
     </button>
 
     <mat-menu #menu="matMenu">
-        <button mat-menu-item >My Profile</button>
-        <a mat-menu-item [routerLink]="['../']">Home</a>
-        <button mat-menu-item>Settings</button>
-        <button mat-menu-item>Logout</button>
+        <a *ngIf="!loggedin" mat-menu-item [routerLink]="['../login']">Login</a>
+        <button *ngIf="loggedin" mat-menu-item >My Profile</button>
+        <a *ngIf="loggedin" mat-menu-item [routerLink]="['../']">Home</a>
+        <button *ngIf="loggedin" mat-menu-item>Settings</button>
+        <button *ngIf="loggedin" mat-menu-item>Logout</button>
     </mat-menu>
 
 </div>
