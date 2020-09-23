@@ -11,7 +11,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material-module';
 import { CustomLoginService } from '@app/services/custom';
-import { UserService } from './services/swagger-api/api';
+import { UserService } from './services/swagger-api/api';;
+import { LandingHeaderComponent } from './components/landing-header/landing-header.component'
 @NgModule({
   imports: [
     BrowserModule,
@@ -22,7 +23,7 @@ import { UserService } from './services/swagger-api/api';
     BrowserAnimationsModule,
     DemoMaterialModule
   ],
-  declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent, FooterComponent, HeaderComponent], 
+  declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent, FooterComponent, HeaderComponent, LandingHeaderComponent],  
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [CustomLoginService, UserService]},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

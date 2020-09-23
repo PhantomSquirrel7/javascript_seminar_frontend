@@ -1,0 +1,30 @@
+<div fxLayout="row" fxLayoutAlign="space-around center" class="header-component">
+
+    <a [routerLink]="['../about']">
+        <img class="logo" src="/assets/logo.png"/>
+    </a>
+
+
+    <a>Vision</a>
+    <a>Offering</a> 
+    <a>Team</a>
+
+
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle value="">EN</mat-button-toggle>
+        <mat-button-toggle value="">DE</mat-button-toggle>
+    </mat-button-toggle-group>
+
+
+    <button mat-icon-button  [matMenuTriggerFor]="menu">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item >My Profile</button>
+        <a mat-menu-item [routerLink]="['../']">Home</a>
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item>Logout</button>
+    </mat-menu>
+
+</div>
