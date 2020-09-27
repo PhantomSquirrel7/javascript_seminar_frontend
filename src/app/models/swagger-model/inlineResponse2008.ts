@@ -10,13 +10,13 @@
  * Do not edit the class manually.
  */
 
-export interface User { 
+export interface InlineResponse2008 { 
     id?: string;
     email?: string;
     firstName?: string;
-    role?: User.RoleEnum;
+    role?: InlineResponse2008.RoleEnum;
 }
-export namespace User {
+export namespace InlineResponse2008 {
     export type RoleEnum = 'teacher' | 'student';
     export const RoleEnum = {
         Teacher: 'teacher' as RoleEnum,

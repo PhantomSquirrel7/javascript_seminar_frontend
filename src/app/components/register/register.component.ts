@@ -43,11 +43,6 @@ export class RegisterComponent implements OnInit {
         Validators.pattern('([A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9]*'), // one number and one character
         Validators.maxLength(25),
         Validators.minLength(8),
-      ])),
-      schoolName: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.maxLength(30),
-        Validators.minLength(5),
       ]))
       ,
       firstName:  new FormControl('', Validators.compose([
@@ -83,7 +78,7 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
 
     this.registerService
-      .register({ email: this.f.email.value, password: this.f.password.value, schoolName: this.f.schoolName.value, firstName: this.f.firstName.value, lastName: this.f.lastName.value  })
+      .register({ email: this.f.email.value, password: this.f.password.value, firstName: this.f.firstName.value, lastName: this.f.lastName.value  })
       .pipe(first())
       .subscribe({
         next: (response) => {

@@ -9,10 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ClassesTeacher } from './classesTeacher';
-import { InlineResponse201Tokens } from './inlineResponse201Tokens';
+import { AuthTokensAccess } from './authTokensAccess';
 
-export interface InlineResponse201 { 
-    user?: ClassesTeacher;
-    tokens?: InlineResponse201Tokens;
+export interface InlineResponse201Tokens { 
+    access?: AuthTokensAccess;
+    refresh?: AuthTokensAccess;
 }

@@ -14,12 +14,10 @@ import { Inject, Injectable, Optional }                      from '@angular/core
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
-
 import { Observable }                                        from 'rxjs';
-
-import { InlineResponse20010 } from '../../models/swagger-model/inlineResponse20010';
-import { InlineResponse2008 } from '../../models/swagger-model/inlineResponse2008';
-import { InlineResponse2009 } from '../../models/swagger-model/inlineResponse2009';
+import { Body9 } from '../../models/swagger-model/body9';
+import { InlineResponse2006 } from '../../models/swagger-model/inlineResponse2006';
+import { InlineResponse2007 } from '../../models/swagger-model/inlineResponse2007';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
@@ -27,7 +25,7 @@ import { Configuration }                                     from '../../swagger
 
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class SchoolsService {
 
     protected basePath = 'https://api-globy.herokuapp.com/v1';
     public defaultHeaders = new HttpHeaders();
@@ -59,15 +57,22 @@ export class UserService {
 
 
     /**
-     * Get your user
-     * Logged in users can fetch only their own user information
+     * get schools
+     * get schools by keyword
+     * @param name keyword
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public meGet(observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2008>;
-    public meGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2008>>;
-    public meGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2008>>;
-    public meGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public schoolsGet(name?: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2006>;
+    public schoolsGet(name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2006>>;
+    public schoolsGet(name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2006>>;
+    public schoolsGet(name?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (name !== undefined && name !== null) {
+            queryParameters = queryParameters.set('name', <any>name);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -91,8 +96,9 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse2008>('get',`${this.basePath}/me`,
+        return this.httpClient.request<InlineResponse2006>('get',`${this.basePath}/schools`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -102,15 +108,20 @@ export class UserService {
     }
 
     /**
-     * Get notifications of the user
-     * All the notifications of the user will be returned
+     * Create a new school
+     * 
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public meNotificationsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2009>>;
-    public meNotificationsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2009>>>;
-    public meNotificationsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2009>>>;
-    public meNotificationsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public schoolsPost(body: Body9, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2007>;
+    public schoolsPost(body: Body9, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2007>>;
+    public schoolsPost(body: Body9, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2007>>;
+    public schoolsPost(body: Body9, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling schoolsPost.');
+        }
 
         let headers = this.defaultHeaders;
 
@@ -132,10 +143,16 @@ export class UserService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
-        return this.httpClient.request<Array<InlineResponse2009>>('get',`${this.basePath}/me/notifications`,
+        return this.httpClient.request<InlineResponse2007>('post',`${this.basePath}/schools`,
             {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -145,19 +162,19 @@ export class UserService {
     }
 
     /**
-     * Get a specific notificatioin
-     * Returns a notification and marks it as opened
-     * @param id Notification id
+     * get school
+     * get school by Id
+     * @param schoolId School id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public meNotificationsIdGet(id: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20010>;
-    public meNotificationsIdGet(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20010>>;
-    public meNotificationsIdGet(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20010>>;
-    public meNotificationsIdGet(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public schoolsSchoolIdGet(schoolId: string, observe?: 'body', reportProgress?: boolean): Observable<Body9>;
+    public schoolsSchoolIdGet(schoolId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body9>>;
+    public schoolsSchoolIdGet(schoolId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body9>>;
+    public schoolsSchoolIdGet(schoolId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling meNotificationsIdGet.');
+        if (schoolId === null || schoolId === undefined) {
+            throw new Error('Required parameter schoolId was null or undefined when calling schoolsSchoolIdGet.');
         }
 
         let headers = this.defaultHeaders;
@@ -182,7 +199,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse20010>('get',`${this.basePath}/me/notifications/${encodeURIComponent(String(id))}`,
+        return this.httpClient.request<Body9>('get',`${this.basePath}/schools/${encodeURIComponent(String(schoolId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

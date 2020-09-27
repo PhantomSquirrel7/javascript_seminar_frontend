@@ -25,16 +25,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="schoolName">School name</label>
-                    <input type="text" formControlName="schoolName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.schoolName.errors }" />
-                    <div *ngIf="submitted && f.schoolName.errors" class="invalid-feedback">
-                        <div *ngIf="f.schoolName.errors.required"> is required</div>
-                        <div *ngIf="f.schoolName.errors.minlength">School name must contain more than 5 characters</div>
-                        <div *ngIf="f.schoolName.errors.maxlength">School name must contain less than 30 characters</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label for="firstName">Firstname</label>
                     <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
                     <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">

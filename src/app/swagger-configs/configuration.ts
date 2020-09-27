@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 export interface ConfigurationParameters {
     apiKeys?: {[ key: string ]: string};
     username?: string;

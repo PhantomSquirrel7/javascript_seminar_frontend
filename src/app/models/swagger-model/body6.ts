@@ -10,9 +10,13 @@
  * Do not edit the class manually.
  */
 import { ClassesTeacher } from './classesTeacher';
-import { InlineResponse201Tokens } from './inlineResponse201Tokens';
 
-export interface InlineResponse201 { 
-    user?: ClassesTeacher;
-    tokens?: InlineResponse201Tokens;
+export interface Body6 { 
+    id?: string;
+    name?: string;
+    language?: string;
+    subject?: string;
+    level?: number;
+    teacher?: ClassesTeacher;
+    students?: Array<ClassesTeacher>;
 }
