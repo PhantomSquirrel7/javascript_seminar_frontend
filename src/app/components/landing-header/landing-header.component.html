@@ -9,10 +9,16 @@
     <a>Team</a>
 
 
-    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-        <mat-button-toggle value="">EN</mat-button-toggle>
-        <mat-button-toggle value="">DE</mat-button-toggle>
-    </mat-button-toggle-group>
+    <!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style"> -->
+    <div class="flag-background">
+        <button mat-icon-button>
+            <img class="flags" src="/assets/germany_round.png"/>
+        </button>
+        <button mat-icon-button style="margin: 10px">
+            <img class="flags" src="/assets/united-kingdom_round.png"/>
+        </button>
+    </div>
+    <!-- </mat-button-toggle-group> -->
 
 
     <button mat-icon-button  [matMenuTriggerFor]="menu">
