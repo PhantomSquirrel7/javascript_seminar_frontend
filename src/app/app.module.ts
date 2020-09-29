@@ -12,7 +12,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material-module';
 import { CustomLoginService } from '@app/services/custom';
 import { UserService } from './services/swagger-api/api';;
-import { LandingHeaderComponent } from './components/landing-header/landing-header.component'
+import { LandingHeaderComponent } from './components/landing-header/landing-header.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { ContentComponent } from './components/content/content.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -23,7 +25,8 @@ import { LandingHeaderComponent } from './components/landing-header/landing-head
     BrowserAnimationsModule,
     DemoMaterialModule
   ],
-  declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent, FooterComponent, HeaderComponent, LandingHeaderComponent],  
+  declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent, FooterComponent, 
+    HeaderComponent, LandingHeaderComponent, NavigationComponent, ContentComponent],   
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [CustomLoginService, UserService]},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

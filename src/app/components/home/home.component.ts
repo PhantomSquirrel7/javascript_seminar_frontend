@@ -4,7 +4,7 @@ import { User } from '@app/models';
 import { CustomUserService, CustomLoginService } from '@app/services/custom';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
-@Component({ templateUrl: 'home.component.html' })
+@Component({ templateUrl: 'home.component.html', styleUrls: ['./home.component.less'] })
 export class HomeComponent {
     loading = false;
     error = '';

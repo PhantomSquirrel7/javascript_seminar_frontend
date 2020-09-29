@@ -1,11 +1,10 @@
-﻿<app-header></app-header>
-<div class="card mt-4">
-    <h4 class="card-header">Welcome to Globy home page !</h4>
-    <div class="card-body">
-        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-        <ul *ngIf="user">
-            <li>{{user.firstName}}</li>
-        </ul>
+﻿<div fxLayout="row">
+    <app-navigation></app-navigation>
+    <div fxFlex="1 1 100%">
+        <app-header></app-header>
+        <div class="home-content">
+            <app-content></app-content>
+        </div>
+        <app-footer></app-footer>
     </div>
 </div>
-<app-footer></app-footer>
