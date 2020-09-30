@@ -1,36 +1,30 @@
-<div fxLayout="row" fxLayoutAlign="space-around center" class="header-component">
+<nav class="navbar navbar-component navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex justify-content-center align-items-center m-0 mr-auto ml-md-3 my-2 my-md-0 mw-100" href="#">
+            <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+            <div class="sidebar-brand-text mx-3"><span>GLOBY</span></div>
+        </a>
 
-    <a [routerLink]="['../about']">
-        <img class="logo" src="/assets/logo.png"/>
-    </a>
+        <a class="justify-content-center align-items-center m-0 mr-auto ml-md-3 my-2 my-md-0 mw-100">Offering</a>
+        <a class="justify-content-center align-items-center m-0 mr-auto ml-md-3 my-2 my-md-0 mw-100">Team</a>
 
+        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary">DE</button>
+            <button type="button" class="btn btn-light">EN</button>
+        </div>
 
-    <a>Offering</a> 
-    <a>Team</a>
+        <div class="d-none d-sm-block topbar-divider"></div>
 
-
-    <!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style"> -->
-    <div class="flag-background">
-        <button mat-icon-button>
-            <img class="flags" src="/assets/germany_round.png"/>
+        <button mat-icon-button  [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
         </button>
-        <button mat-icon-button style="margin: 10px">
-            <img class="flags" src="/assets/united-kingdom_round.png"/>
-        </button>
+    
+        <mat-menu #menu="matMenu">
+            <a *ngIf="!loggedin" mat-menu-item class="landing-menu" [routerLink]="['../login']">Login</a>
+            <button *ngIf="loggedin" mat-menu-item class="landing-menu">My Profile</button>
+            <a *ngIf="loggedin" mat-menu-item class="landing-menu" [routerLink]="['../']">Home</a>
+            <button *ngIf="loggedin" mat-menu-item class="landing-menu">Settings</button>
+            <button *ngIf="loggedin" mat-menu-item class="landing-menu">Logout</button>
+        </mat-menu>
     </div>
-    <!-- </mat-button-toggle-group> -->
-
-
-    <button mat-icon-button  [matMenuTriggerFor]="menu">
-        <mat-icon>account_circle</mat-icon>
-    </button>
-
-    <mat-menu #menu="matMenu">
-        <a *ngIf="!loggedin" mat-menu-item [routerLink]="['../login']">Login</a>
-        <button *ngIf="loggedin" mat-menu-item >My Profile</button>
-        <a *ngIf="loggedin" mat-menu-item [routerLink]="['../']">Home</a>
-        <button *ngIf="loggedin" mat-menu-item>Settings</button>
-        <button *ngIf="loggedin" mat-menu-item>Logout</button>
-    </mat-menu>
-
-</div>
+</nav>
