@@ -14,7 +14,10 @@ import { CustomLoginService } from '@app/services/custom';
 import { UserService } from './services/swagger-api/api';;
 import { LandingHeaderComponent } from './components/landing-header/landing-header.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { ContentComponent } from './components/content/content.component';
+import { ContentComponent } from './components/content/content.component';;
+import { PlanMeetingViewComponent } from './components/plan-meeting-view/plan-meeting-view.component';
+import { PlanMeetingContentComponent } from './components/plan-meeting-content/plan-meeting-content.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -26,7 +29,7 @@ import { ContentComponent } from './components/content/content.component';
     DemoMaterialModule
   ],
   declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent, FooterComponent, 
-    HeaderComponent, LandingHeaderComponent, NavigationComponent, ContentComponent],   
+    HeaderComponent, LandingHeaderComponent, NavigationComponent, ContentComponent, PlanMeetingViewComponent, PlanMeetingContentComponent],   
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [CustomLoginService, UserService]},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
