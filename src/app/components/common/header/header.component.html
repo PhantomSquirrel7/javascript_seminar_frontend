@@ -1,0 +1,32 @@
+<nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+    <div class="container-fluid">
+        <form [formGroup]="searchForm" (ngSubmit)="search()" class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input formControlName="searchText" class="bg-light form-control border-0 small" type="text"
+                    placeholder="Search classes, assignments...">
+                <div class="input-group-append">
+                    <button (click)="search()" class="btn btn-primary py-0" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary">DE</button>
+            <button type="button" class="btn btn-light">EN</button>
+        </div>
+
+        <div class="d-none d-sm-block topbar-divider"></div>
+
+        <button mat-icon-button  [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+    
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/profile']">My Profile</button>
+            <button mat-menu-item [routerLink]="['/settings']" > Settings</button>
+            <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+    </div>
+</nav>
