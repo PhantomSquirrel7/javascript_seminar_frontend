@@ -1,6 +1,6 @@
 ﻿import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -28,7 +28,14 @@ import {
   FooterComponent,
   LandingHeaderComponent,
   NavigationComponent,
-  ProfileViewContentComponent
+  ProfileViewContentComponent,
+  GamesStudentViewComponent, 
+  GamesStudentContentComponent,
+  GamesQuizComponent,
+  GamesAliasComponent,
+  GamesTeacherViewComponent, 
+  GamesTeacherContentComponent
+  
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -40,6 +47,7 @@ import { UserService } from './services/swagger-api/api';;
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     FlexLayoutModule,
@@ -69,7 +77,13 @@ import { UserService } from './services/swagger-api/api';;
     MyMeetingRequestsViewComponent,
     ResetPasswordViewComponent,
     DashboardContentComponent,
-    ProfileViewContentComponent
+    ProfileViewContentComponent,
+    GamesStudentViewComponent,
+    GamesQuizComponent,
+    GamesAliasComponent,
+    GamesStudentContentComponent,
+    GamesTeacherViewComponent,
+    GamesTeacherContentComponent,
   ],
   providers: [
     {

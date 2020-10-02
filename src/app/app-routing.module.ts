@@ -15,7 +15,9 @@ import {
   DashboardViewComponent,
   AboutViewComponent,
   PlanMeetingViewComponent,
-  ForgotPasswordViewComponent
+  ForgotPasswordViewComponent,
+  GamesStudentViewComponent,
+  GamesTeacherViewComponent
 } from './components';
 
 const routes: Routes = [
@@ -67,6 +69,16 @@ const routes: Routes = [
   {
     path: 'my-meeting-requests',
     component: MyMeetingRequestsViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'games-student',
+    component: GamesStudentViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'games-teacher',
+    component: GamesTeacherViewComponent,
     canActivate: [AuthGuard],
   },
 

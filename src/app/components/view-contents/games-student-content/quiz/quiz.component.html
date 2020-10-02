@@ -1,0 +1,10 @@
+Quiz Window! <br /><br />
+<div class="question">{{ quiz.question }}<br /></div>
+<mat-selection-list #answerSelection [(ngModel)]="selectedAnswers">
+  <mat-list-option *ngFor="let answer of quiz.answers" [value]="answer.text">
+    {{ answer.text }}
+  </mat-list-option>
+</mat-selection-list>
+
+<p>You selected: {{ this.selectedAnswers }}</p>
+<button mat-raised-button color="primary" (click)="onSend()">Send</button>

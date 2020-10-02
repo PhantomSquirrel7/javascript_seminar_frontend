@@ -21,10 +21,16 @@ export * from './views/register-view/register-view.component';
 export * from './views/reset-password-view/reset-password-view.component';
 export * from './views/settings-view/settings-view.component';
 export * from './views/about-view/about-view.component';
+export * from './views/games-student-view/games-student-view.component';
+export * from './views/games-teacher-view/games-teacher-view.component';
 
 // view-contents
 export * from './view-contents/dashboard-content/dashboard-content.component'; 
 export * from './view-contents/plan-meeting-content/plan-meeting-content.component';
 export * from './view-contents/profile-view-content/profile-view-content.component';
+export * from './view-contents/games-student-content/games-student-content.component';
+export * from './view-contents/games-student-content/alias/alias.component';
+export * from './view-contents/games-student-content/quiz/quiz.component';
+export * from './view-contents/games-teacher-content/games-teacher-content.component';
 
 
