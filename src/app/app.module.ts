@@ -6,15 +6,36 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './utils';
-import { HomeComponent,LoginComponent,RegisterComponent,ForgotPasswordComponent, LandingComponent, HeaderComponent, FooterComponent } from './components';;
+import {
+  LoginViewComponent,
+  AboutViewComponent,
+  CreateClassViewComponent,
+  CreateStudentViewComponent,
+  DashboardViewComponent,
+  MyMeetingRequestsViewComponent,
+  ResetPasswordViewComponent,
+  RegisterViewComponent,
+  FindPartnerClassViewComponent,
+  ForgotPasswordViewComponent,
+  LandingViewComponent,
+  ProfileViewComponent,
+  SettingsViewComponent,
+  MyClassViewComponent,
+  PlanMeetingViewComponent,
+  DashboardContentComponent,
+  PlanMeetingContentComponent,
+  HeaderComponent,
+  FooterComponent,
+  LandingHeaderComponent,
+  NavigationComponent,
+  ProfileViewContentComponent
+} from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {DemoMaterialModule} from './material-module';
+import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
 import { UserService } from './services/swagger-api/api';;
-import { LandingHeaderComponent } from './components/landing-header/landing-header.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
-import { ContentComponent } from './components/content/content.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -23,12 +44,40 @@ import { ContentComponent } from './components/content/content.component';
     AppRoutingModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
-    DemoMaterialModule
+    DemoMaterialModule,
   ],
-  declarations: [AppComponent, LandingComponent, HomeComponent, LoginComponent,RegisterComponent,ForgotPasswordComponent, FooterComponent, 
-    HeaderComponent, LandingHeaderComponent, NavigationComponent, ContentComponent],   
+  declarations: [
+    AppComponent,
+    LandingViewComponent,
+    LoginViewComponent,
+    RegisterViewComponent,
+    ForgotPasswordViewComponent,
+    FooterComponent,
+    HeaderComponent,
+    LandingHeaderComponent,
+    NavigationComponent,
+    PlanMeetingViewComponent,
+    PlanMeetingContentComponent,
+    FindPartnerClassViewComponent,
+    MyClassViewComponent,
+    SettingsViewComponent,
+    ProfileViewComponent,
+    AboutViewComponent,
+    CreateClassViewComponent,
+    CreateStudentViewComponent,
+    DashboardViewComponent,
+    MyMeetingRequestsViewComponent,
+    ResetPasswordViewComponent,
+    DashboardContentComponent,
+    ProfileViewContentComponent
+  ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [CustomLoginService, UserService]},
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer,
+      multi: true,
+      deps: [CustomLoginService, UserService],
+    },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

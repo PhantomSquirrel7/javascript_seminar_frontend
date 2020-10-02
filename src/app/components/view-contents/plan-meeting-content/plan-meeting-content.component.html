@@ -1,0 +1,14 @@
+<div style="margin-left: 50px; margin-top: 50px">
+    <div class="class-selection">
+        For which class would you like to plan next meeting?
+        <select (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;" ng-model="selectedClass">
+            <option [ngValue]="null">select your class</option>
+            <option *ngFor="let x of user_classes" [ngValue]="x.className">{{x.className}}</option>
+        </select>
+    </div>
+    <div *ngIf="isSelected" class="planning-section">
+        <p>Selecting works</p> 
+        <!-- TODO: Continue -->
+    </div>
+</div>
+    

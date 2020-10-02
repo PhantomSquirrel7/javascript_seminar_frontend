@@ -52,8 +52,13 @@ export class CustomLoginService {
         this.authApi.authLogoutPost({refreshToken: this.tokenValue.refresh.token}).subscribe();
         this.stopRefreshTokenTimer();
         this.userSubject.next(null);
+        this.tokenSubject.next(null);
         this.removeRefreshAccessTokenOnLocalStorage();
         this.router.navigate(['/login']);
+    }
+
+    forgotPassword(email : string){
+        return this.authApi.authForgotPasswordPost({email: email});
     }
 
     refreshToken(credentials: Body3) {
