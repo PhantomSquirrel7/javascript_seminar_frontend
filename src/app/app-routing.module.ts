@@ -15,12 +15,14 @@ import {
   DashboardViewComponent,
   AboutViewComponent,
   PlanMeetingViewComponent,
+  ForgotPasswordViewComponent
 } from './components';
 
 const routes: Routes = [
   { path: '', component: LandingViewComponent },
   { path: 'login', component: LoginViewComponent },
   { path: 'register', component: RegisterViewComponent },
+  { path: 'forgot-password', component: ForgotPasswordViewComponent },
   { path: 'about', component: AboutViewComponent },
   {
     path: 'dashboard',

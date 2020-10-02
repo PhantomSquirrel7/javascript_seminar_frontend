@@ -57,6 +57,10 @@ export class CustomLoginService {
         this.router.navigate(['/login']);
     }
 
+    forgotPassword(email : string){
+        return this.authApi.authForgotPasswordPost({email: email});
+    }
+
     refreshToken(credentials: Body3) {
         return this.authApi.authRefreshTokensPost(credentials)
             .pipe(map((tokens) => {
