@@ -1,39 +1,22 @@
 import { Injectable } from '@angular/core';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-
+import { Socket } from 'ngx-socket-io';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GamesService {
+export class GamesService extends Socket {
 
   constructor() {
-    this.startWebsocket();
-  }
-
-  private ws;
-  private wsURL = "ws://localhost:8081";
-
-  startWebsocket() {
-    this.ws = webSocket(this.wsURL);
-    this.ws.subscribe(
-      data => console.log('got data ' + data),
-      error => console.error('something wrong occurred: ' + error),
-      () => console.log('complete')
-    );
-    console.log("Starting socket");
+    super({
+      url: "http://localhost:5000", options: {}
+    });
   }
 
   sendData(data) {
-    this.ws.next(data);
-    console.log(data);
+    this.emit("new user", data);
+    this.on("answer", (data) => {
+      console.log(data);
+    });
   }
-
-
-
-
-
-
-
 
 }
