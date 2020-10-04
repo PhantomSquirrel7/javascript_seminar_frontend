@@ -1,0 +1,24 @@
+<button mat-raised-button class="fas fa-arrow-left back-button" [routerLink]="['/games-teacher/overview']"></button>
+<mat-card-header>
+    <mat-card-title>Alias Settings</mat-card-title>
+</mat-card-header>
+
+<mat-card-content>
+    <mat-card-subtitle>Games</mat-card-subtitle>
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let game of games">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ game.name }}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ game.description }}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-list role="list">
+                <mat-list-item role="listitem" *ngFor="let word of game.words">{{ word }}</mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <button class="btn btn-success btn-sm mt-2" (click)="addGame()">Add game</button>
+</mat-card-content>

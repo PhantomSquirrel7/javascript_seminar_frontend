@@ -1,9 +1,15 @@
-mat-grid-tile {
-    background: rgb(236, 236, 236);
-    font-size: 120%;
-  }
+.config-card {
+  margin: 1.5em;
+}
 
-  mat-grid-tile:hover {
-    background: rgb(197, 197, 197);
-    cursor: pointer;
-  }
+.back-button {
+  margin-bottom: 1em;
+}
+
+h1 {
+  font-size: 140%;
+}
+
+mat-list-item {
+  border-bottom: 1px solid lightgrey;
+}

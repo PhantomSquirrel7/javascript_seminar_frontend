@@ -29,13 +29,19 @@ import {
   LandingHeaderComponent,
   NavigationComponent,
   ProfileViewContentComponent,
-  GamesStudentViewComponent, 
+  GamesStudentViewComponent,
   GamesStudentContentComponent,
   GamesQuizComponent,
   GamesAliasComponent,
-  GamesTeacherViewComponent, 
-  GamesTeacherContentComponent
-  
+  GamesTeacherViewComponent,
+  GamesTeacherContentComponent,
+  AliasGameConfigComponent,
+  QuizGameConfigComponent,
+  TtolGameConfigComponent,
+  DrawItGameConfigComponent,
+  HotPotatoGameConfigComponent,
+  OverviewGamesConfigComponent
+
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -86,6 +92,12 @@ import { SocketIoModule } from 'ngx-socket-io';
     GamesStudentContentComponent,
     GamesTeacherViewComponent,
     GamesTeacherContentComponent,
+    AliasGameConfigComponent,
+    QuizGameConfigComponent,
+    TtolGameConfigComponent,
+    DrawItGameConfigComponent,
+    HotPotatoGameConfigComponent,
+    OverviewGamesConfigComponent
   ],
   providers: [
     {
@@ -99,4 +111,4 @@ import { SocketIoModule } from 'ngx-socket-io';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
