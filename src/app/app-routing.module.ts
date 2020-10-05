@@ -7,6 +7,8 @@ import {
   CreateStudentViewComponent,
   FindPartnerClassViewComponent,
   LandingViewComponent,
+  LandingViewOfferingComponent,
+  LandingViewTeamComponent,
   LoginViewComponent,
   MyClassViewComponent,
   RegisterViewComponent,
@@ -20,6 +22,8 @@ import {
 
 const routes: Routes = [
   { path: '', component: LandingViewComponent },
+  { path: 'offering', component: LandingViewOfferingComponent },
+  { path: 'team', component: LandingViewTeamComponent },
   { path: 'login', component: LoginViewComponent },
   { path: 'register', component: RegisterViewComponent },
   { path: 'forgot-password', component: ForgotPasswordViewComponent },

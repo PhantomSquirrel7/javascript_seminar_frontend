@@ -18,6 +18,8 @@ import {
   FindPartnerClassViewComponent,
   ForgotPasswordViewComponent,
   LandingViewComponent,
+  LandingViewOfferingComponent,
+  LandingViewTeamComponent,
   ProfileViewComponent,
   SettingsViewComponent,
   MyClassViewComponent,
@@ -28,13 +30,16 @@ import {
   FooterComponent,
   LandingHeaderComponent,
   NavigationComponent,
-  ProfileViewContentComponent
+  ProfileViewContentComponent,
+  LandingHomeContentComponent,
+  LandingOfferingContentComponent,
+  LandingTeamContentComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
-import { UserService } from './services/swagger-api/api';;
+import { UserService } from './services/swagger-api/api';
 
 @NgModule({
   imports: [
@@ -69,8 +74,12 @@ import { UserService } from './services/swagger-api/api';;
     MyMeetingRequestsViewComponent,
     ResetPasswordViewComponent,
     DashboardContentComponent,
-    ProfileViewContentComponent
-  ],
+    ProfileViewContentComponent,
+    LandingHomeContentComponent ,
+    LandingViewOfferingComponent ,
+    LandingViewTeamComponent,
+    LandingTeamContentComponent,
+    LandingOfferingContentComponent],
   providers: [
     {
       provide: APP_INITIALIZER,
