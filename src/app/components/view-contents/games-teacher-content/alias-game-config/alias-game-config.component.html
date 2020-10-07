@@ -3,6 +3,8 @@
     <mat-card-title>Alias Settings</mat-card-title>
 </mat-card-header>
 
+<app-messages></app-messages>
+
 <mat-card-content>
     <mat-card-subtitle>Games</mat-card-subtitle>
     <mat-accordion>
@@ -15,10 +17,20 @@
                     {{ game.description }}
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <mat-list role="list">
-                <mat-list-item role="listitem" *ngFor="let word of game.words">{{ word }}</mat-list-item>
-            </mat-list>
+            <app-alias-form [game]="game" (gameChange)="onGameChange($event)"></app-alias-form>
         </mat-expansion-panel>
     </mat-accordion>
-    <button class="btn btn-success btn-sm mt-2" (click)="addGame()">Add game</button>
+
+    <div class="mt-1">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Create New Game
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-alias-form [game]="newGame" (gameChange)="onCreateGame($event)"></app-alias-form>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
 </mat-card-content>

@@ -40,7 +40,9 @@ import {
   TtolGameConfigComponent,
   DrawItGameConfigComponent,
   HotPotatoGameConfigComponent,
-  OverviewGamesConfigComponent
+  OverviewGamesConfigComponent,
+  MessagesComponent,
+  AliasFormComponent
 
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -97,7 +99,9 @@ import { SocketIoModule } from 'ngx-socket-io';
     TtolGameConfigComponent,
     DrawItGameConfigComponent,
     HotPotatoGameConfigComponent,
-    OverviewGamesConfigComponent
+    OverviewGamesConfigComponent,
+    MessagesComponent,
+    AliasFormComponent  
   ],
   providers: [
     {

@@ -1,0 +1,21 @@
+<form [formGroup]="alias" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>Name: </mat-label>
+        <input type="text" matInput formControlName="name" required>
+    </mat-form-field>
+    <mat-form-field class="ml-4" appearance="outline">
+        <mat-label>Description: </mat-label>
+        <input type="text" matInput formControlName="description">
+    </mat-form-field>
+    <div formArrayName="words">
+        <mat-label>Words:</mat-label>
+        <div *ngFor="let word of words.controls; let i=index">
+            <mat-form-field class="mr-2">
+                <input type="text" matInput [formControlName]="i">
+            </mat-form-field>
+            <button *ngIf="i == words.controls.length-1" class="ml-4 btn btn-sm btn-secondary" (click)="addWord()">+</button>
+        </div>
+    </div>
+    <button class="mt-2 mr-2 btn btn-sm btn-success" type="submit">Save</button>
+    <!-- <button class="mt-2 btn btn-sm btn-danger" (click)="reset()">Reset</button> -->
+</form>
