@@ -1,0 +1,22 @@
+.player,
+.participant,
+.howto,
+.players {
+    float: left;
+}
+
+.player {
+    width: 50%;
+}
+
+.participant {
+    width: 25%;
+}
+
+.players {
+    width: 25%;
+}
+
+.howto {
+    width: 25%;
+}
