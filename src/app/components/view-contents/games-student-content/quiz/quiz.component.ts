@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GamesService } from '@app/services/custom/games/games.service';
 import { Quiz } from "../model/quiz";
 import { Answer } from "../model/answer";
@@ -11,6 +11,8 @@ import { Answer } from "../model/answer";
 export class GamesQuizComponent implements OnInit {
 
   @Output() finished = new EventEmitter<boolean>();
+  @Input() username : string;
+  @Input() sessionId : string;
 
   // Mock quiz
   quiz: Quiz = {
@@ -32,9 +34,13 @@ export class GamesQuizComponent implements OnInit {
   }
   selectedAnswers;
 
-  constructor(private gamesService: GamesService) { }
+  constructor(private gamesService : GamesService) {
+  }
 
   ngOnInit(): void {
+    console.log("Send join Game");
+    console.log(this.username);
+    this.gamesService.joinGame(this.username, this.sessionId, "quiz");
   }
 
   onSend(): void {

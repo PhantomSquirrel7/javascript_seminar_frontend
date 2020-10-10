@@ -1,28 +1,29 @@
 <div classname="games">
-  <div *ngIf="!gameJoined" class="gameSelection">
-    <button (click)="onJoinGameButton()">Join Game</button>
-    <br>
-    <select name="gameselection" [(ngModel)]="selectedGame" id="game">
+    <div *ngIf="!gameJoined" class="gameSelection">
+        <button (click)="onJoinGameButton()">Join Game</button>
+        <br>
+        <select name="gameselection" [(ngModel)]="selectedGame" id="game">
       <option value="quiz">Quiz</option>
       <option value="alias">Alias</option>
     </select>
-  </div>
+        <input [(ngModel)]="username">
+        <input [(ngModel)]="sessionId">
+    </div>
 
-  <div *ngIf="gameJoined && isSelected('quiz')" class="gameScreen">
-    Playing Quiz!<br>
-    <app-quiz (finished)="onFinished()"></app-quiz>
-    <button (click)="onDisconnect()">Disconnect</button>
-  </div>
+    <div *ngIf="gameJoined && isSelected('quiz')" class="gameScreen">
+        Playing Quiz!<br>
+        <app-quiz (finished)="onFinished()" [username]="username" [sessionId]="sessionId"></app-quiz>
+        <button (click)="onDisconnect()">Disconnect</button>
+    </div>
 
 
-  <div *ngIf="gameJoined && isSelected('alias')" class="gameScreen">
-    Playing Alias!<br>
-    <app-alias></app-alias>
-    <button (click)="onDisconnect()">Disconnect</button>
-  </div>
+    <div *ngIf="gameJoined && isSelected('alias')" class="gameScreen">
+        <app-alias [username]="username" [sessionId]="sessionId"></app-alias>
+        <button (click)="onDisconnect()">Disconnect</button>
+    </div>
 
-  <div *ngIf="devMode" class="debugMessages" style="position: absolute;bottom: 0px; ">
-    {{this.debugMessage}}
-  </div>
+    <div *ngIf="devMode" class="debugMessages" style="position: absolute;bottom: 0px; ">
+        {{this.debugMessage}}
+    </div>
 
 </div>
