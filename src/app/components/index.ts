@@ -28,6 +28,7 @@ export * from './views/my-connection-requests-view/my-connection-requests-view.c
 // view-contents
 export * from './view-contents/dashboard-content/dashboard-content.component'; 
 export * from './view-contents/plan-meeting-content/plan-meeting-content.component';
+export * from './view-contents/find-partner-class-content/find-partner-class-content.component';
 export * from './view-contents/profile-view-content/profile-view-content.component';
 export * from './view-contents/landing-home-content/landing-home-content.component';
 export * from './view-contents/landing-offering-content/landing-offering-content.component';

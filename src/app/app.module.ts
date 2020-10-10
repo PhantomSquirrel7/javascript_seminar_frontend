@@ -16,6 +16,7 @@ import {
   ResetPasswordViewComponent,
   RegisterViewComponent,
   FindPartnerClassViewComponent,
+  FindPartnerClassContentComponent,
   ForgotPasswordViewComponent,
   LandingViewComponent,
   LandingViewOfferingComponent,
@@ -40,7 +41,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
-import { UserService } from './services/swagger-api/api';;
+import { UserService } from './services/swagger-api/api';
 @NgModule({
   imports: [
     BrowserModule,
@@ -81,6 +82,7 @@ import { UserService } from './services/swagger-api/api';;
     LandingTeamContentComponent,
     LandingOfferingContentComponent,
     MyConnectionRequestsViewComponent,
+    FindPartnerClassContentComponent
   ],
   providers: [
     {
