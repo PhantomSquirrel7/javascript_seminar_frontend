@@ -7,14 +7,15 @@
 
 <mat-card-content>
     <mat-card-subtitle>Games</mat-card-subtitle>
-    <mat-accordion>
-        <mat-expansion-panel *ngFor="let game of games">
+    <mat-accordion class="headers-align">
+        <mat-expansion-panel *ngFor="let game of games" hideToggle>
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ game.name }}
                 </mat-panel-title>
                 <mat-panel-description>
                     {{ game.description }}
+                    <mat-icon class="headers-align-right" title="delete game" (click)="deleteGame(game)">delete_forever</mat-icon>
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <app-alias-form [game]="game" (gameChange)="onGameChange($event)"></app-alias-form>
@@ -23,7 +24,7 @@
 
     <div class="mt-1">
         <mat-accordion>
-            <mat-expansion-panel>
+            <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Create New Game

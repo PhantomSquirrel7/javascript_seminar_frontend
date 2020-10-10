@@ -21,7 +21,16 @@ export class AliasGameConfigComponent implements OnInit {
 
   ngOnInit(): void {
     this.api.getAliasGames().subscribe(data => {
+      console.log("fetch data", data)
       this.games = data;
+    });
+  }
+
+  deleteGame(game: Alias) {
+    this.api.deleteAliasGame(game).subscribe(data => {
+      console.log("delete game", data)
+      // TODO handle true response
+      this.games = this.games.filter(elem => elem.id !== game.id)
     });
   }
 
@@ -30,6 +39,7 @@ export class AliasGameConfigComponent implements OnInit {
       console.log("created game", data)
       // TODO handle true response
       this.games.push(game);
+      this.resetNewGame();
     });
   }
 
@@ -42,8 +52,12 @@ export class AliasGameConfigComponent implements OnInit {
     });
   }
 
-
-  addWord(id: number, word: string) {
-    this.games.find(game => game.id === id).words.push(word)
+  resetNewGame() {
+    this.newGame = {
+      id: 0,
+      name: "",
+      description: "",
+      words: []
+    }
   }
 }

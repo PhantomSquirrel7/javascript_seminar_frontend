@@ -10,12 +10,20 @@
     <div formArrayName="words">
         <mat-label>Words:</mat-label>
         <div *ngFor="let word of words.controls; let i=index">
+            <button mat-icon-button aria-label="delete word" title="delete word" (click)="deleteWord(i)">
+                <mat-icon>delete_forever</mat-icon>
+            </button>
             <mat-form-field class="mr-2">
                 <input type="text" matInput [formControlName]="i">
             </mat-form-field>
-            <button *ngIf="i == words.controls.length-1" class="ml-4 btn btn-sm btn-secondary" (click)="addWord()">+</button>
+            <button *ngIf="i == words.controls.length-1" title="add word" mat-icon-button aria-label="add word"
+                (click)="addWord()">
+                <mat-icon>add</mat-icon>
+            </button>
         </div>
     </div>
-    <button class="mt-2 mr-2 btn btn-sm btn-success" type="submit">Save</button>
-    <!-- <button class="mt-2 btn btn-sm btn-danger" (click)="reset()">Reset</button> -->
+    <mat-action-row>
+        <button class="btn btn-sm btn-success" type="submit">Save</button>
+    </mat-action-row>
+
 </form>

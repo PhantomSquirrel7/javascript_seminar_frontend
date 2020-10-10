@@ -15,7 +15,7 @@ export class GamesApiService {
     { id: 2134, name: "Class 7a", words: ["stars", "rocket", "gravity"], description: "words about space" }
   ]
 
-  private url: "http://localhost:5000"; // TODO URL to games api
+  private url= "https://javascript-group-d.herokuapp.com/"; // TODO URL to games api
 
 
 
@@ -46,7 +46,7 @@ export class GamesApiService {
 
   // ------------------ ALIAS -------------------
   getAliasGames(): Observable<Alias[]> {
-    this.displaylog("Loading Alias Games");
+    //this.displaylog("Loading Alias Games");
     return of(this.games);
     return this.http.get<Alias[]>(this.url+"/games/alias/games", this.httpOptions)
       .pipe(
@@ -66,7 +66,7 @@ export class GamesApiService {
     return of(game);
     return this.http.put<Alias>(this.url+"/games/alias/"+game.id, game, this.httpOptions)
       .pipe(
-        catchError(this.handleError<Alias>('Saving game failed.')
+        catchError(this.handleError<Alias>('Updating game failed.')
         ));
   }
 
@@ -74,7 +74,7 @@ export class GamesApiService {
     return of(game);
     return this.http.delete(this.url+"/games/alias/"+game.id, this.httpOptions)
       .pipe(
-        catchError(this.handleError<Alias>('Saving game failed.')
+        catchError(this.handleError<any>('Deleting game failed.')
         ));
   }
 

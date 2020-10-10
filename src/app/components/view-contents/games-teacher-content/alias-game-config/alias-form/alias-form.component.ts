@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms'
 import { Alias } from '@app/models/game-models/alias';
 
@@ -19,8 +19,8 @@ export class AliasFormComponent implements OnInit {
     ])
   })
 
-  constructor(private fb: FormBuilder) { 
-    
+  constructor(private fb: FormBuilder) {
+
   }
 
   ngOnInit(): void {
@@ -31,12 +31,12 @@ export class AliasFormComponent implements OnInit {
     this.game.words.forEach(word => {
       this.addWord(word)
     });
-    if(this.game.words.length == 0){
+    if (this.game.words.length == 0) {
       this.addWord();
     }
   }
 
-  addWord(word='') {
+  addWord(word = '') {
     this.words.push(this.fb.control(word));
   }
 
@@ -44,13 +44,20 @@ export class AliasFormComponent implements OnInit {
     return this.alias.get('words') as FormArray;
   }
 
-  onSubmit(){
+  deleteWord(index) {
+    this.words.removeAt(index);
+    if(this.words.length == 0){
+      this.addWord();
+    }
+  }
+
+  onSubmit() {
     let updated = this.alias.value;
     updated.id = this.game.id;
     this.gameChange.emit(updated);
   }
 
-  reset(){
+  reset() {
     this.alias.reset();
   }
 }
