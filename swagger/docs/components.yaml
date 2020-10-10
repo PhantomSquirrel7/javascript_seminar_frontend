@@ -1,0 +1,202 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 0.1.9
+servers:
+  - url: http://localhost:5000/
+    description: Local Server
+  - url: https://javascript-group-d.herokuapp.com/
+    description: Production Server
+
+
+# tags are used for organizing operations
+tags:
+- name: students
+  description: available to students
+- name: teachers
+  description: available to teachers
+
+paths:
+  /question/{questionId}:
+    get:
+      tags:
+      - teachers
+      - students # probably only teacher, because all student info will be handled via socket?
+      summary: get question
+      description: get specific question
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: questionId
+        description: pass id of question
+        required: true
+        type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Question'
+        400:
+          description: bad id
+          
+           
+  /questions:
+    get:
+      tags:
+      - teachers
+      summary: list all questions
+      operationId: listQuestions
+      description: |
+        list all questions
+      produces:
+      - application/json
+      responses:
+        200:
+          description: all available questions
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Question'
+        
+
+
+  /games/alias/games:
+    get:
+      tags:
+      - teachers
+      summary: list all alias games
+      operationId: listAlias
+      desctiption: list all alias games
+      produces: 
+        - application/json
+      responses:
+        200: 
+          description: all available games
+          schema: 
+            type: array
+            items:
+              $ref: '#/definitions/AliasGame'
+
+  /games/alias/create:
+    post:
+      tags: 
+        - teachers
+      summary: create an alias game
+      operationId: createAlias
+      desctiption: create an alias game
+      consumes:
+        - application/json
+      requestBody:
+        description: the game to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/AliasGame'
+      
+      responses:
+        201:
+          description: created
+          schema: 
+            $ref: '#/definitions/AliasGame'
+  
+   
+  /games/alias/{id}:
+    put:
+      tags:
+        - teachers
+      summary: update alias game
+      operationId: updateAlias
+      desctiption: update alias game
+      parameters:
+      - in: path
+        name: id
+        description: pass id of game
+        required: true
+        type: string
+      requestBody:
+        description: the game to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/AliasGame'
+      responses:
+        204:
+          description: updated successfully 
+    
+
+    delete: 
+      tags: 
+         - teachers
+      summary: delete alias game
+      operationId: deleteAlias
+      desctiption: delete alias game
+      parameters:
+      - in: path
+        name: id
+        description: pass id of game
+        required: true
+        type: string
+      responses:
+        200:
+          description: deleted successfully 
+        204: 
+          description: nothing to delete
+          
+
+              
+
+definitions:
+  Question: 
+    type: object
+    required: 
+    - id
+    - question
+    - options
+    - answer
+    properties:
+      question: 
+        type: string
+        example: How are you?
+      options: 
+        type: array
+        items:
+          type: string
+        example: ["Fine", "Great", "Sad"]
+      answer: 
+        type: integer
+        example: 2 
+        description: index for options
+    # manufacturer:
+    #  $ref: '#/definitions/Manufacturer' #example, maybe in quiz later
+
+  AliasGame:
+    type: object
+    required: 
+    - id
+    - name
+    - description
+    - words
+    properties:
+      name: 
+        type: string 
+        example: name of the game
+      description:
+        type: string
+        example: optional description
+      words:
+        type: array
+        itema: 
+          type: string
+        example: ["list", "of", "words"]
+
+
+  
+# Added by API Auto Mocking Plugin
+#host: virtserver.swaggerhub.com
+#basePath: /Javascript-Seminar/GamesAPI/1.0.0
+#schemes:
+# - https
