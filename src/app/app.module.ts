@@ -39,7 +39,6 @@ import {
   QuizGameConfigComponent,
   TtolGameConfigComponent,
   DrawItGameConfigComponent,
-  HotPotatoGameConfigComponent,
   OverviewGamesConfigComponent,
   MessagesComponent,
   AliasFormComponent
@@ -98,7 +97,6 @@ import { SocketIoModule } from 'ngx-socket-io';
     QuizGameConfigComponent,
     TtolGameConfigComponent,
     DrawItGameConfigComponent,
-    HotPotatoGameConfigComponent,
     OverviewGamesConfigComponent,
     MessagesComponent,
     AliasFormComponent  

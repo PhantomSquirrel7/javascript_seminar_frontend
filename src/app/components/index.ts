@@ -36,7 +36,6 @@ export * from './view-contents/games-teacher-content/alias-game-config/alias-gam
 export * from './view-contents/games-teacher-content/quiz-game-config/quiz-game-config.component';
 export * from './view-contents/games-teacher-content/ttol-game-config/ttol-game-config.component';
 export * from './view-contents/games-teacher-content/draw-it-game-config/draw-it-game-config.component';
-export * from './view-contents/games-teacher-content/hot-potato-game-config/hot-potato-game-config.component';
 export * from './view-contents/games-teacher-content/overview-games-config/overview-games-config.component';
 export * from './view-contents/games-teacher-content/messages/messages.component';
 export * from './view-contents/games-teacher-content/alias-game-config/alias-form/alias-form.component';

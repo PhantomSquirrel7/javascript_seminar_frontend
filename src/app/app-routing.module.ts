@@ -20,7 +20,6 @@ import {
   GamesTeacherViewComponent,
   AliasGameConfigComponent,
   QuizGameConfigComponent,
-  HotPotatoGameConfigComponent,
   TtolGameConfigComponent,
   DrawItGameConfigComponent,
   OverviewGamesConfigComponent
@@ -91,7 +90,6 @@ const routes: Routes = [
       { path: 'quiz-config', component: QuizGameConfigComponent },
       { path: '2t1l-config', component: TtolGameConfigComponent },
       { path: 'draw-it-config', component: DrawItGameConfigComponent },
-      { path: 'hot-potato-config', component: HotPotatoGameConfigComponent },
       { path: 'overview', component: OverviewGamesConfigComponent },
       { path: '**', redirectTo: 'overview' }
     ]

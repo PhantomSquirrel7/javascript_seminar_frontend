@@ -17,8 +17,6 @@ export class GamesApiService {
 
   private url= "https://javascript-group-d.herokuapp.com/"; // TODO URL to games api
 
-
-
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -84,6 +82,5 @@ export class GamesApiService {
 
   // ------------------ Draw It -------------------
 
-  // ------------------ Hot Potato -------------------
 
 }
