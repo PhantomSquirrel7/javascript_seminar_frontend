@@ -33,9 +33,25 @@
                       <a class="dropdown-item" [routerLink]="['/my-connection-requests']">View Connection Requests</a>
                     </ul>
                 </li>
-                <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/create-student']"><i class="fas fa-user-circle"></i><span>Create Student</span></a>
-                    <a class="nav-link" [routerLink]="['/plan-meeting']"><i class="far fa-calendar-plus"></i><span>Plan Meeting</span></a>
-                    <a class="nav-link" [routerLink]="['/my-meeting-requests']"><i class="fas fa-share-square"></i><span>My Meeting Requests</span></a>
+                <li class="nav-item dropdown" role="presentation">
+                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa-calendar-plus"></i>
+                        Meetings
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" [routerLink]="['/plan-meeting']">Plan New Meeting</a>
+                      <a class="dropdown-item" [routerLink]="['/my-meeting-requests']">Planned Meeting</a>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" [routerLink]="['/create-student']">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Create Student</span>
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
                     <a class="nav-link" (click)="logout()"><i class="fas fa-arrow-left"></i><span>Logout</span></a>
                 </li>
             </ul>
