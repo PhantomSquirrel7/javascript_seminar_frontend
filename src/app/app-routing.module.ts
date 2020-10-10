@@ -17,7 +17,8 @@ import {
   DashboardViewComponent,
   AboutViewComponent,
   PlanMeetingViewComponent,
-  ForgotPasswordViewComponent
+  ForgotPasswordViewComponent,
+  MyConnectionRequestsViewComponent
 } from './components';
 
 const routes: Routes = [
@@ -71,6 +72,11 @@ const routes: Routes = [
   {
     path: 'my-meeting-requests',
     component: MyMeetingRequestsViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'my-connection-requests',
+    component: MyConnectionRequestsViewComponent,
     canActivate: [AuthGuard],
   },
 

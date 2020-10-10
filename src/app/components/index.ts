@@ -23,6 +23,7 @@ export * from './views/register-view/register-view.component';
 export * from './views/reset-password-view/reset-password-view.component';
 export * from './views/settings-view/settings-view.component';
 export * from './views/about-view/about-view.component';
+export * from './views/my-connection-requests-view/my-connection-requests-view.component'
 
 // view-contents
 export * from './view-contents/dashboard-content/dashboard-content.component'; 

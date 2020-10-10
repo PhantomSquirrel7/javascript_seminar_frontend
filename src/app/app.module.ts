@@ -33,14 +33,14 @@ import {
   ProfileViewContentComponent,
   LandingHomeContentComponent,
   LandingOfferingContentComponent,
-  LandingTeamContentComponent
+  LandingTeamContentComponent,
+  MyConnectionRequestsViewComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
-import { UserService } from './services/swagger-api/api';
-
+import { UserService } from './services/swagger-api/api';;
 @NgModule({
   imports: [
     BrowserModule,
@@ -79,7 +79,9 @@ import { UserService } from './services/swagger-api/api';
     LandingViewOfferingComponent ,
     LandingViewTeamComponent,
     LandingTeamContentComponent,
-    LandingOfferingContentComponent],
+    LandingOfferingContentComponent,
+    MyConnectionRequestsViewComponent,
+  ],
   providers: [
     {
       provide: APP_INITIALIZER,

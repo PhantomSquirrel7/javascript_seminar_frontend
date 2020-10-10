@@ -13,26 +13,6 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <!-- <li class="nav-item" role="presentation">
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle">
-                        <i class="fas fa-table"></i>
-                        My Classes
-                    </a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li class="nav-item" role="presentation">
-                            <a class="asdf nav-link" [routerLink]="['/my-class']">
-                                <i class="fas fa-table"></i>
-                                <span>Current Class</span>
-                            </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="asdf nav-link" [routerLink]="['/create-class']">
-                                <i class="fas fa-table"></i>
-                                <span>Create New Class</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li> -->
                 <li class="nav-item dropdown" role="presentation">
                     <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-table"></i>
@@ -43,11 +23,15 @@
                       <a class="dropdown-item" [routerLink]="['/create-class']">Create New Class</a>
                     </ul>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" [routerLink]="['/find-partner-class']">
+                <li class="nav-item dropdown" role="presentation">
+                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-person-booth"></i>
-                        <span>Find a partner class</span>
+                        Partner Classes
                     </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" [routerLink]="['/find-partner-class']">Find a Partner Class</a>
+                      <a class="dropdown-item" [routerLink]="['/my-connection-requests']">View Connection Requests</a>
+                    </ul>
                 </li>
                 <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/create-student']"><i class="fas fa-user-circle"></i><span>Create Student</span></a>
                     <a class="nav-link" [routerLink]="['/plan-meeting']"><i class="far fa-calendar-plus"></i><span>Plan Meeting</span></a>
