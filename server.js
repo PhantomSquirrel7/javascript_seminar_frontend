@@ -23,7 +23,7 @@ app.listen(process.env.PORT || 8080);
 const path = require("path");
 const config = require("./config");
 // const app = express();
-const http = require('http').Server(app);
+// const http = require('http').Server(app);
 const mongoose = require('mongoose');
 const games = require('./gameLogic.js');
 
@@ -33,9 +33,11 @@ const ioApp = express();
 // const cors = require('cors');
 ioApp.use(cors());
 app.use(cors());
-const ioServer = ioApp.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
-    .listen(PORT, () => console.log(`Listening on ${PORT}`));
-games.gameInit(ioServer);
+// const ioServer = ioApp.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+//     .listen(PORT, () => console.log(`Listening on ${PORT}`));
+const iohttp = require('http').Server(ioApp);
+iohttp.listen(55555);
+games.gameInit(iohttp);
 
 // Swagger
 const swaggerUi = require("swagger-ui-express");
