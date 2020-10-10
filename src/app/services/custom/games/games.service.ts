@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable , EventEmitter} from '@angular/core';
+import { AliasUpdate } from '@app/components/view-contents/games-student-content/messages/aliasUpdate';
 import { Socket } from 'ngx-socket-io';
 import { JoinGameMessage } from '../../../components/view-contents/games-student-content/messages/joinGame';
 
@@ -8,6 +9,9 @@ import { JoinGameMessage } from '../../../components/view-contents/games-student
 export class GamesService extends Socket {
 
   connected: boolean = false;
+  gameSession;
+  gameUpdateEvent = new EventEmitter<any>();
+
 
   constructor() {
     super({
@@ -31,7 +35,7 @@ export class GamesService extends Socket {
 
     // Gameplay Messages
     this.on("updateGame", (data) => {
-      console.log("UpdateGame recieved" + data);
+      console.log("UpdateGame recieved" + JSON.stringify(data));
       this.handleUpdateGameMessage(data);
     });
     this.on("gameResult", (data) => {
@@ -40,10 +44,14 @@ export class GamesService extends Socket {
 
   }
 
-  handleUpdateGameMessage(data){
-    console.log(data);
+  // TODO
+  handleUpdateGameMessage(session){
+    console.log("Recieved UpdateGame " + JSON.stringify(session));
+    this.gameSession = session
+    this.gameUpdateEvent.emit(session);
   }
 
+  // TODO
   handleGameResultMessage(data){
     console.log(data);
   }
@@ -52,16 +60,18 @@ export class GamesService extends Socket {
   joinGame(playerName: string, sessionId: string, gameType: string) {
     let joinMessage: JoinGameMessage = new JoinGameMessage(sessionId, playerName, gameType);
     this.emit("joinGame", joinMessage);
-    this.on(sessionId, (data) => {
-      console.log(data);
-      console.log("Got Answer from Session"  ,data.sessionId);
-    })
   }
 
-  sendUpdate(updateGameMessage){
-    this.emit("updateGame", updateGameMessage);
+
+  /*
+  Send updated game Session.
+  */
+  sendUpdate(){
+    this.emit("updateGame", this.gameSession);
   }
 
+
+  // TODO
   sendPlayerResult(playerResultMessage){
     this.emit("playerResult", playerResultMessage);
   }

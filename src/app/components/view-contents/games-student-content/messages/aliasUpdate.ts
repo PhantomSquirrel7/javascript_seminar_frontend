@@ -3,4 +3,5 @@ export interface AliasUpdate {
     players: string[];
     currentPlayer: string;
     numberOfGuessedWords: number;
+    countDownStarted: boolean;
 }

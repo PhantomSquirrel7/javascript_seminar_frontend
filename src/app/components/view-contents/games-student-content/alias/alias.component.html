@@ -3,7 +3,7 @@
 </div>
 
 <div class="gameContent" *ngIf="gamesService.connected">
-    <div class="player" *ngIf="isPlayer">
+    <div class="player" *ngIf="this.username === this.currentPlayer">
         <div class="wordToGuess">
             Current Word: {{this.currentWord}}
         </div>
@@ -18,29 +18,30 @@
 
     </div>
 
-    <div class="participant" *ngIf="!isPlayer">
+    <div class="participant" *ngIf="this.username !== this.currentPlayer">
 
         <div class="timer">
-            {{this.timeLeftSeconds}}
+            Time Left: {{this.timeLeftSeconds}} seconds
         </div>
     </div>
 
     <div class="howto">
         Currently {{this.currentPlayer}} is in charge!<br><br>
-        <div class="playerHowTo" *ngIf="isPlayer">
+        <div class="playerHowTo" *ngIf="this.username !== this.currentPlayer">
             Please start the game once everybody is ready.<br>Please explain the word verbally without using it! <br>If someone guesses correctly please press correct. <br>If a word is to hard you can SKIP it.
         </div>
-        <div class="participantHowTo" *ngIf="!isPlayer">
+        <div class="participantHowTo" *ngIf="this.username !== this.currentPlayer">
             Please try to guess the word, that {{this.currentPlayer}} tries to explain.
         </div>
     </div>
 
     <div class="players">
         Connected Players:
-        <div class="playerList" *ngFor="let p of playerList">
-            {{p}}
+        <div class="playerList" *ngFor="let playerName of this.playerList">
+            {{playerName}}
         </div>
     </div>
 
+    Guessed Words: {{this.numberOfGuessedWords}} <br> Current player: {{this.currentPlayer}} <br>
 
 </div>
