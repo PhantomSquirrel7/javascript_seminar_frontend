@@ -6,9 +6,8 @@ info:
 servers:
   - url: http://localhost:5000/
     description: Local Server
-  - url: https://javascript-group-d.herokuapp.com/
+  - url: https://javascript-group-d-frontend.herokuapp.com/
     description: Production Server
-
 
 # tags are used for organizing operations
 tags:

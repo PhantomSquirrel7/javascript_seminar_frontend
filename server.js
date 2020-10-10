@@ -9,7 +9,7 @@ app.use(express.static(__dirname + "/dist/"));
 
 app.use(cors());
 
-app.get("/globy/*", function(req, res) {
+app.get("/", function(req, res) {
     res.sendFile("index.html", {
         root: "dist",
     });
