@@ -15,8 +15,8 @@ export class GamesService extends Socket {
 
   constructor() {
     super({
-      url: "http://localhost:55555", options: {}
-      // url: "https://javascript-group-d-frontend.herokuapp.com/:55555"
+      // url: "http://localhost:55555", options: {}
+      url: "https://javascript-group-d-frontend.herokuapp.com/:55555"
     });
     console.log("Try connecting");
 
