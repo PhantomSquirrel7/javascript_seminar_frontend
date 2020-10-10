@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, isDevMode } from '@angular/core';
-import { GamesService } from '@app/services/custom/games/games.service';
 
 @Component({
   selector: 'app-games-student-content',
@@ -8,14 +7,13 @@ import { GamesService } from '@app/services/custom/games/games.service';
 })
 export class GamesStudentContentComponent implements OnInit {
 
-  constructor(private gamesService : GamesService) { 
+  constructor() { 
     
-    this.gamesService.sendData("ASD");
   }
 
   debugMessage: String = "";
   devMode = isDevMode();
-  selectedGame : String = "quiz";
+  selectedGame : String = "alias";
   gameJoined : boolean = false
   @Input() sessionId: String;
   @Input() username: String;
@@ -26,12 +24,7 @@ export class GamesStudentContentComponent implements OnInit {
   public onJoinGameButton() {
     this.debugMessage = "Joining Game as " + this.username + " in Session " + this.sessionId + this.selectedGame;
     this.gameJoined = true;
-    // Disconnect after 2 seconds
-    // setTimeout( () => {
-    //   this.onDisconnect();
-    //   this.debugMessage = "Disconnected after Timeout"
-    // }, 2000);
-
+    
   }
 
   isSelected(game){

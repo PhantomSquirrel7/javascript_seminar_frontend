@@ -1,1 +1,47 @@
-<p>alias works!</p>
+<div class="notConnected" *ngIf="!gamesService.connected">
+    Connecting...
+</div>
+
+<div class="gameContent" *ngIf="gamesService.connected">
+    <div class="player" *ngIf="this.username === this.currentPlayer">
+        <div class="wordToGuess">
+            Current Word: {{this.currentWord}}
+        </div>
+        <div class="controlButtons">
+            <button mat-raised-button color="primary" *ngIf="!gameStarted" (click)="startGame()">START</button>
+            <button mat-raised-button color="primary" *ngIf="gameStarted" (click)="correctGuess()">Correct</button>
+            <button mat-raised-button color="warn" *ngIf="gameStarted" (click)="skipWord()">SKIP</button>
+        </div>
+        <div class="timer">
+            Time Left: {{this.timeLeftSeconds}} seconds.
+        </div>
+
+    </div>
+
+    <div class="participant" *ngIf="this.username !== this.currentPlayer">
+
+        <div class="timer">
+            Time Left: {{this.timeLeftSeconds}} seconds
+        </div>
+    </div>
+
+    <div class="howto">
+        Currently {{this.currentPlayer}} is in charge!<br><br>
+        <div class="playerHowTo" *ngIf="this.username !== this.currentPlayer">
+            Please start the game once everybody is ready.<br>Please explain the word verbally without using it! <br>If someone guesses correctly please press correct. <br>If a word is to hard you can SKIP it.
+        </div>
+        <div class="participantHowTo" *ngIf="this.username !== this.currentPlayer">
+            Please try to guess the word, that {{this.currentPlayer}} tries to explain.
+        </div>
+    </div>
+
+    <div class="players">
+        Connected Players:
+        <div class="playerList" *ngFor="let playerName of this.playerList">
+            {{playerName}}
+        </div>
+    </div>
+
+    Guessed Words: {{this.numberOfGuessedWords}} <br> Current player: {{this.currentPlayer}} <br>
+
+</div>
