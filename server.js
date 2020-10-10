@@ -9,7 +9,7 @@ app.use(express.static(__dirname + "/dist/"));
 
 app.use(cors());
 
-app.get("/*", function(req, res) {
+app.get("/globy/*", function(req, res) {
     res.sendFile("index.html", {
         root: "dist",
     });
@@ -19,25 +19,17 @@ app.listen(process.env.PORT || 8080);
 
 
 // Copied form Backend
-// const express = require("express");
+
 const path = require("path");
 const config = require("./config");
-// const app = express();
-// const http = require('http').Server(app);
+const http = require('http');
+const server = http.createServer(app);
 const mongoose = require('mongoose');
 const games = require('./gameLogic.js');
 
-const INDEX = "./public/index.html";
-const PORT = 55555;
-const ioApp = express();
-// const cors = require('cors');
-ioApp.use(cors());
 app.use(cors());
-// const ioServer = ioApp.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
-//     .listen(PORT, () => console.log(`Listening on ${PORT}`));
-const iohttp = require('http').Server(ioApp);
-iohttp.listen(55555);
-games.gameInit(iohttp);
+games.gameInit(server);
+
 
 // Swagger
 const swaggerUi = require("swagger-ui-express");
@@ -49,7 +41,7 @@ app.use("/games/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // test request
 app.get("/api/test_template", (req, res) => {
-    const template_test = require("./templates/test.json");
+    const template_test = require("./test.json");
     res.json(template_test);
 });
 
