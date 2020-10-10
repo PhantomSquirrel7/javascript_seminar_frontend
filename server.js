@@ -15,20 +15,19 @@ app.get("/globy/*", function(req, res) {
     });
 });
 
-app.listen(process.env.PORT || 8080);
+var server = app.listen(process.env.PORT || 8080);
 
 
 // Copied form Backend
 
 const path = require("path");
 const config = require("./config");
-const http = require('http');
-const server = http.createServer(app);
+var io = require('socket.io').listen(server);
 const mongoose = require('mongoose');
 const games = require('./gameLogic.js');
 
 app.use(cors());
-games.gameInit(server);
+games.gameInit(io);
 
 
 // Swagger

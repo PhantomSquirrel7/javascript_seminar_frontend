@@ -5,9 +5,10 @@ var openSessions = new Map();
 var io;
 
 module.exports = {
-    gameInit: function(http) {
+    gameInit: function(ioServer) {
         //create a io socket
-        io = socket(http);
+        io = ioServer
+            // io = socket(server);
         const connectedUsers = new Set(); //a list of every connection to the socket
         io.on("connection", function(socket) {
             console.log("Made socket connection");
