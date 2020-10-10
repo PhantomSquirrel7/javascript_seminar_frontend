@@ -57,10 +57,6 @@ app.use(express.json());
 // set static folder
 app.use(express.static(path.join(__dirname, "public")));
 
-const server = http.listen(config.PORT, () =>
-    console.log(`Server is running on ${config.PORT}`)
-);
-
 //connecting to the database
 mongoose.connect('mongodb+srv://admin:H4WitQlot528tkUO@globygames.41wi7.mongodb.net/<GlobyGames>?retryWrites=true&w=majority', {
     useNewUrlParser: true,
