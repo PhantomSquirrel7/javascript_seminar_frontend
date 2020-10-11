@@ -4,4 +4,7 @@ export interface AliasUpdate {
     currentPlayer: string;
     numberOfGuessedWords: number;
     countDownStarted: boolean;
+    aliasOver: boolean; 
+    wordsToGuess: string[];
+    wordsId: string;
 }

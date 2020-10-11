@@ -45,3 +45,7 @@
     Guessed Words: {{this.numberOfGuessedWords}} <br> Current player: {{this.currentPlayer}} <br>
 
 </div>
+
+<div class="lastSession" *ngIf="this.lastSession">
+    In your last game {{this.lastSession.players}} guessed {{this.lastSession.numberOfGuessedWords}} words.
+</div>

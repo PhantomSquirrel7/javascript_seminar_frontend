@@ -3,9 +3,7 @@ const cors = require('cors');
 const app = express();
 
 
-// app.use(express.static("./dist"));
 app.use(express.static(__dirname + "/dist/"));
-
 
 app.use(cors());
 
@@ -17,17 +15,13 @@ app.get("/", function(req, res) {
 
 var server = app.listen(process.env.PORT || 8080);
 
-
 // Copied form Backend
-
 const path = require("path");
-const config = require("./config");
 var io = require('socket.io').listen(server);
 const mongoose = require('mongoose');
 const games = require('./gameLogic.js');
 
 app.use(cors());
-games.gameInit(io);
 
 
 // Swagger
@@ -101,9 +95,9 @@ app.get('/questions/:id', (req, res) => {
 
 // @swagger
 app.get('/games/alias/games', (req, res) => {
-    aliasGame.find((err, games) => {
+    aliasGame.find((err, game) => {
         if (err) return console.error(err);
-        res.json(games);
+        res.json(game);
     })
 });
 
@@ -142,3 +136,7 @@ app.delete('/games/alias/:id', (req, res) => {
         }
     })
 });
+
+
+// Init games
+games.gameInit(io, aliasGame);

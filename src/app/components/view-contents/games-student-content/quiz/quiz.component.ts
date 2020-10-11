@@ -40,7 +40,7 @@ export class GamesQuizComponent implements OnInit {
   ngOnInit(): void {
     console.log("Send join Game");
     console.log(this.username);
-    this.gamesService.joinGame(this.username, this.sessionId, "quiz");
+    this.gamesService.sendjoinGame(this.username, this.sessionId, "quiz");
   }
 
   onSend(): void {

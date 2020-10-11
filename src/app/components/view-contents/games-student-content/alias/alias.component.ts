@@ -14,17 +14,18 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
 
   currentPlayer: string;
   playerList: string[] = [];
-  words: string[] = ["Banane", "Apfel", "Krankenwagen"];
+  words: string[] = [];
   currentWord = "";
   currentWordIndex = 0;
-  timeLeftSeconds: number = 10;
   gameStarted: boolean = false;
-  timelimit: number = 10;
+  timelimit: number = 30;
+  timeLeftSeconds: number = this.timelimit;
   timeInterval;
   gameUpdateSubscriptionEvent;
   numberOfGuessedWords: number = 0;
   countDownStarted: boolean = false;
-  gameType : string = "alias";
+  gameType: string = "alias";
+  lastSession: AliasUpdate = undefined;
 
   constructor(public gamesService: GamesService) {
   }
@@ -33,51 +34,62 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     this.gameUpdateSubscriptionEvent = this.gamesService.gameUpdateEvent.subscribe(gameState => {
       this.updateGame(gameState);
     });
-    this.gamesService.joinGame(this.username, this.sessionId, "alias");
+    this.gamesService.sendjoinGame(this.username, this.sessionId, "alias");
   }
 
+  // Remove self from players List, Send update and unsubscribe to changes
   ngOnDestroy(): void {
+    let session: AliasUpdate = this.gamesService.gameSession;
+    session.players = session.players.filter(playerName => playerName !== this.username);
+    this.gamesService.sendUpdate(session);
     this.gameUpdateSubscriptionEvent.unsubscribe();
   }
 
-  updateGame(gameSession : AliasUpdate) {
-    console.log("Recieved Gamestate that should be updated: " + JSON.stringify(gameSession));
+  updateGame(gameSession: AliasUpdate) {
     if (this.gamesService != undefined) {
       this.playerList = gameSession.players;
       this.currentPlayer = gameSession.currentPlayer;
       this.numberOfGuessedWords = gameSession.numberOfGuessedWords;
+      if (this.words.length == 0) {
+        this.words = gameSession.wordsToGuess;
+        this.currentWord = this.words[0];
+      }
 
       if (this.countDownStarted == false && gameSession.countDownStarted == true) {
         this.countDownStarted = true;
         this.setTimer();
       }
     }
-
-    console.log(this.username);
-    console.log(this.currentPlayer);
-    console.log(gameSession.currentPlayer);
-    console.log(this.username == this.currentPlayer);
-
   }
 
+  // Starts a game Session
+  // TODO: Get Words from Server
   startGame(): void {
-    this.words = ["Banane", "Apfel", "Krankenwagen"]
-    this.gamesService.gameSession.countDownStarted = true;
+    let updateMessage: AliasUpdate = this.gamesService.gameSession;
+    updateMessage.countDownStarted = true;
     this.countDownStarted = true;
-    this.gamesService.sendUpdate();
+    // Set ID of words that will be used to query database
+    updateMessage.wordsId = "5f7f058b1a0b070017f11965"
+    this.gamesService.sendUpdate(updateMessage);
     this.gameStarted = true;
+    this.words = []
     this.setTimer();
-    this.currentWord = this.words[0];
   }
 
   onGameOver(): void {
     this.gameStarted = false;
     clearInterval(this.timeInterval);
+    let session: AliasUpdate = this.gamesService.gameSession;
+    session.aliasOver = true;
+    this.gamesService.sendPlayerResult(session)
+    this.currentWord = "";
+    this.currentWordIndex = 0;
+    this.lastSession = session;
   }
 
   setTimer(): void {
     console.log("SET TIMER");
-    this.timeLeftSeconds = 10;
+    this.timeLeftSeconds = this.timelimit;
     this.timeInterval = setInterval(() => {
       this.timeLeftSeconds -= 1;
       if (this.timeLeftSeconds <= 0) {
@@ -91,16 +103,18 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   The number of correct guesses will be synchronized across the network.
   */
   correctGuess(): void {
+    let session: AliasUpdate = this.gamesService.gameSession;
     this.words = this.words.filter(word =>
       word !== this.currentWord
     );
+
+    this.currentWord = this.words[(this.currentWordIndex) % this.words.length];
+    this.numberOfGuessedWords++;
+    session.numberOfGuessedWords++;
     if (this.words.length === 0) {
       this.onGameOver();
     }
-    this.currentWord = this.words[(this.currentWordIndex) % this.words.length];
-    this.gamesService.gameSession.numberOfGuessedWords++;
-    this.numberOfGuessedWords++;
-    this.gamesService.sendUpdate();
+    this.gamesService.sendUpdate(session);
   }
 
   skipWord(): void {
