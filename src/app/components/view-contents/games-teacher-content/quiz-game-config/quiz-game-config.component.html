@@ -1,2 +1,37 @@
 <button mat-raised-button class="fas fa-arrow-left back-button" [routerLink]="['/games-teacher/overview']"></button>
-<p>quiz-game-config works!</p>
+<!-- <mat-card-header>
+    <mat-card-title>Quiz Settings</mat-card-title>
+</mat-card-header>
+
+<app-messages></app-messages>
+
+<mat-card-content>
+    <mat-card-subtitle>Quizzes</mat-card-subtitle>
+    <mat-accordion class="headers-align">
+        <mat-expansion-panel *ngFor="let quiz of quizzes" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ quiz.name }}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ quiz.description }}
+                    <mat-icon class="headers-align-right" title="delete quiz" (click)="deleteQuiz(quiz)">delete_forever</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-alias-form [quiz]="quiz" (quizChange)="onQuizChange($event)"></app-alias-form>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="mt-1">
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Create New Quiz
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-alias-form [quiz]="newQuiz" (quizChange)="onCreateQuiz($event)"></app-alias-form>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div> 
+</mat-card-content> -->

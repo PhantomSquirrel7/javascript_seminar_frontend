@@ -1,6 +1,6 @@
 export interface Alias {
-    id: number;
-    name: string; 
-    description?: string;
+    id: string,
+    name: string, 
+    description?: string,
     words: Array<string>
 }

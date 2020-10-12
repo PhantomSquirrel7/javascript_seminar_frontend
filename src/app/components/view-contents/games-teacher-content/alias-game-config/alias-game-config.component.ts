@@ -11,11 +11,13 @@ export class AliasGameConfigComponent implements OnInit {
   games: Alias[];
 
   newGame: Alias = {
-    id: 0,
+    id: "23123",
     name: "",
     description: "",
     words: []
-  }
+  };
+
+  created: boolean = false;
 
   constructor(private api: GamesApiService) { }
 
@@ -54,7 +56,7 @@ export class AliasGameConfigComponent implements OnInit {
 
   resetNewGame() {
     this.newGame = {
-      id: 0,
+      id: "3242334",
       name: "",
       description: "",
       words: []

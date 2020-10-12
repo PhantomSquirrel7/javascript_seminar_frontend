@@ -41,7 +41,8 @@ import {
   DrawItGameConfigComponent,
   OverviewGamesConfigComponent,
   MessagesComponent,
-  AliasFormComponent
+  AliasFormComponent,
+  QuizFormComponent
 
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -99,7 +100,8 @@ import { SocketIoModule } from 'ngx-socket-io';
     DrawItGameConfigComponent,
     OverviewGamesConfigComponent,
     MessagesComponent,
-    AliasFormComponent  
+    AliasFormComponent,
+    QuizFormComponent 
   ],
   providers: [
     {

@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms'
 import { Alias } from '@app/models/game-models/alias';
 
@@ -13,27 +13,22 @@ export class AliasFormComponent implements OnInit {
   @Output() gameChange: EventEmitter<Alias> = new EventEmitter<Alias>();
 
   alias = this.fb.group({
-    name: [''],
+    name: ['', Validators.required],
     description: [''],
     words: this.fb.array([
     ])
   })
 
   constructor(private fb: FormBuilder) {
+  }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['game']) {
+      this.updateGame(changes.game.currentValue);
+    }
   }
 
   ngOnInit(): void {
-    this.alias.patchValue({
-      name: this.game.name,
-      description: this.game.description,
-    })
-    this.game.words.forEach(word => {
-      this.addWord(word)
-    });
-    if (this.game.words.length == 0) {
-      this.addWord();
-    }
   }
 
   addWord(word = '') {
@@ -46,7 +41,7 @@ export class AliasFormComponent implements OnInit {
 
   deleteWord(index) {
     this.words.removeAt(index);
-    if(this.words.length == 0){
+    if (this.words.length == 0) {
       this.addWord();
     }
   }
@@ -59,5 +54,19 @@ export class AliasFormComponent implements OnInit {
 
   reset() {
     this.alias.reset();
+  }
+
+  updateGame(update: Alias) {
+    this.alias.patchValue({
+      name: update.name,
+      description: update.description
+    })
+    this.words.clear();
+    update.words.forEach(word => {
+      this.addWord(word)
+    });
+    if (this.words.length == 0) {
+      this.addWord();
+    }
   }
 }

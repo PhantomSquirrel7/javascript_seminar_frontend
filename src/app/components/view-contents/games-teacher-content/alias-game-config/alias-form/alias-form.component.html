@@ -10,20 +10,19 @@
     <div formArrayName="words">
         <mat-label>Words:</mat-label>
         <div *ngFor="let word of words.controls; let i=index">
-            <button mat-icon-button aria-label="delete word" title="delete word" (click)="deleteWord(i)">
+            <button type="button" mat-icon-button aria-label="delete word" title="delete word" (click)="deleteWord(i)">
                 <mat-icon>delete_forever</mat-icon>
             </button>
             <mat-form-field class="mr-2">
-                <input type="text" matInput [formControlName]="i">
+                <input (keydown.enter)="$event.preventDefault()" type="text" matInput [formControlName]="i">
             </mat-form-field>
-            <button *ngIf="i == words.controls.length-1" title="add word" mat-icon-button aria-label="add word"
+            <button type="button" *ngIf="i == words.controls.length-1" title="add word" mat-icon-button aria-label="add word"
                 (click)="addWord()">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
     </div>
     <mat-action-row>
-        <button class="btn btn-sm btn-success" type="submit">Save</button>
+        <button class="btn btn-sm" [ngClass]="{'btn-success': alias.valid, 'btn-secondary': !alias.valid}" type="submit" [disabled]="!alias.valid">Save</button>
     </mat-action-row>
-
 </form>
