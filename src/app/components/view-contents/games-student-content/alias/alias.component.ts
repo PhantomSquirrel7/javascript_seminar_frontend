@@ -11,6 +11,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
 
   @Input() username: string;
   @Input() sessionId: string;
+  @Input() taskId: string;
 
   currentPlayer: string;
   playerList: string[] = [];
@@ -34,7 +35,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     this.gameUpdateSubscriptionEvent = this.gamesService.gameUpdateEvent.subscribe(gameState => {
       this.updateGame(gameState);
     });
-    this.gamesService.sendjoinGame(this.username, this.sessionId, "alias");
+    this.gamesService.sendjoinGame(this.username, this.sessionId, "alias", this.taskId);
   }
 
   // Remove self from players List, Send update and unsubscribe to changes
@@ -69,7 +70,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     updateMessage.countDownStarted = true;
     this.countDownStarted = true;
     // Set ID of words that will be used to query database
-    updateMessage.wordsId = "5f7f058b1a0b070017f11965"
+    updateMessage.taskId = "5f7f058b1a0b070017f11965"
     this.gamesService.sendUpdate(updateMessage);
     this.gameStarted = true;
     this.words = []
@@ -118,8 +119,8 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   }
 
   skipWord(): void {
-    this.currentWordIndex++;
-    this.currentWord = this.words[(this.currentWordIndex) % this.words.length];
+    this.currentWordIndex = (this.currentWordIndex+1) % this.words.length;
+    this.currentWord = this.words[this.currentWordIndex];
   }
 
 }

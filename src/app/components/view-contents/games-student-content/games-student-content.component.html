@@ -8,17 +8,18 @@
     </select>
         <input [(ngModel)]="username">
         <input [(ngModel)]="sessionId">
+        <input [(ngModel)]="taskId">
     </div>
 
     <div *ngIf="gameJoined && isSelected('quiz')" class="gameScreen">
         Playing Quiz!<br>
-        <app-quiz (finished)="onFinished()" [username]="username" [sessionId]="sessionId"></app-quiz>
+        <app-quiz (finished)="onFinished()" [username]="username" [taskId]="taskId" [sessionId]="sessionId"></app-quiz>
         <button (click)="onDisconnect()">Disconnect</button>
     </div>
 
 
     <div *ngIf="gameJoined && isSelected('alias')" class="gameScreen">
-        <app-alias [username]="username" [sessionId]="sessionId"></app-alias>
+        <app-alias [username]="username" [taskId]="taskId" [sessionId]="sessionId"></app-alias>
         <button (click)="onDisconnect()">Disconnect</button>
     </div>
 

@@ -9,8 +9,11 @@ import { JoinGameMessage } from '../../../components/view-contents/games-student
 export class GamesService extends Socket {
 
   connected: boolean = false;
-  gameSession;
   gameUpdateEvent = new EventEmitter<any>();
+
+
+  // TODO Move gamesession to component
+  gameSession;
 
   // TODO make this adjustable
   constructor() {
@@ -46,7 +49,8 @@ export class GamesService extends Socket {
 
   // Recieve and save and updated gameSession and let listeners update
   handleUpdateGameMessage(session){
-    this.gameSession = session
+    // TODO Move gameSession to component
+    this.gameSession = session;
     this.gameUpdateEvent.emit(session);
   }
 
@@ -57,8 +61,8 @@ export class GamesService extends Socket {
 
 
   // Send a joinGame Message
-  sendjoinGame(playerName: string, sessionId: string, gameType: string) {
-    let joinMessage: JoinGameMessage = new JoinGameMessage(sessionId, playerName, gameType);
+  sendjoinGame(playerName: string, sessionId: string, gameType: string, taskId: string) {
+    let joinMessage: JoinGameMessage = new JoinGameMessage(sessionId, playerName, gameType, taskId);
     this.emit("joinGame", joinMessage);
   }
 
@@ -74,7 +78,6 @@ export class GamesService extends Socket {
   // Submit a solution
   sendPlayerResult(playerResultMessage){
     // console.log("Send Playerresult" + JSON.stringify(playerResultMessage));
-    this.gameSession = playerResultMessage;
     this.emit("playerResult", playerResultMessage);
   }
 

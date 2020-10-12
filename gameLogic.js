@@ -50,14 +50,18 @@ async function handleJoinGameMessage(data, socket) {
 
     if (openSessions.get(data.sessionId) == undefined) {
         // Create new Session  
+
         console.log("Create new Session for " + data.playerName);
-        let currentGame = await createSession(data.sessionId, data.gameType, data.playerName);
+        let currentGame = await createSession(data.sessionId, data.gameType, data.playerName, data.taskId);
         openSessions.set(data.sessionId, currentGame);
+        // TODO get Words already in this step with the task ID
 
         io.to(data.sessionId).emit("updateGame", currentGame);
     } else {
         // use existing Session
         console.log("Existing Session!" + openSessions.get(data.sessionId));
+
+        // TODO what happens with wrong taskid?
 
         // Update Gamesession
         let currentGame = openSessions.get(data.sessionId);
@@ -76,7 +80,7 @@ function createSession(sessionId, gameType, playerName) {
     }
 }
 
-function createAliasSession(sessionId, gameType, playerName) {
+function createAliasSession(sessionId, gameType, playerName, taskId) {
     // Create alias Session
     var session = {
         gameType: gameType,
@@ -86,7 +90,8 @@ function createAliasSession(sessionId, gameType, playerName) {
         numberOfGuessedWords: 0,
         countDownStarted: false,
         aliasOver: false,
-        wordsToGuess: []
+        wordsToGuess: [],
+        taskId: taskId
     }
     return session;
 }
@@ -117,7 +122,7 @@ async function handleUpdateGameMessage(data) {
 
     io.to(data.sessionId).emit("updateGame", data);
     openSessions.set(data.sessionId, data);
-    console.log("Update Game" + JSON.stringify(data));
+    // console.log("Update Game" + JSON.stringify(data));
 };
 
 // For Quiz give students also the correct result

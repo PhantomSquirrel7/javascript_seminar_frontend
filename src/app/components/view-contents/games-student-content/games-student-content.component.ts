@@ -13,10 +13,12 @@ export class GamesStudentContentComponent implements OnInit {
 
   debugMessage: String = "";
   devMode = isDevMode();
-  selectedGame : String = "alias";
-  gameJoined : boolean = false
+  selectedGame : String = "quiz";
+  gameJoined : boolean = false;
+  taskId : string = "taskId";
   @Input() sessionId: String;
   @Input() username: String;
+
 
   ngOnInit(): void {
   }
