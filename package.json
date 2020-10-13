@@ -8,6 +8,7 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
+        "dev-games": "nodemon server",
         "postinstall": "ng build --output-path dist"
     },
     "private": true,
@@ -35,6 +36,7 @@
         "hammerjs": "^2.0.8",
         "mongoose": "^5.10.9",
         "ngx-socket-io": "^3.2.0",
+        "nodemon": "^2.0.4",
         "rxjs": "^6.5.4",
         "socket.io": "^2.1.1",
         "swagger-jsdoc": "^4.2.3",
