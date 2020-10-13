@@ -4,7 +4,7 @@ info:
   description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
   version: 0.1.9
 servers:
-  - url: http://localhost:5000/
+  - url: http://localhost:8080/
     description: Local Server
   - url: https://javascript-group-d-frontend.herokuapp.com/
     description: Production Server
@@ -15,56 +15,21 @@ tags:
   description: available to students
 - name: teachers
   description: available to teachers
+- name: alias
+  description: alias game
+- name: quiz
+  description: quiz game
+- name: draw it
+  description: draw it game
+
 
 paths:
-  /question/{questionId}:
-    get:
-      tags:
-      - teachers
-      - students # probably only teacher, because all student info will be handled via socket?
-      summary: get question
-      description: get specific question
-      produces:
-      - application/json
-      parameters:
-      - in: path
-        name: questionId
-        description: pass id of question
-        required: true
-        type: integer
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/Question'
-        400:
-          description: bad id
-          
-           
-  /questions:
-    get:
-      tags:
-      - teachers
-      summary: list all questions
-      operationId: listQuestions
-      description: |
-        list all questions
-      produces:
-      - application/json
-      responses:
-        200:
-          description: all available questions
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Question'
-        
-
-
+  
   /games/alias/games:
     get:
       tags:
       - teachers
+      - alias
       summary: list all alias games
       operationId: listAlias
       desctiption: list all alias games
@@ -82,9 +47,12 @@ paths:
     post:
       tags: 
         - teachers
+        - alias
       summary: create an alias game
       operationId: createAlias
       desctiption: create an alias game
+      produces: 
+        - application/json
       consumes:
         - application/json
       requestBody:
@@ -96,16 +64,39 @@ paths:
               $ref: '#/definitions/AliasGame'
       
       responses:
-        201:
+        200:
           description: created
           schema: 
             $ref: '#/definitions/AliasGame'
   
    
   /games/alias/{id}:
+    get:
+      tags:
+        - teachers
+        - alias
+      summary: get alias game with the id
+      operationId: getAlias
+      desctiption:  get alias game with the id
+      parameters:
+      - in: path
+        name: id
+        description: pass id of game
+        required: true
+        type: string
+      produces: 
+        - application/json
+      responses:
+        200: 
+          description: the game
+          schema: 
+            $ref: '#/definitions/AliasGame'
+        404:
+          description: no such game
     put:
       tags:
         - teachers
+        - alias
       summary: update alias game
       operationId: updateAlias
       desctiption: update alias game
@@ -123,13 +114,16 @@ paths:
             schema:
               $ref: '#/definitions/AliasGame'
       responses:
-        204:
+        200:
           description: updated successfully 
+        404:
+          description: no such game
     
 
     delete: 
       tags: 
          - teachers
+         - alias
       summary: delete alias game
       operationId: deleteAlias
       desctiption: delete alias game
@@ -142,40 +136,420 @@ paths:
       responses:
         200:
           description: deleted successfully 
-        204: 
-          description: nothing to delete
+        404: 
+          description: no such game
+
+
+
+
+
+
+
+
+        
+  /games/quiz/quizzes:
+    get:
+      tags:
+        - teachers
+        - quiz 
+      summary: list all quiz games
+      operationId: listQuizzes
+      desctiption: list all quiz games
+      produces: 
+        - application/json
+      responses:
+        200: 
+          description: all available games
+          schema: 
+            type: array
+            items:
+              $ref: '#/definitions/QuizGameID'
+
+
+  /games/quiz/quizzes/{id}:
+    get:
+      tags:
+        - teachers
+        - quiz 
+      summary: get quiz with the id, including questions
+      operationId: getQuiz
+      desctiption: get quiz with the id, including questions
+      produces: 
+        - application/json
+      parameters:
+       - in: path
+         name: id
+         description: pass id of quiz
+         required: true
+         type: string  
+      responses:
+        200: 
+          description: game 
+          schema: 
+              $ref: '#/definitions/FullQuizGame'
+        404: 
+          description: no game with that id 
+
+  /games/quiz/quizzes/{id}/questions:
+    get:
+      tags:
+        - teachers
+        - quiz 
+      summary: get all questions for quiz with the id
+      operationId: getQuestions
+      desctiption: get all questions for quiz with the id
+      produces: 
+        - application/json
+      parameters:
+       - in: path
+         name: id
+         description: pass id of quiz
+         required: true
+         type: string  
+      responses:
+        200: 
+          description: questions
+          schema: 
+            type: array
+              items:
+                $ref: '#/definitions/FullQuizQuestion'
+        404: 
+          description: no quiz with that id
+
+  /games/quiz/questions:
+    get:
+      tags:
+        - teachers
+        - quiz 
+      summary: get all questions for quizzes
+      operationId: getAllQuestions
+      desctiption: get all questions for quizzes
+      produces: 
+        - application/json
+      responses:
+        200: 
+          description: questions
+          schema: 
+            type: array
+              items:
+                $ref: '#/definitions/FullQuizQuestion'
+
+  /games/quiz/question/{id}:
+    get:
+      tags:
+       - teachers
+       - quiz 
+      summary: get question with that id
+      operationId: getQuestion
+      desctiption: get question with that id
+      produces: 
+        - application/json
+      parameters:
+       - in: path
+         name: id
+         description: pass id of question
+         required: true
+         type: string  
+      responses:
+        200: 
+          description: question
+          schema: 
+            $ref: '#/definitions/FullQuizQuestion'
+        404:
+          description: no such question
+            
+    put:
+      tags:
+       - teachers
+       - quiz 
+      summary: update question with that id
+      operationId: updateQuestion
+      desctiption: update question with that id
+      produces: 
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      - in: path
+        name: id
+        description: pass id of question
+        required: true
+        type: string
+      requestBody:
+        description: the question to update (with _id)
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/FullQuizQuestion'
+      responses:
+        200: 
+          description: question
+          schema: 
+            $ref: '#/definitions/FullQuizQuestion'
+        404: 
+          description: quiz not found
+
+
+    delete:
+      tags:
+        - teachers
+        - quiz 
+      summary: delete question with that id
+      operationId: deleteQuestion
+      desctiption: delete question with that id
+      parameters:
+      - in: path
+        name: id
+        description: pass id of question
+        required: true
+        type: string
+      responses:
+        200:
+          description: deleted successfully 
+        404:
+          description: no such question
+
+  /games/quiz/create:
+    post:
+      tags:
+        - teachers
+        - quiz 
+      summary: create quiz
+      operationId: createQuiz
+      desctiption: create quiz
+      produces: 
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        description: the quiz to create (no id)
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/QuizGame'
+      responses:
+        200: 
+          description: quiz with _id
+          schema: 
+            $ref: '#/definitions/QuizGameID'
+        500: 
+          description: could not create quiz
+
+
+  
+  /games/quiz/question/create:
+    post: 
+      tags:
+        - teachers
+        - quiz 
+      summary: create question
+      operationId: createQuestion
+      desctiption: create question
+      produces: 
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        description: the question to create (no id)
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/QuizQuestion'
+      responses:
+        200: 
+          description: question with _id
+          schema: 
+            $ref: '#/definitions/FullQuizQuestion'
+        500: 
+          description: could not create question
+
+  /games/quiz/{id}:
+    put:
+      tags:
+      - teachers
+      - quiz 
+      summary: update quiz with that id
+      operationId: updateQuiz
+      desctiption: update quiz with that id
+      produces: 
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      - in: path
+        name: id
+        description: pass id of quiz
+        required: true
+        type: string
+      requestBody:
+        description: the quiz to update (with _id)
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/QuizGameID'
+      responses:
+        200: 
+          description: quiz
+          schema: 
+            $ref: '#/definitions/QuizGameID'
+        404: 
+          description: quiz not found
+
+    delete:
+      tags:
+        - teachers
+        - quiz 
+      summary: delete quiz with that id
+      operationId: deleteQuiz
+      desctiption: delete quiz with that id
+      parameters:
+      - in: path
+        name: id
+        description: pass id of quiz
+        required: true
+        type: string
+      responses:
+        200:
+          description: deleted successfully 
+        404:
+          description: no such quiz
+  
+
+
+  /games/drawit/games:
+    get:
+      tags:
+      - teachers
+      - draw it
+      summary: list all drawit games
+      operationId: listDrawit
+      desctiption: list all drawit games
+      produces: 
+        - application/json
+      responses:
+        200: 
+          description: all available games
+          schema: 
+            type: array
+            items:
+              $ref: '#/definitions/DrawItGameID'
+      
+
+  /games/drawit/create:
+    post:
+      tags: 
+        - teachers
+        - draw it
+      summary: create a drawit game
+      operationId: createDrawit
+      desctiption: create a drawit game
+      produces: 
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        description: the game to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/DrawItGame'
+      
+      responses:
+        200:
+          description: created
+          schema: 
+            $ref: '#/definitions/DrawItGameID'
+
+  /games/drawit/{id}:
+    get:
+      tags:
+        - teachers
+        - draw it
+      summary: get draw it game with the id
+      operationId: getDrawit
+      desctiption:  get draw it game with the id
+      parameters:
+      - in: path
+        name: id
+        description: pass id of game
+        required: true
+        type: string
+      produces: 
+        - application/json
+      responses:
+        200: 
+          description: the game
+          schema: 
+            $ref: '#/definitions/DrawItGameID'
+        404:
+          description: no such game
+    put:
+      tags:
+        - teachers
+        - draw it
+      summary: update draw it game
+      operationId: updateDrawit
+      desctiption: update draw it game
+      produces: 
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+       - in: path
+         name: id
+         description: pass id of game
+         required: true
+         type: string
+      requestBody:
+        description: the game to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/DrawItGameID'
+      responses:
+        200:
+          description: updated successfully 
+          schema:
+            $ref: '#/definitions/DrawItGameID'
+        404:
+          description: no such game
+    
+
+    delete: 
+      tags: 
+         - teachers
+         - draw it
+      summary: delete draw it game
+      operationId: deleteDrawit
+      desctiption: delete draw it game
+      parameters:
+      - in: path
+        name: id
+        description: pass id of game
+        required: true
+        type: string
+      responses:
+        200:
+          description: deleted successfully 
+        404: 
+          description: no such game
+  
+  
           
 
               
 
 definitions:
-  Question: 
-    type: object
-    required: 
-    - id
-    - question
-    - options
-    - answer
-    properties:
-      question: 
-        type: string
-        example: How are you?
-      options: 
-        type: array
-        items:
-          type: string
-        example: ["Fine", "Great", "Sad"]
-      answer: 
-        type: integer
-        example: 2 
-        description: index for options
-    # manufacturer:
-    #  $ref: '#/definitions/Manufacturer' #example, maybe in quiz later
-
+  
   AliasGame:
     type: object
     required: 
-    - id
     - name
     - description
     - words
@@ -188,10 +562,200 @@ definitions:
         example: optional description
       words:
         type: array
-        itema: 
+        items: 
           type: string
         example: ["list", "of", "words"]
 
+  QuizGame:
+    type: object
+    required: 
+      - name
+      - descriptions
+      - questions
+    properties:
+      name: 
+        type: string
+        example: name of quiz
+      description:
+        type: string
+        example: optional description
+      questions:
+        type: array
+        items: 
+          type: string
+        example: ["5f8589d99258137114baed53"]
+
+  QuizGameID:
+    type: object
+    required: 
+      - _id
+      - name
+      - descriptions
+      - questions
+    properties:
+      _id:
+        type: string
+        example: 5f85966144308d767652771a
+      name: 
+        type: string
+        example: name of quiz
+      description:
+        type: string
+        example: optional description
+      questions:
+        type: array
+        items: 
+          type: string
+        example: ["5f8589d99258137114baed53"]
+
+  FullQuizGame:
+    type: object
+    required: 
+      - name
+      - descriptions
+      - questions
+    properties:
+      name: 
+        type: string
+        example: name of quiz
+      description:
+        type: string
+        example: optional description
+      questions:
+        type: array
+        items: 
+          $ref: '#/definitions/QuizQuestion'
+        
+          
+  QuizQuestion:
+    type: object 
+    required: 
+      - type 
+      - name
+      - question
+      - options
+      - answer
+    properties:
+      type:
+        type: string
+        examples: 
+          match: 
+            value: match
+            summary: a matching question
+          select:
+            value: select
+            summary: a multiple choice question
+      name: 
+        type: string
+        example: name of the question
+      question:
+        type: string
+        example: this is the question itself
+      options:
+        type: array
+        items: 
+          type: string
+        example: ["option1", "option2", "option3", "option4"]
+      answer: 
+        type: array
+        items:
+          type: object
+        examples:
+          match:
+            value: [[1,2], [3,4]]
+            summary: matching options
+          select:
+            value: [1,2]
+            summary: correct multiple choice answers 
+
+  FullQuizQuestion:
+    type: object 
+    required: 
+      -  _id
+      - type 
+      - name
+      - question
+      - options
+      - answer
+    properties:
+      _id: 
+        type: string
+        example: 5f8589d99258137114baed53
+      type:
+        type: string
+        examples: 
+          match: 
+            value: match
+            summary: a matching question
+          select:
+            value: select
+            summary: a multiple choice question
+      name: 
+        type: string
+        example: name of the question
+      question:
+        type: string
+        example: this is the question itself
+      options:
+        type: array
+        items: 
+          type: string
+        example: ["option1", "option2", "option3", "option4"]
+      answer: 
+        type: array
+        items:
+          type:
+            oneOf:
+              - array
+              - number
+        examples:
+          match:
+            value: [[1,2], [3,4]]
+            summary: matching options
+          select:
+            value: [1,2]
+            summary: correct multiple choice answers 
+
+  DrawItGame:
+    type: object
+    required: 
+    - name
+    - description
+    - words
+    properties:
+      name: 
+        type: string 
+        example: name of the game
+      description:
+        type: string
+        example: optional description
+      words:
+        type: array
+        items: 
+          type: string
+        example: ["list", "of", "words"]
+
+  DrawItGameID:
+    type: object
+    required: 
+    - _id
+    - name
+    - description
+    - words
+    properties:
+      _id:
+        type: string
+      name: 
+        type: string 
+        example: name of the game
+      description:
+        type: string
+        example: optional description
+      words:
+        type: array
+        items: 
+          type: string
+        example: ["list", "of", "words"]
 
   
 # Added by API Auto Mocking Plugin
