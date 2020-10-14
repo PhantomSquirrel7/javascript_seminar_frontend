@@ -42,7 +42,8 @@ import {
   MessagesComponent,
   AliasFormComponent,
   QuizFormComponent,
-  QuestionFormComponent
+  QuestionFormComponent,
+  DrawItFormComponent
 
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -50,7 +51,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
 import { UserService } from './services/swagger-api/api';
-import { SocketIoModule } from 'ngx-socket-io';
+import { SocketIoModule } from 'ngx-socket-io';;
 
 @NgModule({
   imports: [
@@ -101,7 +102,8 @@ import { SocketIoModule } from 'ngx-socket-io';
     MessagesComponent,
     AliasFormComponent,
     QuizFormComponent,
-    QuestionFormComponent
+    QuestionFormComponent,
+    DrawItFormComponent
   ],
   providers: [
     {

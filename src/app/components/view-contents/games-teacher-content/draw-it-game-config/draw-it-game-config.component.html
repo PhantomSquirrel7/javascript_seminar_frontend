@@ -1,2 +1,37 @@
 <button mat-raised-button class="fas fa-arrow-left back-button" [routerLink]="['/games-teacher/overview']"></button>
-<p>draw-it-game-config works!</p>
+<mat-card-header>
+    <mat-card-title>Draw-It Settings</mat-card-title>
+</mat-card-header>
+
+<app-messages></app-messages>
+
+<mat-card-content>
+    <mat-card-subtitle>Games</mat-card-subtitle>
+    <div class="mb-2">
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Create New Game
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-draw-it-form [game]="newGame" (gameChange)="onCreateGame($event)"></app-draw-it-form>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <mat-accordion class="headers-align">
+        <mat-expansion-panel *ngFor="let game of games" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ game.name }}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ game.description }}
+                    <mat-icon class="headers-align-right" title="delete game"
+                        (click)="$event.stopPropagation(); deleteGame(game)">delete_forever</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-draw-it-form [game]="game" (gameChange)="onGameChange($event)"></app-draw-it-form>
+        </mat-expansion-panel>
+    </mat-accordion>
+</mat-card-content>
