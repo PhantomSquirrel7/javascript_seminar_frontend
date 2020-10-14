@@ -1,14 +1,20 @@
 <div style="margin-left: 50px; margin-top: 50px">
-    <div class="class-selection">
+    <form [formGroup]="clsSelecForm" class="class-selection">
         For which class would you like to plan next meeting?
-        <select (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;" ng-model="selectedClass">
-            <option [ngValue]="null">select your class</option>
-            <option *ngFor="let x of user_classes" [ngValue]="x.className">{{x.className}}</option>
+        <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+            <option [ngValue]="null" disabled>select your class</option>
+            <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.className}}</option>
         </select>
-    </div>
+    </form>
     <div *ngIf="isSelected" class="planning-section">
-        <p>Selecting works</p> 
-        <!-- TODO: Continue -->
+        <div class="card" style="width: 70vmax; margin-top: 50px;">
+            <div class="card-body">
+                <h3 class="card-title">You're planning for: <span class="text-primary">{{selectedClass.className}}</span> </h3>
+                <!-- <form>
+                    
+                </form> -->
+            </div>
+        </div>
     </div>
 </div>
     

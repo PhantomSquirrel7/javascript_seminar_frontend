@@ -16,8 +16,11 @@ import {
   ResetPasswordViewComponent,
   RegisterViewComponent,
   FindPartnerClassViewComponent,
+  FindPartnerClassContentComponent,
   ForgotPasswordViewComponent,
   LandingViewComponent,
+  LandingViewOfferingComponent,
+  LandingViewTeamComponent,
   ProfileViewComponent,
   SettingsViewComponent,
   MyClassViewComponent,
@@ -29,21 +32,16 @@ import {
   LandingHeaderComponent,
   NavigationComponent,
   ProfileViewContentComponent,
-  GamesStudentViewComponent, 
-  GamesStudentContentComponent,
-  GamesQuizComponent,
-  GamesAliasComponent,
-  GamesTeacherViewComponent, 
-  GamesTeacherContentComponent
-  
+  LandingHomeContentComponent,
+  LandingOfferingContentComponent,
+  LandingTeamContentComponent,
+  MyConnectionRequestsViewComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
 import { UserService } from './services/swagger-api/api';
-import { SocketIoModule } from 'ngx-socket-io';
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -54,7 +52,6 @@ import { SocketIoModule } from 'ngx-socket-io';
     FlexLayoutModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
-    SocketIoModule,
   ],
   declarations: [
     AppComponent,
@@ -80,12 +77,13 @@ import { SocketIoModule } from 'ngx-socket-io';
     ResetPasswordViewComponent,
     DashboardContentComponent,
     ProfileViewContentComponent,
-    GamesStudentViewComponent,
-    GamesQuizComponent,
-    GamesAliasComponent,
-    GamesStudentContentComponent,
-    GamesTeacherViewComponent,
-    GamesTeacherContentComponent,
+    LandingHomeContentComponent ,
+    LandingViewOfferingComponent ,
+    LandingViewTeamComponent,
+    LandingTeamContentComponent,
+    LandingOfferingContentComponent,
+    MyConnectionRequestsViewComponent,
+    FindPartnerClassContentComponent
   ],
   providers: [
     {

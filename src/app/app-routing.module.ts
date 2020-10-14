@@ -7,6 +7,8 @@ import {
   CreateStudentViewComponent,
   FindPartnerClassViewComponent,
   LandingViewComponent,
+  LandingViewOfferingComponent,
+  LandingViewTeamComponent,
   LoginViewComponent,
   MyClassViewComponent,
   RegisterViewComponent,
@@ -16,12 +18,13 @@ import {
   AboutViewComponent,
   PlanMeetingViewComponent,
   ForgotPasswordViewComponent,
-  GamesStudentViewComponent,
-  GamesTeacherViewComponent
+  MyConnectionRequestsViewComponent
 } from './components';
 
 const routes: Routes = [
   { path: '', component: LandingViewComponent },
+  { path: 'offering', component: LandingViewOfferingComponent },
+  { path: 'team', component: LandingViewTeamComponent },
   { path: 'login', component: LoginViewComponent },
   { path: 'register', component: RegisterViewComponent },
   { path: 'forgot-password', component: ForgotPasswordViewComponent },
@@ -72,13 +75,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'games-student',
-    component: GamesStudentViewComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'games-teacher',
-    component: GamesTeacherViewComponent,
+    path: 'my-connection-requests',
+    component: MyConnectionRequestsViewComponent,
     canActivate: [AuthGuard],
   },
 
