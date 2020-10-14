@@ -3,7 +3,10 @@ import { Quiz } from '../model/quiz';
 export interface QuizUpdate {
     sessionId: string;
     players: string[];
-    quiz: Quiz;
-    selectedAnswers: number[];
+    quizes: Quiz[];
     getSolution: boolean;
+    quizIndex: number;
+    countDownStarted: boolean;
+    quizOver: boolean;
+    taskId: string;
 }

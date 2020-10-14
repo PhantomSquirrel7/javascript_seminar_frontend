@@ -1,6 +1,6 @@
-import { Answer } from "./answer";
-
 export interface Quiz {
-    question: string;
-    answers: Answer[];
+    question: string; // Question text
+    answers: string[]; // answer text
+    selectedAnswers: string[]; // Index of selected answers
+    correctAnswers: string[]; // Index of correct answers
   }
