@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Question } from '@app/models/game-models/question';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-question-form',
@@ -17,11 +18,11 @@ export class QuestionFormComponent implements OnInit {
   types = ['select', 'match'];
 
   question = this.fb.group({
-    type: ['select', Validators.required],
+    type: ['', Validators.required],
     name: ['', Validators.required],
     question: ['', Validators.required],
     options: this.fb.array([], Validators.required),
-    answer: this.fb.array([], Validators.required)
+    answer: this.fb.array([]) // TODO required
   });
 
   constructor(private fb: FormBuilder) { }
@@ -44,7 +45,7 @@ export class QuestionFormComponent implements OnInit {
     this.addOption();
   }
 
-  addAnswer(answer = '') {
+  addAnswer(answer) {
     this.answer.push(this.fb.control(answer));
   }
 
@@ -72,19 +73,40 @@ export class QuestionFormComponent implements OnInit {
     return this.question.get('type').value;
   }
 
-  onAnswerChange(event: MatSlideToggleChange, index) {
+  isAnswer(index) {
+    return this.answer.value.includes(index);
+  }
 
+  onAnswerChange(event: MatSlideToggleChange, index) {
+    console.log(event)
     // TODO 
     // !! fix index problem when deleting an option
     if (event.checked) {
-
+      this.addAnswer(index);
     } else {
-
+      let i = 0;
+      while (i < this.answer.length) {
+        if (this.answer.at(i).value == index) {
+          this.answer.removeAt(i)
+        } else i++;
+      }
     }
+    console.log(this.answer.value)
+  }
+
+  onTypeChange(event: MatSelectChange) {
+    this.options.clear();
+    if (event.value == "select") {
+      this.addOption();
+    } else this.addOptionPair();
   }
 
   onSubmit() {
-    console.log("ON SAVE", this.question.value)
+    if (this.type == "match") {
+      for (let index = 0; index < this.options.length; index = index + 2) {
+        this.addAnswer([index, index + 1]);
+      }
+    }
     let updated = this.question.value;
     updated._id = this.quest._id;
     this.questionChange.emit(updated);
@@ -106,15 +128,9 @@ export class QuestionFormComponent implements OnInit {
       } else
         this.addOption();
     }
-    /* if (update.type == "match" && update.options.length % 2 == 1) {
-         this.addOption();
-       } */
     this.answer.clear();
     update.answer.forEach(answ => {
       this.addAnswer(answ)
     });
-    if (this.answer.length == 0) {
-      this.addAnswer();
-    }
   }
 }

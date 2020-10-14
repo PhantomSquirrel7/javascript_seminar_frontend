@@ -136,7 +136,7 @@ export class GamesApiService {
   }
 
   createQuiz(quiz: Quiz): Observable<Quiz> {
-    //return of(quiz);
+    delete quiz['_id'];
     return this.http.post<Quiz>(this.url + "/games/quiz/create", quiz, this.httpOptionsJson)
       .pipe(
         catchError(this.handleError<Quiz>('Creating new quiz')
@@ -144,7 +144,7 @@ export class GamesApiService {
   }
 
   createQuestion(question: Question): Observable<Question> {
-    //return of(question);
+    delete question['_id'];
     return this.http.post<Question>(this.url + "/games/quiz/question/create", question, this.httpOptionsJson)
       .pipe(
         catchError(this.handleError<Question>('Creating new question')

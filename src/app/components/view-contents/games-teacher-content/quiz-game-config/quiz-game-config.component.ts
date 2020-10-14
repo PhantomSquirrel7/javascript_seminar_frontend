@@ -43,51 +43,79 @@ export class QuizGameConfigComponent implements OnInit {
 
   deleteQuestion(question: Question) {
     this.api.deleteQuestion(question).subscribe(data => {
-      console.log("delete question", data)
-      // TODO handle true response
-      this.questions = this.questions.filter(elem => elem._id !== question._id)
+      if (data) {
+        console.log("delete question", data)
+        this.questions = this.questions.filter(elem => elem._id !== question._id)
+      }
     });
   }
 
   deleteQuiz(quiz: Quiz) {
     this.api.deleteQuiz(quiz).subscribe(data => {
-      console.log("delete quiz", data)
-      // TODO handle true response
-      this.quizzes = this.quizzes.filter(elem => elem._id !== quiz._id)
+      if (data) {
+        console.log("delete quiz", data)
+        this.quizzes = this.quizzes.filter(elem => elem._id !== quiz._id)
+      }
     });
   }
 
   onCreateQuestion(question: Question) {
     this.api.createQuestion(question).subscribe(data => {
-      // TODO handle true response
-      this.questions.push(question);
-      //this.resetNewQuestion();
+      if (data) {
+        this.questions.push(data);
+        this.resetNewQuestion();
+      }
     });
   }
 
-  onCreateQuiz(quiz: Quiz){
+  onCreateQuiz(quiz: Quiz) {
     this.api.createQuiz(quiz).subscribe(data => {
-      // TODO handle true response
-      this.quizzes.push(quiz);
-      //this.resetNewQuestion();
+      if (data) {
+        this.quizzes.push(data);
+        this.resetNewQuestion();
+      }
     });
   }
 
   onQuestionChange(question: Question) {
     this.api.updateQuestion(question).subscribe(data => {
-      console.log("changed question", data)
-      this.questions[this.questions.findIndex(g => {
-        return g._id === question._id
-      })] = question;
+      if (data) {
+        console.log("changed question", data)
+        this.questions[this.questions.findIndex(g => {
+          return g._id === question._id
+        })] = data;
+      }
     });
   }
 
   onQuizChange(quiz: Quiz) {
     this.api.updateQuiz(quiz).subscribe(data => {
-      console.log("changed quiz", data)
-      this.quizzes[this.quizzes.findIndex(g => {
-        return g._id === quiz._id
-      })] = quiz;
+      if (data) {
+        console.log("changed quiz", data)
+        this.quizzes[this.quizzes.findIndex(g => {
+          return g._id === quiz._id
+        })] = data;
+      }
     });
+  }
+
+  resetNewQuestion() {
+    this.newQuestion = {
+      _id: "-1",
+      type: "select",
+      name: "",
+      question: "",
+      options: [],
+      answer: []
+    }
+  }
+
+  resetNewQuiz() {
+    this.newQuiz = {
+      _id: "-1",
+      name: "",
+      description: "",
+      questions: []
+    }
   }
 }
