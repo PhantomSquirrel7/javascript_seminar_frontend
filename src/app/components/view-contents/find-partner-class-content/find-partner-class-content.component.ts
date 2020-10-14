@@ -15,7 +15,8 @@ export class FindPartnerClassContentComponent implements OnInit {
   findPartnerForm: FormGroup;
 
   user: User;
-  loading = false;
+  loading = false; // true if waiting for results
+  results = false; // true if searchresults are in else false
   error = '';
   isSelected = false;
   selectedClass: any; // Type Class
@@ -35,13 +36,13 @@ export class FindPartnerClassContentComponent implements OnInit {
     }
   ]
 
-  user_years = Array.from(Array(8).keys(), x => x+5);
-  selectedYear: number;
+  // user_years = Array.from(Array(8).keys(), x => x+5);
+  // selectedYear: number;
 
-  user_languages = ['English', 'Spanish', 'French', 'Italian', 'Chinese'];
-  selectedLanguage: string;
+  // user_languages = ['English', 'Spanish', 'French', 'Italian', 'Chinese'];
+  // selectedLanguage: string;
 
-  user_lang_profs = ['English', 'Spanish', 'French', 'Italian', 'Chinese'];
+  user_lang_profs = ['Beginner (A1)', 'Beginner (A1)', 'Intermediate (B1)', 'Intermediate (B2)', 'Advanced (C1)', 'Advanced (C2)'];
   selectedLangProf: string;
   
   user_duration = ['1 day', '1 week', '2 weeks', '3 weeks', '4 weeks +'];
@@ -49,14 +50,89 @@ export class FindPartnerClassContentComponent implements OnInit {
 
   myClasses:any = [];
 
+  resultClasses = [ // Replace with API
+    {
+      "name": "Class 1",
+      "language": "English",
+      "country": "au",
+      "year": "8",
+      "subject": "mathematics",
+      "topics": [
+        "addition",
+        "subtraction"
+      ],
+      "level": 2
+    },
+    {
+      "name": "Class 2",
+      "language": "English",
+      "country": "gb",
+      "year": "9",
+      "subject": "mathematics",
+      "topics": [
+        "division",
+        "subtraction"
+      ],
+      "level": 2
+    },
+    {
+      "name": "Class 3",
+      "language": "English",
+      "country": "us",
+      "year": "7",
+      "subject": "mathematics",
+      "topics": [
+        "addition",
+        "multiplication"
+      ],
+      "level": 1
+    },
+    {
+      "name": "Class 4",
+      "language": "English",
+      "country": "us",
+      "year": "7",
+      "subject": "mathematics",
+      "topics": [
+        "addition",
+        "multiplication"
+      ],
+      "level": 1
+    },
+    {
+      "name": "Class 5",
+      "language": "English",
+      "country": "us",
+      "year": "7",
+      "subject": "mathematics",
+      "topics": [
+        "addition",
+        "multiplication"
+      ],
+      "level": 1
+    },
+    {
+      "name": "Class 6",
+      "language": "English",
+      "country": "us",
+      "year": "7",
+      "subject": "mathematics",
+      "topics": [
+        "addition",
+        "multiplication"
+      ],
+      "level": 1
+    }
+  ];
+
   constructor(private fb: FormBuilder) {
   }
  
   ngOnInit() {
     this.findPartnerForm = this.fb.group({
       selectedClass: [null],
-      selectedYear: [],
-      selectedLanguage: [],
+      // selectedYear: [],
+      // selectedLanguage: [],
       selectedLangProf: [],
       selectedDuration: []
     });
@@ -67,13 +143,13 @@ export class FindPartnerClassContentComponent implements OnInit {
     this.isSelected = true;
   }
   
-  yearSelected(){
-    this.selectedYear = this.findPartnerForm.value.selectedYear;
-  }
+  // yearSelected(){
+  //   this.selectedYear = this.findPartnerForm.value.selectedYear;
+  // }
   
-  languageSelected(){
-    this.selectedLanguage = this.findPartnerForm.value.selectedLanguage;
-  }  
+  // languageSelected(){
+  //   this.selectedLanguage = this.findPartnerForm.value.selectedLanguage;
+  // }  
   
   langProfSelected(){
     this.selectedLangProf = this.findPartnerForm.value.selectedLangProf;
@@ -89,6 +165,11 @@ export class FindPartnerClassContentComponent implements OnInit {
     //   return;
     // }
     this.loading = true;
+    
+    this.results = true;
+    // TODO: API Call for results
+    this.loading = false;
+
     // this.loginService
     //   .login({ email: this.f.email.value, password: this.f.password.value })
     //   .pipe(first())

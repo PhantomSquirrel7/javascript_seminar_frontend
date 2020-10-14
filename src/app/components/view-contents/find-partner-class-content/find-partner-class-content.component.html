@@ -1,57 +1,63 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/css/flag-icon.min.css" />
 <div style="margin-left: 50px; margin-top: 50px">
-    <h1>Let's find a partner class for you:</h1>
-    <div>
-        <form [formGroup]="findPartnerForm" class="class-selection">
-            For which class would you like to plan next meeting?
-            <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
-                <option [ngValue]="null" disabled>select your class</option>
-                <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.className}}</option>
-            </select>
-        </form>
-        <br>
-        <br>
-        <form [formGroup]="findPartnerForm" class="year-selection">
-            Please select the preferred year:
-            <select formControlName="selectedYear" (change)="yearSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
-                <option [ngValue]="null" disabled>year</option>
-                <option *ngFor="let selectedYear of user_years" [ngValue]="selectedYear">{{selectedYear}}</option>
-            </select>
-        </form>
-        <br>
-        <br>
-        <form [formGroup]="findPartnerForm" class="language-selection">
-            Which language your students would speak?
-            <select formControlName="selectedLanguage" (change)="languageSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
-                <option [ngValue]="null" disabled>language</option>
-                <option *ngFor="let selectedLanguage of user_languages" [ngValue]="selectedLanguage">{{selectedLanguage}}</option>
-            </select>
-        </form>    
-        <br>
-        <br>
-        <form [formGroup]="findPartnerForm" class="langprof-selection">
-            What level of the language your students would speak?
-            <select formControlName="selectedLangProf" (change)="langProfSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
-                <option [ngValue]="null" disabled>language proficiency</option>
-                <option *ngFor="let selectedLangProf of user_lang_profs" [ngValue]="selectedLangProf">{{selectedLangProf}}</option>
-            </select>
-        </form>
-        <br>
-        <br>
-        <form [formGroup]="findPartnerForm" class="duration-selection">
-            What's the duration of your project?
-            <select formControlName="selectedDuration" (change)="durationSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
-                <option [ngValue]="null" disabled>project duration</option>
-                <option *ngFor="let selectedDuration of user_duration" [ngValue]="selectedDuration">{{selectedDuration}}</option>
-            </select>
-        </form>
-        <br>
-        <br>
-        <form [formGroup]="findPartnerForm" (ngSubmit)="onSubmit()">
-            <button [disabled]="loading" class="btn btn-primary btn-block text-white btn-user" style="margin-left: 25vw; max-width: 300px;" type="submit">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                Get matched!
-            </button>
-        </form>
+    <div *ngIf=!results>
+        <h1>Let's find a partner class for you:</h1>
+        <div>
+            <form [formGroup]="findPartnerForm" class="class-selection">
+                For which class would you like to plan next meeting?
+                <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+                    <option [ngValue]="null" disabled>select your class</option>
+                    <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.className}}</option>
+                </select>
+            </form>
+            <br>
+            <br>
+            <form [formGroup]="findPartnerForm" class="langprof-selection">
+                What level of the language your students would speak?
+                <select formControlName="selectedLangProf" (change)="langProfSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+                    <option [ngValue]="null" disabled>language proficiency</option>
+                    <option *ngFor="let selectedLangProf of user_lang_profs" [ngValue]="selectedLangProf">{{selectedLangProf}}</option>
+                </select>
+            </form>
+            <br>
+            <br>
+            <form [formGroup]="findPartnerForm" class="duration-selection">
+                What's the duration of your project?
+                <select formControlName="selectedDuration" (change)="durationSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+                    <option [ngValue]="null" disabled>project duration</option>
+                    <option *ngFor="let selectedDuration of user_duration" [ngValue]="selectedDuration">{{selectedDuration}}</option>
+                </select>
+            </form>
+            <br>
+            <br>
+            <form [formGroup]="findPartnerForm" (ngSubmit)="onSubmit()">
+                <button [disabled]="loading" class="btn btn-primary btn-block text-white btn-user" style="margin-left: 25vw; max-width: 300px;" type="submit">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Get matched!
+                </button>
+            </form>
+        </div>
     </div>
-
+    <div *ngIf=results style="display: inline;">
+        <h1 style="float: left;">Possible matches based on your preferences:</h1>
+        <button class="btn btn-primary btn-block text-white btn-user" style="width: 200px; float: right; margin-right: 5vw;">Adjust criteria</button>
+		<br>
+        <br>
+        <br>
+        <div class="card-columns" style="margin-right: 50px;">
+		  	<div *ngFor="let myclass of resultClasses"  class="card" style="width: 20rm;">
+				<img class="card-img-top" src="../../../assets/pexels-meliani-idriss-2982449.jpg" alt="School Image">
+				<div class="card-body">
+					<div style="float: left;">
+						<h3 class="card-title">{{myclass.name}}</h3>
+						<p class="card-text">Year: {{myclass.year}}<br>Language: {{myclass.language}}</p>
+						<a [routerLink]="['/find-partner-class']" class="card-link">More</a>
+					</div>
+					<div style="float: right">
+						<span class="flag-icon flag-icon-{{myclass.country}} flag-icon"></span>
+					</div>
+				</div>
+        	</div>
+        </div>
+    </div>
 </div>

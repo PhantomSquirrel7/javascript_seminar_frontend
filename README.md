@@ -8,3 +8,7 @@
 ## Swagger document can be found
 
 - at `https://api-globy.herokuapp.com/v1/docs/swagger.json`
+
+## Licenses for Icons and Images
+
+- See src/assets/picture_info.txt
