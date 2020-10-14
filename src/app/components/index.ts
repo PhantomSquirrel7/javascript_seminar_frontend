@@ -32,5 +32,12 @@ export * from './view-contents/games-student-content/games-student-content.compo
 export * from './view-contents/games-student-content/alias/alias.component';
 export * from './view-contents/games-student-content/quiz/quiz.component';
 export * from './view-contents/games-teacher-content/games-teacher-content.component';
-
-
+export * from './view-contents/games-teacher-content/alias-game-config/alias-game-config.component';
+export * from './view-contents/games-teacher-content/quiz-game-config/quiz-game-config.component';
+export * from './view-contents/games-teacher-content/draw-it-game-config/draw-it-game-config.component';
+export * from './view-contents/games-teacher-content/overview-games-config/overview-games-config.component';
+export * from './view-contents/games-teacher-content/messages/messages.component';
+export * from './view-contents/games-teacher-content/alias-game-config/alias-form/alias-form.component';
+export * from './view-contents/games-teacher-content/quiz-game-config/quiz-form/quiz-form.component';
+export * from './view-contents/games-teacher-content/quiz-game-config/question-form/question-form.component';
+export * from './view-contents/games-teacher-content/draw-it-game-config/draw-it-form/draw-it-form.component';

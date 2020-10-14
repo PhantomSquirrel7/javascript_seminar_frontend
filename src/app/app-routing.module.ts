@@ -17,7 +17,11 @@ import {
   PlanMeetingViewComponent,
   ForgotPasswordViewComponent,
   GamesStudentViewComponent,
-  GamesTeacherViewComponent
+  GamesTeacherViewComponent,
+  AliasGameConfigComponent,
+  QuizGameConfigComponent,
+  DrawItGameConfigComponent,
+  OverviewGamesConfigComponent
 } from './components';
 
 const routes: Routes = [
@@ -80,6 +84,13 @@ const routes: Routes = [
     path: 'games-teacher',
     component: GamesTeacherViewComponent,
     canActivate: [AuthGuard],
+    children: [
+      { path: 'alias-config', component: AliasGameConfigComponent },
+      { path: 'quiz-config', component: QuizGameConfigComponent },
+      { path: 'draw-it-config', component: DrawItGameConfigComponent },
+      { path: 'overview', component: OverviewGamesConfigComponent },
+      { path: '**', redirectTo: 'overview' }
+    ]
   },
 
   // otherwise redirect to home

@@ -1,0 +1,58 @@
+<form [formGroup]="question" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="mr-4">
+        <mat-label>Name: </mat-label>
+        <input type="text" matInput formControlName="name" required>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Type:</mat-label>
+        <mat-select formControlName="type" [disabled]="quest._id != '-1'" (selectionChange)="onTypeChange($event)">
+            <mat-option *ngFor="let type of types" [value]="type">
+                {{ type }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div>
+        <mat-form-field appearance="outline" class="w-100 mr-2">
+            <mat-label>Question: </mat-label>
+            <input type="text" matInput formControlName="question">
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="type == 'match'" formArrayName="options">
+        <mat-label class="block">Matching Options:</mat-label>
+        <div *ngFor="let option of options.controls; let i=index" [ngClass]="{'clear': i%2==0, 'matching-pairs': true}">
+            <button *ngIf="i%2==0" type="button" mat-icon-button aria-label="delete option" title="delete option"
+                (click)="deleteOptionPair(i)">
+                <mat-icon>delete_forever</mat-icon>
+            </button>
+            <mat-form-field class="mr-2">
+                <input (keydown.enter)="$event.preventDefault()" type="text" matInput [formControlName]="i">
+            </mat-form-field>
+            <button type="button" *ngIf="i == options.controls.length-1" title="add option pair" mat-icon-button
+                aria-label="add option pair" (click)="addOptionPair()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="type == 'select'" formArrayName="options">
+        <mat-label>Options (save answer by checking the correct options):</mat-label>
+        <div *ngFor="let option of options.controls; let i=index">
+            <button type="button" mat-icon-button aria-label="delete option" title="delete option"
+                (click)="deleteOption(i)">
+                <mat-icon>delete_forever</mat-icon>
+            </button>
+            <mat-form-field class="mr-2">
+                <input (keydown.enter)="$event.preventDefault()" type="text" matInput [formControlName]="i">
+            </mat-form-field>
+            <mat-slide-toggle (change)="onAnswerChange($event, i)" [checked]="isAnswer(i)"></mat-slide-toggle>
+            <button type="button" *ngIf="i == options.controls.length-1" title="add option" mat-icon-button
+                aria-label="add option" (click)="addOption()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+    <mat-action-row class="clear">
+        <button class="btn btn-sm" [ngClass]="{'btn-success': question.valid, 'btn-secondary': !question.valid}"
+            type="submit" [disabled]="!question.valid">Save</button>
+    </mat-action-row>
+</form>

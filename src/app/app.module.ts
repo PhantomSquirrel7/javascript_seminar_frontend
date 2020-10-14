@@ -29,20 +29,29 @@ import {
   LandingHeaderComponent,
   NavigationComponent,
   ProfileViewContentComponent,
-  GamesStudentViewComponent, 
+  GamesStudentViewComponent,
   GamesStudentContentComponent,
   GamesQuizComponent,
   GamesAliasComponent,
-  GamesTeacherViewComponent, 
-  GamesTeacherContentComponent
-  
+  GamesTeacherViewComponent,
+  GamesTeacherContentComponent,
+  AliasGameConfigComponent,
+  QuizGameConfigComponent,
+  DrawItGameConfigComponent,
+  OverviewGamesConfigComponent,
+  MessagesComponent,
+  AliasFormComponent,
+  QuizFormComponent,
+  QuestionFormComponent,
+  DrawItFormComponent
+
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
 import { UserService } from './services/swagger-api/api';
-import { SocketIoModule } from 'ngx-socket-io';
+import { SocketIoModule } from 'ngx-socket-io';;
 
 @NgModule({
   imports: [
@@ -86,6 +95,15 @@ import { SocketIoModule } from 'ngx-socket-io';
     GamesStudentContentComponent,
     GamesTeacherViewComponent,
     GamesTeacherContentComponent,
+    AliasGameConfigComponent,
+    QuizGameConfigComponent,
+    DrawItGameConfigComponent,
+    OverviewGamesConfigComponent,
+    MessagesComponent,
+    AliasFormComponent,
+    QuizFormComponent,
+    QuestionFormComponent,
+    DrawItFormComponent
   ],
   providers: [
     {
@@ -99,4 +117,4 @@ import { SocketIoModule } from 'ngx-socket-io';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
