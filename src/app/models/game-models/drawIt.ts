@@ -1,4 +1,4 @@
-export interface Alias {
+export interface DrawIt {
     _id: string,
     name: string, 
     description?: string,

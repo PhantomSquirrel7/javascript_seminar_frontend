@@ -56,6 +56,10 @@ export class QuestionFormComponent implements OnInit {
     }
   }
 
+  deleteOption(index) {
+    this.options.removeAt(index);
+  }
+
   get options() {
     return this.question.get('options') as FormArray;
   }
@@ -68,11 +72,11 @@ export class QuestionFormComponent implements OnInit {
     return this.question.get('type').value;
   }
 
-  onAnswerChange(event: MatSlideToggleChange, index){
+  onAnswerChange(event: MatSlideToggleChange, index) {
 
     // TODO 
     // !! fix index problem when deleting an option
-    if(event.checked){
+    if (event.checked) {
 
     } else {
 
@@ -82,7 +86,7 @@ export class QuestionFormComponent implements OnInit {
   onSubmit() {
     console.log("ON SAVE", this.question.value)
     let updated = this.question.value;
-    updated.id = this.quest.id;
+    updated._id = this.quest._id;
     this.questionChange.emit(updated);
   }
 
@@ -102,9 +106,9 @@ export class QuestionFormComponent implements OnInit {
       } else
         this.addOption();
     }
- /* if (update.type == "match" && update.options.length % 2 == 1) {
-      this.addOption();
-    } */
+    /* if (update.type == "match" && update.options.length % 2 == 1) {
+         this.addOption();
+       } */
     this.answer.clear();
     update.answer.forEach(answ => {
       this.addAnswer(answ)

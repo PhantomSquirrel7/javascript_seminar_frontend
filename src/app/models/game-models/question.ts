@@ -1,5 +1,5 @@
 export interface Question {
-    id: string,
+    _id: string,
     type: "select" | "match",   // type of question -> Multiple choice or matching
     name: string, 
     question: string,       

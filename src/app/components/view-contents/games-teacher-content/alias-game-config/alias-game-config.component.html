@@ -7,22 +7,7 @@
 
 <mat-card-content>
     <mat-card-subtitle>Games</mat-card-subtitle>
-    <mat-accordion class="headers-align">
-        <mat-expansion-panel *ngFor="let game of games" hideToggle>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ game.name }}
-                </mat-panel-title>
-                <mat-panel-description>
-                    {{ game.description }}
-                    <mat-icon class="headers-align-right" title="delete game" (click)="deleteGame(game)">delete_forever</mat-icon>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <app-alias-form [game]="game" (gameChange)="onGameChange($event)"></app-alias-form>
-        </mat-expansion-panel>
-    </mat-accordion>
-
-    <div class="mt-1">
+    <div class="mb-2">
         <mat-accordion>
             <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header>
@@ -34,4 +19,19 @@
             </mat-expansion-panel>
         </mat-accordion>
     </div>
+    <mat-accordion class="headers-align">
+        <mat-expansion-panel *ngFor="let game of games" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ game.name }}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ game.description }}
+                    <mat-icon class="headers-align-right" title="delete game"
+                        (click)="$event.stopPropagation(); deleteGame(game)">delete_forever</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-alias-form [game]="game" (gameChange)="onGameChange($event)"></app-alias-form>
+        </mat-expansion-panel>
+    </mat-accordion>
 </mat-card-content>

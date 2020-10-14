@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MessageService } from '../messages/message.service';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Alias } from '@app/models/game-models/alias';
 import { Question } from '@app/models/game-models/question';
 import { Quiz } from '@app/models/game-models/quiz';
+import { DrawIt } from '@app/models/game-models/drawIt';
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +15,23 @@ export class GamesApiService {
 
   //-------- mock data -------------
   games: Array<Alias> = [
-    { id: "11", name: "Class 6b", words: ["apple", "banana", "strawberry"] },
-    { id: "22", name: "Class 7a", words: ["stars", "rocket", "gravity"], description: "words about space" }
+    { _id: "11", name: "Class 6b", words: ["apple", "banana", "strawberry"] },
+    { _id: "22", name: "Class 7a", words: ["stars", "rocket", "gravity"], description: "words about space" }
   ]
 
   questions: Array<Question> = [
-    { id: "333", type: "select", name: "Fruit Types", question: "Which fruits are red?", options: ["apple", "banana", "strawberry", "peach"], answer: [0, 2] },
-    { id: "222", type: "match", name: "Englisch Vocabulary", question: "Match the appropriate translation", options: ["apple", "Apfel", "strawberry", "Erdbeere"], answer: [[0, 1], [2, 3]] }
+    { _id: "333", type: "select", name: "Fruit Types", question: "Which fruits are red?", options: ["apple", "banana", "strawberry", "peach"], answer: [0, 2] },
+    { _id: "222", type: "match", name: "Englisch Vocabulary", question: "Match the appropriate translation", options: ["apple", "Apfel", "strawberry", "Erdbeere"], answer: [[0, 1], [2, 3]] }
   ]
 
   quizzes: Array<Quiz> = [
-    { id: "000", name: "Random Quiz", description: "quiz with random questions", questions: ["333", "222"]}
+    { _id: "000", name: "Random Quiz", description: "quiz with random questions", questions: ["333", "222"] }
   ]
   //---------------------------------
 
-  private url = "https://javascript-group-d.herokuapp.com/"; // TODO URL to games api
+  private url = "http://localhost:8080"; // TODO URL to games api
 
-  private httpOptions = {
+  private httpOptionsJson = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: ''   // TODO
@@ -40,152 +41,175 @@ export class GamesApiService {
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
   //display message for user
-  private displaylog(message: string) {
-    this.messageService.add(message);
+  private displaylog(message: string, type: string) {
+    this.messageService.add(message, type);
   }
 
   //handle errors
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.log(error); // TODO do propper error handling/logging
-      this.displaylog(`${operation} failed: ${error.message}`);
+      this.displaylog(`${operation} failed: ${error.message}`, 'error');
 
-      //return appropriate empty result
-      return of(result as T);
+      return null;
     }
   }
 
   // ------------------ ALIAS -------------------
   getAliasGames(): Observable<Alias[]> {
-    //this.displaylog("Loading Alias Games");
-    return of(this.games);
-    return this.http.get<Alias[]>(this.url + "/games/alias/games", this.httpOptions)
+    return this.http.get<Alias[]>(this.url + "/games/alias/games", this.httpOptionsJson)
       .pipe(
         catchError(this.handleError<Alias[]>('Loading Alias Games', [])
         ));
   }
 
   createAliasGame(game: Alias): Observable<Alias> {
-    return of(game);
-    return this.http.post<Alias>(this.url + "/games/alias/create", game, this.httpOptions)
+    //return of(game);
+    delete game['_id'];
+    console.log(game)
+    return this.http.post<Alias>(this.url + "/games/alias/create", game, this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Alias>('Saving new game failed.')
+        catchError(this.handleError<Alias>('Saving new game')
         ));
   }
 
   updateAliasGame(game: Alias): Observable<Alias> {
-    return of(game);
-    return this.http.put<Alias>(this.url + "/games/alias/" + game.id, game, this.httpOptions)
+    //return of(game);
+    return this.http.put<Alias>(this.url + "/games/alias/" + game._id, game, this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Alias>('Updating game failed.')
+        catchError(this.handleError<Alias>('Updating game')
         ));
   }
 
   deleteAliasGame(game: Alias): Observable<any> {
-    return of(game);
-    return this.http.delete(this.url + "/games/alias/" + game.id, this.httpOptions)
+    //return of(game);
+    return this.http.delete(this.url + "/games/alias/" + game._id, { responseType: 'text' })
       .pipe(
-        catchError(this.handleError<any>('Deleting game failed.')
+        catchError(this.handleError<any>('Deleting game')
         ));
   }
 
   // ------------------ QUIZ -------------------
   getQuizzes(): Observable<Quiz[]> {
     //this.displaylog("Loading Quizzes");
-    return of(this.quizzes);
-    return this.http.get<Quiz[]>(this.url + "/games/quiz/quizzes", this.httpOptions)
+    //return of(this.quizzes);
+    return this.http.get<Quiz[]>(this.url + "/games/quiz/quizzes", this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Quiz[]>('Loading Quizzes failed', [])
+        catchError(this.handleError<Quiz[]>('Loading Quizzes', [])
         ));
   }
 
-  getQuiz(id:string): Observable<Quiz> {
+  getQuiz(id: string): Observable<Quiz> {
     //this.displaylog("Loading Quiz");
-    return of(this.quizzes[0]);
-    return this.http.get<Quiz>(this.url + "/games/quiz/quizzes/"+id, this.httpOptions)
+    //return of(this.quizzes[0]);
+    return this.http.get<Quiz>(this.url + "/games/quiz/quizzes/" + id, this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Quiz>('Loading Quiz failed')
+        catchError(this.handleError<Quiz>('Loading Quiz')
         ));
   }
 
   getQuestionsForQuiz(quiz: Quiz): Observable<Question[]> {
     //this.displaylog("Loading Quizzes");
-    return of(this.questions);
-    return this.http.get<Question[]>(this.url + "/games/quiz/quizzes/"+quiz.id+"/questions", this.httpOptions)
+    //return of(this.questions);
+    return this.http.get<Question[]>(this.url + "/games/quiz/quizzes/" + quiz._id + "/questions", this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Question[]>('Loading Questions for quiz failed', [])
+        catchError(this.handleError<Question[]>('Loading Questions for quiz', [])
         ));
   }
 
   getQuestions(): Observable<Question[]> {
     //this.displaylog("Loading Questions");
-    return of(this.questions);
-    return this.http.get<Question[]>(this.url + "/games/quiz/questions", this.httpOptions)
+    //return of(this.questions);
+    return this.http.get<Question[]>(this.url + "/games/quiz/questions", this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Question[]>('Loading Questions failed', [])
+        catchError(this.handleError<Question[]>('Loading Questions', [])
         ));
   }
 
-  getQuestion(id:string): Observable<Question> {
+  getQuestion(id: string): Observable<Question> {
     //this.displaylog("Loading Questions");
-    return of(this.questions[0]);
-    return this.http.get<Question>(this.url + "/games/quiz/question/"+id, this.httpOptions)
+    //return of(this.questions[0]);
+    return this.http.get<Question>(this.url + "/games/quiz/question/" + id, this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Question>('Loading Question failed')
+        catchError(this.handleError<Question>('Loading Question')
         ));
   }
 
   createQuiz(quiz: Quiz): Observable<Quiz> {
-    return of(quiz);
-    return this.http.post<Quiz>(this.url + "/games/quiz/create", quiz, this.httpOptions)
+    //return of(quiz);
+    return this.http.post<Quiz>(this.url + "/games/quiz/create", quiz, this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Quiz>('Creating new quiz failed.')
+        catchError(this.handleError<Quiz>('Creating new quiz')
         ));
   }
 
   createQuestion(question: Question): Observable<Question> {
-    return of(question);
-    return this.http.post<Question>(this.url + "/games/quiz/question/create", question, this.httpOptions)
+    //return of(question);
+    return this.http.post<Question>(this.url + "/games/quiz/question/create", question, this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Question>('Creating new question failed.')
+        catchError(this.handleError<Question>('Creating new question')
         ));
   }
 
   updateQuiz(quiz: Quiz): Observable<Quiz> {
-    return of(quiz);
-    return this.http.put<Quiz>(this.url + "/games/quiz/" + quiz.id, quiz, this.httpOptions)
+    //return of(quiz);
+    return this.http.put<Quiz>(this.url + "/games/quiz/" + quiz._id, quiz, this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Quiz>('Updating quiz failed.')
+        catchError(this.handleError<Quiz>('Updating quiz')
         ));
   }
 
   updateQuestion(question: Question): Observable<Question> {
-    return of(question);
-    return this.http.put<Question>(this.url + "/games/quiz/question/" + question.id, question, this.httpOptions)
+    //return of(question);
+    return this.http.put<Question>(this.url + "/games/quiz/question/" + question._id, question, this.httpOptionsJson)
       .pipe(
-        catchError(this.handleError<Question>('Updating question failed.')
+        catchError(this.handleError<Question>('Updating question')
         ));
   }
 
   deleteQuiz(quiz: Quiz): Observable<any> {
-    return of(quiz);
-    return this.http.delete(this.url + "/games/quiz/" + quiz.id, this.httpOptions)
+    //return of(quiz);
+    return this.http.delete(this.url + "/games/quiz/" + quiz._id, { responseType: 'text' })
       .pipe(
-        catchError(this.handleError<any>('Deleting quiz failed.')
+        catchError(this.handleError<any>('Deleting quiz')
         ));
   }
 
   deleteQuestion(question: Question): Observable<any> {
-    return of(question);
-    return this.http.delete(this.url + "/games/quiz/question/" + question.id, this.httpOptions)
+    //return of(question);
+    return this.http.delete(this.url + "/games/quiz/question/" + question._id, { responseType: 'text' })
       .pipe(
-        catchError(this.handleError<any>('Deleting question failed.')
+        catchError(this.handleError<any>('Deleting question')
         ));
   }
 
-  // ------------------ 2 Truth 1 Lie -------------------
-
   // ------------------ Draw It -------------------
+  getDrawItGames(): Observable<DrawIt[]> {
+    return this.http.get<DrawIt[]>(this.url + "/games/drawit/games", this.httpOptionsJson)
+      .pipe(
+        catchError(this.handleError<DrawIt[]>('Loading DrawIt Games', [])
+        ));
+  }
 
+  createDrawItGame(game: DrawIt): Observable<DrawIt> {
+    delete game['_id'];
+    return this.http.post<DrawIt>(this.url + "/games/drawit/create", game, this.httpOptionsJson)
+      .pipe(
+        catchError(this.handleError<DrawIt>('Saving new game')
+        ));
+  }
 
+  updateDrawItGame(game: DrawIt): Observable<DrawIt> {
+    return this.http.put<DrawIt>(this.url + "/games/drawit/" + game._id, game, this.httpOptionsJson)
+      .pipe(
+        catchError(this.handleError<DrawIt>('Updating game')
+        ));
+  }
+
+  deleteDrawItGame(game: DrawIt): Observable<any> {
+    return this.http.delete(this.url + "/games/drawit/" + game._id, { responseType: 'text' })
+      .pipe(
+        catchError(this.handleError<any>('Deleting game')
+        ));
+  }
 }

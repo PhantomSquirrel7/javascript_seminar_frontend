@@ -47,7 +47,7 @@ export class QuizFormComponent implements OnInit {
 
   onSubmit() {
     let updated = this.quiz.value;
-    updated.id = this.game.id;
+    updated._id = this.game._id;
     this.quizChange.emit(updated);
   }
 

@@ -47,8 +47,16 @@ export class AliasFormComponent implements OnInit {
   }
 
   onSubmit() {
+    let index = 0;
+    while (index < this.words.length) {
+      if (this.words.at(index).value == "") {
+        this.deleteWord(index);
+      } else {
+        index++;
+      }
+    }
     let updated = this.alias.value;
-    updated.id = this.game.id;
+    updated._id = this.game._id;
     this.gameChange.emit(updated);
   }
 

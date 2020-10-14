@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from '@app/services/custom/messages/message.service';
 
 @Component({
   selector: 'app-overview-games-config',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewGamesConfigComponent implements OnInit {
 
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
   ngOnInit(): void {
+    this.messageService.clearAll();
   }
 
 }
