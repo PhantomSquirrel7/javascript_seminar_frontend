@@ -4,5 +4,5 @@ export interface Question {
     name: string, 
     question: string,       
     options: Array<string>,     // possible answers 
-    answers: Array<number> | Array<[number, number]>    // indexes of options array for select or tuples for matching
+    answer: Array<number> | Array<[number, number]>    // indexes of options array for select or tuples for matching
 }

@@ -12,19 +12,21 @@ import { Quiz } from '@app/models/game-models/quiz';
 })
 export class GamesApiService {
 
+  //-------- mock data -------------
   games: Array<Alias> = [
     { id: "11", name: "Class 6b", words: ["apple", "banana", "strawberry"] },
     { id: "22", name: "Class 7a", words: ["stars", "rocket", "gravity"], description: "words about space" }
   ]
 
   questions: Array<Question> = [
-    { id: "333", type: "select", name: "Fruit Types", question: "Which fruits are red?", options: ["apple", "banana", "strawberry", "peach"], answers: [0, 2] },
-    { id: "222", type: "match", name: "Englisch Vocabulary", question: "Match the approporate translation", options: ["apple", "Apfel", "strawberry", "Erdbeere"], answers: [[0, 1], [2, 3]] }
+    { id: "333", type: "select", name: "Fruit Types", question: "Which fruits are red?", options: ["apple", "banana", "strawberry", "peach"], answer: [0, 2] },
+    { id: "222", type: "match", name: "Englisch Vocabulary", question: "Match the appropriate translation", options: ["apple", "Apfel", "strawberry", "Erdbeere"], answer: [[0, 1], [2, 3]] }
   ]
 
   quizzes: Array<Quiz> = [
     { id: "000", name: "Random Quiz", description: "quiz with random questions", questions: ["333", "222"]}
   ]
+  //---------------------------------
 
   private url = "https://javascript-group-d.herokuapp.com/"; // TODO URL to games api
 
@@ -93,7 +95,7 @@ export class GamesApiService {
     return of(this.quizzes);
     return this.http.get<Quiz[]>(this.url + "/games/quiz/quizzes", this.httpOptions)
       .pipe(
-        catchError(this.handleError<Quiz[]>('Loading Quizzes', [])
+        catchError(this.handleError<Quiz[]>('Loading Quizzes failed', [])
         ));
   }
 
@@ -102,7 +104,7 @@ export class GamesApiService {
     return of(this.quizzes[0]);
     return this.http.get<Quiz>(this.url + "/games/quiz/quizzes/"+id, this.httpOptions)
       .pipe(
-        catchError(this.handleError<Quiz>('Loading Quiz')
+        catchError(this.handleError<Quiz>('Loading Quiz failed')
         ));
   }
 
@@ -111,7 +113,7 @@ export class GamesApiService {
     return of(this.questions);
     return this.http.get<Question[]>(this.url + "/games/quiz/quizzes/"+quiz.id+"/questions", this.httpOptions)
       .pipe(
-        catchError(this.handleError<Question[]>('Loading Questions for quiz', [])
+        catchError(this.handleError<Question[]>('Loading Questions for quiz failed', [])
         ));
   }
 
@@ -120,10 +122,66 @@ export class GamesApiService {
     return of(this.questions);
     return this.http.get<Question[]>(this.url + "/games/quiz/questions", this.httpOptions)
       .pipe(
-        catchError(this.handleError<Question[]>('Loading Questions', [])
+        catchError(this.handleError<Question[]>('Loading Questions failed', [])
         ));
   }
 
+  getQuestion(id:string): Observable<Question> {
+    //this.displaylog("Loading Questions");
+    return of(this.questions[0]);
+    return this.http.get<Question>(this.url + "/games/quiz/question/"+id, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Question>('Loading Question failed')
+        ));
+  }
+
+  createQuiz(quiz: Quiz): Observable<Quiz> {
+    return of(quiz);
+    return this.http.post<Quiz>(this.url + "/games/quiz/create", quiz, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Quiz>('Creating new quiz failed.')
+        ));
+  }
+
+  createQuestion(question: Question): Observable<Question> {
+    return of(question);
+    return this.http.post<Question>(this.url + "/games/quiz/question/create", question, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Question>('Creating new question failed.')
+        ));
+  }
+
+  updateQuiz(quiz: Quiz): Observable<Quiz> {
+    return of(quiz);
+    return this.http.put<Quiz>(this.url + "/games/quiz/" + quiz.id, quiz, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Quiz>('Updating quiz failed.')
+        ));
+  }
+
+  updateQuestion(question: Question): Observable<Question> {
+    return of(question);
+    return this.http.put<Question>(this.url + "/games/quiz/question/" + question.id, question, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Question>('Updating question failed.')
+        ));
+  }
+
+  deleteQuiz(quiz: Quiz): Observable<any> {
+    return of(quiz);
+    return this.http.delete(this.url + "/games/quiz/" + quiz.id, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<any>('Deleting quiz failed.')
+        ));
+  }
+
+  deleteQuestion(question: Question): Observable<any> {
+    return of(question);
+    return this.http.delete(this.url + "/games/quiz/question/" + question.id, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<any>('Deleting question failed.')
+        ));
+  }
 
   // ------------------ 2 Truth 1 Lie -------------------
 

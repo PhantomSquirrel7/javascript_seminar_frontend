@@ -25,7 +25,7 @@ export class QuizGameConfigComponent implements OnInit {
     name: "",
     question: "",
     options: [],
-    answers: []
+    answer: []
   };
 
   constructor(private api: GamesApiService) { }
@@ -41,38 +41,38 @@ export class QuizGameConfigComponent implements OnInit {
     });
   }
 
-/*   deleteGame(game: Alias) {
-    this.api.deleteAliasGame(game).subscribe(data => {
-      console.log("delete game", data)
+  deleteQuestion(question: Question) {
+    this.api.deleteQuestion(question).subscribe(data => {
+      console.log("delete question", data)
       // TODO handle true response
-      this.games = this.games.filter(elem => elem.id !== game.id)
+      this.questions = this.questions.filter(elem => elem.id !== question.id)
     });
   }
 
-  onCreateGame(game: Alias) {
-    this.api.createAliasGame(game).subscribe(data => {
-      console.log("created game", data)
+  deleteQuiz(quiz: Quiz) {
+    this.api.deleteQuiz(quiz).subscribe(data => {
+      console.log("delete quiz", data)
       // TODO handle true response
-      this.games.push(game);
-      this.resetNewGame();
+      this.quizzes = this.quizzes.filter(elem => elem.id !== quiz.id)
     });
   }
 
-  onGameChange(game: Alias) {
-    this.api.updateAliasGame(game).subscribe(data => {
-      console.log("changed", data)
-      this.games[this.games.findIndex(g => {
-        return g.id === game.id
-      })] = game;
+  onQuestionChange(question: Question) {
+    this.api.updateQuestion(question).subscribe(data => {
+      console.log("changed question", data)
+      this.questions[this.questions.findIndex(g => {
+        return g.id === question.id
+      })] = question;
     });
   }
 
-  resetNewGame() {
-    this.newGame = {
-      id: 0,
-      name: "",
-      description: "",
-      words: []
-    }
-  } */
+  onQuizChange(quiz: Quiz) {
+    this.api.updateQuiz(quiz).subscribe(data => {
+      console.log("changed quiz", data)
+      this.quizzes[this.quizzes.findIndex(g => {
+        return g.id === quiz.id
+      })] = quiz;
+    });
+  }
+
 }
