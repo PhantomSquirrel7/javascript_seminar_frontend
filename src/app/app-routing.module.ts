@@ -20,7 +20,6 @@ import {
   GamesTeacherViewComponent,
   AliasGameConfigComponent,
   QuizGameConfigComponent,
-  TtolGameConfigComponent,
   DrawItGameConfigComponent,
   OverviewGamesConfigComponent
 } from './components';
@@ -88,7 +87,6 @@ const routes: Routes = [
     children: [
       { path: 'alias-config', component: AliasGameConfigComponent },
       { path: 'quiz-config', component: QuizGameConfigComponent },
-      { path: '2t1l-config', component: TtolGameConfigComponent },
       { path: 'draw-it-config', component: DrawItGameConfigComponent },
       { path: 'overview', component: OverviewGamesConfigComponent },
       { path: '**', redirectTo: 'overview' }
