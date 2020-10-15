@@ -45,10 +45,11 @@
         <br>
         <br>
         <div class="card-columns" style="margin-right: 50px;">
-		  	<div *ngFor="let myclass of resultClasses"  class="card" style="width: 20rm;">
+		  	<div *ngFor="let myclass of resultClasses" class="card shadow-lg rounded"
+		  	  style="width: 20rm; margin: 25px 25px 25px 0px;">
 				<img class="card-img-top" src="../../../assets/pexels-meliani-idriss-2982449.jpg" alt="School Image">
 				<div class="card-body">
-					<div style="float: left;">
+					<div style="float: left; margin-bottom: 20px;">
 						<h3 class="card-title">{{myclass.name}}</h3>
 						<p class="card-text">Year: {{myclass.year}}<br>Language: {{myclass.language}}</p>
 						<a [routerLink]="['/find-partner-class']" class="card-link">More</a>
