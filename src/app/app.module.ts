@@ -35,7 +35,8 @@ import {
   LandingHomeContentComponent,
   LandingOfferingContentComponent,
   LandingTeamContentComponent,
-  MyConnectionRequestsViewComponent
+  MyConnectionRequestsViewComponent,
+  ClassContactComponentComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -82,8 +83,8 @@ import { UserService } from './services/swagger-api/api';
     LandingTeamContentComponent,
     LandingOfferingContentComponent,
     MyConnectionRequestsViewComponent,
-    FindPartnerClassContentComponent
-  ],
+    FindPartnerClassContentComponent,
+    ClassContactComponentComponent  ],
   providers: [
     {
       provide: APP_INITIALIZER,

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/css/flag-icon.min.css" />
 <div style="margin-left: 50px; margin-top: 50px">
-    <div *ngIf=!results>
+    <div *ngIf=!results&&!details>
         <h1>Let's find a partner class for you:</h1>
         <div>
             <form [formGroup]="findPartnerForm" class="class-selection">
@@ -38,9 +38,12 @@
             </form>
         </div>
     </div>
-    <div *ngIf=results style="display: inline;">
+    <div *ngIf=results&&!details style="display: inline;">
         <h1 style="float: left;">Possible matches based on your preferences:</h1>
-        <button class="btn btn-primary btn-block text-white btn-user" style="width: 200px; float: right; margin-right: 5vw;">Adjust criteria</button>
+        <form [formGroup]="findPartnerForm" (ngSubmit)="adjustCriteria()">
+            <button [disabled]="loading" class="btn btn-primary btn-block text-white btn-user"
+              style="width: 200px; float: right; margin-right: 5vw;">Adjust criteria</button>
+        </form>
 		<br>
         <br>
         <br>
@@ -52,7 +55,9 @@
 					<div style="float: left; margin-bottom: 20px;">
 						<h3 class="card-title">{{myclass.name}}</h3>
 						<p class="card-text">Year: {{myclass.year}}<br>Language: {{myclass.language}}</p>
-						<a [routerLink]="['/find-partner-class']" class="card-link">More</a>
+                        <form [formGroup]="findPartnerForm" (ngSubmit)="detailsFor(myclass)">
+                            <button class="card-link btn btn-link">More</button>
+                        </form>
 					</div>
 					<div style="float: right">
 						<span class="flag-icon flag-icon-{{myclass.country}} flag-icon"></span>
@@ -60,5 +65,8 @@
 				</div>
         	</div>
         </div>
+    </div>
+    <div *ngIf=details>
+        <app-class-contact-component [actClass]="contactClass"></app-class-contact-component>
     </div>
 </div>

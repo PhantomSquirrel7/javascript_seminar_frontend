@@ -33,5 +33,6 @@ export * from './view-contents/profile-view-content/profile-view-content.compone
 export * from './view-contents/landing-home-content/landing-home-content.component';
 export * from './view-contents/landing-offering-content/landing-offering-content.component';
 export * from './view-contents/landing-team-content/landing-team-content.component';
+export * from './view-contents/class-contact-component/class-contact-component.component';
 
 
