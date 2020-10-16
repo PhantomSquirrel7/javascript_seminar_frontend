@@ -9,6 +9,10 @@ export class ClassContactComponentComponent{
 
   @Input() actClass: any;
 
+  teacherInfo(){ // TODO: redirect to teacher profile
+    console.log("Hello");
+    
+  }
 
 }
 
