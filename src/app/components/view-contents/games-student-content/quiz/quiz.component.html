@@ -1,19 +1,31 @@
-Quiz Window! <br /><br />
-<div class="question">{{ quiz.question }}<br /></div>
-<mat-selection-list #answerSelection [(ngModel)]="this.currentQuiz.selectedAnswers" (ngModelChange)="onSelectionChange($event)">
-    <mat-list-option *ngFor="let answer of currentQuiz.answers" [value]="answer">
-        {{ answer }}
-    </mat-list-option>
-</mat-selection-list>
-<p>You selected: {{ this.currentQuiz.selectedAnswers }}</p>
-<button mat-raised-button color="primary" (click)="onPreviousQuestion()">Back</button>
-<button mat-raised-button color="primary" (click)="onNextQuestion()">Next</button>
-<button mat-raised-button color="primary" (click)="onSubmitAnswers()">Submit</button>
+<div class="notConnected" *ngIf="!gamesService.connected || this.currentQuiz == undefined">
+    Connecting...
+</div>
 
 
-<div class="players">
+<div class="question" *ngIf="gamesService.connected && this.currentQuiz != undefined">{{ this.currentQuiz.question }}<br>
+    <mat-selection-list #answerSelection [(ngModel)]="this.currentQuiz.selectedAnswers" (ngModelChange)="onSelectionChange($event)">
+        <mat-list-option [style.backgroundColor]="this.getBackgroundColor(answer)" [disabled]="this.quizUpdate.quizOver" *ngFor="let answer of this.currentQuiz.answers" [value]="answer">
+            {{ answer }}
+        </mat-list-option>
+    </mat-selection-list>
+    <p>You selected: {{ this.currentQuiz.selectedAnswers }}</p>
+    <button mat-raised-button color="primary" (click)="onPreviousQuestion()">Back</button>
+    <button mat-raised-button color="primary" (click)="onNextQuestion()">Next</button>
+    <button mat-raised-button color="primary" (click)="onSubmitAnswers()">Submit</button>
+</div>
+
+<div class="startQuiz" *ngIf="!this.quizUpdate.countDownStarted">
+    <button mat-raised-button color="primary" (click)="onStartQuiz()">Start</button>
+</div>
+
+<div class="players" *ngIf="gamesService.connected">
     Connected Players:
-    <div class="playerList" *ngFor="let playerName of this.playerList">
+    <div class="playerList" *ngFor="let playerName of this.quizUpdate.players">
         {{playerName}}
     </div>
+</div>
+
+<div class="timer">
+    Time Left: {{this.timeLeftSeconds}} seconds
 </div>

@@ -1,4 +1,5 @@
 export interface AliasUpdate {
+    gameType: string;
     sessionId: string; 
     players: string[];
     currentPlayer: string; // The playername of the currently in charge player

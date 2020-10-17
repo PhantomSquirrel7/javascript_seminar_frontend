@@ -51,7 +51,8 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
       this.playerList = gameSession.players;
       this.currentPlayer = gameSession.currentPlayer;
       this.numberOfGuessedWords = gameSession.numberOfGuessedWords;
-      if (this.words.length == 0) {
+      // Load new words when game started and currently words are empty
+      if (this.words.length == 0 && this.gameStarted) {
         this.words = gameSession.wordsToGuess;
         this.currentWord = this.words[0];
       }
@@ -82,7 +83,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     clearInterval(this.timeInterval);
     let session: AliasUpdate = this.gamesService.gameSession;
     session.aliasOver = true;
-    this.gamesService.sendPlayerResult(session)
+    this.gamesService.sendPlayerResult(session);
     this.currentWord = "";
     this.currentWordIndex = 0;
     this.lastSession = session;
