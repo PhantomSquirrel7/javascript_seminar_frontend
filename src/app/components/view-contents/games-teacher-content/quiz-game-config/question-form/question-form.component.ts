@@ -49,6 +49,7 @@ export class QuestionFormComponent implements OnInit {
     this.answer.push(this.fb.control(answer));
   }
 
+  // for question type "match"
   deleteOptionPair(index) {
     this.options.removeAt(index);
     this.options.removeAt(index);
@@ -57,8 +58,25 @@ export class QuestionFormComponent implements OnInit {
     }
   }
 
+  // for question type "select"
   deleteOption(index) {
     this.options.removeAt(index);
+    // adjust answers
+    for (let i = 0; i < this.answer.length; i++) {
+      if (this.answer.at(i).value == index) {
+        this.answer.removeAt(i);
+        i--;
+      }
+      else if (this.answer.at(i).value > index) {
+        for (let j = i; j < this.answer.length; j++) {
+          this.answer.at(j).patchValue(this.answer.at(j).value - 1);
+        }
+        break;
+      }
+    }
+    if (this.options.length == 0) {
+      this.addOption();
+    }
   }
 
   get options() {
@@ -78,24 +96,21 @@ export class QuestionFormComponent implements OnInit {
   }
 
   onAnswerChange(event: MatSlideToggleChange, index) {
-    console.log(event)
-    // TODO 
-    // !! fix index problem when deleting an option
     if (event.checked) {
       this.addAnswer(index);
     } else {
       let i = 0;
       while (i < this.answer.length) {
         if (this.answer.at(i).value == index) {
-          this.answer.removeAt(i)
+          this.answer.removeAt(i);
         } else i++;
       }
     }
-    console.log(this.answer.value)
   }
 
   onTypeChange(event: MatSelectChange) {
     this.options.clear();
+    this.answer.clear();
     if (event.value == "select") {
       this.addOption();
     } else this.addOptionPair();

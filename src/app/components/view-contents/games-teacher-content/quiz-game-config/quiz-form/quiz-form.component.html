@@ -7,27 +7,42 @@
         <mat-label>Description: </mat-label>
         <input type="text" matInput formControlName="description">
     </mat-form-field>
-    <div formArrayName="questions">
+    <div>
+        <mat-form-field class="w-75">
+            <mat-select [formControl]="questMultiCtrl" placeholder="Questions" [multiple]="true" #multiSelect>
+                <mat-option>
+                    <ngx-mat-select-search [formControl]="questMultiFilterCtrl"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let quest of filteredQuestMulti | async" [value]="quest">
+                    {{quest.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <div class="mb-4 mt-4">
+            <b>Selected Questions:</b>
+        </div>
+        <ol>
+            <ng-container *ngFor="let q of questMultiCtrl?.value">
+                <li class="mb-2">{{q.name}} - {{ q.question }} </li>
+            </ng-container>
+        </ol>
+    </div>
+    <!--   <div formArrayName="questions">
         <mat-label>Questions:</mat-label>
         <div *ngFor="let question of questions.controls; let i=index">
             <button type="button" mat-icon-button aria-label="remove question" title="remove question"
                 (click)="removeQuestion(i)">
                 <mat-icon>delete</mat-icon>
             </button>
-            <mat-form-field class="mr-2">
-                <mat-select>
-                    <mat-option value="" disabled>select question</mat-option>
-                  <!-- <mat-option *ngFor="let quest of allQuestions" [ngValue]="questions[i]">
-                        {{questions[i]}}
-                    </mat-option> -->
-                </mat-select>
-            </mat-form-field>
-            <button type="button" *ngIf="i == questions.controls.length-1" title="add question" mat-icon-button
-                aria-label="add question" (click)="addQuestion()">
-                <mat-icon>add</mat-icon>
-            </button>
+
+          <button type="button" class="btn btn-sm btn-primary" *ngIf="i == questions.controls.length-1"
+                title="add question" aria-label="add question" (click)="addQuestion()">
+                add
+            </button> 
         </div>
-    </div>
+    </div> -->
     <mat-action-row>
         <button class="btn btn-sm" [ngClass]="{'btn-success': quiz.valid, 'btn-secondary': !quiz.valid}" type="submit"
             [disabled]="!quiz.valid">Save</button>

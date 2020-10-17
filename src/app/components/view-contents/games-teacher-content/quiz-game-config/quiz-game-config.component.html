@@ -6,7 +6,7 @@
 
 <app-messages></app-messages>
 
-<mat-card-content>
+<mat-card-content *ngIf="questions && quizzes">
     <mat-tab-group>
         <mat-tab label="Questions">
             <mat-card>
@@ -53,7 +53,7 @@
                                         Create New Quiz
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
-                                <app-quiz-form [game]="newQuiz" (quizChange)="onCreateQuiz($event)"></app-quiz-form>
+                                <app-quiz-form [game]="newQuiz" [allQuestions]="questions" (quizChange)="onCreateQuiz($event)"></app-quiz-form>
                             </mat-expansion-panel>
                         </mat-accordion>
                     </div>
@@ -68,7 +68,7 @@
                                     delete_forever</mat-icon>
                             </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <app-quiz-form [game]="quiz" (quizChange)="onQuizChange($event)">
+                        <app-quiz-form [game]="quiz" [allQuestions]="questions" (quizChange)="onQuizChange($event)">
                         </app-quiz-form>
                     </mat-expansion-panel>
                 </mat-accordion>
