@@ -1,15 +1,16 @@
-<h1>Get in touch with...</h1>
-<div class="card" style="margin-right: 50px;">
+<div style="margin: 25px;">
+  <h1>Get in touch with...</h1>
+  <div class="card">
     <div class="card-header">
-        <div class="left-header">
-          <img class="" src="../../../assets/pexels-meliani-idriss-2982449.jpg" alt="class profile picture"> 
-          <h2>{{actClass.name}}</h2>
-        </div>
-        <div class="right-header">
-          <span class="flag-icon flag-icon-{{actClass.country}} flag-icon"></span>
-        </div>
+      <div class="left-header">
+        <img class="" src="../../../assets/pexels-meliani-idriss-2982449.jpg" alt="class profile picture"> 
+        <h2>{{actClass.name}}</h2>
+      </div>
+      <div class="right-header">
+        <span class="flag-icon flag-icon-{{actClass.country}} flag-icon"></span>
+      </div>
     </div>
-
+    
     <div class="card-body">
       <div style="display: flex;">
         <span style="margin-right: 170px;">Year:</span>
@@ -22,7 +23,7 @@
     </div>
     
     <ul class="list-group list-group-flush">
-    
+      
       <li class="list-group-item">
         <div style="display: flex;">
           <span style="margin-right: 135px;">Language:</span>
@@ -33,7 +34,7 @@
           <span>Intermediate (B1)</span>
         </div>
       </li>
-    
+      
       <li class="list-group-item">
         <div style="display: flex;">
           <span style="margin-right: 100px;">Project duration:</span>
@@ -44,7 +45,7 @@
           <span>2x/week</span>
         </div>
       </li>
-
+      
       <li (click)="teacherInfo()" class="list-group-item" style="cursor: pointer;">
         <h3>Your contact person:</h3>
         <div class="contact-person">
@@ -52,14 +53,15 @@
           <h2>Dr. Christoph Heumos</h2>
         </div>
       </li>
-
+      
     </ul>
-</div>
-<br>
-<br>
-<h1>Reach out:</h1>
-<div class="form-group" style="margin-right: 50px">
-  <textarea class="form-control" rows="5" id="comment"></textarea>
+  </div>
   <br>
-  <button class="btn btn-outline-primary btn-lg">Let's get in touch!</button>
-</div> 
+  <br>
+  <h1>Reach out:</h1>
+  <div class="form-group" style="margin-right: 50px">
+    <textarea class="form-control" rows="5" id="comment"></textarea>
+    <br>
+    <button class="btn btn-outline-primary btn-lg">Let's get in touch!</button>
+  </div> 
+</div>

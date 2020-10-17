@@ -10,6 +10,7 @@ export * from './views/create-class-view/create-class-view.component';
 export * from './views/create-student-view/create-student-view.component';
 export * from './views/dashboard-view/dashboard-view.component';
 export * from './views/find-partner-class-view/find-partner-class-view.component';
+export * from './views/find-partner-class-view-results/find-partner-class-view-results.component';
 export * from './views/forgot-password-view/forgot-password-view.component';
 export * from './views/landing-view/landing-view.component';
 export * from './views/landing-view-offering/landing-view-offering.component';
@@ -23,12 +24,13 @@ export * from './views/register-view/register-view.component';
 export * from './views/reset-password-view/reset-password-view.component';
 export * from './views/settings-view/settings-view.component';
 export * from './views/about-view/about-view.component';
-export * from './views/my-connection-requests-view/my-connection-requests-view.component'
+export * from './views/my-connection-requests-view/my-connection-requests-view.component';
 
 // view-contents
 export * from './view-contents/dashboard-content/dashboard-content.component'; 
 export * from './view-contents/plan-meeting-content/plan-meeting-content.component';
 export * from './view-contents/find-partner-class-content/find-partner-class-content.component';
+export * from './view-contents/find-partner-class-results-content/find-partner-class-results-content.component';
 export * from './view-contents/profile-view-content/profile-view-content.component';
 export * from './view-contents/landing-home-content/landing-home-content.component';
 export * from './view-contents/landing-offering-content/landing-offering-content.component';

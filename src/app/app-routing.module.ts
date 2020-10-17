@@ -18,7 +18,8 @@ import {
   AboutViewComponent,
   PlanMeetingViewComponent,
   ForgotPasswordViewComponent,
-  MyConnectionRequestsViewComponent
+  MyConnectionRequestsViewComponent,
+  FindPartnerClassViewResultsComponent
 } from './components';
 
 const routes: Routes = [
@@ -57,6 +58,11 @@ const routes: Routes = [
   {
     path: 'find-partner-class',
     component: FindPartnerClassViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'find-partner-class/results',
+    component: FindPartnerClassViewResultsComponent,
     canActivate: [AuthGuard],
   },
   {

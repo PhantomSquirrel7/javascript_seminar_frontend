@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/css/flag-icon.min.css"/>
+<div style="margin-left: 50px; margin-top: 50px">
+    <div style="display: inline;">
+        <h1 style="float: left;">Possible matches based on your preferences:</h1>
+        <form [formGroup]="findPartnerForm" (ngSubmit)="adjustCriteria()">
+            <button [disabled]="loading" class="btn btn-primary btn-block text-white btn-user"
+            style="width: 200px; float: right; margin-right: 5vw;">Adjust criteria</button>
+        </form>
+        <br>
+        <br>
+        <br>
+        <div class="card-columns" style="margin-right: 50px;">
+            <div *ngFor="let myclass of resultClasses" class="card shadow-lg rounded" style="width: 20rm; margin: 25px 25px 25px 0px;">
+                <img class="card-img-top" src="../../../assets/pexels-meliani-idriss-2982449.jpg" alt="School Image">
+                <div class="card-body">
+                    <div style="float: left; margin-bottom: 20px;">
+                        <h3 class="card-title">{{myclass.name}}</h3>
+                        <p class="card-text">Year: {{myclass.year}}<br>Language: {{myclass.language}}</p>
+                        <form [formGroup]="findPartnerForm" (ngSubmit)="detailsFor(myclass)">
+                            <button class="btn btn-link btn-outline-primary" data-toggle="modal" data-target="#classInfo">More</button>
+                        </form>
+                    </div>
+                    <div style="float: right">
+                        <span class="flag-icon flag-icon-{{myclass.country}} flag-icon"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="classInfo" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <app-class-contact-component [actClass]="contactClass"></app-class-contact-component>
+            </div>
+        </div>
+    </div>
+</div>

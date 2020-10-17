@@ -6,17 +6,17 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 
-
 @Component({
-  selector: 'app-find-partner-class-content',
-  templateUrl: './find-partner-class-content.component.html',
-  styleUrls: ['./find-partner-class-content.component.less']
+  selector: 'app-find-partner-class-results-content',
+  templateUrl: './find-partner-class-results-content.component.html',
+  styleUrls: ['./find-partner-class-results-content.component.less']
 })
-export class FindPartnerClassContentComponent implements OnInit {
+export class FindPartnerClassResultsContentComponent implements OnInit {
 
 	constructor(
-		private fb: FormBuilder,
-		private router: Router,
+    private fb: FormBuilder,
+    private router: Router,
+
   	) { }
 
 
@@ -24,6 +24,7 @@ export class FindPartnerClassContentComponent implements OnInit {
 
 	user: User;
 	loading = false; // true if waiting for results
+	details = false; // true if details for class are requestet else false
 	error = '';
 	isSelected = false;
 	selectedClass: any; // Type Class
@@ -165,32 +166,20 @@ export class FindPartnerClassContentComponent implements OnInit {
 		this.selectedDuration = this.findPartnerForm.value.selectedDuration;
 	}
 
-	onSubmit() {
-		// this.submitted = true;
-		// if (this.loginForm.invalid) {
-		//   return;
-		// }
-		this.loading = true;
+	adjustCriteria(){
+		console.log("adjust it!");
 		
-		this.router.navigate(['find-partner-class/results']);
+    this.loading = true;
+    
+		this.router.navigate(['find-partner-class']);
 		// TODO: API Call for results
 		this.loading = false;
 
-		// this.loginService
-		//   .login({ email: this.f.email.value, password: this.f.password.value })
-		//   .pipe(first())
-		//   .subscribe({
-		//     next: (response) => {
-		//       this.loading = false;          
-		//       this.router.navigate([this.returnUrl]);
-		//     },
-		//     error: (error) => {
-		//       this.error = error;
-		//       this._snackBar.open(this.error, 'Close', {
-		//         duration: 3000
-		//       });
-		//       this.loading = false;
-		//     },
-		//   });
+  }
+
+	detailsFor(actClass){
+		this.details = true;
+		this.contactClass = actClass;
 	}
+
 }
