@@ -6,11 +6,17 @@ import { ReplaySubject, Subject } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { take, takeUntil } from 'rxjs/operators';
 
+interface QuestionGroup {
+  type: string;
+  questions: Question[]
+}
+
 @Component({
   selector: 'app-quiz-form',
   templateUrl: './quiz-form.component.html',
   styleUrls: ['./quiz-form.component.less']
 })
+
 
 export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -18,15 +24,17 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() allQuestions: Question[];
   @Output() quizChange: EventEmitter<Quiz> = new EventEmitter<Quiz>();
 
+  questionGroups: QuestionGroup[] = [];
+
   quiz = this.fb.group({
     name: ['', Validators.required],
     description: [''],
     questions: this.fb.array([])
   })
 
-  public questMultiCtrl: FormControl = new FormControl();
-  public questMultiFilterCtrl: FormControl = new FormControl();
-  public filteredQuestMulti: ReplaySubject<Question[]> = new ReplaySubject<Question[]>(1);
+  public questGroupsCtrl: FormControl = new FormControl();
+  public questGroupsFilterCtrl: FormControl = new FormControl();
+  public filteredQuestGroups: ReplaySubject<QuestionGroup[]> = new ReplaySubject<QuestionGroup[]>(1);
 
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
 
@@ -35,7 +43,6 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private fb: FormBuilder) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
     if (changes['game']) {
       this.updateGame(changes.game.currentValue);
     }
@@ -48,18 +55,30 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.quiz.patchValue({
       name: this.game.name,
       description: this.game.description
-    }) 
+    })
+    //group questions by type
+    let matchQs = { type: 'match', questions: [] };
+    let selectQs = { type: 'select', questions: [] };
+    this.allQuestions.forEach(q => {
+      if (q.type == 'match') {
+        matchQs.questions.push(q);
+      } else selectQs.questions.push(q);
+    });
+    this.questionGroups.push(matchQs);
+    this.questionGroups.push(selectQs);
     //set initial selected questions of quiz
     let qs = [];
     this.game.questions.forEach(questId => {
       let q = this.allQuestions.find(elem => elem._id === questId);
-      if(q) qs.push(q);
+      if (q) qs.push(q);
     });
-    this.questMultiCtrl.setValue(qs);
-    this.filteredQuestMulti.next(this.allQuestions.slice());
-    this.questMultiFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
-      this.filterQuestMulti();
-    })
+    this.questGroupsCtrl.setValue(qs);
+    this.filteredQuestGroups.next(this.copyQuestGroups(this.questionGroups));
+    this.questGroupsFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterQuestGroups();
+      })
   }
 
   ngAfterViewInit() {
@@ -72,7 +91,7 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   protected setInitialValue() {
-    this.filteredQuestMulti
+    this.filteredQuestGroups
       .pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(() => {
         this.multiSelect.compareWith = (a: Question, b: Question) => a && b && a._id === b._id;
@@ -99,7 +118,7 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSubmit() {
-    let ids = this.getQuestionsIds(this.questMultiCtrl.value);
+    let ids = this.getQuestionsIds(this.questGroupsCtrl.value);
     this.questions.clear();
     ids.forEach(id => {
       this.addQuestion(id);
@@ -115,34 +134,53 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateGame(update: Quiz) {
     console.log("quiz update")
- /*    this.quiz.patchValue({
-      name: update.name,
-      description: update.description
-    }) */
-   /*  this.questions.clear();
-    update.questions.forEach(questionId => {
-      this.addQuestion(questionId)
-    });
-    if (this.questions.length == 0) {
-      this.addQuestion();
-    } */
+    /*    this.quiz.patchValue({
+         name: update.name,
+         description: update.description
+       }) */
+    /*  this.questions.clear();
+     update.questions.forEach(questionId => {
+       this.addQuestion(questionId)
+     });
+     if (this.questions.length == 0) {
+       this.addQuestion();
+     } */
   }
 
-  protected filterQuestMulti() {
-    if (!this.allQuestions) {
+  protected filterQuestGroups() {
+    if (!this.questionGroups) {
       return;
     }
     // get the search keyword
-    let search = this.questMultiFilterCtrl.value;
+    let search = this.questGroupsFilterCtrl.value;
+    const questGroupsCopy = this.copyQuestGroups(this.questionGroups);
     if (!search) {
-      this.filteredQuestMulti.next(this.allQuestions.slice());
+      this.filteredQuestGroups.next(questGroupsCopy);
       return;
     } else {
       search = search.toLowerCase();
     }
     // filter the questions
-    this.filteredQuestMulti.next(
-      this.allQuestions.filter(question => question.name.toLowerCase().indexOf(search) > -1)
+    this.filteredQuestGroups.next(
+      questGroupsCopy.filter(questGroup => {
+        const showQuestGroup = questGroup.name.toLowerCase().indexOf(search) > -1;
+        if (!showQuestGroup) {
+          questGroup.banks = questGroup.banks.filter(
+            bank => bank.name.toLowerCase().indexOf(search) > -1
+          );
+        }
+        return questGroup.banks.length > 0;
+      })
     );
+  }
+  protected copyQuestGroups(questGroups: QuestionGroup[]) {
+    const questGroupsCopy = [];
+    questGroups.forEach(questGroup => {
+      questGroupsCopy.push({
+        type: questGroup.type,
+        questions: questGroup.questions.slice()
+      });
+    });
+    return questGroupsCopy;
   }
 }

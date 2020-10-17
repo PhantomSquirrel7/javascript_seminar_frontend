@@ -9,13 +9,15 @@
     </mat-form-field>
     <div>
         <mat-form-field class="w-75">
-            <mat-select [formControl]="questMultiCtrl" placeholder="Questions" [multiple]="true" #multiSelect>
+            <mat-select [formControl]="questGroupsCtrl" placeholder="Questions" [multiple]="true" #multiSelect>
                 <mat-option>
-                    <ngx-mat-select-search [formControl]="questMultiFilterCtrl"></ngx-mat-select-search>
+                    <ngx-mat-select-search [formControl]="questGroupsFilterCtrl"></ngx-mat-select-search>
                 </mat-option>
-                <mat-option *ngFor="let quest of filteredQuestMulti | async" [value]="quest">
-                    {{quest.name}}
-                </mat-option>
+                <mat-optgroup *ngFor="let group of filteredQuestGroups | async" [label]="group.type">
+                    <mat-option *ngFor="let quest of group.questions | async" [value]="quest">
+                        {{quest.name}}
+                    </mat-option>
+                </mat-optgroup>
             </mat-select>
         </mat-form-field>
     </div>
@@ -24,7 +26,7 @@
             <b>Selected Questions:</b>
         </div>
         <ol>
-            <ng-container *ngFor="let q of questMultiCtrl?.value">
+            <ng-container *ngFor="let q of questGroupsCtrl?.value">
                 <li class="mb-2">{{q.name}} - {{ q.question }} </li>
             </ng-container>
         </ol>
