@@ -14,7 +14,7 @@
                     <ngx-mat-select-search [formControl]="questGroupsFilterCtrl"></ngx-mat-select-search>
                 </mat-option>
                 <mat-optgroup *ngFor="let group of filteredQuestGroups | async" [label]="group.type">
-                    <mat-option *ngFor="let quest of group.questions | async" [value]="quest">
+                    <mat-option *ngFor="let quest of group.questions" [value]="quest">
                         {{quest.name}}
                     </mat-option>
                 </mat-optgroup>
