@@ -67,7 +67,6 @@ export class GamesApiService {
   createAliasGame(game: Alias): Observable<Alias> {
     //return of(game);
     delete game['_id'];
-    console.log(game)
     return this.http.post<Alias>(this.url + "/games/alias/create", game, this.httpOptionsJson)
       .pipe(
         catchError(this.handleError<Alias>('Saving new game')

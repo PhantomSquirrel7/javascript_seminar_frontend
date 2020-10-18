@@ -47,7 +47,7 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.updateGame(changes.game.currentValue);
     }
     if (changes['allQuestions']) {
-      this.updateQuestions(changes.allQuestions.currentValue)
+      this.refreshQuestions(changes.allQuestions.currentValue);
     }
   }
 
@@ -56,10 +56,20 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
       name: this.game.name,
       description: this.game.description
     })
+    this.refreshQuestions();
+    this.questGroupsFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterQuestGroups();
+      })
+  }
+
+  refreshQuestions(allQs = this.allQuestions) {
     //group questions by type
+    this.questionGroups = [];
     let matchQs = { type: 'match', questions: [] };
     let selectQs = { type: 'select', questions: [] };
-    this.allQuestions.forEach(q => {
+    allQs.forEach(q => {
       if (q.type == 'match') {
         matchQs.questions.push(q);
       } else selectQs.questions.push(q);
@@ -69,16 +79,11 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
     //set initial selected questions of quiz
     let qs = [];
     this.game.questions.forEach(questId => {
-      let q = this.allQuestions.find(elem => elem._id === questId);
+      let q = allQs.find(elem => elem._id === questId);
       if (q) qs.push(q);
     });
     this.questGroupsCtrl.setValue(qs);
     this.filteredQuestGroups.next(this.copyQuestGroups(this.questionGroups));
-    this.questGroupsFilterCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterQuestGroups();
-      })
   }
 
   ngAfterViewInit() {
@@ -128,23 +133,16 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.quizChange.emit(updated);
   }
 
-  updateQuestions(update: Question[]) {
-    console.log("question update")
-  }
-
   updateGame(update: Quiz) {
-    console.log("quiz update")
-    /*    this.quiz.patchValue({
-         name: update.name,
-         description: update.description
-       }) */
-    /*  this.questions.clear();
-     update.questions.forEach(questionId => {
-       this.addQuestion(questionId)
-     });
-     if (this.questions.length == 0) {
-       this.addQuestion();
-     } */
+    this.quiz.patchValue({
+      name: update.name,
+      description: update.description
+    })
+
+    //refresh questions of quiz 
+    if (this.allQuestions && this.game) {
+      this.refreshQuestions();
+    }
   }
 
   protected filterQuestGroups() {

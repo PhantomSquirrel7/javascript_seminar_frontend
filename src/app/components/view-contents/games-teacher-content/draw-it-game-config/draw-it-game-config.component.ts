@@ -23,7 +23,7 @@ export class DrawItGameConfigComponent implements OnInit {
 
   ngOnInit(): void {
     this.api.getDrawItGames().subscribe(data => {
-      console.log("fetch draw it games", data)
+      //console.log("fetch draw it games", data)
       this.games = data;
     });
   }
@@ -31,7 +31,7 @@ export class DrawItGameConfigComponent implements OnInit {
   deleteGame(game: DrawIt) {
     this.api.deleteDrawItGame(game).subscribe(data => {
       if (data) {
-        console.log("delete game", data)
+        //console.log("delete game", data)
         this.games = this.games.filter(elem => elem._id !== game._id);
         this.messageService.add("Game '" + game.name + "' was deleted.", "success");
       }
@@ -40,8 +40,8 @@ export class DrawItGameConfigComponent implements OnInit {
 
   onCreateGame(game: DrawIt) {
     this.api.createDrawItGame(game).subscribe(data => {
-      console.log("create game", data)
       if (data) {
+        //console.log("create game", data)
         this.games.push(data);
         this.resetNewGame();
         this.messageService.add("Game '" + game.name + "' was created.", "success");
@@ -52,7 +52,7 @@ export class DrawItGameConfigComponent implements OnInit {
   onGameChange(game: DrawIt) {
     this.api.updateDrawItGame(game).subscribe(data => {
       if (data) {
-        console.log("changed game", data)
+        //console.log("changed game", data)
         this.games[this.games.findIndex(g => {
           return g._id === data._id
         })] = data;

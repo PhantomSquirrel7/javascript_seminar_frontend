@@ -22,7 +22,7 @@ export class QuestionFormComponent implements OnInit {
     name: ['', Validators.required],
     question: ['', Validators.required],
     options: this.fb.array([], Validators.required),
-    answer: this.fb.array([]) // TODO required
+    answer: this.fb.array([])
   });
 
   constructor(private fb: FormBuilder) { }
@@ -34,6 +34,13 @@ export class QuestionFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.quest.type == 'select'){
+      this.answer.setValidators(Validators.required);
+      this.answer.updateValueAndValidity();
+    }
+    if(this.quest._id != '-1') {
+      this.question.get('type').disable();
+    }
   }
 
   addOption(option = '') {
@@ -112,8 +119,13 @@ export class QuestionFormComponent implements OnInit {
     this.options.clear();
     this.answer.clear();
     if (event.value == "select") {
+      this.answer.setValidators(Validators.required);
       this.addOption();
-    } else this.addOptionPair();
+    } else {
+      this.answer.clearValidators();
+      this.addOptionPair();
+    }
+    this.answer.updateValueAndValidity();
   }
 
   onSubmit() {

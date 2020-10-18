@@ -22,7 +22,7 @@ export class AliasGameConfigComponent implements OnInit {
 
   ngOnInit(): void {
     this.api.getAliasGames().subscribe(data => {
-      console.log("fetch alias", data)
+      //console.log("fetch alias", data)
       this.games = data;
     });
   }
@@ -30,7 +30,7 @@ export class AliasGameConfigComponent implements OnInit {
   deleteGame(game: Alias) {
     this.api.deleteAliasGame(game).subscribe(data => {
       if (data) {
-        console.log("delete game", data)
+        //console.log("delete game", data)
         this.games = this.games.filter(elem => elem._id !== game._id);
         this.messageService.add("Game '" + game.name + "' was deleted.", "success");
       }
@@ -39,8 +39,8 @@ export class AliasGameConfigComponent implements OnInit {
 
   onCreateGame(game: Alias) {
     this.api.createAliasGame(game).subscribe(data => {
-      console.log("create game", data)
       if (data) {
+        //console.log("create game", data)
         this.games.push(data);
         this.resetNewGame();
         this.messageService.add("Game '" + game.name + "' was created.", "success");
@@ -51,7 +51,7 @@ export class AliasGameConfigComponent implements OnInit {
   onGameChange(game: Alias) {
     this.api.updateAliasGame(game).subscribe(data => {
       if (data) {
-        console.log("changed game", data)
+        //console.log("changed game", data)
         this.games[this.games.findIndex(g => {
           return g._id === data._id
         })] = data;

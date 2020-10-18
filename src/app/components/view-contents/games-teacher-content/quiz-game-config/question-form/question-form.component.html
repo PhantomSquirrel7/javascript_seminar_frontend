@@ -5,7 +5,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Type:</mat-label>
-        <mat-select formControlName="type" [disabled]="quest._id != '-1'" (selectionChange)="onTypeChange($event)">
+        <mat-select formControlName="type"  (selectionChange)="onTypeChange($event)">
             <mat-option *ngFor="let type of types" [value]="type">
                 {{ type }}
             </mat-option>
@@ -14,7 +14,7 @@
     <div>
         <mat-form-field appearance="outline" class="w-100 mr-2">
             <mat-label>Question: </mat-label>
-            <input type="text" matInput formControlName="question">
+            <input type="text" matInput formControlName="question" required>
         </mat-form-field>
     </div>
 

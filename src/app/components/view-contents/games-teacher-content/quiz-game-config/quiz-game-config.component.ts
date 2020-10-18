@@ -3,6 +3,7 @@ import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { Question } from '@app/models/game-models/question';
 import { Quiz } from '@app/models/game-models/quiz';
 import { MessageService } from '@app/services/custom/messages/message.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-quiz-game-config',
@@ -29,17 +30,27 @@ export class QuizGameConfigComponent implements OnInit {
     answer: []
   };
 
-  constructor(private api: GamesApiService, private messageService: MessageService) { }
+  requestDelete = "";
+
+  constructor(private api: GamesApiService, private messageService: MessageService, public deleteDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.api.getQuestions().subscribe(data => {
-      console.log("fetch questions", data)
+      //console.log("fetch questions", data)
       this.questions = data;
     });
     this.api.getQuizzes().subscribe(data => {
-      console.log("fetch quizzes", data)
+      //console.log("fetch quizzes", data)
       this.quizzes = data;
     });
+  }
+
+  requestDeleteQuestion(question: Question){
+    this.requestDelete = question._id;
+  }
+
+  cancelRequestDelete(){
+    this.requestDelete = "";
   }
 
   deleteQuestion(question: Question) {
@@ -48,6 +59,14 @@ export class QuizGameConfigComponent implements OnInit {
         //console.log("delete question", data)
         this.questions = this.questions.filter(elem => elem._id !== question._id);
         this.messageService.add("Question '" + question.name + "' was deleted.", "success");
+        this.requestDelete = "";
+
+        //get quiz update with removed question
+        this.api.getQuizzes().subscribe(data => {
+          //console.log("fetch quizzes", data)
+          this.quizzes = data;
+        
+        });
       }
     });
   }
@@ -65,7 +84,7 @@ export class QuizGameConfigComponent implements OnInit {
   onCreateQuestion(question: Question) {
     this.api.createQuestion(question).subscribe(data => {
       if (data) {
-        this.questions.push(data);
+        this.questions = [...this.questions, data];
         this.resetNewQuestion();
         this.messageService.add("New Question created: " + question.name, "success");
       }
@@ -85,7 +104,7 @@ export class QuizGameConfigComponent implements OnInit {
   onQuestionChange(question: Question) {
     this.api.updateQuestion(question).subscribe(data => {
       if (data) {
-        console.log("changed question", data)
+        //console.log("changed question", data)
         this.questions[this.questions.findIndex(g => {
           return g._id === question._id
         })] = data;
@@ -97,7 +116,7 @@ export class QuizGameConfigComponent implements OnInit {
   onQuizChange(quiz: Quiz) {
     this.api.updateQuiz(quiz).subscribe(data => {
       if (data) {
-        console.log("changed quiz", data)
+        //console.log("changed quiz", data)
         this.quizzes[this.quizzes.findIndex(g => {
           return g._id === quiz._id
         })] = data;
