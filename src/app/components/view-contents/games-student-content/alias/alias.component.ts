@@ -121,5 +121,4 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     this.currentWordIndex = (this.currentWordIndex+1) % this.words.length;
     this.currentWord = this.words[this.currentWordIndex];
   }
-
 }

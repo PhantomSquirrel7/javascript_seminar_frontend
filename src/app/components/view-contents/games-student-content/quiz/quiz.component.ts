@@ -3,6 +3,10 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { GamesService } from '@app/services/custom/games/games.service';
 import { QuizUpdate } from '../messages/quizUpdate';
 import { Quiz } from "../model/quiz";
+
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+
+
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -17,11 +21,13 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   @Input() taskId: string;
 
   gameUpdateSubscriptionEvent;
-  quizUpdate: QuizUpdate = undefined;
+  quizUpdate: QuizUpdate;
   currentQuiz: Quiz;
   timeLimit: number = 30;
   timeLeftSeconds: number = this.timeLimit;
   timeInterval;
+  leftAnswers : string[] = ["a", "b"];
+  rightAnswers : string[] = ["c", "dwoakadwo"];
 
   constructor(public gamesService: GamesService) {
     this.quizUpdate = {
@@ -35,6 +41,18 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
       quizOver: false,
       taskId: this.taskId
     }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+    console.log(this.leftAnswers);
   }
 
   ngOnInit(): void {

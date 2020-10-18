@@ -1,9 +1,9 @@
-<div class="notConnected" *ngIf="!gamesService.connected || this.currentQuiz == undefined">
+<div class="notConnected" *ngIf="!gamesService.connected">
     Connecting...
 </div>
 
 
-<div class="question" *ngIf="gamesService.connected && this.currentQuiz != undefined">{{ this.currentQuiz.question }}<br>
+<div class="question" *ngIf="gamesService.connected && this.currentQuiz != undefined && this.currentQuiz.type == 'select'">{{ this.currentQuiz.question }}<br>
     <mat-selection-list #answerSelection [(ngModel)]="this.currentQuiz.selectedAnswers" (ngModelChange)="onSelectionChange($event)">
         <mat-list-option [style.backgroundColor]="this.getBackgroundColor(answer)" [disabled]="this.quizUpdate.quizOver" *ngFor="let answer of this.currentQuiz.answers" [value]="answer">
             {{ answer }}
@@ -14,6 +14,30 @@
     <button mat-raised-button color="primary" (click)="onNextQuestion()">Next</button>
     <button mat-raised-button color="primary" (click)="onSubmitAnswers()">Submit</button>
 </div>
+
+<div class="matchingQuestion" *ngIf="gamesService.connected && this.currentQuiz != undefined && this.currentQuiz.type == 'match'">{{ this.currentQuiz.question }}<br> TODO Matching
+
+    <div class="example-container">
+        <h2>To do</h2>
+
+        <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="leftAnswers" [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of leftAnswers" cdkDrag>{{item}}</div>
+        </div>
+    </div>
+
+    <div class="example-container">
+        <h2>Done</h2>
+
+        <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="rightAnswers" [cdkDropListConnectedTo]="[todoList]" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of rightAnswers" cdkDrag>{{item}}</div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
 
 <div class="startQuiz" *ngIf="!this.quizUpdate.countDownStarted">
     <button mat-raised-button color="primary" (click)="onStartQuiz()">Start</button>

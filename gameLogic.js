@@ -134,14 +134,14 @@ async function handleAliasUpdateMessage(data) {
             // Get random words
             console.log("Wrong taskID, get random words");
 
-            fetch('http://localhosT:8080/games/alias/games/').then(res => res.json()).then(json => {
+            fetch('http://localhost:8080/games/alias/games/').then(res => res.json()).then(json => {
                 data.wordsToGuess = json[Math.floor(Math.random() * json.length)].words;
                 io.to(data.sessionId).emit("updateGame", data);
                 openSessions.set(data.sessionId, data);
             }).catch(err => console.log(err));
         } else {
             // Find by ID
-            fetch('http://localhosT:8080/games/alias/' + data.taskId).then(res => res.json()).then(json => {
+            fetch('http://localhost:8080/games/alias/' + data.taskId).then(res => res.json()).then(json => {
                 data.wordsToGuess = json[Math.floor(Math.random() * json.length)].words;
                 io.to(data.sessionId).emit("updateGame", data);
                 openSessions.set(data.sessionId, data);
@@ -164,20 +164,21 @@ function handleQuizUpdateMessage(data) {
         var hex = /[0-9A-Fa-f]{6}/g;
         if (data.taskId == null || data.taskId == undefined || data.taskId == "" || !hex.test(data.taskId)) {
             console.log("Invalid Task ID, sending random quiz");
-            taskId = "5f85966144308d767652771a";
-            fetch('http://localhosT:8080/games/quiz/quizzes/').then(res => res.json()).then(json => {
+            taskId = "5f8c26864667c50017f90e77";
+            fetch('http://localhost:8080/games/quiz/quizzes/').then(res => res.json()).then(json => {
                 taskId = json[Math.floor(Math.random() * json.length)]._id;
             }).catch(err => console.log(err));
         } else {
             taskId = data.taskId;
         }
-        fetch('http://localhosT:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
+        fetch('http://localhost:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
             json.forEach(question => {
                 var q = {
                     question: question.question,
                     answers: question.options,
                     correctAnswers: question.answer,
-                    selectedAnswers: []
+                    selectedAnswers: [],
+                    type: question.type
                 };
                 data.quizes.push(q);
             });

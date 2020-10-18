@@ -158,7 +158,6 @@ app.get('/games/quiz/quizzes/:id/questions', (req, res) => {
                 }
             })
         });
-
     })
 });
 
