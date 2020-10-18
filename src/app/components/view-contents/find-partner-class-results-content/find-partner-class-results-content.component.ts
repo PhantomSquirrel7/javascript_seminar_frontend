@@ -59,78 +59,78 @@ export class FindPartnerClassResultsContentComponent implements OnInit {
 	myClasses:any = [];
 
 	resultClasses = [ // Replace with API
-		{
-		"name": "Class 1",
-		"language": "English",
-		"country": "au",
-		"year": "8",
-		"subject": "mathematics",
-		"topics": [
-			"addition",
-			"subtraction"
-		],
-		"level": 2
-		},
-		{
-		"name": "Class 2",
-		"language": "English",
-		"country": "gb",
-		"year": "9",
-		"subject": "mathematics",
-		"topics": [
-			"division",
-			"subtraction"
-		],
-		"level": 2
-		},
-		{
-		"name": "Class 3",
-		"language": "English",
-		"country": "us",
-		"year": "7",
-		"subject": "mathematics",
-		"topics": [
-			"addition",
-			"multiplication"
-		],
-		"level": 1
-		},
-		{
-		"name": "Class 4",
-		"language": "English",
-		"country": "us",
-		"year": "7",
-		"subject": "mathematics",
-		"topics": [
-			"addition",
-			"multiplication"
-		],
-		"level": 1
-		},
-		{
-		"name": "Class 5",
-		"language": "English",
-		"country": "us",
-		"year": "7",
-		"subject": "mathematics",
-		"topics": [
-			"addition",
-			"multiplication"
-		],
-		"level": 1
-		},
-		{
-		"name": "Class 6",
-		"language": "English",
-		"country": "us",
-		"year": "7",
-		"subject": "mathematics",
-		"topics": [
-			"addition",
-			"multiplication"
-		],
-		"level": 1
-		}
+		// {
+		// "name": "Class 1",
+		// "language": "English",
+		// "country": "au",
+		// "year": "8",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"addition",
+		// 	"subtraction"
+		// ],
+		// "level": 2
+		// },
+		// {
+		// "name": "Class 2",
+		// "language": "English",
+		// "country": "gb",
+		// "year": "9",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"division",
+		// 	"subtraction"
+		// ],
+		// "level": 2
+		// },
+		// {
+		// "name": "Class 3",
+		// "language": "English",
+		// "country": "us",
+		// "year": "7",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"addition",
+		// 	"multiplication"
+		// ],
+		// "level": 1
+		// },
+		// {
+		// "name": "Class 4",
+		// "language": "English",
+		// "country": "us",
+		// "year": "7",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"addition",
+		// 	"multiplication"
+		// ],
+		// "level": 1
+		// },
+		// {
+		// "name": "Class 5",
+		// "language": "English",
+		// "country": "us",
+		// "year": "7",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"addition",
+		// 	"multiplication"
+		// ],
+		// "level": 1
+		// },
+		// {
+		// "name": "Class 6",
+		// "language": "English",
+		// "country": "us",
+		// "year": "7",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"addition",
+		// 	"multiplication"
+		// ],
+		// "level": 1
+		// }
 	];
 
 	contactClass: any;
@@ -143,6 +143,7 @@ export class FindPartnerClassResultsContentComponent implements OnInit {
 		selectedLangProf: [],
 		selectedDuration: []
 		});
+		this.resultClasses = history.state.data;
 	}
 
 	classSelected(){

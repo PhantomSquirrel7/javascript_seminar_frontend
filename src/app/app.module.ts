@@ -44,7 +44,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
-import { UserService } from './services/swagger-api/api';
+import { UserService, ClassesService } from './services/swagger-api/api';
 
 @NgModule({
   imports: [
@@ -95,7 +95,7 @@ import { UserService } from './services/swagger-api/api';
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
       multi: true,
-      deps: [CustomLoginService, UserService],
+      deps: [CustomLoginService, UserService, ClassesService],
     },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

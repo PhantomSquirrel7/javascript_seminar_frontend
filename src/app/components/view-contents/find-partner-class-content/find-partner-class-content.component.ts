@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms'
 import { ClassesService } from 'src/app/services/swagger-api/classes.service'
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -17,8 +17,11 @@ export class FindPartnerClassContentComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
+		private classService: ClassesService,
+		private _snackBar: MatSnackBar,
   	) { }
 
+	myNewClass: any;
 
 	findPartnerForm: FormGroup;
 
@@ -58,78 +61,78 @@ export class FindPartnerClassContentComponent implements OnInit {
 	myClasses:any = [];
 
 	resultClasses = [ // Replace with API
-		{
-		"name": "Class 1",
-		"language": "English",
-		"country": "au",
-		"year": "8",
-		"subject": "mathematics",
-		"topics": [
-			"addition",
-			"subtraction"
-		],
-		"level": 2
-		},
-		{
-		"name": "Class 2",
-		"language": "English",
-		"country": "gb",
-		"year": "9",
-		"subject": "mathematics",
-		"topics": [
-			"division",
-			"subtraction"
-		],
-		"level": 2
-		},
-		{
-		"name": "Class 3",
-		"language": "English",
-		"country": "us",
-		"year": "7",
-		"subject": "mathematics",
-		"topics": [
-			"addition",
-			"multiplication"
-		],
-		"level": 1
-		},
-		{
-		"name": "Class 4",
-		"language": "English",
-		"country": "us",
-		"year": "7",
-		"subject": "mathematics",
-		"topics": [
-			"addition",
-			"multiplication"
-		],
-		"level": 1
-		},
-		{
-		"name": "Class 5",
-		"language": "English",
-		"country": "us",
-		"year": "7",
-		"subject": "mathematics",
-		"topics": [
-			"addition",
-			"multiplication"
-		],
-		"level": 1
-		},
-		{
-		"name": "Class 6",
-		"language": "English",
-		"country": "us",
-		"year": "7",
-		"subject": "mathematics",
-		"topics": [
-			"addition",
-			"multiplication"
-		],
-		"level": 1
-		}
+		// {
+		// "name": "Class 1",
+		// "language": "English",
+		// "country": "au",
+		// "year": "8",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"addition",
+		// 	"subtraction"
+		// ],
+		// "level": 2
+		// },
+		// {
+		// "name": "Class 2",
+		// "language": "English",
+		// "country": "gb",
+		// "year": "9",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"division",
+		// 	"subtraction"
+		// ],
+		// "level": 2
+		// },
+		// {
+		// "name": "Class 3",
+		// "language": "English",
+		// "country": "us",
+		// "year": "7",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"addition",
+		// 	"multiplication"
+		// ],
+		// "level": 1
+		// },
+		// {
+		// "name": "Class 4",
+		// "language": "English",
+		// "country": "us",
+		// "year": "7",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"addition",
+		// 	"multiplication"
+		// ],
+		// "level": 1
+		// },
+		// {
+		// "name": "Class 5",
+		// "language": "English",
+		// "country": "us",
+		// "year": "7",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"addition",
+		// 	"multiplication"
+		// ],
+		// "level": 1
+		// },
+		// {
+		// "name": "Class 6",
+		// "language": "English",
+		// "country": "us",
+		// "year": "7",
+		// "subject": "mathematics",
+		// "topics": [
+		// 	"addition",
+		// 	"multiplication"
+		// ],
+		// "level": 1
+		// }
 	];
 
 	contactClass: any;
@@ -137,8 +140,6 @@ export class FindPartnerClassContentComponent implements OnInit {
 	ngOnInit() {
 		this.findPartnerForm = this.fb.group({
 		selectedClass: [null],
-		// selectedYear: [],
-		// selectedLanguage: [],
 		selectedLangProf: [],
 		selectedDuration: []
 		});
@@ -148,15 +149,7 @@ export class FindPartnerClassContentComponent implements OnInit {
 		this.selectedClass = this.findPartnerForm.value.selectedClass;
 		this.isSelected = true;
 	}
-	
-	// yearSelected(){
-	//   this.selectedYear = this.findPartnerForm.value.selectedYear;
-	// }
-	
-	// languageSelected(){
-	//   this.selectedLanguage = this.findPartnerForm.value.selectedLanguage;
-	// }  
-	
+		
 	langProfSelected(){
 		this.selectedLangProf = this.findPartnerForm.value.selectedLangProf;
 	}
@@ -166,13 +159,29 @@ export class FindPartnerClassContentComponent implements OnInit {
 	}
 
 	onSubmit() {
-		// this.submitted = true;
-		// if (this.loginForm.invalid) {
-		//   return;
-		// }
 		this.loading = true;
 		
-		this.router.navigate(['find-partner-class/results']);
+		// this.router.navigate(['find-partner-class/results']);
+
+		console.log("Hello Api:");
+
+		this.myClasses = this.classService.classesGet().subscribe({
+			next: (response) => {
+				this.loading = false;
+				this.resultClasses = response;
+				console.log(this.resultClasses);
+				this.router.navigate(['find-partner-class/results'], {state: {data: response}});
+			},
+			error: (error) => {
+				this.error = error;
+				this._snackBar.open(this.error, 'Close', {
+				duration: 3000
+				});
+				this.loading = false;
+			},
+		});
+
+		
 		// TODO: API Call for results
 		this.loading = false;
 
