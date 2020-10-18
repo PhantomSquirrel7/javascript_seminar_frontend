@@ -39,7 +39,7 @@ export class GamesStudentContentComponent implements OnInit {
   }
 
   onFinished() {
-    console.log("Game Finished");
+    console.log("Game Finished TODO");
   }
 
 }
