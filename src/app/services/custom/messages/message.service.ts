@@ -11,7 +11,9 @@ export class MessageService {
   }
 
   clear(message:string) {
-    this.messages = this.messages.filter(m => m[0] !== message);
+    this.messages = this.messages.filter(function(msg){
+      return msg[0] !== message;
+    })
   }
   clearAll(){
     this.messages = [];

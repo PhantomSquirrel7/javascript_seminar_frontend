@@ -32,7 +32,7 @@
                             <mat-panel-description>
                                 {{ question.question }}
                                 <mat-icon class="headers-align-right" title="delete question"
-                                    (click)="deleteQuestion(question)">
+                                    (click)="$event.stopPropagation(); deleteQuestion(question)">
                                     delete_forever</mat-icon>
                             </mat-panel-description>
                         </mat-expansion-panel-header>
@@ -64,7 +64,7 @@
                             </mat-panel-title>
                             <mat-panel-description>
                                 {{ quiz.description }}
-                                <mat-icon class="headers-align-right" title="delete quiz" (click)="deleteQuiz(quiz)">
+                                <mat-icon class="headers-align-right" title="delete quiz" (click)="$event.stopPropagation(); deleteQuiz(quiz)">
                                     delete_forever</mat-icon>
                             </mat-panel-description>
                         </mat-expansion-panel-header>

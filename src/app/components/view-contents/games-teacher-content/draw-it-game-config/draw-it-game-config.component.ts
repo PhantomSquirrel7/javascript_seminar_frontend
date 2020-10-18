@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { DrawIt } from '@app/models/game-models/drawIt';
+import { MessageService } from '@app/services/custom/messages/message.service';
 
 @Component({
   selector: 'app-draw-it-game-config',
@@ -18,7 +19,7 @@ export class DrawItGameConfigComponent implements OnInit {
     words: []
   };
 
-  constructor(private api: GamesApiService) { }
+  constructor(private api: GamesApiService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.api.getDrawItGames().subscribe(data => {
@@ -31,7 +32,8 @@ export class DrawItGameConfigComponent implements OnInit {
     this.api.deleteDrawItGame(game).subscribe(data => {
       if (data) {
         console.log("delete game", data)
-        this.games = this.games.filter(elem => elem._id !== game._id)
+        this.games = this.games.filter(elem => elem._id !== game._id);
+        this.messageService.add("Game '" + game.name + "' was deleted.", "success");
       }
     });
   }
@@ -42,6 +44,7 @@ export class DrawItGameConfigComponent implements OnInit {
       if (data) {
         this.games.push(data);
         this.resetNewGame();
+        this.messageService.add("Game '" + game.name + "' was created.", "success");
       }
     });
   }
@@ -53,6 +56,7 @@ export class DrawItGameConfigComponent implements OnInit {
         this.games[this.games.findIndex(g => {
           return g._id === data._id
         })] = data;
+        this.messageService.add("Game '" + game.name + "' updated successfully.", "success");
       }
     });
   }

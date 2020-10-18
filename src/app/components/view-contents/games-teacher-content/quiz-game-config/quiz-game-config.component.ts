@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { Question } from '@app/models/game-models/question';
 import { Quiz } from '@app/models/game-models/quiz';
+import { MessageService } from '@app/services/custom/messages/message.service';
 
 @Component({
   selector: 'app-quiz-game-config',
@@ -28,7 +29,7 @@ export class QuizGameConfigComponent implements OnInit {
     answer: []
   };
 
-  constructor(private api: GamesApiService) { }
+  constructor(private api: GamesApiService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.api.getQuestions().subscribe(data => {
@@ -44,8 +45,9 @@ export class QuizGameConfigComponent implements OnInit {
   deleteQuestion(question: Question) {
     this.api.deleteQuestion(question).subscribe(data => {
       if (data) {
-        console.log("delete question", data)
-        this.questions = this.questions.filter(elem => elem._id !== question._id)
+        //console.log("delete question", data)
+        this.questions = this.questions.filter(elem => elem._id !== question._id);
+        this.messageService.add("Question '" + question.name + "' was deleted.", "success");
       }
     });
   }
@@ -53,8 +55,9 @@ export class QuizGameConfigComponent implements OnInit {
   deleteQuiz(quiz: Quiz) {
     this.api.deleteQuiz(quiz).subscribe(data => {
       if (data) {
-        console.log("delete quiz", data)
-        this.quizzes = this.quizzes.filter(elem => elem._id !== quiz._id)
+        //console.log("delete quiz", data)
+        this.quizzes = this.quizzes.filter(elem => elem._id !== quiz._id);
+        this.messageService.add("Quiz '" + quiz.name + "' was deleted.", "success");
       }
     });
   }
@@ -64,6 +67,7 @@ export class QuizGameConfigComponent implements OnInit {
       if (data) {
         this.questions.push(data);
         this.resetNewQuestion();
+        this.messageService.add("New Question created: " + question.name, "success");
       }
     });
   }
@@ -73,6 +77,7 @@ export class QuizGameConfigComponent implements OnInit {
       if (data) {
         this.quizzes.push(data);
         this.resetNewQuestion();
+        this.messageService.add("New Quiz created: " + quiz.name, "success");
       }
     });
   }
@@ -84,6 +89,7 @@ export class QuizGameConfigComponent implements OnInit {
         this.questions[this.questions.findIndex(g => {
           return g._id === question._id
         })] = data;
+        this.messageService.add("Question '" + question.name + "' updated successfully.", "success");
       }
     });
   }
@@ -95,6 +101,7 @@ export class QuizGameConfigComponent implements OnInit {
         this.quizzes[this.quizzes.findIndex(g => {
           return g._id === quiz._id
         })] = data;
+        this.messageService.add("Quiz '" + quiz.name + "' updated successfully.", "success");
       }
     });
   }
