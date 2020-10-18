@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { Alias } from '@app/models/game-models/alias';
+import { MessageService } from '@app/services/custom/messages/message.service';
 
 @Component({
   selector: 'app-alias-game-config',
@@ -17,11 +18,11 @@ export class AliasGameConfigComponent implements OnInit {
     words: []
   };
 
-  constructor(private api: GamesApiService) { }
+  constructor(private api: GamesApiService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.api.getAliasGames().subscribe(data => {
-      console.log("fetch alias", data)
+      //console.log("fetch alias", data)
       this.games = data;
     });
   }
@@ -29,18 +30,20 @@ export class AliasGameConfigComponent implements OnInit {
   deleteGame(game: Alias) {
     this.api.deleteAliasGame(game).subscribe(data => {
       if (data) {
-        console.log("delete game", data)
-        this.games = this.games.filter(elem => elem._id !== game._id)
+        //console.log("delete game", data)
+        this.games = this.games.filter(elem => elem._id !== game._id);
+        this.messageService.add("Game '" + game.name + "' was deleted.", "success");
       }
     });
   }
 
   onCreateGame(game: Alias) {
     this.api.createAliasGame(game).subscribe(data => {
-      console.log("create game", data)
       if (data) {
+        //console.log("create game", data)
         this.games.push(data);
         this.resetNewGame();
+        this.messageService.add("Game '" + game.name + "' was created.", "success");
       }
     });
   }
@@ -48,10 +51,11 @@ export class AliasGameConfigComponent implements OnInit {
   onGameChange(game: Alias) {
     this.api.updateAliasGame(game).subscribe(data => {
       if (data) {
-        console.log("changed game", data)
+        //console.log("changed game", data)
         this.games[this.games.findIndex(g => {
           return g._id === data._id
         })] = data;
+        this.messageService.add("Game '" + game.name + "' updated successfully.", "success");
       }
     });
   }
