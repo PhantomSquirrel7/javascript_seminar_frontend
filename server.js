@@ -27,7 +27,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
 
 // Swagger
 const swaggerUi = require("swagger-ui-express");
@@ -117,25 +117,25 @@ app.get('/games/quiz/quizzes', (req, res) => {
 
 // @swagger
 app.get('/games/quiz/quizzes/:id', (req, res) => {
-   quizGame.findById(req.params.id, (err, game) => {
-       if (err) {
-           console.error(err);
-           return res.sendStatus(404)
-       }
-       if (game == null) return res.sendStatus(404);
-       var allquestions = [];
-       game.questions.forEach(element => {
-        quizQuestion.findById(element, (err1, qst)  => {
-            if (err1) console.error(err1);
-            allquestions.push(qst.toJSON());
-            if (allquestions.length === game.questions.length){
-                game.questions = allquestions;
-                res.status(200).json(game.toJSON());
-            }
-        })
-       });
-      
-   })
+    quizGame.findById(req.params.id, (err, game) => {
+        if (err) {
+            console.error(err);
+            return res.sendStatus(404)
+        }
+        if (game == null) return res.sendStatus(404);
+        var allquestions = [];
+        game.questions.forEach(element => {
+            quizQuestion.findById(element, (err1, qst) => {
+                if (err1) console.error(err1);
+                allquestions.push(qst.toJSON());
+                if (allquestions.length === game.questions.length) {
+                    game.questions = allquestions;
+                    res.status(200).json(game.toJSON());
+                }
+            })
+        });
+
+    })
 
 });
 
@@ -150,17 +150,17 @@ app.get('/games/quiz/quizzes/:id/questions', (req, res) => {
         if (game == null) return res.sendStatus(404);
         var allquestions = [];
         game.questions.forEach(element => {
-         quizQuestion.findById(element, (err1, qst)  => {
-             if (err1) console.error(err1);
-             allquestions.push(qst.toJSON());
-             if (allquestions.length === game.questions.length){
-                 res.status(200).json(allquestions);
-             }
-         })
+            quizQuestion.findById(element, (err1, qst) => {
+                if (err1) console.error(err1);
+                allquestions.push(qst.toJSON());
+                if (allquestions.length === game.questions.length) {
+                    res.status(200).json(allquestions);
+                }
+            })
         });
-       
     })
 });
+
 
 // @swagger
 app.get('/games/quiz/questions', (req, res) => {
@@ -173,7 +173,7 @@ app.get('/games/quiz/questions', (req, res) => {
 // @swagger
 app.get('/games/quiz/question/:id', (req, res) => {
     quizQuestion.findById(req.params.id, (err, qst) => {
-        if(err || qst == null) {
+        if (err || qst == null) {
             console.log(err);
             return res.sendStatus(404);
         }
@@ -188,35 +188,32 @@ app.post('/games/quiz/create', (req, res) => {
         if (err) {
             console.log(err);
             return res.sendStatus(500);
-            }
-        else {
+        } else {
             res.status(200).json(qz.toJSON());
-        } 
+        }
     })
 });
 
 // @swagger
 app.post('/games/quiz/question/create', (req, res) => {
     const newQst = new quizQuestion(req.body);
-    newQst.save((err, qst) =>{
+    newQst.save((err, qst) => {
         if (err) {
             console.log(err);
             return res.sendStatus(500);
-            }
-        else {
+        } else {
             res.status(200).json(qst.toJSON());
-        } 
+        }
     })
 });
 
 // @swagger
 app.put('/games/quiz/:id', (req, res) => {
-    quizGame.findByIdAndUpdate(req.params.id, { name: req.body.name, description: req.body.description, questions: req.body.questions }, {new: true}, (err, game) => {
-        if (err || game == null){
+    quizGame.findByIdAndUpdate(req.params.id, { name: req.body.name, description: req.body.description, questions: req.body.questions }, { new: true }, (err, game) => {
+        if (err || game == null) {
             console.error(err);
             return res.sendStatus(404);
-        }
-        else {      
+        } else {
             res.json(game.toJSON());
         }
     })
@@ -225,12 +222,11 @@ app.put('/games/quiz/:id', (req, res) => {
 
 // @swagger
 app.put('/games/quiz/question/:id', (req, res) => {
-    quizQuestion.findByIdAndUpdate(req.params.id, { type: req.body.type, name: req.body.name, question: req.body.question, options: req.body.options, answer: req.body.answer}, {new: true}, (err, qst) => {
-        if (err || qst == null){
+    quizQuestion.findByIdAndUpdate(req.params.id, { type: req.body.type, name: req.body.name, question: req.body.question, options: req.body.options, answer: req.body.answer }, { new: true }, (err, qst) => {
+        if (err || qst == null) {
             console.error(err);
             return res.sendStatus(404);
-        }
-        else {      
+        } else {
             res.json(qst.toJSON());
         }
     })
@@ -238,13 +234,12 @@ app.put('/games/quiz/question/:id', (req, res) => {
 
 // @swagger
 app.delete('/games/quiz/:id', (req, res) => {
-    quizGame.deleteOne({_id: req.params.id}, (err, quiz) => {
-        if (err)  {
+    quizGame.deleteOne({ _id: req.params.id }, (err, quiz) => {
+        if (err) {
             console.error(err);
             res.sendStatus(404);
-        }
-        else {
-            if(quiz == null) return res.sendStatus(404);
+        } else {
+            if (quiz == null) return res.sendStatus(404);
             res.sendStatus(200)
         }
     })
@@ -253,16 +248,15 @@ app.delete('/games/quiz/:id', (req, res) => {
 
 // @swagger
 app.delete('/games/quiz/question/:id', (req, res) => {
-    quizQuestion.deleteOne({_id: req.params.id}, (err, qst) => {
-        if (err)  {
+    quizQuestion.deleteOne({ _id: req.params.id }, (err, qst) => {
+        if (err) {
             console.error(err);
             res.sendStatus(404);
-        }
-        else {
-            if(qst == null) return res.sendStatus(404);
+        } else {
+            if (qst == null) return res.sendStatus(404);
             res.sendStatus(200)
         }
-    }) 
+    })
 });
 
 
@@ -276,15 +270,15 @@ app.delete('/games/quiz/question/:id', (req, res) => {
 // @swagger
 app.get('/games/drawit/games', (req, res) => {
     drawitGame.find((err, games) => {
-            if (err) return console.error(err);
-            res.json(games);
-        })
+        if (err) return console.error(err);
+        res.json(games);
+    })
 });
 
 // @swagger
 app.get('/games/drawit/:id', (req, res) => {
     drawitGame.findById(req.params.id, (err, game) => {
-        if(err || game == null) {
+        if (err || game == null) {
             console.log(err);
             return res.sendStatus(404);
         }
@@ -299,8 +293,7 @@ app.post('/games/drawit/create', (req, res) => {
         if (err || newGame == null) {
             console.error(err);
             res.sendStatus()
-        }
-        else {
+        } else {
             res.status(200).json(newGame.toJSON());
         }
     });
@@ -308,12 +301,11 @@ app.post('/games/drawit/create', (req, res) => {
 
 // @swagger
 app.put('/games/drawit/:id', (req, res) => {
-    drawitGame.findByIdAndUpdate(req.params.id, { name: req.body.name, description: req.body.description, words: req.body.words}, {new: true}, (err, game) => {
-        if (err || game == null){
+    drawitGame.findByIdAndUpdate(req.params.id, { name: req.body.name, description: req.body.description, words: req.body.words }, { new: true }, (err, game) => {
+        if (err || game == null) {
             console.error(err);
             return res.sendStatus(404);
-        }
-        else {      
+        } else {
             res.json(game.toJSON());
         }
     })
@@ -322,16 +314,15 @@ app.put('/games/drawit/:id', (req, res) => {
 
 // @swagger
 app.delete('/games/drawit/:id', (req, res) => {
-    drawitGame.deleteOne({_id: req.params.id}, (err, game) => {
-        if (err)  {
+    drawitGame.deleteOne({ _id: req.params.id }, (err, game) => {
+        if (err) {
             console.error(err);
             res.sendStatus(404);
-        }
-        else {
-            if(game == null) return res.sendStatus(404);
+        } else {
+            if (game == null) return res.sendStatus(404);
             res.sendStatus(200)
         }
-    }) 
+    })
 });
 
 
@@ -354,7 +345,7 @@ app.get('/games/alias/games', (req, res) => {
 // @swagger
 app.get('/games/alias/:id', (req, res) => {
     aliasGame.findById(req.params.id, (err, game) => {
-        if(err || game == null) {
+        if (err || game == null) {
             console.log(err);
             return res.sendStatus(404);
         }
@@ -403,4 +394,4 @@ app.delete('/games/alias/:id', (req, res) => {
 
 
 // Init games
-games.gameInit(io, aliasGame);
+games.gameInit(io);

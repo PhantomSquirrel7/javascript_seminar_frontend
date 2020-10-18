@@ -51,7 +51,8 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
       this.playerList = gameSession.players;
       this.currentPlayer = gameSession.currentPlayer;
       this.numberOfGuessedWords = gameSession.numberOfGuessedWords;
-      if (this.words.length == 0) {
+      // Load new words when game started and currently words are empty
+      if (this.words.length == 0 && this.gameStarted) {
         this.words = gameSession.wordsToGuess;
         this.currentWord = this.words[0];
       }
@@ -64,13 +65,12 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   }
 
   // Starts a game Session
-  // TODO: Get Words from Server
   startGame(): void {
     let updateMessage: AliasUpdate = this.gamesService.gameSession;
     updateMessage.countDownStarted = true;
     this.countDownStarted = true;
-    // Set ID of words that will be used to query database
-    updateMessage.taskId = "5f7f058b1a0b070017f11965"
+    updateMessage.getWords = true;
+    updateMessage.taskId = this.taskId;
     this.gamesService.sendUpdate(updateMessage);
     this.gameStarted = true;
     this.words = []
@@ -82,14 +82,13 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     clearInterval(this.timeInterval);
     let session: AliasUpdate = this.gamesService.gameSession;
     session.aliasOver = true;
-    this.gamesService.sendPlayerResult(session)
+    this.gamesService.sendPlayerResult(session);
     this.currentWord = "";
     this.currentWordIndex = 0;
     this.lastSession = session;
   }
 
   setTimer(): void {
-    console.log("SET TIMER");
     this.timeLeftSeconds = this.timelimit;
     this.timeInterval = setInterval(() => {
       this.timeLeftSeconds -= 1;
@@ -122,5 +121,4 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     this.currentWordIndex = (this.currentWordIndex+1) % this.words.length;
     this.currentWord = this.words[this.currentWordIndex];
   }
-
 }

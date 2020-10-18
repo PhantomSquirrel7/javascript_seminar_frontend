@@ -1,15 +1,14 @@
-const http = require("http");
+const fetch = require('node-fetch');
+
 
 // Map <SessionId, GameState>
 var openSessions = new Map();
 var io;
-var alias
+
 
 module.exports = {
-    gameInit: function(ioServer, aliasEndpoint) {
+    gameInit: function(ioServer) {
         console.log("Creating Games socket");
-        alias = aliasEndpoint;
-
         //create a io socket
         io = ioServer
             // io = socket(server);
@@ -54,7 +53,6 @@ async function handleJoinGameMessage(data, socket) {
         console.log("Create new Session for " + data.playerName);
         let currentGame = await createSession(data.sessionId, data.gameType, data.playerName, data.taskId);
         openSessions.set(data.sessionId, currentGame);
-        // TODO get Words already in this step with the task ID
 
         io.to(data.sessionId).emit("updateGame", currentGame);
     } else {
@@ -73,15 +71,30 @@ async function handleJoinGameMessage(data, socket) {
     }
 };
 
-function createSession(sessionId, gameType, playerName) {
-    // TODO maybe split depending on gametype
+function createSession(sessionId, gameType, playerName, taskId) {
     if (gameType == "alias") {
-        return createAliasSession(sessionId, gameType, playerName)
+        return createAliasSession(sessionId, gameType, playerName, taskId)
+    } else if (gameType == "quiz") {
+        return createQuizSession(sessionId, gameType, playerName, taskId);
     }
 }
 
+async function createQuizSession(sessionId, gameType, playerName, taskId) {
+    var session = {
+        gameType: gameType,
+        sessionId: sessionId,
+        players: [playerName],
+        quizes: [],
+        quizIndex: 0,
+        getSolution: false,
+        countDownStarted: false,
+        quizOver: false,
+        taskId: taskId
+    }
+    return session;
+}
+
 function createAliasSession(sessionId, gameType, playerName, taskId) {
-    // Create alias Session
     var session = {
         gameType: gameType,
         sessionId: sessionId,
@@ -104,26 +117,81 @@ async function handleUpdateGameMessage(data) {
         console.log("Closing session: " + data.sessionId);
         return;
     }
-
-    console.log("OpenSession: " + JSON.stringify(openSessions.get(data.sessionId)));
-    // If game just started, query words and send them 
-    if (data.countDownStarted == true && data.wordsToGuess.length == 0) {
-        // TODO Sync with aliasEndpoint
-        // TODO find with data.wordsId
-        const query = alias.find((err, game) => {
-            if (err) {
-                data.wordsToGuess = ["Banana", "Apple", "Ambulance", "Trump", "Model-based design"];
-            }
-            // Get a random set of words for a session
-            data.wordsToGuess = game[Math.floor(Math.random() * game.length)].words;
-        });
-        await query;
+    if (data.gameType == "alias") {
+        await handleAliasUpdateMessage(data);
+    } else if (data.gameType == "quiz") {
+        await handleQuizUpdateMessage(data);
+    } else {
+        console.log("Unknown gameType: " + data.gameType);
     }
+};
 
+async function handleAliasUpdateMessage(data) {
+    if (data.countDownStarted == true && data.wordsToGuess.length == 0 || data.getWords == true) {
+        var hex = /[0-9A-Fa-f]{6}/g;
+        data.getWords = false;
+        if (data.taskId == "" || data.taskId == null || data.taskId == undefined || !hex.test(data.taskId)) {
+            // Get random words
+            console.log("Wrong taskID, get random words");
+
+            fetch('http://localhost:8080/games/alias/games/').then(res => res.json()).then(json => {
+                data.wordsToGuess = json[Math.floor(Math.random() * json.length)].words;
+                io.to(data.sessionId).emit("updateGame", data);
+                openSessions.set(data.sessionId, data);
+            }).catch(err => console.log(err));
+        } else {
+            // Find by ID
+            fetch('http://localhost:8080/games/alias/' + data.taskId).then(res => res.json()).then(json => {
+                data.wordsToGuess = json[Math.floor(Math.random() * json.length)].words;
+                io.to(data.sessionId).emit("updateGame", data);
+                openSessions.set(data.sessionId, data);
+            }).catch(err => {
+                console.log(err);
+                data.wordsToGuess = ["Banana", "Trump", "Bicycle", "Pluto"];
+                io.to(data.sessionId).emit("updateGame", data);
+                openSessions.set(data.sessionId, data);
+            });
+        }
+    }
     io.to(data.sessionId).emit("updateGame", data);
     openSessions.set(data.sessionId, data);
-    // console.log("Update Game" + JSON.stringify(data));
-};
+}
+
+function handleQuizUpdateMessage(data) {
+    // Get new Questions!
+    if (data.countDownStarted == true && data.quizes.length == 0) {
+        var taskId;
+        var hex = /[0-9A-Fa-f]{6}/g;
+        if (data.taskId == null || data.taskId == undefined || data.taskId == "" || !hex.test(data.taskId)) {
+            console.log("Invalid Task ID, sending random quiz");
+            taskId = "5f8c26864667c50017f90e77";
+            fetch('http://localhost:8080/games/quiz/quizzes/').then(res => res.json()).then(json => {
+                taskId = json[Math.floor(Math.random() * json.length)]._id;
+            }).catch(err => console.log(err));
+        } else {
+            taskId = data.taskId;
+        }
+        fetch('http://localhost:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
+            json.forEach(question => {
+                var q = {
+                    question: question.question,
+                    answers: question.options,
+                    correctAnswers: question.answer,
+                    selectedAnswers: [],
+                    type: question.type
+                };
+                data.quizes.push(q);
+            });
+            io.to(data.sessionId).emit("updateGame", data);
+            openSessions.set(data.sessionId, data);
+        }).catch(err => console.log(err));
+
+    } else {
+        // TODO Maybe get answers later
+        io.to(data.sessionId).emit("updateGame", data);
+        openSessions.set(data.sessionId, data);
+    }
+}
 
 // For Quiz give students also the correct result
 // For Alias just forward the number of correct words!
