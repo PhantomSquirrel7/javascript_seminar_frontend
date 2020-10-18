@@ -65,13 +65,12 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   }
 
   // Starts a game Session
-  // TODO: Get Words from Server
   startGame(): void {
     let updateMessage: AliasUpdate = this.gamesService.gameSession;
     updateMessage.countDownStarted = true;
     this.countDownStarted = true;
-    // Set ID of words that will be used to query database
-    updateMessage.taskId = "5f7f058b1a0b070017f11965"
+    updateMessage.getWords = true;
+    updateMessage.taskId = this.taskId;
     this.gamesService.sendUpdate(updateMessage);
     this.gameStarted = true;
     this.words = []
@@ -90,7 +89,6 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   }
 
   setTimer(): void {
-    console.log("SET TIMER");
     this.timeLeftSeconds = this.timelimit;
     this.timeInterval = setInterval(() => {
       this.timeLeftSeconds -= 1;

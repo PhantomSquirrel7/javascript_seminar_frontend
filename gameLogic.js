@@ -1,18 +1,14 @@
-const http = require("http");
-const { Session } = require("protractor");
+const fetch = require('node-fetch');
+
 
 // Map <SessionId, GameState>
 var openSessions = new Map();
 var io;
-var aliasQuery;
-var quizQuery;
+
 
 module.exports = {
-    gameInit: function(ioServer, aliasEndpoint, quizEndpoint) {
+    gameInit: function(ioServer) {
         console.log("Creating Games socket");
-        aliasQuery = aliasEndpoint;
-        quizQuery = quizEndpoint;
-
         //create a io socket
         io = ioServer
             // io = socket(server);
@@ -131,63 +127,69 @@ async function handleUpdateGameMessage(data) {
 };
 
 async function handleAliasUpdateMessage(data) {
-    if (data.countDownStarted == true && data.wordsToGuess.length == 0) {
-        // TODO Sync with alias endpoints
-
-        if (data.taskId == "" || data.taskId == null || data.taskId == undefined) {
+    if (data.countDownStarted == true && data.wordsToGuess.length == 0 || data.getWords == true) {
+        var hex = /[0-9A-Fa-f]{6}/g;
+        data.getWords = false;
+        if (data.taskId == "" || data.taskId == null || data.taskId == undefined || !hex.test(data.taskId)) {
             // Get random words
-            const query = aliasQuery.find((err, game) => {
-                if (err) {
-                    data.wordsToGuess = ["Banana", "Apple", "Ambulance", "Trump", "Model-based design"];
-                } else {
-                    // Get a random set of words for a session
-                    data.wordsToGuess = game[Math.floor(Math.random() * game.length)].words;
-                }
-            });
-            await query;
+            console.log("Wrong taskID, get random words");
+
+            fetch('http://localhosT:8080/games/alias/games/').then(res => res.json()).then(json => {
+                data.wordsToGuess = json[Math.floor(Math.random() * json.length)].words;
+                io.to(data.sessionId).emit("updateGame", data);
+                openSessions.set(data.sessionId, data);
+            }).catch(err => console.log(err));
         } else {
             // Find by ID
-            const query = aliasGame.findById(data.taskId, (err, game) => {
-                if (err) {
-                    data.wordsToGuess = ["Banana", "Apple", "Ambulance", "Trump", "Model-based design"];
-                } else {
-                    data.wordsToGuess = game.words;
-                }
+            fetch('http://localhosT:8080/games/alias/' + data.taskId).then(res => res.json()).then(json => {
+                data.wordsToGuess = json[Math.floor(Math.random() * json.length)].words;
+                io.to(data.sessionId).emit("updateGame", data);
+                openSessions.set(data.sessionId, data);
+            }).catch(err => {
+                console.log(err);
+                data.wordsToGuess = ["Banana", "Trump", "Bicycle", "Pluto"];
+                io.to(data.sessionId).emit("updateGame", data);
+                openSessions.set(data.sessionId, data);
             });
-            await query;
         }
     }
     io.to(data.sessionId).emit("updateGame", data);
     openSessions.set(data.sessionId, data);
 }
 
-async function handleQuizUpdateMessage(data) {
+function handleQuizUpdateMessage(data) {
+    // Get new Questions!
     if (data.countDownStarted == true && data.quizes.length == 0) {
-        data.quizes = await getQuiz(data.taskId);
-    }
-    if (data.getSolution) {
-        quizes = await getQuiz(data.taskId);
-        data.quizes.correctAnswers = quizes.correctAnswers;
-    }
-    io.to(data.sessionId).emit("updateGame", data);
-    openSessions.set(data.sessionId, data);
-}
+        var taskId;
+        var hex = /[0-9A-Fa-f]{6}/g;
+        if (data.taskId == null || data.taskId == undefined || data.taskId == "" || !hex.test(data.taskId)) {
+            console.log("Invalid Task ID, sending random quiz");
+            taskId = "5f85966144308d767652771a";
+            fetch('http://localhosT:8080/games/quiz/quizzes/').then(res => res.json()).then(json => {
+                taskId = json[Math.floor(Math.random() * json.length)]._id;
+            }).catch(err => console.log(err));
+        } else {
+            taskId = data.taskId;
+        }
+        fetch('http://localhosT:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
+            json.forEach(question => {
+                var q = {
+                    question: question.question,
+                    answers: question.options,
+                    correctAnswers: question.answer,
+                    selectedAnswers: []
+                };
+                data.quizes.push(q);
+            });
+            io.to(data.sessionId).emit("updateGame", data);
+            openSessions.set(data.sessionId, data);
+        }).catch(err => console.log(err));
 
-// TODO Really get something
-async function getQuiz(taskId) {
-    var quiz1 = {
-        question: "Who was it?",
-        answers: ["A", "B", "C", "All of them"],
-        selectedAnswers: [],
-        correctAnswers: []
+    } else {
+        // TODO Maybe get answers later
+        io.to(data.sessionId).emit("updateGame", data);
+        openSessions.set(data.sessionId, data);
     }
-    var quiz2 = {
-        question: "What is true?",
-        answers: ["A==a", "B===B", "1+'1'", "All of them"],
-        selectedAnswers: [],
-        correctAnswers: []
-    }
-    return [quiz1, quiz2]
 }
 
 // For Quiz give students also the correct result

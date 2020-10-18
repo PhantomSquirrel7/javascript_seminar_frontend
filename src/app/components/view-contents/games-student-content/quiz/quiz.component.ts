@@ -38,7 +38,6 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log("Try joining game");
     this.gamesService.sendjoinGame(this.username, this.sessionId, "quiz", this.taskId);
     this.gameUpdateSubscriptionEvent = this.gamesService.gameUpdateEvent.subscribe(gameState => {
       this.handleRecievedUpdateGame(gameState);
@@ -57,8 +56,14 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
     this.quizUpdate.getSolution = true;
     this.quizUpdate.quizOver = true;
     this.gamesService.sendUpdate(this.quizUpdate);
-    console.log("Sending quizzes" + JSON.stringify(this.quizUpdate));
     this.finished.emit(true);
+  }
+
+  onGameOver(): void {
+    this.quizUpdate.quizOver = true;
+    this.sendUpdateGame();
+    clearInterval(this.timeInterval);
+    console.log("TODO Gameover");
   }
 
   /*
@@ -96,7 +101,6 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   }
 
   setTimer(): void {
-    console.log("SET TIMER");
     this.timeLeftSeconds = this.timeLimit;
     this.timeInterval = setInterval(() => {
       this.timeLeftSeconds -= 1;
@@ -107,17 +111,11 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   }
 
 
-  onGameOver(): void {
-    this.quizUpdate.quizOver = true;
-    this.sendUpdateGame();
-    clearInterval(this.timeInterval);
-    console.log("TODO Gameover");
-  }
+
 
 
   // Updates the current view with a recieved update
   handleRecievedUpdateGame(quizUpdate: QuizUpdate) {
-    console.log("TODO Gameupdate" + JSON.stringify(quizUpdate));
     if (quizUpdate.quizes.length > 0) {
       this.currentQuiz = quizUpdate.quizes[quizUpdate.quizIndex];
     }
@@ -133,9 +131,10 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   }
 
   getBackgroundColor(answer) {
-    if (this.quizUpdate.quizOver == true) {
+    if (this.quizUpdate.quizOver == true && this.quizUpdate.quizes.length != 0) {
       // Correct solution selected
-      if ((this.quizUpdate.quizes[this.quizUpdate.quizIndex].selectedAnswers.includes(answer)
+      if ((
+        this.quizUpdate.quizes[this.quizUpdate.quizIndex].selectedAnswers.includes(answer)
         && this.quizUpdate.quizes[this.quizUpdate.quizIndex].correctAnswers.includes(answer)
       ) ||
       // Wrong solution not selected

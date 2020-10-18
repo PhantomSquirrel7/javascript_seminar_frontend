@@ -126,17 +126,15 @@ app.get('/games/quiz/quizzes/:id', (req, res) => {
         var allquestions = [];
         game.questions.forEach(element => {
             quizQuestion.findById(element, (err1, qst) => {
-                if (err1) {
-                    console.error(err1);
-                    return;
-                }
-                if (qst == null) {
-                    return;
-                }
+                if (err1) console.error(err1);
                 allquestions.push(qst.toJSON());
+                if (allquestions.length === game.questions.length) {
+                    game.questions = allquestions;
+                    res.status(200).json(game.toJSON());
+                }
             })
         });
-        res.status(200).json(allquestions);
+
     })
 
 });
@@ -153,19 +151,17 @@ app.get('/games/quiz/quizzes/:id/questions', (req, res) => {
         var allquestions = [];
         game.questions.forEach(element => {
             quizQuestion.findById(element, (err1, qst) => {
-                if (err1) {
-                    console.error(err1);
-                    return;
-                }
-                if (qst == null) {
-                    return;
-                }
+                if (err1) console.error(err1);
                 allquestions.push(qst.toJSON());
+                if (allquestions.length === game.questions.length) {
+                    res.status(200).json(allquestions);
+                }
             })
         });
-        res.status(200).json(allquestions);
+
     })
 });
+
 
 // @swagger
 app.get('/games/quiz/questions', (req, res) => {
@@ -399,4 +395,4 @@ app.delete('/games/alias/:id', (req, res) => {
 
 
 // Init games
-games.gameInit(io, aliasGame);
+games.gameInit(io);
