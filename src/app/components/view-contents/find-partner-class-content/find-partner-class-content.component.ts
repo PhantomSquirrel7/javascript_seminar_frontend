@@ -2,7 +2,6 @@ import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import { User } from '@app/models';
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { ClassesService } from 'src/app/services/swagger-api/classes.service'
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
