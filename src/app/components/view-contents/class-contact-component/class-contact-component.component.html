@@ -17,8 +17,9 @@
         <span>Subject:</span>
       </div>
       <div style="display: flex;">
-        <span style="margin-left: 50px; margin-right: 195px;">8</span>
-        <span>Physics</span>
+        <span style="margin-left: 50px; margin-right: 195px;">{{actClass.level}}</span> 
+        <!-- TODO: eventually change "actClass.level" to "actClass.year" -->
+        <span>{{actClass.subject}}</span>
       </div>
     </div>
     
@@ -30,7 +31,7 @@
           <span>Language proficiency:</span>
         </div>
         <div style="display: flex;">
-          <span style="margin-left: 50px; margin-right: 155px;">English</span>
+          <span style="margin-left: 50px; margin-right: 155px;">{{actClass.language}}</span>
           <span>Intermediate (B1)</span>
         </div>
       </li>

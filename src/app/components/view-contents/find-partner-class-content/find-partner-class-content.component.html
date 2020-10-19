@@ -7,7 +7,7 @@
                 For which class would you like to plan next meeting?
                 <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
                     <option [ngValue]="null" disabled>select your class</option>
-                    <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.className}}</option>
+                    <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.name}}</option>
                 </select>
             </form>
             <br>

@@ -32,18 +32,18 @@ export class FindPartnerClassContentComponent implements OnInit {
 	selectedClass: any; // Type Class
 
 	user_classes = [ // Todo: Replace with API
-		{
-		classId: 1,
-		className: "Class 1"
-		},
-		{
-		classId: 2,
-		className: "Class 2"
-		},
-		{
-		classId: 3,
-		className: "Class 3"
-		}
+		// {
+		// classId: 1,
+		// className: "Class 1"
+		// },
+		// {
+		// classId: 2,
+		// className: "Class 2"
+		// },
+		// {
+		// classId: 3,
+		// className: "Class 3"
+		// }
 	]
 
 	// user_years = Array.from(Array(8).keys(), x => x+5);
@@ -143,6 +143,20 @@ export class FindPartnerClassContentComponent implements OnInit {
 		selectedLangProf: [],
 		selectedDuration: []
 		});
+		this.classService.classesGet().subscribe({
+			next: (response) => {
+				this.loading = false;
+				this.user_classes = response;
+				console.log(this.user_classes[0]);
+			},
+			error: (error) => {
+				this.error = error;
+				this._snackBar.open(this.error, 'Close', {
+				duration: 3000
+				});
+				this.loading = false;
+			},
+		});
 	}
 
 	classSelected(){
@@ -165,6 +179,7 @@ export class FindPartnerClassContentComponent implements OnInit {
 
 		console.log("Hello Api:");
 
+		// this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id).subscribe({
 		this.myClasses = this.classService.classesGet().subscribe({
 			next: (response) => {
 				this.loading = false;
@@ -181,25 +196,6 @@ export class FindPartnerClassContentComponent implements OnInit {
 			},
 		});
 
-		
-		// TODO: API Call for results
 		this.loading = false;
-
-		// this.loginService
-		//   .login({ email: this.f.email.value, password: this.f.password.value })
-		//   .pipe(first())
-		//   .subscribe({
-		//     next: (response) => {
-		//       this.loading = false;          
-		//       this.router.navigate([this.returnUrl]);
-		//     },
-		//     error: (error) => {
-		//       this.error = error;
-		//       this._snackBar.open(this.error, 'Close', {
-		//         duration: 3000
-		//       });
-		//       this.loading = false;
-		//     },
-		//   });
 	}
 }
