@@ -19,15 +19,19 @@ export class PlanMeetingContentComponent implements OnInit  {
   error = '';
   isSelected = false;
   selectedClass: any; // Type Class
+  selectedTypeOfClass = ''
+  selectedDuration: number;
+  durations = [30, 45, 60, 90, 120];
+  typeOfClasses = ['Quiz','Ice-Breaker Game','Others',]
   loading = false;
 
   user_classes = [];
 
   constructor(
     private fb: FormBuilder,
-		private router: Router,
-		private classService: ClassesService,
-		private _snackBar: MatSnackBar,
+    private router: Router,
+    private classService: ClassesService,
+    private _snackBar: MatSnackBar,
   ) {}
  
   ngOnInit() {
@@ -35,24 +39,47 @@ export class PlanMeetingContentComponent implements OnInit  {
       selectedClass: [null]
     });
     this.classService.classesGet().subscribe({
-			next: (response) => {
-				this.loading = false;
-				this.user_classes = response;
-				console.log(this.user_classes[0]);
-			},
-			error: (error) => {
-				this.error = error;
-				this._snackBar.open(this.error, 'Close', {
-				duration: 3000
-				});
-				this.loading = false;
-			},
-		});
+      next: (response) => {
+        this.loading = false;
+        this.user_classes = response;
+        console.log(this.user_classes[0]);
+      },
+      error: (error) => {
+        this.error = error;
+        this._snackBar.open(this.error, 'Close', {
+        duration: 3000
+        });
+        this.loading = false;
+      },
+    });
   }
 
   classSelected(){
     this.selectedClass = this.clsSelecForm.value.selectedClass;
     this.isSelected = true;
   }  
+
+  typeSelected(event) {
+    let type = this.stringFormatter(event.target.value);
+
+    switch(type) {
+      case "quiz": {
+        this.selectedTypeOfClass = 'quiz'
+        break
+      }
+      case "ice-breaker game": {
+        this.selectedTypeOfClass = 'ice-breaker'
+        break
+      }
+      default: {
+        this.selectedTypeOfClass = 'other'
+        break
+      }
+    }
+  }
+
+  stringFormatter(text: string) {
+    return text.toLowerCase();
+  }
 
 }

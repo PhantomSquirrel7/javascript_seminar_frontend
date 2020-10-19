@@ -2,18 +2,71 @@
     <form [formGroup]="clsSelecForm" class="class-selection">
         For which class would you like to plan next meeting?
         <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
-            <option [ngValue]="null" disabled>select your class</option>
+            <option [ngValue]="null" disabled>Select your class</option>
             <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.name}}</option>
         </select>
     </form>
     <div *ngIf="isSelected" class="planning-section">
         <div class="card" style="width: 70vmax; margin-top: 50px;">
             <div class="card-body">
-                <h3 class="card-title">You're planning for: <span class="text-primary">{{selectedClass.name}}</span> </h3>
-                <form [formGroup]="clsSelecForm" class="class-selection">
-                    When would you like to meet? (your timezone)?
+                <h3 class="card-title">You're planning for: <span class="text-primary">{{selectedClass.className}}</span> </h3>
 
-                </form>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div fxFlex="0 0 45%">When would you like to meet?</div>
+                    <mat-form-field>
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                </div>
+
+                <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
+                    <div fxFlex="0 0 45%">How long would you like to meet?</div>
+                    <select class="form-control form-control-sm fa-pull-right"
+                    style="max-width: 300px;">
+                        <option [ngValue]="null" disabled>Please Select Duration of meeting</option>
+                        <option [ngValue]="selectedDuration" *ngFor="let duration of durations">{{duration}} mins</option>
+                    </select>
+                </div>
+
+                <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
+                    <div fxFlex="0 0 45%">How would you like to organize the students?</div>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-primary">Tandem</button>
+                        <button type="button" class="btn btn-light">Group of 3</button>
+                        <button type="button" class="btn btn-light">Group of 4</button>
+                        <button type="button" class="btn btn-light">Whole Class</button>
+                      </div>
+                </div>
+
+                <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
+                    <div fxFlex="0 0 45%">Please select Type of Class:</div>
+                    <select (change)="typeSelected($event)" class="form-control form-control-sm fa-pull-right"
+                    style="max-width: 300px;">
+                        <option [ngValue]="null" disabled>Please Select Type of Class</option>
+                        <option *ngFor="let typeOfClass of typeOfClasses">{{typeOfClass}}</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div *ngIf="selectedTypeOfClass === 'quiz'" class="card" style="width: 70vmax; margin-top: 50px;">
+            <div class="card-body">
+                Dummy game component Here
+            </div>
+        </div>
+
+        <div *ngIf="selectedTypeOfClass === 'ice-breaker'" class="card" style="width: 70vmax; margin-top: 50px;">
+            <div class="card-body">
+                Ice Breaker game component Here
+            </div>
+        </div>
+
+        <div *ngIf="selectedTypeOfClass === 'other'" class="card" style="width: 70vmax; margin-top: 50px;">
+            <div class="card-body">
+                Other component Here
             </div>
         </div>
     </div>
