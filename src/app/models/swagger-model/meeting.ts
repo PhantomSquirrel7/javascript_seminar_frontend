@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 
-export interface InlineResponse2005 { 
+export interface Meeting { 
     id?: string;
     project?: string;
     date?: Date;
-    groupAssignments?: InlineResponse2005.GroupAssignmentsEnum;
+    groupAssignments?: Meeting.GroupAssignmentsEnum;
     groups?: Array<Array<string>>;
 }
-export namespace InlineResponse2005 {
+export namespace Meeting {
     export type GroupAssignmentsEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';
     export const GroupAssignmentsEnum = {
         Tandem: 'tandem' as GroupAssignmentsEnum,

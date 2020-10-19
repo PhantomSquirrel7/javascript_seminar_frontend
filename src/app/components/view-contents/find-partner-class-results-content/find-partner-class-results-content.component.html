@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <div style="float: left; margin-bottom: 20px;">
                         <h3 class="card-title">{{myclass.name}}</h3>
-                        <p class="card-text">Year: {{myclass.year}}<br>Language: {{myclass.language}}</p>
+                        <p class="card-text">Year: {{myclass.level + 3}}<br>Language: {{myclass.language}}</p>
                         <form [formGroup]="findPartnerForm" (ngSubmit)="detailsFor(myclass)">
                             <button class="btn btn-link btn-outline-primary" data-toggle="modal" data-target="#classInfo">More</button>
                         </form>

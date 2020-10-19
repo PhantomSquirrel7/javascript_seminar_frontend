@@ -17,9 +17,10 @@ import { CustomHttpUrlEncodingCodec }                        from '../../swagger
 
 import { Observable }                                        from 'rxjs';
 
-import { InlineResponse20012 } from '../../models/swagger-model/inlineResponse20012';
-import { InlineResponse20013 } from '../../models/swagger-model/inlineResponse20013';
+import { Body13 } from '../../models/swagger-model/body13';
+import { Body14 } from '../../models/swagger-model/body14';
 import { InlineResponse2004 } from '../../models/swagger-model/inlineResponse2004';
+import { InlineResponse201 } from '../../models/swagger-model/inlineResponse201';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
@@ -27,7 +28,7 @@ import { Configuration }                                     from '../../swagger
 
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class StudentsService {
 
     protected basePath = 'https://api-globy.herokuapp.com/v1';
     public defaultHeaders = new HttpHeaders();
@@ -59,15 +60,74 @@ export class UserService {
 
 
     /**
-     * Get your user
-     * Logged in users can fetch only their own user information
+     * Register a student account
+     * 
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public meGet(observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2004>;
-    public meGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2004>>;
-    public meGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2004>>;
-    public meGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public studentsPost(body: Body13, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse201>;
+    public studentsPost(body: Body13, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse201>>;
+    public studentsPost(body: Body13, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse201>>;
+    public studentsPost(body: Body13, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling studentsPost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<InlineResponse201>('post',`${this.basePath}/students`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get student information
+     * get the student profile
+     * @param studentId student id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public studentsStudentIdGet(studentId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2004>;
+    public studentsStudentIdGet(studentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2004>>;
+    public studentsStudentIdGet(studentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2004>>;
+    public studentsStudentIdGet(studentId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (studentId === null || studentId === undefined) {
+            throw new Error('Required parameter studentId was null or undefined when calling studentsStudentIdGet.');
+        }
 
         let headers = this.defaultHeaders;
 
@@ -91,7 +151,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse2004>('get',`${this.basePath}/me`,
+        return this.httpClient.request<InlineResponse2004>('get',`${this.basePath}/students/${encodeURIComponent(String(studentId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -102,62 +162,24 @@ export class UserService {
     }
 
     /**
-     * Get notifications of the user
-     * All the notifications of the user will be returned
+     * update student information
+     * update the student profile
+     * @param body 
+     * @param studentId Student id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public meNotificationsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse20012>>;
-    public meNotificationsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse20012>>>;
-    public meNotificationsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse20012>>>;
-    public meNotificationsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public studentsStudentIdPatch(body: Body14, studentId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2004>;
+    public studentsStudentIdPatch(body: Body14, studentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2004>>;
+    public studentsStudentIdPatch(body: Body14, studentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2004>>;
+    public studentsStudentIdPatch(body: Body14, studentId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling studentsStudentIdPatch.');
         }
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<Array<InlineResponse20012>>('get',`${this.basePath}/me/notifications`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Get a specific notificatioin
-     * Returns a notification and marks it as opened
-     * @param id Notification id
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public meNotificationsIdGet(id: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20013>;
-    public meNotificationsIdGet(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20013>>;
-    public meNotificationsIdGet(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20013>>;
-    public meNotificationsIdGet(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling meNotificationsIdGet.');
+        if (studentId === null || studentId === undefined) {
+            throw new Error('Required parameter studentId was null or undefined when calling studentsStudentIdPatch.');
         }
 
         let headers = this.defaultHeaders;
@@ -180,53 +202,16 @@ export class UserService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<InlineResponse20013>('get',`${this.basePath}/me/notifications/${encodeURIComponent(String(id))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Get all your students
-     * Logged in users can fetch only their students
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public meStudentsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2004>>;
-    public meStudentsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2004>>>;
-    public meStudentsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2004>>>;
-    public meStudentsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
             'application/json'
         ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<Array<InlineResponse2004>>('get',`${this.basePath}/me/students`,
+        return this.httpClient.request<InlineResponse2004>('patch',`${this.basePath}/students/${encodeURIComponent(String(studentId))}`,
             {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

@@ -9,7 +9,16 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Body12 } from './body12';
 
-export interface Schools extends Array<Body12> { 
+export interface Body13 { 
+    firstName: string;
+    lastName: string;
+    /**
+     * must be unique
+     */
+    email: string;
+    /**
+     * At least one number and one letter
+     */
+    password: string;
 }

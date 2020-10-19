@@ -14,10 +14,15 @@ import { Inject, Injectable, Optional }                      from '@angular/core
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
+
 import { Observable }                                        from 'rxjs';
-import { Body8 } from '../../models/swagger-model/body8';
-import { InlineResponse2004 } from '../../models/swagger-model/inlineResponse2004';
-import { InlineResponse2005 } from '../../models/swagger-model/inlineResponse2005';
+
+import { Body10 } from '../../models/swagger-model/body10';
+import { Body11 } from '../../models/swagger-model/body11';
+import { InlineResponse2006 } from '../../models/swagger-model/inlineResponse2006';
+import { InlineResponse2007 } from '../../models/swagger-model/inlineResponse2007';
+import { InlineResponse2008 } from '../../models/swagger-model/inlineResponse2008';
+import { InlineResponse2009 } from '../../models/swagger-model/inlineResponse2009';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
@@ -63,9 +68,9 @@ export class ProjectsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public classesClassIdProjectsGet(classId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2004>>;
-    public classesClassIdProjectsGet(classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2004>>>;
-    public classesClassIdProjectsGet(classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2004>>>;
+    public classesClassIdProjectsGet(classId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2006>>;
+    public classesClassIdProjectsGet(classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2006>>>;
+    public classesClassIdProjectsGet(classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2006>>>;
     public classesClassIdProjectsGet(classId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (classId === null || classId === undefined) {
@@ -94,7 +99,7 @@ export class ProjectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse2004>>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects`,
+        return this.httpClient.request<Array<InlineResponse2006>>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -112,10 +117,10 @@ export class ProjectsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public classesClassIdProjectsPost(body: Body8, classId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2005>;
-    public classesClassIdProjectsPost(body: Body8, classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2005>>;
-    public classesClassIdProjectsPost(body: Body8, classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2005>>;
-    public classesClassIdProjectsPost(body: Body8, classId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdProjectsPost(body: Body10, classId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2007>;
+    public classesClassIdProjectsPost(body: Body10, classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2007>>;
+    public classesClassIdProjectsPost(body: Body10, classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2007>>;
+    public classesClassIdProjectsPost(body: Body10, classId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling classesClassIdProjectsPost.');
@@ -152,7 +157,7 @@ export class ProjectsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<InlineResponse2005>('post',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects`,
+        return this.httpClient.request<InlineResponse2007>('post',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -224,9 +229,9 @@ export class ProjectsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public classesClassIdProjectsProjectIdGet(classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2005>;
-    public classesClassIdProjectsProjectIdGet(classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2005>>;
-    public classesClassIdProjectsProjectIdGet(classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2005>>;
+    public classesClassIdProjectsProjectIdGet(classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2007>;
+    public classesClassIdProjectsProjectIdGet(classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2007>>;
+    public classesClassIdProjectsProjectIdGet(classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2007>>;
     public classesClassIdProjectsProjectIdGet(classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (classId === null || classId === undefined) {
@@ -259,8 +264,125 @@ export class ProjectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse2005>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}`,
+        return this.httpClient.request<InlineResponse2007>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * get all messages belong to the project
+     * get all messages belong to the project
+     * @param classId the class id
+     * @param projectId the projectId id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public classesClassIdProjectsProjectIdMessagesGet(classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2008>>;
+    public classesClassIdProjectsProjectIdMessagesGet(classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2008>>>;
+    public classesClassIdProjectsProjectIdMessagesGet(classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2008>>>;
+    public classesClassIdProjectsProjectIdMessagesGet(classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (classId === null || classId === undefined) {
+            throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdMessagesGet.');
+        }
+
+        if (projectId === null || projectId === undefined) {
+            throw new Error('Required parameter projectId was null or undefined when calling classesClassIdProjectsProjectIdMessagesGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<InlineResponse2008>>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/messages`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * add a message
+     * add a message
+     * @param body 
+     * @param classId the class id
+     * @param projectId the projectId id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public classesClassIdProjectsProjectIdMessagesPost(body: Body11, classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2009>;
+    public classesClassIdProjectsProjectIdMessagesPost(body: Body11, classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2009>>;
+    public classesClassIdProjectsProjectIdMessagesPost(body: Body11, classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2009>>;
+    public classesClassIdProjectsProjectIdMessagesPost(body: Body11, classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling classesClassIdProjectsProjectIdMessagesPost.');
+        }
+
+        if (classId === null || classId === undefined) {
+            throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdMessagesPost.');
+        }
+
+        if (projectId === null || projectId === undefined) {
+            throw new Error('Required parameter projectId was null or undefined when calling classesClassIdProjectsProjectIdMessagesPost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<InlineResponse2009>('post',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/messages`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

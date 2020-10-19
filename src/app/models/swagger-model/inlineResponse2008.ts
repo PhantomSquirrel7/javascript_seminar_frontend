@@ -9,17 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ClassesTeacher } from './classesTeacher';
 
 export interface InlineResponse2008 { 
     id?: string;
-    email?: string;
-    firstName?: string;
-    role?: InlineResponse2008.RoleEnum;
-}
-export namespace InlineResponse2008 {
-    export type RoleEnum = 'teacher' | 'student';
-    export const RoleEnum = {
-        Teacher: 'teacher' as RoleEnum,
-        Student: 'student' as RoleEnum
-    };
+    message?: string;
+    from?: ClassesTeacher;
+    to?: ClassesTeacher;
+    timestamp?: string;
 }

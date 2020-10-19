@@ -17,7 +17,7 @@
         <span>Subject:</span>
       </div>
       <div style="display: flex;">
-        <span style="margin-left: 50px; margin-right: 195px;">{{actClass.level}}</span> 
+        <span style="margin-left: 50px; margin-right: 195px;">{{actClass.level + 3 }}</span> 
         <!-- TODO: eventually change "actClass.level" to "actClass.year" -->
         <span>{{actClass.subject}}</span>
       </div>
@@ -32,18 +32,18 @@
         </div>
         <div style="display: flex;">
           <span style="margin-left: 50px; margin-right: 155px;">{{actClass.language}}</span>
-          <span>Intermediate (B1)</span>
+          <span>{{actClass.languageLevel}}</span>
         </div>
       </li>
       
       <li class="list-group-item">
         <div style="display: flex;">
-          <span style="margin-right: 100px;">Project duration:</span>
+          <span style="margin-right: 60px;">Project duration (days):</span>
           <span>Meeting frequency:</span>
         </div>
         <div style="display: flex;">
-          <span style="margin-left: 50px; margin-right: 150px;">2 weeks</span>
-          <span>2x/week</span>
+          <span style="margin-left: 50px; margin-right: 150px;">{{actClass.projectDuration}}</span>
+          <span>{{actClass.meetingFrequency}}x/week</span>
         </div>
       </li>
       

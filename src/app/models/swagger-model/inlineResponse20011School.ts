@@ -10,16 +10,7 @@
  * Do not edit the class manually.
  */
 
-export interface InlineResponse2004 { 
+export interface InlineResponse20011School { 
     id?: string;
-    email?: string;
-    firstName?: string;
-    role?: InlineResponse2004.RoleEnum;
-}
-export namespace InlineResponse2004 {
-    export type RoleEnum = 'teacher' | 'student';
-    export const RoleEnum = {
-        Teacher: 'teacher' as RoleEnum,
-        Student: 'student' as RoleEnum
-    };
+    name?: string;
 }

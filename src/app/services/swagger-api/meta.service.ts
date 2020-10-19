@@ -17,17 +17,13 @@ import { CustomHttpUrlEncodingCodec }                        from '../../swagger
 
 import { Observable }                                        from 'rxjs';
 
-import { Body12 } from '../../models/swagger-model/body12';
-import { InlineResponse20010 } from '../../models/swagger-model/inlineResponse20010';
-import { InlineResponse20011 } from '../../models/swagger-model/inlineResponse20011';
-import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
 import { Configuration }                                     from '../../swagger-configs/configuration';
 
 
 @Injectable({ providedIn: 'root' })
-export class SchoolsService {
+export class MetaService {
 
     protected basePath = 'https://api-globy.herokuapp.com/v1';
     public defaultHeaders = new HttpHeaders();
@@ -59,81 +55,18 @@ export class SchoolsService {
 
 
     /**
-     * get schools
-     * get schools by keyword
-     * @param name keyword
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public schoolsGet(name?: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20010>;
-    public schoolsGet(name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20010>>;
-    public schoolsGet(name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20010>>;
-    public schoolsGet(name?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (name !== undefined && name !== null) {
-            queryParameters = queryParameters.set('name', <any>name);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<InlineResponse20010>('get',`${this.basePath}/schools`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Create a new school
+     * Get list of valid countries
      * 
-     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public schoolsPost(body: Body12, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20011>;
-    public schoolsPost(body: Body12, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20011>>;
-    public schoolsPost(body: Body12, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20011>>;
-    public schoolsPost(body: Body12, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling schoolsPost.');
-        }
+    public countriesGet(observe?: 'body', reportProgress?: boolean): Observable<Array<any>>;
+    public countriesGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<any>>>;
+    public countriesGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<any>>>;
+    public countriesGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -145,16 +78,10 @@ export class SchoolsService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
 
-        return this.httpClient.request<InlineResponse20011>('post',`${this.basePath}/schools`,
+        return this.httpClient.request<Array<any>>('get',`${this.basePath}/countries`,
             {
-                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -164,30 +91,18 @@ export class SchoolsService {
     }
 
     /**
-     * get school
-     * get school by Id
-     * @param schoolId School id
+     * Get list of valid languages
+     * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public schoolsSchoolIdGet(schoolId: string, observe?: 'body', reportProgress?: boolean): Observable<Body12>;
-    public schoolsSchoolIdGet(schoolId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body12>>;
-    public schoolsSchoolIdGet(schoolId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body12>>;
-    public schoolsSchoolIdGet(schoolId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (schoolId === null || schoolId === undefined) {
-            throw new Error('Required parameter schoolId was null or undefined when calling schoolsSchoolIdGet.');
-        }
+    public languagesGet(observe?: 'body', reportProgress?: boolean): Observable<Array<any>>;
+    public languagesGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<any>>>;
+    public languagesGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<any>>>;
+    public languagesGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -201,7 +116,43 @@ export class SchoolsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Body12>('get',`${this.basePath}/schools/${encodeURIComponent(String(schoolId))}`,
+        return this.httpClient.request<Array<any>>('get',`${this.basePath}/languages`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get list of valid subjects
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public subjectsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<any>>;
+    public subjectsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<any>>>;
+    public subjectsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<any>>>;
+    public subjectsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<any>>('get',`${this.basePath}/subjects`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

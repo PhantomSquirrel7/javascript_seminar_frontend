@@ -15,7 +15,7 @@ export interface Project {
     id?: string;
     classes?: Array<ClassesclassIdprojectsClasses>;
     state?: Project.StateEnum;
-    messages?: Array<any>;
+    messages?: Array<Array<any>>;
     meetings?: Array<any>;
 }
 export namespace Project {

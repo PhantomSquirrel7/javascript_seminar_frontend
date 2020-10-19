@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Body12 } from './body12';
+import { InlineResponse2004 } from './inlineResponse2004';
 
-export interface Schools extends Array<Body12> { 
+export interface Users extends Array<InlineResponse2004> { 
 }

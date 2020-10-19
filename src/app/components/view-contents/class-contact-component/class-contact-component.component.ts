@@ -8,11 +8,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ClassContactComponentComponent{
 
   @Input() actClass: any;
+  ngOnInit() {
+  }
 
   teacherInfo(){ // TODO: redirect to teacher profile
     console.log("Hello");
-    
   }
-
 }
 

@@ -9,7 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Body12 } from './body12';
 
-export interface Schools extends Array<Body12> { 
+export interface Body11 { 
+    message?: string;
+    from?: string;
+    to?: string;
 }
