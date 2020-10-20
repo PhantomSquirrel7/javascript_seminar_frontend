@@ -1,51 +1,88 @@
-<div class="notConnected" *ngIf="!gamesService.connected">
-    Connecting...
-</div>
+<div class="container alias-game">
+    <div class="row">
+        <div class="col">
+            <div class="row game-header">
+                <div class="col logo">Alias</div>
+                <div class="col-auto">
+                    <button mat-fab color="accent" aria-label="help" (click)="toggleHelp()">
+                        <mat-icon>help</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="row justify-content-center game-content">
+                <div class="col">
+                    <!-- connected but game not started yet -->
+                    <div *ngIf="gamesService.connected && !gameStarted && !lastSession" class="game-content">
+                        <!-- explaining player -->
+                        <div class="row">
+                            Welcome to the game! Please wait for all Players.
+                        </div>
+                    </div>
 
-<div class="gameContent" *ngIf="gamesService.connected">
-    <div class="player" *ngIf="this.username === this.currentPlayer">
-        <div class="wordToGuess">
-            Current Word: {{this.currentWord}}
-        </div>
-        <div class="controlButtons">
-            <button mat-raised-button color="primary" *ngIf="!gameStarted" (click)="startGame()">START</button>
-            <button mat-raised-button color="primary" *ngIf="gameStarted" (click)="correctGuess()">Correct</button>
-            <button mat-raised-button color="warn" *ngIf="gameStarted" (click)="skipWord()">SKIP</button>
-        </div>
-        <div class="timer">
-            Time Left: {{this.timeLeftSeconds}} seconds.
+                    <!-- game is running -->
+                    <div *ngIf="gamesService.connected && gameStarted" class="game-content">
+                        <!-- explaining player -->
+                        <div class="row" *ngIf="this.username === this.currentPlayer" class="explaining">
+                            Explain the word: <span class="word">{{this.currentWord}}</span>
+                            <div *ngIf="gameStarted">
+                                <button class="btn btn-danger" (click)="skipWord()">Skip</button>
+                                <button class="btn btn-success" (click)="correctGuess()">Correct</button>
+                            </div>
+                        </div>
+                        <!-- guessing player -->
+                        <div class="row" *ngIf="this.username === !this.currentPlayer" class="explaining">
+                            <div>{{ this.currentPlayer }} is explaining. Guess the word!</div>
+                        </div>
+                        <!-- all players -->
+                        <div class="row">
+                            <div class="timer">
+                                Time Left: {{this.timeLeftSeconds}} seconds.
+                            </div>
+                        </div>
+                        <div class="row">
+                            Guessed Words: {{this.numberOfGuessedWords}}
+                        </div>
+
+                    </div>
+                    <!-- connecting to game -->
+                    <div class="row connecting" *ngIf="!gamesService.connected">
+                        Connecting...
+                    </div>
+                    <div class="row" *ngIf="this.lastSession">
+                        GAME ENDED! <br>
+                        In your last game {{this.lastSession.players}} guessed
+                        {{this.lastSession.numberOfGuessedWords}}
+                        words.
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <div class="col-auto settings">
+            <div class="row justify-content-end">
+                <div class="players-list">
+                    <div class="list-header">Connected Players:</div>
+                    <div class="player" *ngFor="let playerName of this.playerList">
+                        {{playerName}}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 mb-2 justify-content-center">
+                <button class="btn btn-success" *ngIf="!gameStarted" (click)="startGame()">Start Game</button>
+            </div>
+        </div>
     </div>
 
-    <div class="participant" *ngIf="this.username !== this.currentPlayer">
+    <!--  <mat-dialog *ngIf="showHelp">
+        <mat-dialog-title>How to play "Alias"</mat-dialog-title>
+        <mat-dialog-content>
+            <div>
+                Please start the game once everybody is ready.<br>Please explain the word verbally without
+                using it!
+                <br>If someone guesses correctly please press "correct". <br>If a word is to hard you can "skip"
+                it.
+            </div>
+        </mat-dialog-content>
+    </mat-dialog> -->
 
-        <div class="timer">
-            Time Left: {{this.timeLeftSeconds}} seconds
-        </div>
-    </div>
-
-    <div class="howto">
-        Currently {{this.currentPlayer}} is in charge!<br><br>
-        <div class="playerHowTo" *ngIf="this.username !== this.currentPlayer">
-            Please start the game once everybody is ready.<br>Please explain the word verbally without using it! <br>If someone guesses correctly please press correct. <br>If a word is to hard you can SKIP it.
-        </div>
-        <div class="participantHowTo" *ngIf="this.username !== this.currentPlayer">
-            Please try to guess the word, that {{this.currentPlayer}} tries to explain.
-        </div>
-    </div>
-
-    <div class="players">
-        Connected Players:
-        <div class="playerList" *ngFor="let playerName of this.playerList">
-            {{playerName}}
-        </div>
-    </div>
-
-    Guessed Words: {{this.numberOfGuessedWords}} <br> Current player: {{this.currentPlayer}} <br>
-
-</div>
-
-<div class="lastSession" *ngIf="this.lastSession">
-    In your last game {{this.lastSession.players}} guessed {{this.lastSession.numberOfGuessedWords}} words.
 </div>

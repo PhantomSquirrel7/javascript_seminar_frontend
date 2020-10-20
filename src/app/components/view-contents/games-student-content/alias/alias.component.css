@@ -1,22 +1,64 @@
-.player,
-.participant,
-.howto,
-.players {
-    float: left;
+.alias-game {
+    background-color: rgb(236, 248, 248);
+    min-width: 300px;
+    padding: 0;
+}
+
+.connecting {
+    font-size: 150%;
+}
+
+.game-header {
+    text-shadow: rgba(0, 65, 65, 0.5);
+    font-family: "Lucida Console", Courier, monospace;
+    font-weight: bold;
+    background: rgb(0, 124, 124);
+    color: rgba(255, 255, 255, 0.85);
+    padding: 1em;
+}
+
+.logo {
+    font-size: 125%;
+}
+
+.game-content {
+    padding: 1em;
+}
+
+.players-list {
+    background: white;
+    padding: 0.5em;
+    width: 200px;
+    margin: 0.25em;
 }
 
 .player {
-    width: 50%;
+    position: relative;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 0.25em;
+    width: 100%;
 }
 
-.participant {
-    width: 25%;
+.list-header {
+    font-weight: bold;
+    padding: 0.25em;
 }
 
-.players {
-    width: 25%;
+.settings{
+    border-left: 0.25em solid rgba(0, 124, 124);
+    border-top: 0.25em solid rgba(0, 124, 124);
 }
 
-.howto {
-    width: 25%;
+.explaining {
+    background: rgba(255, 255, 255, 0.75);
+    font-size: 140%;
+}
+
+.word {
+    font-weight: bold;
+    color: rgb(0, 59, 59);
+}
+
+.timer {
+    font-size: 120%;
 }

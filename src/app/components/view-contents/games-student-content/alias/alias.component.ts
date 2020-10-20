@@ -27,6 +27,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   countDownStarted: boolean = false;
   gameType: string = "alias";
   lastSession: AliasUpdate = undefined;
+  showHelp = false;
 
   constructor(public gamesService: GamesService) {
   }
@@ -118,7 +119,11 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   }
 
   skipWord(): void {
-    this.currentWordIndex = (this.currentWordIndex+1) % this.words.length;
+    this.currentWordIndex = (this.currentWordIndex + 1) % this.words.length;
     this.currentWord = this.words[this.currentWordIndex];
+  }
+
+  toggleHelp() {
+    this.showHelp = !this.showHelp;
   }
 }
