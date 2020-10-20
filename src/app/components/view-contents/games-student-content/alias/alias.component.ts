@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, Output, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import { GamesService } from '@app/services/custom/games/games.service';
 import { AliasUpdate } from '../messages/aliasUpdate';
 
@@ -12,6 +12,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   @Input() username: string;
   @Input() sessionId: string;
   @Input() taskId: string;
+  @Output() disconnect: EventEmitter<string> = new EventEmitter<string>();
 
   currentPlayer: string;
   playerList: string[] = [];
@@ -125,5 +126,9 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
 
   toggleHelp() {
     this.showHelp = !this.showHelp;
+  }
+
+  disconnectGame() {
+    this.disconnect.emit("disconnect");
   }
 }
