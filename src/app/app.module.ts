@@ -38,7 +38,9 @@ import {
   MyConnectionRequestsViewComponent,
   ClassContactComponentComponent,
   FindPartnerClassViewResultsComponent,
-  FindPartnerClassResultsContentComponent
+  FindPartnerClassResultsContentComponent,
+  StudentHomeViewComponent,
+  StudentNavigationComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -89,7 +91,9 @@ import { UserService, ClassesService } from './services/swagger-api/api';
     FindPartnerClassContentComponent,
     ClassContactComponentComponent ,
     FindPartnerClassViewResultsComponent ,
-    FindPartnerClassResultsContentComponent],
+    FindPartnerClassResultsContentComponent,
+    StudentHomeViewComponent,
+    StudentNavigationComponent],
   providers: [
     {
       provide: APP_INITIALIZER,

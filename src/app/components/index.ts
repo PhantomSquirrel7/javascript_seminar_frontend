@@ -4,6 +4,7 @@ export * from './common/header/header.component';
 export * from './common/footer/footer.component';
 export * from './common/landing-header/landing-header.component';
 export * from './common/navigation/navigation.component';
+export * from './common/student-navigation/student-navigation.component';
 
 // views
 export * from './views/create-class-view/create-class-view.component';
@@ -25,6 +26,7 @@ export * from './views/reset-password-view/reset-password-view.component';
 export * from './views/settings-view/settings-view.component';
 export * from './views/about-view/about-view.component';
 export * from './views/my-connection-requests-view/my-connection-requests-view.component';
+export * from './views/student-home-view/student-home-view.component';
 
 // view-contents
 export * from './view-contents/dashboard-content/dashboard-content.component'; 

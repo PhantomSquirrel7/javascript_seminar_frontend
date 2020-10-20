@@ -19,7 +19,8 @@ import {
   PlanMeetingViewComponent,
   ForgotPasswordViewComponent,
   MyConnectionRequestsViewComponent,
-  FindPartnerClassViewResultsComponent
+  FindPartnerClassViewResultsComponent,
+  StudentHomeViewComponent
 } from './components';
 
 const routes: Routes = [
@@ -83,6 +84,11 @@ const routes: Routes = [
   {
     path: 'my-connection-requests',
     component: MyConnectionRequestsViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'student-home',
+    component: StudentHomeViewComponent,
     canActivate: [AuthGuard],
   },
 
