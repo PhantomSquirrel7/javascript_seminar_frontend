@@ -22,7 +22,7 @@ export class StudentHomeViewComponent {
           next: (response) => {
             this.loading = false;
             this.user = response;
-            this._snackBar.open('Welcome to find-partner-class page!', 'Close', {
+            this._snackBar.open('Welcome to your Homepage!', 'Close', {
               duration: 3000
             });
           },

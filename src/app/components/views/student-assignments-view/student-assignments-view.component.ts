@@ -22,7 +22,7 @@ export class StudentAssignmentsViewComponent {
           next: (response) => {
             this.loading = false;
             this.user = response;
-            this._snackBar.open('Welcome to find-partner-class page!', 'Close', {
+            this._snackBar.open('Welcome to your Assignments!', 'Close', {
               duration: 3000
             });
           },
