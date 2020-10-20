@@ -40,14 +40,20 @@ import {
   FindPartnerClassViewResultsComponent,
   FindPartnerClassResultsContentComponent,
   StudentHomeViewComponent,
-  StudentNavigationComponent
+  StudentNavigationComponent,
+  StudentProfileViewComponent,
+  StudentProfileContentComponent,
+  StudentHomeContentComponent,
+  StudentAssignmentsViewComponent,
+  StudentMeetingsViewComponent,
+  StudentAssignmentsContentComponent,
+  StudentMeetingsContentComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
 import { UserService, ClassesService } from './services/swagger-api/api';
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -93,7 +99,14 @@ import { UserService, ClassesService } from './services/swagger-api/api';
     FindPartnerClassViewResultsComponent ,
     FindPartnerClassResultsContentComponent,
     StudentHomeViewComponent,
-    StudentNavigationComponent],
+    StudentNavigationComponent,
+    StudentProfileViewComponent,
+    StudentProfileContentComponent,
+    StudentHomeContentComponent,
+    StudentAssignmentsViewComponent,
+    StudentMeetingsViewComponent,
+    StudentMeetingsContentComponent,
+    StudentAssignmentsContentComponent],
   providers: [
     {
       provide: APP_INITIALIZER,

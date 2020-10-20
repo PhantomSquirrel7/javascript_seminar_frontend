@@ -20,7 +20,10 @@ import {
   ForgotPasswordViewComponent,
   MyConnectionRequestsViewComponent,
   FindPartnerClassViewResultsComponent,
-  StudentHomeViewComponent
+  StudentHomeViewComponent,
+  StudentProfileViewComponent,
+  StudentAssignmentsViewComponent,
+  StudentMeetingsViewComponent
 } from './components';
 
 const routes: Routes = [
@@ -89,6 +92,21 @@ const routes: Routes = [
   {
     path: 'student-home',
     component: StudentHomeViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'student-profile',
+    component: StudentProfileViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'student-assignments',
+    component: StudentAssignmentsViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'student-meetings',
+    component: StudentMeetingsViewComponent,
     canActivate: [AuthGuard],
   },
 

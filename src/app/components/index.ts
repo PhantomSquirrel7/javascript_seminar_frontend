@@ -27,6 +27,9 @@ export * from './views/settings-view/settings-view.component';
 export * from './views/about-view/about-view.component';
 export * from './views/my-connection-requests-view/my-connection-requests-view.component';
 export * from './views/student-home-view/student-home-view.component';
+export * from './views/student-profile-view/student-profile-view.component';
+export * from './views/student-assignments-view/student-assignments-view.component';
+export * from './views/student-meetings-view/student-meetings-view.component';
 
 // view-contents
 export * from './view-contents/dashboard-content/dashboard-content.component'; 
@@ -38,5 +41,9 @@ export * from './view-contents/landing-home-content/landing-home-content.compone
 export * from './view-contents/landing-offering-content/landing-offering-content.component';
 export * from './view-contents/landing-team-content/landing-team-content.component';
 export * from './view-contents/class-contact-component/class-contact-component.component';
+export * from './view-contents/student-profile-content/student-profile-content.component';
+export * from './view-contents/student-home-content/student-home-content.component';
+export * from './view-contents/student-assignments-content/student-assignments-content.component';
+export * from './view-contents/student-meetings-content/student-meetings-content.component';
 
 
