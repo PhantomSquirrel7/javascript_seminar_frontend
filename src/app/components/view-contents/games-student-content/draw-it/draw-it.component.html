@@ -1,8 +1,8 @@
-<div class="container alias-game">
+<div class="container drawit-game">
     <div class="row">
         <div class="col">
             <div class="row game-header">
-                <div class="col logo">Alias</div>
+                <div class="col logo">Draw It</div>
                 <div class="col-auto">
                     <button mat-fab color="accent" aria-label="help" (click)="toggleHelp()">
                         <mat-icon>help</mat-icon>
@@ -13,7 +13,7 @@
                 <div class="col">
                     <!-- connected but game not started yet -->
                     <div *ngIf="gamesService.connected && !gameStarted && !lastSession" class="game-content">
-                        <!-- explaining player -->
+                        <!-- drawing player -->
                         <div class="row">
                             Welcome to the game! Please wait for all Players.
                         </div>
@@ -21,7 +21,7 @@
 
                     <!-- game is running -->
                     <div *ngIf="gamesService.connected && gameStarted" class="game-content">
-                        <!-- explaining player -->
+                        <!-- drawing player -->
                         <div class="row" *ngIf="this.username === this.currentPlayer" class="explaining">
                             Explain the word: <span class="word">{{this.currentWord}}</span>
                             <div *ngIf="gameStarted">
@@ -70,11 +70,15 @@
             <div class="row mt-2 mb-2 justify-content-center">
                 <button class="btn btn-success" *ngIf="!gameStarted" (click)="startGame()">Start Game</button>
             </div>
+
+            <div class="row mt-2 mb-2 justify-content-center">
+                <button (click)="disconnectGame()">Disconnect</button>
+            </div>
         </div>
     </div>
 
     <!--  <mat-dialog *ngIf="showHelp">
-        <mat-dialog-title>How to play "Alias"</mat-dialog-title>
+        <mat-dialog-title>How to play "Draw It"</mat-dialog-title>
         <mat-dialog-content>
             <div>
                 Please start the game once everybody is ready.<br>Please explain the word verbally without

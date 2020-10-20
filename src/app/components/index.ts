@@ -25,12 +25,13 @@ export * from './views/games-student-view/games-student-view.component';
 export * from './views/games-teacher-view/games-teacher-view.component';
 
 // view-contents
-export * from './view-contents/dashboard-content/dashboard-content.component'; 
+export * from './view-contents/dashboard-content/dashboard-content.component';
 export * from './view-contents/plan-meeting-content/plan-meeting-content.component';
 export * from './view-contents/profile-view-content/profile-view-content.component';
 export * from './view-contents/games-student-content/games-student-content.component';
 export * from './view-contents/games-student-content/alias/alias.component';
 export * from './view-contents/games-student-content/quiz/quiz.component';
+export * from './view-contents/games-student-content/draw-it/draw-it.component';
 export * from './view-contents/games-teacher-content/games-teacher-content.component';
 export * from './view-contents/games-teacher-content/alias-game-config/alias-game-config.component';
 export * from './view-contents/games-teacher-content/quiz-game-config/quiz-game-config.component';
