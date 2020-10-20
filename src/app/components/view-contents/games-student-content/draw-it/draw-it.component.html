@@ -1,11 +1,11 @@
 <div class="container drawit-game">
-    <div class="row">
+    <div *ngIf="game" class="row">
         <div class="col">
             <div class="row game-header">
                 <div class="col logo">Draw It</div>
-                <div class="col">Joined as: {{ this.username }}</div>
+                <div class="col">Joined as: {{ username }}</div>
                 <div class="col-auto">
-                    <button mat-fab color="accent" aria-label="help" (click)="toggleHelp()">
+                    <button class="help-button" aria-label="help" (click)="toggleHelp()">
                         <mat-icon>help</mat-icon>
                     </button>
                 </div>
@@ -14,19 +14,19 @@
                 <div class="col">
                     <!-- CONNECTED -->
                     <div *ngIf="gamesService.connected">
-                        <!-- NOT STARTED -->
-                        <div *ngIf="!gameStarted" class="row">
+                        <!-- LOBBY -->
+                        <div *ngIf="game.state == 'lobby'" class="row">
                             <div>
                                 Welcome to the game! <br>
-                                Please wait for all players. {{ this.currentPlayer }} should start the game.
+                                Please wait for all players. {{ game.currentPlayer }} should start the game.
                             </div>
                         </div>
-                        <!-- STARTED -->
-                        <div *ngIf="gameStarted">
+                        <!-- GAME RUNNING -->
+                        <div *ngIf="game.state == 'running'">
                             <!-- PLAYER EXPLAINING -->
-                            <div *ngIf="this.username === this.currentPlayer">
-                                <div class="row explaining"> Explain the word: <span
-                                        class="word">{{this.currentWord}}</span>
+                            <div *ngIf="username === game.currentPlayer">
+                                <div class="row explaining"> Explain the word:
+                                    {{ currentWord }}
                                 </div>
                                 <div class="row game-controls">
                                     <button class="btn btn-danger" (click)="skipWord()">Skip</button>
@@ -34,15 +34,23 @@
                                 </div>
                             </div>
                             <!-- PLAYER GUESSING -->
-                            <div *ngIf="this.username !== this.currentPlayer">
-                                <div class="row">{{ this.currentPlayer }} is explaining. Guess the word!</div>
+                            <div *ngIf="username !== game.currentPlayer">
+                                <div class="row">{{ game.currentPlayer }} is explaining. Guess the word!</div>
                             </div>
                             <!-- ALL PLAYERS -->
                             <div class="row timer">
-                                Time Left: {{this.timeLeftSeconds}} seconds.
+                                Time Left: {{timer}} seconds.
                             </div>
                             <div class="row">
-                                Guessed Words: {{this.numberOfGuessedWords}}
+                                Guessed Words: {{game.numberOfGuessedWords}}
+                            </div>
+                        </div>
+                        <div *ngIf="game.state == 'over'">
+                            <div class="row">
+                                GAME ENDED! <br>
+                                In your last game {{game.players}} guessed
+                                {{game.numberOfGuessedWords}}
+                                words.
                             </div>
                         </div>
                     </div>
@@ -51,12 +59,6 @@
                         <div class="row connecting" *ngIf="!gamesService.connected">
                             Connecting...
                         </div>
-                    </div>
-                    <div class="row" *ngIf="this.lastSession">
-                        GAME ENDED! <br>
-                        In your last game {{this.lastSession.players}} guessed
-                        {{this.lastSession.numberOfGuessedWords}}
-                        words.
                     </div>
                 </div>
             </div>
@@ -67,18 +69,18 @@
             <div class="row justify-content-end">
                 <div class="players-list">
                     <div class="list-header">Connected Players:</div>
-                    <div class="player" *ngFor="let playerName of this.playerList">
-                        {{playerName}}
+                    <div class="player" *ngFor="let player of game.players">
+                        {{ player }}
                     </div>
                 </div>
             </div>
             <!-- only first player connected can start the game -->
             <div class="row mt-2 mb-2 justify-content-center">
-                <button class="btn btn-success" *ngIf="!gameStarted && this.username === this.currentPlayer"
+                <button class="btn btn-success" *ngIf="game.state == 'lobby' && username === game.currentPlayer"
                     (click)="startGame()">Start Game</button>
             </div>
-            <div *ngIf="!gamesService.connected" class="row mt-2 mb-2 justify-content-center">
-                <button (click)="disconnectGame()">Disconnect</button>
+            <div class="row mt-2 mb-2 justify-content-center">
+                <button class="btn btn-secondary" (click)="disconnectGame()">Disconnect</button>
             </div>
         </div>
     </div>
@@ -88,15 +90,16 @@
             <button class="help-close" mat-mini-fab color="accent" aria-label="close help" (click)="toggleHelp()">
                 <mat-icon>close</mat-icon>
             </button>
-            <h1>How to play "Draw It"</h1>
+            <h1>How to play "Alias"</h1>
             <p>
-                Please start the game once everybody is ready.<br>Please draw the word in the BBB drawing board! You are
-                not
-                allowed to draw letters!
+                Please start the game once everybody is ready.<br>Please explain the word verbally without
+                using it!
                 <br>If someone guesses correctly please press "correct". <br>If a word is to hard you can "skip"
                 it.
             </p>
         </div>
     </div>
-
+    <div *ngIf="!game" class="row">
+        Creating Game session. Please wait...
+    </div>
 </div>

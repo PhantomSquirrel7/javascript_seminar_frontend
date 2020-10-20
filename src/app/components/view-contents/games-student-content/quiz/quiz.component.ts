@@ -4,7 +4,7 @@ import { GamesService } from '@app/services/custom/games/games.service';
 import { QuizUpdate } from '../messages/quizUpdate';
 import { Quiz } from "../model/quiz";
 
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -26,8 +26,8 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   timeLimit: number = 30;
   timeLeftSeconds: number = this.timeLimit;
   timeInterval;
-  leftAnswers : string[] = ["a", "b"];
-  rightAnswers : string[] = ["c", "dwoakadwo"];
+  leftAnswers: string[] = ["a", "b"];
+  rightAnswers: string[] = ["c", "dwoakadwo"];
 
   constructor(public gamesService: GamesService) {
     this.quizUpdate = {
@@ -48,9 +48,9 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
     }
     console.log(this.leftAnswers);
   }
@@ -134,6 +134,7 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
 
   // Updates the current view with a recieved update
   handleRecievedUpdateGame(quizUpdate: QuizUpdate) {
+    console.log(quizUpdate)
     if (quizUpdate.quizes.length > 0) {
       this.currentQuiz = quizUpdate.quizes[quizUpdate.quizIndex];
     }
@@ -155,7 +156,7 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
         this.quizUpdate.quizes[this.quizUpdate.quizIndex].selectedAnswers.includes(answer)
         && this.quizUpdate.quizes[this.quizUpdate.quizIndex].correctAnswers.includes(answer)
       ) ||
-      // Wrong solution not selected
+        // Wrong solution not selected
         (
           !this.quizUpdate.quizes[this.quizUpdate.quizIndex].selectedAnswers.includes(answer)
           && !this.quizUpdate.quizes[this.quizUpdate.quizIndex].correctAnswers.includes(answer)

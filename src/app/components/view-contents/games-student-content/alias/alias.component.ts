@@ -41,6 +41,24 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     this.gameUpdateSubscriptionEvent.unsubscribe();
   }
 
+  get countdown() {
+    let minutes = Math.floor(this.timer / 60);
+    let min;
+    if (minutes < 10) {
+      min = `0${minutes}`;
+    } else {
+      min = minutes;
+    }
+    let seconds = this.timer % 60;
+    let sec;
+    if (seconds < 10) {
+      sec = `0${seconds}`;
+    } else {
+      sec = seconds;
+    }
+    return `${min}:${sec}`
+  }
+
   updateGame(gameUpdate: AliasUpdate) {
     if (this.gamesService == undefined) {
       return;
@@ -73,7 +91,6 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     clearInterval(this.timeInterval);
     this.game.state = "over";
     this.gamesService.sendUpdate(this.game);
-    //this.gamesService.sendPlayerResult(this.game);
   }
 
   setTimer(): void {

@@ -227,7 +227,7 @@ function handleQuizUpdateMessage(data) {
         var hex = /[0-9A-Fa-f]{6}/g;
         if (data.taskId == null || data.taskId == undefined || data.taskId == "" || !hex.test(data.taskId)) {
             console.log("Invalid Task ID, sending random quiz");
-            taskId = "5f8c26864667c50017f90e77";
+            taskId = "5f8efa97d5841b00176305f4";
             fetch('http://localhost:8080/games/quiz/quizzes/').then(res => res.json()).then(json => {
                 taskId = json[Math.floor(Math.random() * json.length)]._id;
             }).catch(err => console.log(err));
