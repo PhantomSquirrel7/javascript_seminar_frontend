@@ -2,6 +2,7 @@ export interface DrawItUpdate {
     gameType: string;
     sessionId: string;
     players: string[];
+    gameStarted: boolean;
     currentPlayer: string; // The playername of the currently in charge player
     numberOfGuessedWords: number; // number of correctly guessed words
     countDownStarted: boolean; // indicates if countdown started, a change starts countdown for all clients

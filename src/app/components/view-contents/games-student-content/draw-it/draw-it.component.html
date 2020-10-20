@@ -77,22 +77,26 @@
                 <button class="btn btn-success" *ngIf="!gameStarted && this.username === this.currentPlayer"
                     (click)="startGame()">Start Game</button>
             </div>
-            <div class="row mt-2 mb-2 justify-content-center">
+            <div *ngIf="!gamesService.connected" class="row mt-2 mb-2 justify-content-center">
                 <button (click)="disconnectGame()">Disconnect</button>
             </div>
         </div>
     </div>
 
-    <!--  <mat-dialog *ngIf="showHelp">
-        <mat-dialog-title>How to play "Draw It"</mat-dialog-title>
-        <mat-dialog-content>
-            <div>
-                Please start the game once everybody is ready.<br>Please explain the word verbally without
-                using it!
+    <div *ngIf="showHelp" class="help">
+        <div class="help-content">
+            <button class="help-close" mat-mini-fab color="accent" aria-label="close help" (click)="toggleHelp()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <h1>How to play "Draw It"</h1>
+            <p>
+                Please start the game once everybody is ready.<br>Please draw the word in the BBB drawing board! You are
+                not
+                allowed to draw letters!
                 <br>If someone guesses correctly please press "correct". <br>If a word is to hard you can "skip"
                 it.
-            </div>
-        </mat-dialog-content>
-    </mat-dialog> -->
+            </p>
+        </div>
+    </div>
 
 </div>
