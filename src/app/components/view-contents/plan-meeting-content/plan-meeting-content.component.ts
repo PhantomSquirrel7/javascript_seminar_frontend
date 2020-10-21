@@ -13,12 +13,16 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./plan-meeting-content.component.less']
 })
 export class PlanMeetingContentComponent implements OnInit  { 
-  lists = [
+  list1 = [    
     'Episode I - The Phantom Menace',
     'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith',
+    'Episode III - Revenge of the Sith'
+  ];
+
+  list2 = [    
     'Episode IV - A New Hope',
     'Episode V - The Empire Strikes Back',
+    'Episode VI - The Empire Strikes Back'
   ];
 
   clsSelecForm: FormGroup;
@@ -90,7 +94,12 @@ export class PlanMeetingContentComponent implements OnInit  {
     return text.toLowerCase();
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
+  drop(event: CdkDragDrop<string[]>, list) {
+    moveItemInArray(list, event.previousIndex, event.currentIndex);
+  }
+
+  saveArrangement() {
+    console.log(this.list1)
+    console.log(this.list2)
   }
 }
