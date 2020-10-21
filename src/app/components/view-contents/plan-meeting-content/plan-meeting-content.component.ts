@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ClassesService } from 'src/app/services/swagger-api/classes.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -12,6 +13,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./plan-meeting-content.component.less']
 })
 export class PlanMeetingContentComponent implements OnInit  { 
+  list1 = [    
+    'Episode I - The Phantom Menace',
+    'Episode II - Attack of the Clones',
+    'Episode III - Revenge of the Sith'
+  ];
+
+  list2 = [    
+    'Episode IV - A New Hope',
+    'Episode V - The Empire Strikes Back',
+    'Episode VI - The Empire Strikes Back'
+  ];
 
   clsSelecForm: FormGroup;
 
@@ -24,6 +36,7 @@ export class PlanMeetingContentComponent implements OnInit  {
   durations = [30, 45, 60, 90, 120];
   typeOfClasses = ['Quiz','Ice-Breaker Game','Others',]
   loading = false;
+  selectedArrangement = '';
 
   user_classes = [];
 
@@ -35,6 +48,7 @@ export class PlanMeetingContentComponent implements OnInit  {
   ) {}
  
   ngOnInit() {
+    this.selectedArrangement = 'tandem';
     this.clsSelecForm = this.fb.group({
       selectedClass: [null]
     });
@@ -82,4 +96,16 @@ export class PlanMeetingContentComponent implements OnInit  {
     return text.toLowerCase();
   }
 
+  drop(event: CdkDragDrop<string[]>, list) {
+    moveItemInArray(list, event.previousIndex, event.currentIndex);
+  }
+
+  saveArrangement() {
+    console.log(this.list1)
+    console.log(this.list2)
+  }
+
+  selectArrangement(arrangement: string) {
+    this.selectedArrangement = arrangement;
+  }
 }
