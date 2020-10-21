@@ -15,7 +15,7 @@ export class AliasFormComponent implements OnInit {
   alias = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    words: this.fb.array([
+    words: this.fb.array([Validators.required
     ])
   })
 
