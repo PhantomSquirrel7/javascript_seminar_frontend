@@ -36,6 +36,7 @@ export class PlanMeetingContentComponent implements OnInit  {
   durations = [30, 45, 60, 90, 120];
   typeOfClasses = ['Quiz','Ice-Breaker Game','Others',]
   loading = false;
+  selectedArrangement = '';
 
   user_classes = [];
 
@@ -47,6 +48,7 @@ export class PlanMeetingContentComponent implements OnInit  {
   ) {}
  
   ngOnInit() {
+    this.selectedArrangement = 'tandem';
     this.clsSelecForm = this.fb.group({
       selectedClass: [null]
     });
@@ -101,5 +103,9 @@ export class PlanMeetingContentComponent implements OnInit  {
   saveArrangement() {
     console.log(this.list1)
     console.log(this.list2)
+  }
+
+  selectArrangement(arrangement: string) {
+    this.selectedArrangement = arrangement;
   }
 }
