@@ -13,22 +13,6 @@ import { DrawIt } from '@app/models/game-models/drawIt';
 })
 export class GamesApiService {
 
-  //-------- mock data -------------
-  games: Array<Alias> = [
-    { _id: "11", name: "Class 6b", words: ["apple", "banana", "strawberry"] },
-    { _id: "22", name: "Class 7a", words: ["stars", "rocket", "gravity"], description: "words about space" }
-  ]
-
-  questions: Array<Question> = [
-    { _id: "333", type: "select", name: "Fruit Types", question: "Which fruits are red?", options: ["apple", "banana", "strawberry", "peach"], answer: [0, 2] },
-    { _id: "222", type: "match", name: "Englisch Vocabulary", question: "Match the appropriate translation", options: ["apple", "Apfel", "strawberry", "Erdbeere"], answer: [[0, 1], [2, 3]] }
-  ]
-
-  quizzes: Array<Quiz> = [
-    { _id: "000", name: "Random Quiz", description: "quiz with random questions", questions: ["333", "222"] }
-  ]
-  //---------------------------------
-
   private url = "https://javascript-group-d-frontend.herokuapp.com";
 
   private httpOptionsJson = {

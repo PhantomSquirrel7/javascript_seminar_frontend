@@ -16,7 +16,7 @@ export class DrawItFormComponent implements OnInit {
     name: ['', Validators.required],
     description: [''],
     words: this.fb.array([
-    ])
+    ], invalidWordsValidator)
   })
 
   constructor(private fb: FormBuilder) {
@@ -78,3 +78,12 @@ export class DrawItFormComponent implements OnInit {
     }
   }
 }
+
+function invalidWordsValidator(arr: FormArray): { [key: string]: any } | null {
+  const words: [] = arr.value;
+  let filter = words.filter(word => word != "");
+  if (words.length == 0 || filter.length == 0) {
+    return { 'invalidWords': true }
+  } else return null;
+}
+
