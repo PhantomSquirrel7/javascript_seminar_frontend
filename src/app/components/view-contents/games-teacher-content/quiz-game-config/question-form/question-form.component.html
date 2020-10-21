@@ -5,7 +5,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Type:</mat-label>
-        <mat-select formControlName="type"  (selectionChange)="onTypeChange($event)">
+        <mat-select formControlName="type" (selectionChange)="onTypeChange($event)">
             <mat-option *ngFor="let type of types" [value]="type">
                 {{ type }}
             </mat-option>
@@ -44,7 +44,9 @@
             <mat-form-field class="mr-2">
                 <input (keydown.enter)="$event.preventDefault()" type="text" matInput [formControlName]="i">
             </mat-form-field>
-            <mat-slide-toggle (change)="onAnswerChange($event, i)" [checked]="isAnswer(i)"></mat-slide-toggle>
+            <mat-slide-toggle (change)="onAnswerChange($event, i)" [checked]="isAnswer(i)"
+                [disabled]="option.value == ''">
+            </mat-slide-toggle>
             <button type="button" *ngIf="i == options.controls.length-1" title="add option" mat-icon-button
                 aria-label="add option" (click)="addOption()">
                 <mat-icon>add</mat-icon>

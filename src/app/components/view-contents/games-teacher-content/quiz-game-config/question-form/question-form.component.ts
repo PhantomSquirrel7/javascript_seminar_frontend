@@ -21,7 +21,7 @@ export class QuestionFormComponent implements OnInit {
     type: ['', Validators.required],
     name: ['', Validators.required],
     question: ['', Validators.required],
-    options: this.fb.array([], Validators.required),
+    options: this.fb.array([], invalidOptionsValidator),
     answer: this.fb.array([])
   });
 
@@ -34,11 +34,11 @@ export class QuestionFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.quest.type == 'select'){
+    if (this.quest.type == 'select') {
       this.answer.setValidators(Validators.required);
       this.answer.updateValueAndValidity();
     }
-    if(this.quest._id != '-1') {
+    if (this.quest._id != '-1') {
       this.question.get('type').disable();
     }
   }
@@ -134,6 +134,16 @@ export class QuestionFormComponent implements OnInit {
         this.addAnswer([index, index + 1]);
       }
     }
+    if (this.type == "select") {
+      let index = 0;
+      while (index < this.options.length) {
+        if (this.options.at(index).value == "") {
+          this.deleteOption(index);
+        } else {
+          index++;
+        }
+      }
+    }
     let updated = this.question.value;
     updated._id = this.quest._id;
     this.questionChange.emit(updated);
@@ -160,4 +170,11 @@ export class QuestionFormComponent implements OnInit {
       this.addAnswer(answ)
     });
   }
+}
+
+function invalidOptionsValidator(arr: FormArray): { [key: string]: any } | null {
+  const options = arr.value;
+  if (options.includes("")) {
+    return { 'invalidOptions': true }
+  } else return null;
 }

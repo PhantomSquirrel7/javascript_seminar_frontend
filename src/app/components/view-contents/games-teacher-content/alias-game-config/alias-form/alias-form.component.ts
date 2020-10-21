@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormArray, Validators } from '@angular/forms'
+import { FormBuilder, FormArray, Validators, ValidatorFn } from '@angular/forms'
 import { Alias } from '@app/models/game-models/alias';
 
 @Component({
@@ -16,7 +16,7 @@ export class AliasFormComponent implements OnInit {
     name: ['', Validators.required],
     description: [''],
     words: this.fb.array([
-    ])
+    ], invalidWordsValidator)
   })
 
   constructor(private fb: FormBuilder) {
@@ -78,3 +78,13 @@ export class AliasFormComponent implements OnInit {
     }
   }
 }
+
+
+function invalidWordsValidator(arr: FormArray): { [key: string]: any } | null {
+  const words: [] = arr.value;
+  let filter = words.filter(word => word != "");
+  if (words.length == 0 || filter.length == 0) {
+    return { 'invalidWords': true }
+  } else return null;
+}
+
