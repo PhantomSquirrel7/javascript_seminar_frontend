@@ -1,8 +1,8 @@
-<div class="container-fluid alias-game">
+<div class="container-fluid drawit-game">
     <div *ngIf="game" class="row">
         <div class="col">
             <div class="row game-header">
-                <div class="col logo">Alias</div>
+                <div class="col logo">Draw It</div>
                 <div class="col-auto">
                     <button class="help-button" aria-label="help" (click)="toggleHelp()">
                         ?
@@ -39,7 +39,7 @@
                             </div>
                             <!-- PLAYER EXPLAINING -->
                             <div *ngIf="username === game.currentPlayer">
-                                <div class="mt-4 p-3 explaining text-center"> Explain the word:
+                                <div class="mt-4 p-3 explaining text-center"> Draw the word:
                                     {{ currentWord }}
                                 </div>
                                 <div class="mt-4 game-controls text-center">
@@ -49,7 +49,7 @@
                             </div>
                             <!-- PLAYER GUESSING -->
                             <div *ngIf="username !== game.currentPlayer">
-                                <div class="mt-4 text-center">{{ game.currentPlayer }} is explaining. Guess the word!
+                                <div class="mt-4 text-center">{{ game.currentPlayer }} is drawing. Guess the word!
                                 </div>
                             </div>
                         </div>
@@ -93,10 +93,10 @@
             <button class="help-close" mat-mini-fab color="accent" aria-label="close help" (click)="toggleHelp()">
                 <mat-icon>close</mat-icon>
             </button>
-            <h1>How to play "Alias"</h1>
+            <h1>How to play "Draw It"</h1>
             <p>
-                Please start the game once everybody is ready.<br>Explain the word verbally without
-                using it!
+                Please start the game once everybody is ready.<br>Draw the word! You are not allowed to talk or draw
+                letters.
                 <br>If someone guesses correctly press "correct". <br>If a word is to hard you can "skip"
                 it.
             </p>

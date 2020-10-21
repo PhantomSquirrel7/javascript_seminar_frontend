@@ -1,8 +1,8 @@
-.alias-game {
-    background-color: rgb(236, 248, 248);
+.drawit-game {
+    background-color: rgb(248, 243, 236);
     min-width: 300px;
     padding: 0;
-    border: 2px solid rgba(0, 124, 124);
+    border: 2px solid rgb(248, 226, 195);
 }
 
 .connecting {
@@ -12,20 +12,19 @@
 .game-header {
     font-family: "Lucida Console", Courier, monospace;
     font-weight: bold;
-    background: rgb(0, 124, 124);
-    color: rgba(255, 255, 255, 0.85);
+    background: rgb(248, 226, 195);
+    color: rgba(0, 0, 0, 0.85);
     padding: 1em;
 }
 
 .logo {
-    font-size: 150%;
+    font-size: 150%;    
     line-height: 2em;
 }
 
 .game-content {
     padding: 1em;
     font-size: 130%;
-
 }
 
 .players-list {
@@ -48,8 +47,8 @@
     padding: 0.25em;
 }
 
-.settings{
-    border-left: 2px solid rgba(0, 124, 124);
+.settings {
+    border-left: 2px solid rgb(248, 226, 195);
 }
 
 .explaining {
@@ -59,7 +58,7 @@
 
 .word {
     font-weight: bold;
-    color: rgb(0, 59, 59);
+    color: rgb(175, 102, 0);
 }
 
 .timer {
@@ -72,13 +71,13 @@
 
 .help {
     position: fixed; 
-    z-index: 9999;
+    z-index: 9999; 
     left: 0;
     top: 0;
     width: 100%; 
-    height: 100%; 
+    height: 100%;
     overflow: auto; 
-    background-color: rgb(0,0,0);
+    background-color: rgb(0,0,0); 
     background-color: rgba(0,0,0,0.4); 
 }
 
@@ -88,7 +87,7 @@
 
 .help-content {
     background-color: rgb(255, 255, 255);
-    margin: 20% auto;
+    margin: 20% auto; 
     padding: 1em;
     border: 1px solid #888;
     width: 60%; 

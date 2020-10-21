@@ -1,13 +1,14 @@
 import { Component, Input, Output, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import { GamesService } from '@app/services/custom/games/games.service';
-import { AliasUpdate } from '../messages/aliasUpdate';
+import { DrawItUpdate } from '../messages/drawItUpdate';
 
 @Component({
-  selector: 'app-alias',
-  templateUrl: './alias.component.html',
-  styleUrls: ['./alias.component.css']
+  selector: 'app-draw-it',
+  templateUrl: './draw-it.component.html',
+  styleUrls: ['./draw-it.component.css']
 })
-export class GamesAliasComponent implements OnInit, OnDestroy {
+
+export class DrawItComponent implements OnInit, OnDestroy {
 
   @Input() username: string;
   @Input() sessionId: string;
@@ -21,7 +22,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   gameUpdateSubscriptionEvent;
   showHelp = false;
 
-  game: AliasUpdate;
+  game: DrawItUpdate;
 
   constructor(public gamesService: GamesService) {
   }
@@ -59,7 +60,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     return `${min}:${sec}`
   }
 
-  updateGame(gameUpdate: AliasUpdate) {
+  updateGame(gameUpdate: DrawItUpdate) {
     if (this.gamesService == undefined) {
       return;
     }

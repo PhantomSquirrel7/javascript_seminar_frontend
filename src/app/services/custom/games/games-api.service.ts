@@ -29,8 +29,7 @@ export class GamesApiService {
   ]
   //---------------------------------
 
-  private url = "http://localhost:8080"; // TODO URL to games api
-  //private url = "https://javascript-group-d-frontend.herokuapp.com";
+  private url = "https://javascript-group-d-frontend.herokuapp.com";
 
   private httpOptionsJson = {
     headers: new HttpHeaders({

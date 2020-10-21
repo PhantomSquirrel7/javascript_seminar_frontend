@@ -1,5 +1,5 @@
-export interface AliasUpdate {
-    gameType: "alias";
+export interface DrawItUpdate {
+    gameType: "drawit";
     sessionId: string;
     players: string[];
     currentPlayer: string; // The playername of the currently in charge player
