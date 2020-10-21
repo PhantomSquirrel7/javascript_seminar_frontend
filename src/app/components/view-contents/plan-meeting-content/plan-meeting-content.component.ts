@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ClassesService } from 'src/app/services/swagger-api/classes.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -12,6 +13,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./plan-meeting-content.component.less']
 })
 export class PlanMeetingContentComponent implements OnInit  { 
+  lists = [
+    'Episode I - The Phantom Menace',
+    'Episode II - Attack of the Clones',
+    'Episode III - Revenge of the Sith',
+    'Episode IV - A New Hope',
+    'Episode V - The Empire Strikes Back',
+  ];
 
   clsSelecForm: FormGroup;
 
@@ -82,4 +90,7 @@ export class PlanMeetingContentComponent implements OnInit  {
     return text.toLowerCase();
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
+  }
 }
