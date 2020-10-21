@@ -10,12 +10,10 @@ export class GamesStudentContentComponent implements OnInit {
   constructor() {
 
   }
+  selectedGame : String = "quiz";
+  gameJoined : boolean = false;
+  taskId : string = "taskId";
 
-  debugMessage: String = "";
-  devMode = isDevMode();
-  selectedGame: String = "quiz";
-  gameJoined: boolean = false;
-  taskId: string = "taskId";
   @Input() sessionId: String;
   @Input() username: String;
 
@@ -24,9 +22,7 @@ export class GamesStudentContentComponent implements OnInit {
   }
 
   public onJoinGameButton() {
-    this.debugMessage = "Joining Game as " + this.username + " in Session " + this.sessionId + this.selectedGame;
-    this.gameJoined = true;
-
+    this.gameJoined = true; 
   }
 
   isSelected(game) {
@@ -35,11 +31,7 @@ export class GamesStudentContentComponent implements OnInit {
 
   onDisconnect(event: string = "") {
     this.gameJoined = false;
-    this.debugMessage = "Disconnected";
   }
 
-  onFinished() {
-    console.log("Game Finished TODO");
-  }
 
 }

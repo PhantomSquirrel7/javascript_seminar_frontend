@@ -18,7 +18,7 @@ export class GamesService extends Socket {
   // TODO make this adjustable
   constructor() {
     super({
-      //url: "http://localhost:8080/", options: {}
+      // url: "http://localhost:8080/", options: {}
       url: "https://javascript-group-d-frontend.herokuapp.com/", options: {}
     });
     console.log("Try connecting");

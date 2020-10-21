@@ -1,42 +1,9 @@
+<!---
+
 <div class="notConnected" *ngIf="!gamesService.connected">
     Connecting...
 </div>
 
-
-<div class="question" *ngIf="gamesService.connected && this.currentQuiz != undefined && this.currentQuiz.type == 'select'">{{ this.currentQuiz.question }}<br>
-    <mat-selection-list #answerSelection [(ngModel)]="this.currentQuiz.selectedAnswers" (ngModelChange)="onSelectionChange($event)">
-        <mat-list-option [style.backgroundColor]="this.getBackgroundColor(answer)" [disabled]="this.quizUpdate.quizOver" *ngFor="let answer of this.currentQuiz.answers" [value]="answer">
-            {{ answer }}
-        </mat-list-option>
-    </mat-selection-list>
-    <p>You selected: {{ this.currentQuiz.selectedAnswers }}</p>
-    <button mat-raised-button color="primary" (click)="onPreviousQuestion()">Back</button>
-    <button mat-raised-button color="primary" (click)="onNextQuestion()">Next</button>
-    <button mat-raised-button color="primary" (click)="onSubmitAnswers()">Submit</button>
-</div>
-
-<div class="matchingQuestion" *ngIf="gamesService.connected && this.currentQuiz != undefined && this.currentQuiz.type == 'match'">{{ this.currentQuiz.question }}<br> TODO Matching
-
-    <div class="example-container">
-        <h2>To do</h2>
-
-        <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="leftAnswers" [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
-            <div class="example-box" *ngFor="let item of leftAnswers" cdkDrag>{{item}}</div>
-        </div>
-    </div>
-
-    <div class="example-container">
-        <h2>Done</h2>
-
-        <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="rightAnswers" [cdkDropListConnectedTo]="[todoList]" class="example-list" (cdkDropListDropped)="drop($event)">
-            <div class="example-box" *ngFor="let item of rightAnswers" cdkDrag>{{item}}</div>
-        </div>
-    </div>
-
-
-
-
-</div>
 
 
 <div class="startQuiz" *ngIf="!this.quizUpdate.countDownStarted">
@@ -50,6 +17,149 @@
     </div>
 </div>
 
+<div class="instructions">
+    <div class="selectionInstructions" *ngIf="this.currentQuiz != undefined && this.currentQuiz.type=='select'">
+        Please select all correct answers.
+    </div>
+    <div class="matchingInstructions" *ngIf="this.currentQuiz != undefined && this.currentQuiz.type=='match'">
+        Please match all objects to pairs. An object is matched if they are on the same height in the left and right column!
+    </div>
+</div>
+
 <div class="timer">
     Time Left: {{this.timeLeftSeconds}} seconds
+</div>
+
+
+
+--->
+
+
+
+
+<div class="container-fluid quiz-game">
+    <div class="row">
+        <div class="col">
+            <div class="row game-header">
+                <div class="col logo">Quiz!</div>
+                <div class="col-auto">
+                    <button class="help-button" aria-label="help" (click)="toggleHelp()">
+                        ?
+                    </button>
+                </div>
+            </div>
+            <div class="row justify-content-center game-content">
+                <div class="col">
+                    <!-- CONNECTED -->
+                    <div *ngIf="this.gamesService.connected">
+                        <!-- LOBBY -->
+                        <div *ngIf="this.quizUpdate.state == 'lobby'">
+                            <div>
+                                Welcome to the game! <br> Please wait for all players.
+                            </div>
+                            <button class="btn btn-success" (click)="onStartQuiz()">Start Game</button>
+                        </div>
+                        <!-- GAME RUNNING -->
+                        <div *ngIf="this.quizUpdate.state == 'running'">
+                            <div class="row">
+                                <!-- ALL PLAYERS -->
+                                <div class="col text-center">
+                                    <div>Time Left:</div>
+                                    <div class="timer">{{this.timeLeftSeconds}}</div>
+                                </div>
+                            </div>
+
+
+                            <div class="question" *ngIf="gamesService.connected && this.currentQuiz != undefined && this.currentQuiz.type == 'select'">{{ this.currentQuiz.question }}<br>
+                                <mat-selection-list #answerSelection [(ngModel)]="this.currentQuiz.selectedAnswers" (ngModelChange)="onSelectionChange($event)">
+                                    <mat-list-option [style.backgroundColor]="this.getBackgroundColorSelection(answer)" [disabled]="this.quizUpdate.quizOver" *ngFor="let answer of this.currentQuiz.answers" [value]="answer">
+                                        {{ answer }}
+                                    </mat-list-option>
+                                </mat-selection-list>
+
+                                <div class="questionSolution" *ngIf="this.quizUpdate.quizOver">
+                                    Correct would have been:
+                                    <div class="questionSolutionLine" *ngFor="let solution of this.currentQuiz.correctAnswers">
+                                        {{this.currentQuiz.answers[solution]}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="matchingQuestion" *ngIf="gamesService.connected && this.currentQuiz != undefined && this.currentQuiz.type == 'match'">{{ this.currentQuiz.question }}<br>
+                                <div class="example-container">
+                                    <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="this.currentQuiz.leftAnswers" [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+                                        <div [cdkDragDisabled]="this.quizUpdate.quizOver" [style.backgroundColor]="this.getBackgroundColorMatching(item, 'left')" class="example-box" *ngFor="let item of this.currentQuiz.leftAnswers" cdkDrag>{{item}}</div>
+                                    </div>
+                                </div>
+                                <div class="example-container">
+                                    <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="this.currentQuiz.rightAnswers" [cdkDropListConnectedTo]="[todoList]" class="example-list" (cdkDropListDropped)="drop($event)">
+                                        <div [cdkDragDisabled]="this.quizUpdate.quizOver" [style.backgroundColor]="this.getBackgroundColorMatching(item, 'right')" class="example-box" *ngFor="let item of this.currentQuiz.rightAnswers" cdkDrag>{{item}}</div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="matchingSolution" *ngIf="this.quizUpdate.quizOver">
+                                    <div class="matchingSolutionLine" *ngFor="let solution of this.currentQuiz.correctAnswers">
+                                        {{this.currentQuiz.answers[solution[0]]}} matches with {{this.currentQuiz.answers[solution[1]]}}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="navigationButtos" *ngIf="gamesService.connected && this.currentQuiz != undefined">
+                                <button mat-raised-button color="primary" (click)="onPreviousQuestion()">Back</button>
+                                <button mat-raised-button color="primary" (click)="onNextQuestion()">Next</button>
+                                <button *ngIf="this.quizUpdate.quizOver == false" mat-raised-button color="primary" (click)="onSubmitAnswers()">Submit</button>
+                            </div>
+
+
+                        </div>
+                        <div *ngIf="this.quizUpdate.state == 'over'">
+                            <div class="text-center">
+                                GAME ENDED <br> You guessed words correctly!
+                            </div>
+                        </div>
+                    </div>
+                    <!-- NOT CONNECTED-->
+                    <div *ngIf="!gamesService.connected">
+                        <div class="row connecting" *ngIf="!gamesService.connected">
+                            Connecting...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- sidebar with playerslist and game settings when connected-->
+        <div *ngIf="gamesService.connected" class="col-auto settings">
+            <div class="row justify-content-end">
+                <div class="players-list">
+                    <div class="list-header">Connected Players:</div>
+                    <div class="player" *ngFor="let player of this.quizUpdate.players">
+                        {{ player }} <span *ngIf="username === player">(me)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 mb-2 justify-content-center">
+                <button class="btn btn-secondary" (click)="disconnectGame()">Disconnect</button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showHelp" class="help">
+        <div class="help-content">
+            <button class="help-close" mat-mini-fab color="accent" aria-label="close help" (click)="toggleHelp()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <h1>How to play "Quiz"</h1>
+            <h2>Selection</h2>
+            <p>
+                Please select all correct answers. Multiple answers can be correct. The group has to agree on a solution before submitting. Please discuss the result after the time is up, or you submitted.
+            </p>
+            <h2>Matching</h2>
+            <p>
+                Please match the words that belong together. The first card in the left column is matched to the first card in the right column. Example: <br> |A| - |B|<br> |C| - |D|<br> A will be matched with B and C will be matched with D. Swaping A
+                and B is also valid
+            </p>
+        </div>
+    </div>
 </div>

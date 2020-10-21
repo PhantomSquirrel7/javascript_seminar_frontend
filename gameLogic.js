@@ -7,13 +7,13 @@ var io;
 
 
 module.exports = {
-    gameInit: function (ioServer) {
+    gameInit: function(ioServer) {
         console.log("Creating Games socket");
         //create a io socket
         io = ioServer
-        // io = socket(server);
+            // io = socket(server);
         const connectedUsers = new Set(); //a list of every connection to the socket
-        io.on("connection", function (socket) {
+        io.on("connection", function(socket) {
             console.log("Made socket connection");
 
             // Defines Signals to react to
@@ -87,6 +87,7 @@ async function createQuizSession(sessionId, gameType, playerName, taskId) {
         sessionId: sessionId,
         players: [playerName],
         quizes: [],
+        state: "lobby",
         quizIndex: 0,
         getSolution: false,
         countDownStarted: false,
@@ -240,27 +241,47 @@ function handleQuizUpdateMessage(data) {
         var hex = /[0-9A-Fa-f]{6}/g;
         if (data.taskId == null || data.taskId == undefined || data.taskId == "" || !hex.test(data.taskId)) {
             console.log("Invalid Task ID, sending random quiz");
-            taskId = "5f8efa97d5841b00176305f4";
-            fetch('http://localhost:8080/games/quiz/quizzes/').then(res => res.json()).then(json => {
+            fetch('http://localhost:8080/games/quiz/quizzes').then(res => res.json()).then(json => {
                 taskId = json[Math.floor(Math.random() * json.length)]._id;
+            }).then(() => {
+                fetch('http://localhost:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
+                    json.forEach(question => {
+                        var q = {
+                            question: question.question,
+                            answers: question.options,
+                            correctAnswers: question.answer,
+                            selectedAnswers: [],
+                            type: question.type,
+                            leftAnswers: question.options,
+                            rightAnswers: []
+                        };
+                        data.quizes.push(q);
+                    });
+                    io.to(data.sessionId).emit("updateGame", data);
+                    openSessions.set(data.sessionId, data);
+                }).catch(err => console.log(err));
+
             }).catch(err => console.log(err));
         } else {
             taskId = data.taskId;
+            fetch('http://localhost:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
+                json.forEach(question => {
+                    var q = {
+                        question: question.question,
+                        answers: question.options,
+                        correctAnswers: question.answer,
+                        selectedAnswers: [],
+                        type: question.type,
+                        leftAnswers: question.options,
+                        rightAnswers: []
+                    };
+                    data.quizes.push(q);
+                });
+                io.to(data.sessionId).emit("updateGame", data);
+                openSessions.set(data.sessionId, data);
+            }).catch(err => console.log(err));
         }
-        fetch('http://localhost:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
-            json.forEach(question => {
-                var q = {
-                    question: question.question,
-                    answers: question.options,
-                    correctAnswers: question.answer,
-                    selectedAnswers: [],
-                    type: question.type
-                };
-                data.quizes.push(q);
-            });
-            io.to(data.sessionId).emit("updateGame", data);
-            openSessions.set(data.sessionId, data);
-        }).catch(err => console.log(err));
+
 
     } else {
         // TODO Maybe get answers later

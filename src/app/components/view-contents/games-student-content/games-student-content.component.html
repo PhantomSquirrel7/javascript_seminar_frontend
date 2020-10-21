@@ -13,23 +13,16 @@
     </div>
 
     <div *ngIf="gameJoined && isSelected('quiz')" class="gameScreen">
-        <app-quiz (finished)="onFinished()" [username]="username" [taskId]="taskId" [sessionId]="sessionId"></app-quiz>
-        <button (click)="onDisconnect()">Disconnect</button>
+        <app-quiz (disconnect)="onDisconnect($event)" [username]="username " [taskId]="taskId " [sessionId]="sessionId "></app-quiz>
     </div>
 
 
-    <div *ngIf="gameJoined && isSelected('alias')" class="gameScreen">
-        <app-alias [username]="username" [taskId]="taskId" [sessionId]="sessionId" (disconnect)="onDisconnect($event)">
+    <div *ngIf="gameJoined && isSelected( 'alias') " class="gameScreen ">
+        <app-alias [username]="username " [taskId]="taskId " [sessionId]="sessionId " (disconnect)="onDisconnect($event) ">
         </app-alias>
     </div>
 
-    <div *ngIf="gameJoined && isSelected('drawit')" class="gameScreen">
-        <app-draw-it [username]="username" [taskId]="taskId" [sessionId]="sessionId"
-            (disconnect)="onDisconnect($event)"></app-draw-it>
+    <div *ngIf="gameJoined && isSelected( 'drawit') " class="gameScreen ">
+        <app-draw-it [username]="username " [taskId]="taskId " [sessionId]="sessionId " (disconnect)="onDisconnect($event) "></app-draw-it>
     </div>
-
-    <div *ngIf="devMode" class="debugMessages" style="position: absolute;bottom: 0px; ">
-        {{this.debugMessage}}
-    </div>
-
 </div>

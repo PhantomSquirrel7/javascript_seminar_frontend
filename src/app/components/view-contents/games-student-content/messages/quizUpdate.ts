@@ -5,6 +5,7 @@ export interface QuizUpdate {
     sessionId: string;
     players: string[];
     quizes: Quiz[];
+    state: string;
     getSolution: boolean;
     quizIndex: number;
     countDownStarted: boolean;

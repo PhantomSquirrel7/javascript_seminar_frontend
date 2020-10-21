@@ -5,6 +5,7 @@ import { QuizUpdate } from '../messages/quizUpdate';
 import { Quiz } from "../model/quiz";
 
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { getTreeNoValidDataSourceError } from '@angular/cdk/tree';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 export class GamesQuizComponent implements OnInit, OnDestroy {
 
   // finished to notify parent component
-  @Output() finished = new EventEmitter<boolean>();
+  @Output() disconnect = new EventEmitter<string>();
   @Input() username: string;
   @Input() sessionId: string;
   @Input() taskId: string;
@@ -25,9 +26,8 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   currentQuiz: Quiz;
   timeLimit: number = 30;
   timeLeftSeconds: number = this.timeLimit;
-  timeInterval;
-  leftAnswers: string[] = ["a", "b"];
-  rightAnswers: string[] = ["c", "dwoakadwo"];
+  timeInterval;    
+  showHelp : boolean = false;
 
   constructor(public gamesService: GamesService) {
     this.quizUpdate = {
@@ -35,6 +35,7 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
       sessionId: this.sessionId,
       players: [this.username],
       quizes: [],
+      state: "lobby",
       getSolution: false,
       quizIndex: 0,
       countDownStarted: false,
@@ -42,6 +43,7 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
       taskId: this.taskId
     }
   }
+
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -52,7 +54,6 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
         event.previousIndex,
         event.currentIndex);
     }
-    console.log(this.leftAnswers);
   }
 
   ngOnInit(): void {
@@ -74,7 +75,6 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
     this.quizUpdate.getSolution = true;
     this.quizUpdate.quizOver = true;
     this.gamesService.sendUpdate(this.quizUpdate);
-    this.finished.emit(true);
   }
 
   onGameOver(): void {
@@ -114,8 +114,10 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   // Start timer and notify others
   onStartQuiz(): void {
     this.setTimer();
+    this.quizUpdate.state = "running";
     this.quizUpdate.countDownStarted = true;
     this.gamesService.sendUpdate(this.quizUpdate);
+    
   }
 
   setTimer(): void {
@@ -149,17 +151,19 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
     this.gamesService.sendUpdate(this.quizUpdate);
   }
 
-  getBackgroundColor(answer) {
+  getBackgroundColorSelection(answer) {
     if (this.quizUpdate.quizOver == true && this.quizUpdate.quizes.length != 0) {
+
+      let i = this.quizUpdate.quizes[this.quizUpdate.quizIndex].answers.indexOf(answer);
       // Correct solution selected
       if ((
         this.quizUpdate.quizes[this.quizUpdate.quizIndex].selectedAnswers.includes(answer)
-        && this.quizUpdate.quizes[this.quizUpdate.quizIndex].correctAnswers.includes(answer)
+        && this.quizUpdate.quizes[this.quizUpdate.quizIndex].correctAnswers.includes(i)
       ) ||
         // Wrong solution not selected
         (
           !this.quizUpdate.quizes[this.quizUpdate.quizIndex].selectedAnswers.includes(answer)
-          && !this.quizUpdate.quizes[this.quizUpdate.quizIndex].correctAnswers.includes(answer)
+          && !this.quizUpdate.quizes[this.quizUpdate.quizIndex].correctAnswers.includes(i)
         )) {
         return "green";
       }
@@ -169,5 +173,47 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
     } else {
       return "white";
     }
+  }
+
+  /*
+  Color the cards once the game is finished to provide feedback.
+  */
+  getBackgroundColorMatching(answer, position) {
+    // White while in Progress
+    if (!this.quizUpdate.quizOver) {
+      return "white";
+    }
+    let correctAnswers = this.quizUpdate.quizes[this.quizUpdate.quizIndex].correctAnswers;
+    let indexAnswers = this.quizUpdate.quizes[this.quizUpdate.quizIndex].answers.indexOf(answer);
+    let selectedAnswerMatch = [];
+    if (position == "left") {
+      let indexLeft = this.currentQuiz.leftAnswers.indexOf(answer);
+      let indexAnswersMatch = this.quizUpdate.quizes[this.quizUpdate.quizIndex].answers.indexOf(this.currentQuiz.rightAnswers[indexLeft]);
+      selectedAnswerMatch = [indexAnswers, indexAnswersMatch];
+      // Check if [indexAnswers, indexAnswersMatch] is in Array
+    } else if (position == "right") {
+      let indexRight = this.currentQuiz.rightAnswers.indexOf(answer);
+      let indexAnswersMatch = this.quizUpdate.quizes[this.quizUpdate.quizIndex].answers.indexOf(this.currentQuiz.leftAnswers[indexRight]);
+      selectedAnswerMatch = [indexAnswersMatch, indexAnswers];
+    }
+    for (var i = 0; i < correctAnswers.length; i++) {
+      if ((correctAnswers[i][0] == selectedAnswerMatch[0] && correctAnswers[i][1] == selectedAnswerMatch[1])
+        || (correctAnswers[i][0] == selectedAnswerMatch[1] && correctAnswers[i][1] == selectedAnswerMatch[0]
+        )
+      ) {
+        return "green";
+      }
+    }
+    return "red";
+  }
+
+
+  toggleHelp() {
+    this.showHelp = !this.showHelp;
+    console.log(this.quizUpdate.state);
+  }
+
+  disconnectGame() {
+    this.disconnect.emit("disconnect");
   }
 }
