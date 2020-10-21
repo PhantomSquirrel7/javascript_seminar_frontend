@@ -125,7 +125,7 @@ async function createAliasSession(sessionId, gameType, playerName, taskId) {
     }
 }
 
-function createDrawItSession(sessionId, gameType, playerName, taskId) {
+async function createDrawItSession(sessionId, gameType, playerName, taskId) {
     var session = {
         gameType: gameType,
         sessionId: sessionId,
@@ -133,11 +133,25 @@ function createDrawItSession(sessionId, gameType, playerName, taskId) {
         currentPlayer: playerName,
         numberOfGuessedWords: 0,
         countDownStarted: false,
-        drawitOver: false,
-        wordsToGuess: [],
-        taskId: taskId
+        words: [],
+        name: "",
+        description: "",
+        taskId: taskId,
+        state: "lobby",
+        timelimit: 30,
+        timeleft: 30
     }
-    return session;
+    try {
+        let drawit = await getDrawItGame(taskId);
+        session.words = alias.words;
+        session.name = alias.name;
+        session.description = drawit.description;
+        return session;
+
+    } catch (error) {
+        console.log("could not get drawit game")
+        return null;
+    }
 }
 
 async function getAliasGame(taskId) {
@@ -158,6 +172,31 @@ async function getAliasGame(taskId) {
             let alias = fetch('http://localhost:8080/games/alias/' + taskId).then(res => res.json())
             console.log("FETCHED ALIAS", alias);
             return alias;
+        } catch (error) {
+            console.log(error)
+            return null;
+        }
+    }
+}
+
+async function getDrawItGame(taskId) {
+    var hex = /[0-9A-Fa-f]{6}/g;
+    if (taskId == "" || taskId == null || taskId == undefined || !hex.test(taskId)) {
+        // Get random words
+        console.log("Wrong taskID, get random words"); // TODO -> throw and handle error! 
+        return {
+            id: taskId,
+            name: "Mock Draw It Game",
+            description: "this is not a real game",
+            words: ["Banana", "Trump", "Bicycle", "Pluto"]
+        }
+
+    } else {
+        // Find by ID
+        try {
+            let drawit = fetch('http://localhost:8080/games/drawit/' + taskId).then(res => res.json())
+            console.log("FETCHED DRAW IT", alias);
+            return drawit;
         } catch (error) {
             console.log(error)
             return null;
@@ -190,32 +229,6 @@ async function handleAliasUpdateMessage(data) {
 }
 
 async function handleDrawItUpdateMessage(data) {
-    if (data.countDownStarted == true && data.wordsToGuess.length == 0 || data.getWords == true) {
-        var hex = /[0-9A-Fa-f]{6}/g;
-        data.getWords = false;
-        if (data.taskId == "" || data.taskId == null || data.taskId == undefined || !hex.test(data.taskId)) {
-            // Get random words
-            console.log("Wrong taskID, get random words");
-
-            fetch('http://localhost:8080/games/drawit/games/').then(res => res.json()).then(json => {
-                data.wordsToGuess = json[Math.floor(Math.random() * json.length)].words;
-                io.to(data.sessionId).emit("updateGame", data);
-                openSessions.set(data.sessionId, data);
-            }).catch(err => console.log(err));
-        } else {
-            // Find by ID
-            fetch('http://localhost:8080/games/drawit/' + data.taskId).then(res => res.json()).then(json => {
-                data.wordsToGuess = json[Math.floor(Math.random() * json.length)].words;
-                io.to(data.sessionId).emit("updateGame", data);
-                openSessions.set(data.sessionId, data);
-            }).catch(err => {
-                console.log(err);
-                data.wordsToGuess = ["Banana", "Trump", "Bicycle", "Pluto"];
-                io.to(data.sessionId).emit("updateGame", data);
-                openSessions.set(data.sessionId, data);
-            });
-        }
-    }
     io.to(data.sessionId).emit("updateGame", data);
     openSessions.set(data.sessionId, data);
 }

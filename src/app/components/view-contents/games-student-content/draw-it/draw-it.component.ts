@@ -5,7 +5,7 @@ import { DrawItUpdate } from '../messages/drawItUpdate';
 @Component({
   selector: 'app-draw-it',
   templateUrl: './draw-it.component.html',
-  styleUrls: ['./draw-it.component.less']
+  styleUrls: ['./draw-it.component.css']
 })
 
 export class DrawItComponent implements OnInit, OnDestroy {
@@ -15,86 +15,94 @@ export class DrawItComponent implements OnInit, OnDestroy {
   @Input() taskId: string;
   @Output() disconnect: EventEmitter<string> = new EventEmitter<string>();
 
-  currentPlayer: string;
-  playerList: string[] = [];
-  words: string[] = [];
   currentWord = "";
   currentWordIndex = 0;
-  gameStarted = false;
-  timelimit = 30;
-  timeLeftSeconds: number = this.timelimit;
   timeInterval;
+  timer;
   gameUpdateSubscriptionEvent;
-  numberOfGuessedWords = 0;
-  countDownStarted = false;
-  gameType = "drawit";
-  lastSession: DrawItUpdate = undefined;
   showHelp = false;
 
-  constructor(public gamesService: GamesService) { }
+  game: DrawItUpdate;
+
+  constructor(public gamesService: GamesService) {
+  }
 
   ngOnInit(): void {
-    this.gameUpdateSubscriptionEvent = this.gamesService.gameUpdateEvent.subscribe(gameState => {
-      this.updateGame(gameState);
+    this.gameUpdateSubscriptionEvent = this.gamesService.gameUpdateEvent.subscribe(gameUpdate => {
+      this.updateGame(gameUpdate);
     });
-    this.gamesService.sendjoinGame(this.username, this.sessionId, "drawit", this.taskId);
+    this.gamesService.sendjoinGame(this.username, this.sessionId, "alias", this.taskId);
   }
 
   // Remove self from players List, Send update and unsubscribe to changes
   ngOnDestroy(): void {
-    let session: DrawItUpdate = this.gamesService.gameSession;
-    session.players = session.players.filter(playerName => playerName !== this.username);
-    this.gamesService.sendUpdate(session);
+    //let session: AliasUpdate = this.gamesService.gameSession;
+    this.game.players = this.game.players.filter(playerName => playerName !== this.username);
+    this.gamesService.sendUpdate(this.game);
     this.gameUpdateSubscriptionEvent.unsubscribe();
   }
 
-  updateGame(gameSession: DrawItUpdate) {
-    if (this.gamesService != undefined) {
-      this.playerList = gameSession.players;
-      this.currentPlayer = gameSession.currentPlayer;
-      this.numberOfGuessedWords = gameSession.numberOfGuessedWords;
-      // Load new words when game started and currently words are empty
-      if (this.words.length == 0 && this.gameStarted) {
-        this.words = gameSession.wordsToGuess;
-        this.currentWord = this.words[0];
+  get countdown() {
+    let minutes = Math.floor(this.timer / 60);
+    let min;
+    if (minutes < 10) {
+      min = `0${minutes}`;
+    } else {
+      min = minutes;
+    }
+    let seconds = this.timer % 60;
+    let sec;
+    if (seconds < 10) {
+      sec = `0${seconds}`;
+    } else {
+      sec = seconds;
+    }
+    return `${min}:${sec}`
+  }
+
+  updateGame(gameUpdate: DrawItUpdate) {
+    if (this.gamesService == undefined) {
+      return;
+    }
+    if (this.game) {
+      if (this.username != this.game.currentPlayer) {
+        this.timer = gameUpdate.timeleft;
       }
-      if (this.countDownStarted == false && gameSession.countDownStarted == true) {
-        this.countDownStarted = true;
+      if (this.game.countDownStarted == false && gameUpdate.countDownStarted == true) {
+        console.log("STARTED GAME", this.game.words)
         this.setTimer();
       }
+      this.game = gameUpdate;
+    } else {
+      this.game = gameUpdate;
+      this.timer = this.game.timelimit;
     }
   }
 
   // Starts a game Session
   startGame(): void {
-    let updateMessage: DrawItUpdate = this.gamesService.gameSession;
-    updateMessage.countDownStarted = true;
-    this.countDownStarted = true;
-    updateMessage.getWords = true;
-    updateMessage.taskId = this.taskId;
-    this.gamesService.sendUpdate(updateMessage);
-    this.gameStarted = true;
-    this.words = []
+    this.game.countDownStarted = true;
+    this.game.state = "running";
+    this.currentWord = this.game.words[0];
+    this.gamesService.sendUpdate(this.game);
     this.setTimer();
   }
 
   onGameOver(): void {
-    this.gameStarted = false;
     clearInterval(this.timeInterval);
-    let session: DrawItUpdate = this.gamesService.gameSession;
-    session.drawitOver = true;
-    this.gamesService.sendPlayerResult(session);
-    this.currentWord = "";
-    this.currentWordIndex = 0;
-    this.lastSession = session;
+    this.game.state = "over";
+    this.gamesService.sendUpdate(this.game);
   }
 
   setTimer(): void {
-    this.timeLeftSeconds = this.timelimit;
     this.timeInterval = setInterval(() => {
-      this.timeLeftSeconds -= 1;
-      if (this.timeLeftSeconds <= 0) {
-        this.onGameOver();
+      if (this.timer > 0) this.timer -= 1;
+      //current player is reference for timer and initializes game over
+      if (this.username == this.game.currentPlayer) {
+        this.game.timeleft = this.timer;
+        if (this.timer <= 0) {
+          this.onGameOver();
+        }
       }
     }, 1000);
   }
@@ -104,23 +112,21 @@ export class DrawItComponent implements OnInit, OnDestroy {
   The number of correct guesses will be synchronized across the network.
   */
   correctGuess(): void {
-    let session: DrawItUpdate = this.gamesService.gameSession;
-    this.words = this.words.filter(word =>
+    this.game.words = this.game.words.filter(word =>
       word !== this.currentWord
     );
 
-    this.currentWord = this.words[(this.currentWordIndex) % this.words.length];
-    this.numberOfGuessedWords++;
-    session.numberOfGuessedWords++;
-    if (this.words.length === 0) {
+    this.currentWord = this.game.words[(this.currentWordIndex) % this.game.words.length];
+    this.game.numberOfGuessedWords++;
+    if (this.game.words.length === 0) {
       this.onGameOver();
     }
-    this.gamesService.sendUpdate(session);
+    this.gamesService.sendUpdate(this.game);
   }
 
   skipWord(): void {
-    this.currentWordIndex = (this.currentWordIndex + 1) % this.words.length;
-    this.currentWord = this.words[this.currentWordIndex];
+    this.currentWordIndex = (this.currentWordIndex + 1) % this.game.words.length;
+    this.currentWord = this.game.words[this.currentWordIndex];
   }
 
   toggleHelp() {
@@ -130,5 +136,4 @@ export class DrawItComponent implements OnInit, OnDestroy {
   disconnectGame() {
     this.disconnect.emit("disconnect");
   }
-
 }
