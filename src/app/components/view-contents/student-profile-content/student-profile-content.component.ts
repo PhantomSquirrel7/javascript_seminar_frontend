@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { StudentsService } from '@app/services/swagger-api/api';
+import { CustomUserService } from '@app/services/custom';
+import { flatMap, map, catchError } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+import { User, Body14 } from '@app/models';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormGroup, FormBuilder } from '@angular/forms'
 
 @Component({
   selector: 'app-student-profile-content',
@@ -7,9 +14,106 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentProfileContentComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private studentService: StudentsService,
+    private userService: CustomUserService,
+    private _snackBar: MatSnackBar,
+    private fb: FormBuilder,
+  ) { }
 
-  ngOnInit(): void {
+  user_student: any = {};
+	loading = false; // true if waiting for results
+  error = '';
+
+  updateProfile: FormGroup;
+  age: string;
+  hobbies: string;
+  notes: string;
+  proficiency_level: string;
+
+
+  updateFormValues(){
+    this.updateProfile.value.age = this.age;
+    this.updateProfile.value.hobbies = this.hobbies;
+    this.updateProfile.value.notes = this.notes;
+    this.updateProfile.value.proficiency_level = this.proficiency_level;
   }
 
+	ngOnInit() {
+		this.updateProfile = this.fb.group({
+      age: [this.age],
+      hobbies: [this.hobbies],
+      notes: [this.notes],
+      proficiency_level: [this.proficiency_level],
+		});
+		this.userService.getMe().subscribe({
+			next: (response) => {
+				this.loading = false;
+        this.user_student = response;
+        this.age = this.user_student.age;
+        this.hobbies = this.user_student.hobbies;
+        this.notes = this.user_student.notes;
+        this.proficiency_level = this.user_student.proficiency_level;
+        this.updateFormValues();
+			},
+			error: (error) => {
+				this.error = error;
+				this._snackBar.open(this.error, 'Close', {
+				duration: 3000
+				});
+				this.loading = false;
+			},
+		});
+  }
+  
+  onSubmit(){
+    if (this.updateProfile.value.age){
+      this.age = this.updateProfile.value.age;
+    }
+    if(this.updateProfile.value.hobbies){
+      this.hobbies = this.updateProfile.value.hobbies;
+    }
+    if(this.updateProfile.value.notes){
+      this.notes = this.updateProfile.value.notes;
+    }
+    if(this.updateProfile.value.proficiency_level){
+      this.proficiency_level = this.updateProfile.value.proficiency_level;
+    }
+    
+    var body = {
+      "age": this.age,
+      "hobbies": this.hobbies,
+      "notes": this.notes,
+      "proficiency_level": this.proficiency_level
+    }
+    console.log(body);
+    this.updateYourself(body);
+  }
+  
+
+  updateYourself(body){
+    this.userService.getMe().pipe(
+      flatMap( (user) => 
+        this.studentService.studentsStudentIdPatch(body, user.id).pipe(
+          map(
+            student => {
+              return student;
+            } 
+          )
+        )
+      )
+    ).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.user_student = response;
+      },
+      error: (error) => {
+        this.error = error;
+        this._snackBar.open(this.error, 'Close', {
+        duration: 3000
+        });
+        this.loading = false;
+      },
+    });
+  }
 }

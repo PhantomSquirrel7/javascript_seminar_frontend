@@ -30,26 +30,7 @@ export class FindPartnerClassContentComponent implements OnInit {
 	isSelected = false;
 	selectedClass: any; // Type Class
 
-	user_classes = [ // Todo: Replace with API
-		// {
-		// classId: 1,
-		// className: "Class 1"
-		// },
-		// {
-		// classId: 2,
-		// className: "Class 2"
-		// },
-		// {
-		// classId: 3,
-		// className: "Class 3"
-		// }
-	]
-
-	// user_years = Array.from(Array(8).keys(), x => x+5);
-	// selectedYear: number;
-
-	// user_languages = ['English', 'Spanish', 'French', 'Italian', 'Chinese'];
-	// selectedLanguage: string;
+	user_classes = [];
 
 	user_lang_profs = ['Beginner (A1)', 'Beginner (A1)', 'Intermediate (B1)', 'Intermediate (B2)', 'Advanced (C1)', 'Advanced (C2)'];
 	selectedLangProf: string;
@@ -59,80 +40,7 @@ export class FindPartnerClassContentComponent implements OnInit {
 
 	myClasses:any = [];
 
-	resultClasses = [ // Replace with API
-		// {
-		// "name": "Class 1",
-		// "language": "English",
-		// "country": "au",
-		// "year": "8",
-		// "subject": "mathematics",
-		// "topics": [
-		// 	"addition",
-		// 	"subtraction"
-		// ],
-		// "level": 2
-		// },
-		// {
-		// "name": "Class 2",
-		// "language": "English",
-		// "country": "gb",
-		// "year": "9",
-		// "subject": "mathematics",
-		// "topics": [
-		// 	"division",
-		// 	"subtraction"
-		// ],
-		// "level": 2
-		// },
-		// {
-		// "name": "Class 3",
-		// "language": "English",
-		// "country": "us",
-		// "year": "7",
-		// "subject": "mathematics",
-		// "topics": [
-		// 	"addition",
-		// 	"multiplication"
-		// ],
-		// "level": 1
-		// },
-		// {
-		// "name": "Class 4",
-		// "language": "English",
-		// "country": "us",
-		// "year": "7",
-		// "subject": "mathematics",
-		// "topics": [
-		// 	"addition",
-		// 	"multiplication"
-		// ],
-		// "level": 1
-		// },
-		// {
-		// "name": "Class 5",
-		// "language": "English",
-		// "country": "us",
-		// "year": "7",
-		// "subject": "mathematics",
-		// "topics": [
-		// 	"addition",
-		// 	"multiplication"
-		// ],
-		// "level": 1
-		// },
-		// {
-		// "name": "Class 6",
-		// "language": "English",
-		// "country": "us",
-		// "year": "7",
-		// "subject": "mathematics",
-		// "topics": [
-		// 	"addition",
-		// 	"multiplication"
-		// ],
-		// "level": 1
-		// }
-	];
+	resultClasses = [];
 
 	contactClass: any;
  
