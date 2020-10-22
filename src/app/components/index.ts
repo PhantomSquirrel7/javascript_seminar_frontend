@@ -30,6 +30,8 @@ export * from './views/student-home-view/student-home-view.component';
 export * from './views/student-profile-view/student-profile-view.component';
 export * from './views/student-assignments-view/student-assignments-view.component';
 export * from './views/student-meetings-view/student-meetings-view.component';
+export * from './views/create-class-view/create-class-view.component';
+
 
 // view-contents
 export * from './view-contents/dashboard-content/dashboard-content.component'; 
@@ -45,5 +47,8 @@ export * from './view-contents/student-profile-content/student-profile-content.c
 export * from './view-contents/student-home-content/student-home-content.component';
 export * from './view-contents/student-assignments-content/student-assignments-content.component';
 export * from './view-contents/student-meetings-content/student-meetings-content.component';
+export * from './view-contents/create-class-component/create-class-component.component';
+export * from './view-contents/create-student-component/create-student-component.component';
+
 
 

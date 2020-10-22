@@ -44,7 +44,7 @@
                       </div>
                 </div>
 
-                <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
+                <div *ngIf="selectedArrangement !== 'wholeclass'" class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
                     <div fxFlex="0 0 45%">Based on your choice, we've organized the students for you</div>
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
@@ -62,11 +62,18 @@
                             </button>
                             </div>
                             <div fxLayout="row" fxLayoutGap="25px" class="modal-body">
-                                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, list1)">
-                                    <div class="example-box" *ngFor="let list of list1" cdkDrag>{{list}}</div>
+                                <div>
+                                    Your Class
+                                    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, list1)">
+                                        <div class="example-box" *ngFor="let list of list1" cdkDrag>{{list}}</div>
+                                    </div>
                                 </div>
-                                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, list2)">
-                                    <div class="example-box" *ngFor="let list of list2" cdkDrag>{{list}}</div>
+
+                                <div>
+                                    Partner Class
+                                    <div cdkDropList cdkDropListDisabled class="example-list" (cdkDropListDropped)="drop($event, list2)">
+                                        <div class="example-box" *ngFor="let list of list2" cdkDrag>{{list}}</div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">

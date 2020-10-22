@@ -66,6 +66,12 @@ const routes: Routes = [
     data: { roles: [User.RoleEnum.Teacher]}
   },
   {
+    path: 'create-student',
+    component: CreateStudentViewComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [User.RoleEnum.Teacher]}
+  },
+  {
     path: 'find-partner-class',
     component: FindPartnerClassViewComponent,
     canActivate: [AuthGuard],
