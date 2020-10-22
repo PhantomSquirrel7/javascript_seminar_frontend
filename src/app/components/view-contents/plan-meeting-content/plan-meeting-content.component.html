@@ -44,7 +44,7 @@
                       </div>
                 </div>
 
-                <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
+                <div *ngIf="selectedArrangement !== 'wholeclass'" class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
                     <div fxFlex="0 0 45%">Based on your choice, we've organized the students for you</div>
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
