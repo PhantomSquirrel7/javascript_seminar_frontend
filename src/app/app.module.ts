@@ -2,7 +2,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './utils';
@@ -47,13 +46,15 @@ import {
   StudentAssignmentsViewComponent,
   StudentMeetingsViewComponent,
   StudentAssignmentsContentComponent,
-  StudentMeetingsContentComponent
+  StudentMeetingsContentComponent,
+  CreateClassComponentComponent,
+  CreateStudentComponentComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
-import { UserService, ClassesService } from './services/swagger-api/api';
+import { UserService, ClassesService } from './services/swagger-api/api';;
 @NgModule({
   imports: [
     BrowserModule,
@@ -106,7 +107,11 @@ import { UserService, ClassesService } from './services/swagger-api/api';
     StudentAssignmentsViewComponent,
     StudentMeetingsViewComponent,
     StudentMeetingsContentComponent,
-    StudentAssignmentsContentComponent],
+    StudentAssignmentsContentComponent,
+    CreateClassComponentComponent,
+    CreateStudentComponentComponent
+  ],
+    
   providers: [
     {
       provide: APP_INITIALIZER,
