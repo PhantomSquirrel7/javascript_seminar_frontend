@@ -6,6 +6,10 @@ var openSessions = new Map();
 var io;
 
 
+var url = "https://javascript-group-d-frontend.herokuapp.com";
+// var url = "http://localhost:8080";
+
+
 module.exports = {
     gameInit: function(ioServer) {
         console.log("Creating Games socket");
@@ -170,7 +174,7 @@ async function getAliasGame(taskId) {
     } else {
         // Find by ID
         try {
-            let alias = fetch('http://localhost:8080/games/alias/' + taskId).then(res => res.json())
+            let alias = fetch(url + '/games/alias/' + taskId).then(res => res.json())
             console.log("FETCHED ALIAS", alias);
             return alias;
         } catch (error) {
@@ -195,7 +199,7 @@ async function getDrawItGame(taskId) {
     } else {
         // Find by ID
         try {
-            let drawit = fetch('http://localhost:8080/games/drawit/' + taskId).then(res => res.json())
+            let drawit = fetch(url + '/games/drawit/' + taskId).then(res => res.json())
             console.log("FETCHED DRAW IT", alias);
             return drawit;
         } catch (error) {
@@ -241,10 +245,10 @@ function handleQuizUpdateMessage(data) {
         var hex = /[0-9A-Fa-f]{6}/g;
         if (data.taskId == null || data.taskId == undefined || data.taskId == "" || !hex.test(data.taskId)) {
             console.log("Invalid Task ID, sending random quiz");
-            fetch('http://localhost:8080/games/quiz/quizzes').then(res => res.json()).then(json => {
+            fetch(url + '/games/quiz/quizzes').then(res => res.json()).then(json => {
                 taskId = json[Math.floor(Math.random() * json.length)]._id;
             }).then(() => {
-                fetch('http://localhost:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
+                fetch(url + '/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
                     json.forEach(question => {
                         var q = {
                             question: question.question,
@@ -264,7 +268,7 @@ function handleQuizUpdateMessage(data) {
             }).catch(err => console.log(err));
         } else {
             taskId = data.taskId;
-            fetch('http://localhost:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
+            fetch(url + '/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
                 json.forEach(question => {
                     var q = {
                         question: question.question,

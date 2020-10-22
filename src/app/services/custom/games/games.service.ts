@@ -18,8 +18,8 @@ export class GamesService extends Socket {
   // TODO make this adjustable
   constructor() {
     super({
-      // url: "http://localhost:8080/", options: {}
-      url: "https://javascript-group-d-frontend.herokuapp.com/", options: {}
+      url: "http://localhost:8080/", options: {}
+      // url: "https://javascript-group-d-frontend.herokuapp.com/", options: {}
     });
     console.log("Try connecting");
 
@@ -49,6 +49,7 @@ export class GamesService extends Socket {
 
   // Recieve and save and updated gameSession and let listeners update
   handleUpdateGameMessage(session) {
+    console.log("Recieved Upadte " + JSON.stringify(session));
     // TODO Move gameSession to component
     this.gameSession = session;
     this.gameUpdateEvent.emit(session);
