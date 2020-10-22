@@ -31,3 +31,9 @@ mat-list-item {
 .headers-align .mat-form-field + .mat-form-field {
   margin-left: 8px;
 }
+
+.loading {
+  display: inline-block;
+  margin: 2em;
+  vertical-align: middle;
+}
