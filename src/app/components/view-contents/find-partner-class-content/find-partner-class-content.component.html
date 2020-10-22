@@ -9,6 +9,13 @@
                     <option [ngValue]="null" disabled>select your class</option>
                     <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.name}}</option>
                 </select>
+                <div *ngIf="submitted && classError" style="margin-right: 50px">
+                    <br>
+                    <br>
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong> Please select a class first!
+                    </div>
+                </div>
             </form>
             <br>
             <br>
@@ -22,10 +29,21 @@
             <br>
             <br>
             <form [formGroup]="findPartnerForm" class="duration-selection">
-                What's the duration of your project?
-                <select formControlName="selectedDuration" (change)="durationSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+                
+                <!-- <select formControlName="selectedDuration" (change)="durationSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
                     <option [ngValue]="null" disabled>project duration</option>
                     <option *ngFor="let selectedDuration of user_duration" [ngValue]="selectedDuration">{{selectedDuration}}</option>
+                </select> -->
+                <label for="projectDurationInput">What's the duration of your project (in days)?</label>
+                <input id="projectDurationInput" value="{{projectDuration}}" type="number" formControlName="projectDuration" class="form-control" style="width: 200px;">
+            </form>
+            <br>
+            <br>
+            <form [formGroup]="findPartnerForm" class="country-selection">
+                What's the duration of your project?
+                <select formControlName="selectedCountry" (change)="countrySelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+                    <option [ngValue]="null" disabled>partner country</option>
+                    <option *ngFor="let selectedCountry of user_country" [ngValue]="selectedCountry">{{selectedCountry.name}}</option>
                 </select>
             </form>
             <br>
