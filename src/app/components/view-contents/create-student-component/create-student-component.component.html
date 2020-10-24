@@ -13,21 +13,21 @@
                         </div>
                     </div>                    
                     <div class="form-group">
-                        <label for="firstName">Student's last name:</label>
+                        <label for="lastName">Student's last name:</label>
                         <input type="text" id="lastName"formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
                         <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
                             <div *ngIf="f.lastName.errors.required">Last name is required</div>
                         </div>
                     </div>                    
                     <div class="form-group">
-                        <label for="firstName">Student's email:</label>
+                        <label for="email">Student's email:</label>
                         <input  type="text" id="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                             <div *ngIf="f.email.errors.required">Email is required</div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="firstName">Student's password:</label>
+                        <label for="password">Student's password:</label>
                         <input  type="password" id="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                             <div *ngIf="f.password.errors.required">Password is required</div>
