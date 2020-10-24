@@ -35,7 +35,7 @@
                     <option *ngFor="let selectedDuration of user_duration" [ngValue]="selectedDuration">{{selectedDuration}}</option>
                 </select> -->
                 <label for="projectDurationInput">What's the duration of your project (in days)?</label>
-                <input id="projectDurationInput" value="{{projectDuration}}" type="number" formControlName="projectDuration" class="form-control" style="width: 200px;">
+                <input id="projectDurationInput" placeholder="number of days" value="{{projectDuration}}" type="number" formControlName="projectDuration" class="form-control" style="margin-right: 10vw; max-width: 300px;">
             </form>
             <br>
             <br>

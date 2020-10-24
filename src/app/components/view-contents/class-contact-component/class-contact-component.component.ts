@@ -12,7 +12,7 @@ export class ClassContactComponentComponent{
   }
 
   teacherInfo(){ // TODO: redirect to teacher profile
-    console.log("Hello");
+    console.log("Hello Teacher");
   }
 }
 
