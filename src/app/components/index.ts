@@ -17,7 +17,6 @@ export * from './views/landing-view/landing-view.component';
 export * from './views/landing-view-offering/landing-view-offering.component';
 export * from './views/landing-view-team/landing-view-team.component';
 export * from './views/login-view/login-view.component';
-export * from './views/my-class-view/my-class-view.component';
 export * from './views/my-meeting-requests-view/my-meeting-requests-view.component';
 export * from './views/plan-meeting-view/plan-meeting-view.component';
 export * from './views/profile-view/profile-view.component';
@@ -31,6 +30,8 @@ export * from './views/student-profile-view/student-profile-view.component';
 export * from './views/student-assignments-view/student-assignments-view.component';
 export * from './views/student-meetings-view/student-meetings-view.component';
 export * from './views/create-class-view/create-class-view.component';
+export * from './views/class-information-view/class-information-view.component';
+
 
 
 // view-contents
@@ -49,6 +50,8 @@ export * from './view-contents/student-assignments-content/student-assignments-c
 export * from './view-contents/student-meetings-content/student-meetings-content.component';
 export * from './view-contents/create-class-component/create-class-component.component';
 export * from './view-contents/create-student-component/create-student-component.component';
+export * from './view-contents/class-information-component/class-information-component.component';
+
 
 
 

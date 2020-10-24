@@ -22,7 +22,6 @@ import {
   LandingViewTeamComponent,
   ProfileViewComponent,
   SettingsViewComponent,
-  MyClassViewComponent,
   PlanMeetingViewComponent,
   DashboardContentComponent,
   PlanMeetingContentComponent,
@@ -48,13 +47,15 @@ import {
   StudentAssignmentsContentComponent,
   StudentMeetingsContentComponent,
   CreateClassComponentComponent,
-  CreateStudentComponentComponent
+  CreateStudentComponentComponent,
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
-import { UserService, ClassesService } from './services/swagger-api/api';;
+import { UserService, ClassesService } from './services/swagger-api/api';
+import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
+import { ClassInformationComponentComponent } from './components/view-contents/class-information-component/class-information-component.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -78,7 +79,6 @@ import { UserService, ClassesService } from './services/swagger-api/api';;
     PlanMeetingViewComponent,
     PlanMeetingContentComponent,
     FindPartnerClassViewComponent,
-    MyClassViewComponent,
     SettingsViewComponent,
     ProfileViewComponent,
     AboutViewComponent,
@@ -89,15 +89,15 @@ import { UserService, ClassesService } from './services/swagger-api/api';;
     ResetPasswordViewComponent,
     DashboardContentComponent,
     ProfileViewContentComponent,
-    LandingHomeContentComponent ,
-    LandingViewOfferingComponent ,
+    LandingHomeContentComponent,
+    LandingViewOfferingComponent,
     LandingViewTeamComponent,
     LandingTeamContentComponent,
     LandingOfferingContentComponent,
     MyConnectionRequestsViewComponent,
     FindPartnerClassContentComponent,
-    ClassContactComponentComponent ,
-    FindPartnerClassViewResultsComponent ,
+    ClassContactComponentComponent,
+    FindPartnerClassViewResultsComponent,
     FindPartnerClassResultsContentComponent,
     StudentHomeViewComponent,
     StudentNavigationComponent,
@@ -109,9 +109,11 @@ import { UserService, ClassesService } from './services/swagger-api/api';;
     StudentMeetingsContentComponent,
     StudentAssignmentsContentComponent,
     CreateClassComponentComponent,
-    CreateStudentComponentComponent
+    CreateStudentComponentComponent,
+    ClassInformationViewComponent,
+    ClassInformationComponentComponent,
   ],
-    
+
   providers: [
     {
       provide: APP_INITIALIZER,

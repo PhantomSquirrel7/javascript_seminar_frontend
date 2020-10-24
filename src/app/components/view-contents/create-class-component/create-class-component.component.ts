@@ -36,7 +36,8 @@ export class CreateClassComponentComponent implements OnInit {
       selectedCountry: [''],
       projectDuration: ['', Validators.required],
       meetingFrequency: ['', Validators.required],
-      level: ['', Validators.required]
+      level: ['', Validators.required],
+      languageLevel: ['', Validators.required]
     });
    this.classLangProfs = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
    this.classCountries = ['DE', 'US', 'TR', 'CZ'];

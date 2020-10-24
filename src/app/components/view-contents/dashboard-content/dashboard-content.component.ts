@@ -18,7 +18,7 @@ export class DashboardContentComponent implements OnInit {
   navigateTo(pageName: string) {
     switch(pageName) {
       case "classPage": {
-        this.router.navigate(['/my-class']);
+        this.router.navigate(['/class-information']);
         break
       }
       case "myConnectionRequestsPage": {
