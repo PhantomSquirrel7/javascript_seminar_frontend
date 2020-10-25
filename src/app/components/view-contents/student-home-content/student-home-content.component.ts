@@ -24,7 +24,7 @@ export class StudentHomeContentComponent implements OnInit {
   ) { }
 
   user_student: any = {};
-	loading = false; // true if waiting for results
+	loading = true; // true if waiting for results
   error = '';
   noNotifications = true;
   notifications = [];
@@ -50,10 +50,13 @@ export class StudentHomeContentComponent implements OnInit {
           map(
             notifications => {
               this.user_student = user;
+              console.log(user);
               this.notifications = notifications;
+              console.log(notifications);
               if (this.notifications.length > 0){
                 this.noNotifications = false;
               }
+              return user;
             } 
           )
         )

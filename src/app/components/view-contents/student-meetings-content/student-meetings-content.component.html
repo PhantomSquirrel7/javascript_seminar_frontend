@@ -1,1 +1,19 @@
-<p>student-meetings-content works!</p>
+<div style="margin-right: 50px; margin-left: 50px;">
+    <div *ngIf=!loading>
+        <h1>Your Meetings {{user_student.firstName}}!</h1>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <p *ngIf=noMeetings>You have no meetings</p>
+                <div *ngIf="noMeetings">
+                    <!-- Your notifications -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf=loading>
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>

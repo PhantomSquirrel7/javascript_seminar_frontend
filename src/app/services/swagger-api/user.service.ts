@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../../swagger
 
 import { Observable }                                        from 'rxjs';
 
+import { Body8 } from '../../models/swagger-model/body8';
 import { InlineResponse20012 } from '../../models/swagger-model/inlineResponse20012';
 import { InlineResponse20013 } from '../../models/swagger-model/inlineResponse20013';
 import { InlineResponse2004 } from '../../models/swagger-model/inlineResponse2004';
@@ -92,6 +93,49 @@ export class UserService {
         ];
 
         return this.httpClient.request<InlineResponse2004>('get',`${this.basePath}/me`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get all your meetings
+     * Logged in users can fetch their meetings
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public meMeetingsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<Body8>>;
+    public meMeetingsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Body8>>>;
+    public meMeetingsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Body8>>>;
+    public meMeetingsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<Body8>>('get',`${this.basePath}/me/meetings`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
