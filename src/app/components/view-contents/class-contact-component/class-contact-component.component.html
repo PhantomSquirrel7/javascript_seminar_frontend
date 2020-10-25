@@ -51,7 +51,7 @@
         <h3>Your contact person:</h3>
         <div class="contact-person">
           <img class="" src="../../../assets/teacher.svg" alt="contact person profile picture"> 
-          <h2>Dr. Christoph Heumos</h2>
+          <h2>{{teacher.firstName}} {{teacher.lastName}}</h2>
         </div>
       </li>
       
@@ -61,8 +61,16 @@
   <br>
   <h1>Reach out:</h1>
   <div class="form-group" style="margin-right: 50px">
-    <textarea class="form-control" rows="5" id="comment"></textarea>
-    <br>
-    <button class="btn btn-outline-primary btn-lg">Let's get in touch!</button>
+    <form [formGroup]="contactTeacherForm" (ngSubmit)="onSubmit()">
+      <textarea class="form-control" rows="5" id="comment" formControlName="messageText" [(ngModel)]="messageTextValue"></textarea>
+      <br>
+      <button class="btn btn-outline-primary btn-lg">Let's get in touch!</button>
+    </form>
+    <div *ngIf=sent>
+      <br>
+      <div class="alert alert-success" role="alert">
+        Your message was sent successfully!
+      </div>
+    </div>
   </div> 
 </div>

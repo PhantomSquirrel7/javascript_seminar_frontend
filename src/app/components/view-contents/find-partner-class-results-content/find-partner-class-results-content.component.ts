@@ -1,5 +1,6 @@
 import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import { User } from '@app/models';
+import { StudentsService } from '../../../services/swagger-api/api';
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { ClassesService } from 'src/app/services/swagger-api/classes.service'
 import { HttpClient } from '@angular/common/http';
@@ -16,7 +17,7 @@ export class FindPartnerClassResultsContentComponent implements OnInit {
 	constructor(
     private fb: FormBuilder,
     private router: Router,
-
+	private userService: StudentsService
   	) { }
 
 
@@ -40,6 +41,8 @@ export class FindPartnerClassResultsContentComponent implements OnInit {
 	resultClasses = [];
 
 	contactClass: any = {};
+
+	contactTeacher: any = {};
  
 	ngOnInit() {
 		this.findPartnerForm = this.fb.group({
@@ -75,6 +78,25 @@ export class FindPartnerClassResultsContentComponent implements OnInit {
 	detailsFor(actClass){
 		this.details = true;
 		this.contactClass = actClass;
+		this.userService.studentsStudentIdGet(actClass.teacher).subscribe({
+			next: (response) => {
+				this.contactTeacher = response;
+			},
+			error: (error) => {
+			  console.log(error);
+			},
+		});
+
 	}
 
+	// teacherOfContactClass(actClass){
+	// 	return this.userService.studentsStudentIdGet(actClass.teacher).subscribe({
+	// 		next: (response) => {
+	// 			return response;
+	// 		},
+	// 		error: (error) => {
+	// 		  console.log(error);
+	// 		},
+	// 	  });
+	// }
 }
