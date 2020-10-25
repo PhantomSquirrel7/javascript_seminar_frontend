@@ -1,80 +1,93 @@
-<div class="create-class-component">
-    <mat-card>
-        <div fxFlex="1 1 50%" class="login-form">
-            <h4 class="text-dark mb-4">Create Class</h4>
-            <form [formGroup]="createClassForm" (ngSubmit)="onSubmit()">
-                <div class="form-groups">
+<div class="create-class-component" style="margin-left: 50px; margin-right: 50px">
+  <mat-card>
+    <div fxFlex="1 1 100%" class="login-form">
+      <h1>Create Class</h1>
+      <br />
+      <form [formGroup]="createClassForm" (ngSubmit)="onSubmit()">
+        <div class="form-groups">
 
-                    <div class="form-group">
-                        <input placeholder="Enter ID ..." type="text" formControlName="id" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.id.errors }" />
-                        <div *ngIf="submitted && f.id.errors" class="invalid-feedback">
-                            <div *ngIf="f.id.errors.required">ID is required</div>
-                        </div>
-                    </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" formControlName="name" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">Name is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" formControlName="subject" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.subject.errors }" />
+            <div *ngIf="submitted && f.subject.errors" class="invalid-feedback">
+              <div *ngIf="f.subject.errors.required">subject is required</div>
+            </div>
+          </div>
 
-                    <div class="form-group">
-                        <input placeholder="Enter Name ..." type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
-                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                            <div *ngIf="f.name.errors.required">Name is required</div>
-                        </div>
-                    </div>   
-                    
-                    <div class="form-group">
-                        <input placeholder="Enter language ..." type="text" formControllanguage="language" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.language.errors }" />
-                        <div *ngIf="submitted && f.language.errors" class="invalid-feedback">
-                            <div *ngIf="f.language.errors.required">language is required</div>
-                        </div>
-                    </div>       
-                    
-                    <div class="form-group">
-                        <input placeholder="Enter subject ..." type="text" formControlsubject="subject" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.subject.errors }" />
-                        <div *ngIf="submitted && f.subject.errors" class="invalid-feedback">
-                            <div *ngIf="f.subject.errors.required">subject is required</div>
-                        </div>
-                    </div> 
-                    
-                    <div class="form-group">
-                        <input placeholder="Enter country ..." type="text" formControlcountry="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" />
-                        <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
-                            <div *ngIf="f.country.errors.required">country is required</div>
-                        </div>
-                    </div>             
+          <div class="form-group">
 
-                    <div class="form-group">
-                        <input placeholder="Enter project duration ..." type="number" formControlprojectDuration="projectDuration" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.projectDuration.errors }" />
-                        <div *ngIf="submitted && f.projectDuration.errors" class="invalid-feedback">
-                            <div *ngIf="f.projectDuration.errors.required">project duration is required</div>
-                        </div>
-                    </div> 
+            <label for="language">Language proficiency</label>
+            <select formControlName="selectedLangProf" [(ngModel)]="selectedLangProf" class="form-control">
+              <option [ngValue]="null" disabled>Language proficiency</option>
+              <option *ngFor="let selectedLangProf of classLangProfs" [ngValue]="selectedLangProf">{{selectedLangProf}}
+              </option>
+            </select>
+          </div>
 
-                    <div class="form-group">
-                        <input placeholder="Enter meeting frequency ..." type="number" formControlmeetingFrequency="meetingFrequency" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.meetingFrequency.errors }" />
-                        <div *ngIf="submitted && f.meetingFrequency.errors" class="invalid-feedback">
-                            <div *ngIf="f.meetingFrequency.errors.required">meetingFrequency is required</div>
-                        </div>
-                    </div>    
-                    
-                    <div class="form-group">
-                        <input placeholder="Enter level ..." type="number" formControllevel="level" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.level.errors }" />
-                        <div *ngIf="submitted && f.level.errors" class="invalid-feedback">
-                            <div *ngIf="f.level.errors.required">level is required</div>
-                        </div>
-                    </div> 
-                    
-                    <div class="form-group">
-                        <input placeholder="Enter language level ..." type="number" formControllanguageLevel="languageLevel" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.languageLevel.errors }" />
-                        <div *ngIf="submitted && f.languageLevel.errors" class="invalid-feedback">
-                            <div *ngIf="f.languageLevel.errors.required">language level is required</div>
-                        </div>
-                    </div>                     
 
-                </div>
 
-                <button [disabled]="loading" class="btn btn-primary btn-block text-white btn-user" type="submit">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Create Class
-                </button>
-            </form>
+          <div class="form-group">
+            <label for="selectedCountry">Country</label>
+            <select formControlName="selectedCountry" class="form-control" [(ngModel)]="selectedClassCountry">
+              <option [ngValue]="null" disabled>Country</option>
+              <option *ngFor="let selectedClassCountry of classCountries" [ngValue]="selectedClassCountry">
+                {{selectedClassCountry}}</option>
+            </select>
+
+          </div>
+
+          <div class="form-group">
+            <label for="projectDuration">Project Duration</label>
+            <input type="number" id="projectDuration" formControlName="projectDuration" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.projectDuration.errors }" />
+            <div *ngIf="submitted && f.projectDuration.errors" class="invalid-feedback">
+              <div *ngIf="f.projectDuration.errors.required">project duration is required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="meetingFrequency">Meeting Frequency</label>
+            <input type="number" id="meetingFrequency" formControlName="meetingFrequency" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.meetingFrequency.errors }" />
+            <div *ngIf="submitted && f.meetingFrequency.errors" class="invalid-feedback">
+              <div *ngIf="f.meetingFrequency.errors.required">meeting frequency is required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="levet">Level</label>
+            <input type="number" id="level" formControlName="level" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.level.errors }" />
+            <div *ngIf="submitted && f.level.errors" class="invalid-feedback">
+              <div *ngIf="f.level.errors.required">level is required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="languageLevel">Language Level</label>
+            <input type="number" id="languageLevel" formControlName="languageLevel" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.languageLevel.errors }" />
+            <div *ngIf="submitted && f.languageLevel.errors" class="invalid-feedback">
+              <div *ngIf="f.languageLevel.errors.required">language level is required</div>
+            </div>
+          </div>
+
         </div>
-    </mat-card>
+
+        <button [disabled]="loading" class="btn btn-outline-primary btn-lg btn-block btn-user" type="submit">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Create Class
+        </button>
+      </form>
+    </div>
+  </mat-card>
 </div>

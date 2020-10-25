@@ -11,7 +11,6 @@ import {
   LandingViewOfferingComponent,
   LandingViewTeamComponent,
   LoginViewComponent,
-  MyClassViewComponent,
   RegisterViewComponent,
   MyMeetingRequestsViewComponent,
   SettingsViewComponent,
@@ -24,7 +23,8 @@ import {
   StudentHomeViewComponent,
   StudentProfileViewComponent,
   StudentAssignmentsViewComponent,
-  StudentMeetingsViewComponent
+  StudentMeetingsViewComponent,
+  ClassInformationViewComponent
 } from './components';
 
 const routes: Routes = [
@@ -54,8 +54,8 @@ const routes: Routes = [
     data: { roles: [User.RoleEnum.Teacher]}
   },
   {
-    path: 'my-class',
-    component: MyClassViewComponent,
+    path: 'class-information',
+    component: ClassInformationViewComponent,
     canActivate: [AuthGuard],
     data: { roles: [User.RoleEnum.Teacher]}
   },

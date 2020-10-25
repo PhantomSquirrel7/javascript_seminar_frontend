@@ -105,6 +105,9 @@ export class StudentProfileContentComponent implements OnInit {
     ).subscribe({
       next: (response) => {
         this.loading = false;
+        this._snackBar.open('Your information updated successfully !', 'Close', {
+          duration: 3000
+          });        
         this.user_student = response;
       },
       error: (error) => {

@@ -17,6 +17,11 @@ export class CreateClassComponentComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  classLangProfs = null;
+  classCountries = null;
+  selectedClassCountry = null;
+  selectedLangProf = null;
+
 
   constructor( private userService: CustomLoginService,
               private classService : ClassesService,
@@ -25,22 +30,22 @@ export class CreateClassComponentComponent implements OnInit {
 
   ngOnInit() {
     this.createClassForm = this.formBuilder.group({
-      id: ['', Validators.required],
       name: ['', Validators.required],
-      language: ['', Validators.required],
+      selectedLangProf: [''],
       subject: ['', Validators.required],
-      country: ['', Validators.required],
+      selectedCountry: [''],
       projectDuration: ['', Validators.required],
       meetingFrequency: ['', Validators.required],
       level: ['', Validators.required],
       languageLevel: ['', Validators.required]
-
     });
-
+   this.classLangProfs = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+   this.classCountries = ['DE', 'US', 'TR', 'CZ'];
   }
   get f() {
     return this.createClassForm.controls;
   }
+ 
 
   onSubmit() : void{
     this.loading = true;
@@ -52,17 +57,15 @@ export class CreateClassComponentComponent implements OnInit {
     this.loading = true;   
     this.classService
       .classesPost({
-        id: this.f.id.value,
         name: this.f.name.value, 
-        language: this.f.language.value,
+        language: this.selectedLangProf,
         subject: this.f.subject.value,
-        country: this.f.country.value,
+        country: this.selectedClassCountry,
         projectDuration: this.f.projectDuration.value,
         meetingFrequency: this.f.meetingFrequency.value,
-        level: this.f.levle.value,
+        level: this.f.level.value,
         languageLevel: this.f.languageLevel.value,
-        teacher : {
-        },
+        teacher : this.userService.userValue,
         students: []
       })
       .pipe(first())
