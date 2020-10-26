@@ -1,14 +1,18 @@
-import { Component, Input, Output, OnDestroy, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnDestroy, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { GamesService } from '@app/services/custom/games/games.service';
 import { DrawItUpdate } from '../messages/drawItUpdate';
+import { CanvasWhiteboardComponent, CanvasWhiteboardOptions, CanvasWhiteboardService, CanvasWhiteboardUpdate } from 'ng2-canvas-whiteboard';
 
 @Component({
   selector: 'app-draw-it',
+  viewProviders: [CanvasWhiteboardComponent],
   templateUrl: './draw-it.component.html',
   styleUrls: ['./draw-it.component.css']
 })
 
 export class DrawItComponent implements OnInit, OnDestroy {
+
+  @ViewChild('canvasWhiteboard') canvasWhiteboard: CanvasWhiteboardComponent;
 
   @Input() username: string;
   @Input() sessionId: string;
@@ -24,7 +28,53 @@ export class DrawItComponent implements OnInit, OnDestroy {
 
   game: DrawItUpdate;
 
-  constructor(public gamesService: GamesService) {
+  canvasOptionsDraw: CanvasWhiteboardOptions = {
+    drawButtonEnabled: false,
+    drawButtonClass: "drawButtonClass",
+    drawButtonText: "Draw",
+    clearButtonEnabled: true,
+    clearButtonClass: "clearButtonClass",
+    clearButtonText: "Clear",
+    undoButtonText: "Undo",
+    undoButtonEnabled: true,
+    redoButtonText: "Redo",
+    redoButtonEnabled: true,
+    colorPickerEnabled: true,
+    fillColorPickerText: "Fill",
+    strokeColorPickerText: "Stroke",
+    saveDataButtonEnabled: false,
+    saveDataButtonText: "Save",
+    lineWidth: 2,
+    strokeColor: "rgb(0,0,0)",
+    shouldDownloadDrawing: true,
+    drawingEnabled: true,
+    batchUpdateTimeoutDuration: 100
+  };
+
+  canvasOptionsGuess: CanvasWhiteboardOptions = {
+    drawButtonEnabled: false,
+    drawButtonClass: "drawButtonClass",
+    drawButtonText: "Draw",
+    clearButtonEnabled: false,
+    clearButtonClass: "clearButtonClass",
+    clearButtonText: "Clear",
+    undoButtonText: "Undo",
+    undoButtonEnabled: false,
+    redoButtonText: "Redo",
+    redoButtonEnabled: false,
+    colorPickerEnabled: false,
+    fillColorPickerText: "Fill",
+    strokeColorPickerText: "Stroke",
+    saveDataButtonEnabled: false,
+    saveDataButtonText: "Save",
+    lineWidth: 2,
+    strokeColor: "rgb(0,0,0)",
+    shouldDownloadDrawing: false,
+    drawingEnabled: false,
+    batchUpdateTimeoutDuration: 100
+  };
+
+  constructor(public gamesService: GamesService, private _canvasWhiteboardService: CanvasWhiteboardService) {
   }
 
   ngOnInit(): void {
@@ -69,10 +119,10 @@ export class DrawItComponent implements OnInit, OnDestroy {
         this.timer = gameUpdate.timeleft;
       }
       if (this.game.countDownStarted == false && gameUpdate.countDownStarted == true) {
-        console.log("STARTED GAME", this.game.words)
         this.setTimer();
       }
       this.game = gameUpdate;
+      if (gameUpdate.drawing) this.handleCanvasUpdate(gameUpdate.drawing);
     } else {
       this.game = gameUpdate;
       this.timer = this.game.timelimit;
@@ -135,5 +185,50 @@ export class DrawItComponent implements OnInit, OnDestroy {
 
   disconnectGame() {
     this.disconnect.emit("disconnect");
+  }
+
+  // Canvas Events
+  onCanvasDraw(event) {
+    this.game.drawing = { type: 'draw', data: event };
+    this.gamesService.sendUpdate(this.game);
+  }
+
+  onCanvasClear() {
+    this.game.drawing = { type: 'clear' };
+    this.gamesService.sendUpdate(this.game);
+  }
+
+  onCanvasUndo(event) {
+    this.game.drawing = { type: 'undo', UUID: event };
+    this.gamesService.sendUpdate(this.game);
+  }
+
+  onCanvasRedo(event) {
+    this.game.drawing = { type: 'redo', UUID: event };
+    this.gamesService.sendUpdate(this.game);
+  }
+
+  // receive canvas event
+  handleCanvasUpdate(newMessage: any): void {
+    if (this.username == this.game.currentPlayer || this.game.state == "over") {
+      return;
+    }
+    //update for guessing players only
+    console.log(newMessage)
+    switch (newMessage.type) {
+      case "draw":
+        let updates = newMessage.data;
+        this._canvasWhiteboardService.drawCanvas(updates);
+        break;
+      case "clear":
+        this._canvasWhiteboardService.clearCanvas();
+        break;
+      case "undo":
+        this._canvasWhiteboardService.undoCanvas(newMessage.UUID);
+        break;
+      case "redo":
+        this._canvasWhiteboardService.redoCanvas(newMessage.UUID);
+        break;
+    }
   }
 }
