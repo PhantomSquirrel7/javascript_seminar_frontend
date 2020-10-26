@@ -44,7 +44,8 @@ import {
   QuizFormComponent,
   QuestionFormComponent,
   DrawItFormComponent,
-  DrawItComponent
+  DrawItComponent,
+  TruthlieComponent
 
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -53,6 +54,7 @@ import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
 import { UserService } from './services/swagger-api/api';
 import { SocketIoModule } from 'ngx-socket-io';
+
 
 @NgModule({
   imports: [
@@ -105,8 +107,8 @@ import { SocketIoModule } from 'ngx-socket-io';
     QuizFormComponent,
     QuestionFormComponent,
     DrawItFormComponent,
-    DrawItComponent
-  ],
+    DrawItComponent,
+    TruthlieComponent],
   providers: [
     {
       provide: APP_INITIALIZER,

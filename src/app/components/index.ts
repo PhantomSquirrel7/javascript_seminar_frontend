@@ -42,3 +42,4 @@ export * from './view-contents/games-teacher-content/alias-game-config/alias-for
 export * from './view-contents/games-teacher-content/quiz-game-config/quiz-form/quiz-form.component';
 export * from './view-contents/games-teacher-content/quiz-game-config/question-form/question-form.component';
 export * from './view-contents/games-teacher-content/draw-it-game-config/draw-it-form/draw-it-form.component';
+export * from './view-contents/games-student-content/truthlie/truthlie.component';
