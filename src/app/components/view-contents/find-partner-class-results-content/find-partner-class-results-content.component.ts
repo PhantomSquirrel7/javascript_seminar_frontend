@@ -1,4 +1,4 @@
-import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '@app/models';
 import { StudentsService } from '../../../services/swagger-api/api';
 import { FormGroup, FormBuilder } from '@angular/forms'
@@ -43,12 +43,17 @@ export class FindPartnerClassResultsContentComponent implements OnInit {
 	contactClass: any = {};
 
 	contactTeacher: any = {};
+
+	selfClass: any = {};
  
 	ngOnInit() {
 		this.findPartnerForm = this.fb.group({
 
 		});
 		this.resultClasses = history.state.data;
+		console.log("Self:");
+		console.log(history.state.selfClass);
+		this.selfClass = history.state.selfClass;
 	}
 
 	classSelected(){
@@ -78,14 +83,24 @@ export class FindPartnerClassResultsContentComponent implements OnInit {
 	detailsFor(actClass){
 		this.details = true;
 		this.contactClass = actClass;
-		this.userService.studentsStudentIdGet(actClass.teacher).subscribe({
-			next: (response) => {
-				this.contactTeacher = response;
-			},
-			error: (error) => {
-			  console.log(error);
-			},
-		});
+
+		// TODO: replace when allowed from backend
+		this.contactTeacher = {
+			"email": "test@mail.de",
+			"schoolName": "test school",
+			"firstName": "Peter",
+			"lastName": "Tester",
+			"role": "teacher",
+			"id": "5f685056d6bf4e0016d9931e"
+		}
+		// this.userService.studentsStudentIdGet(actClass.teacher).subscribe({
+		// 	next: (response) => {
+		// 		this.contactTeacher = response;
+		// 	},
+		// 	error: (error) => {
+		// 	  console.log(error);
+		// 	},
+		// });
 
 	}
 

@@ -4,9 +4,10 @@ import { CustomUserService } from '@app/services/custom';
 import { UserService } from '@app/services/swagger-api/api';
 import { flatMap, map, catchError } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
-import { User, Body14 } from '@app/models';
+import { User, Body14, InlineResponse20012 } from '@app/models';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormGroup, FormBuilder } from '@angular/forms'
+import { FormGroup, FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-student-home-content',
@@ -27,7 +28,7 @@ export class StudentHomeContentComponent implements OnInit {
 	loading = true; // true if waiting for results
   error = '';
   noNotifications = true;
-  notifications = [];
+  notifications: any[] = [];
 
 
 	ngOnInit() {
@@ -55,6 +56,27 @@ export class StudentHomeContentComponent implements OnInit {
               console.log(notifications);
               if (this.notifications.length > 0){
                 this.noNotifications = false;
+              }
+              else { // TODO: remove else, just mockup
+                this.notifications = [
+                  {
+                    "id": "",
+                    "title": "Messege 1",
+                    "text": "Messege 1 text",
+                    "opened": false,
+                    "type": "notification",
+                    "cta": {
+                      "text": "string",
+                      "url": "string"
+                    },
+                    "user": {
+                      "email": "test@mail.de",
+                      "firstName": "Peter",
+                      "lastName": "Tester",
+                      "role": "teacher"
+                    }
+                  }
+                ];
               }
               return user;
             } 

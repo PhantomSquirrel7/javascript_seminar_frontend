@@ -123,23 +123,40 @@ export class FindPartnerClassContentComponent implements OnInit {
 			console.log(this.selectedLangProf);
 			console.log(this.selectedCountry);
 			
-			// TODO: For production uncomment following line and comment out the line after
-			// this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id, this.findPartnerForm.value.projectDuration, this.selectedLangProf, this.selectedCountry).subscribe({
-			this.myClasses = this.classService.classesGet().subscribe({
-				next: (response) => {
-					this.loading = false;
-					this.resultClasses = response;
-					console.log(this.resultClasses);
-					this.router.navigate(['find-partner-class/results'], {state: {data: response}});
-				},
-				error: (error) => {
-					this.error = error;
-					this._snackBar.open(this.error, 'Close', {
-					duration: 3000
-					});
-					this.loading = false;
-				},
-			});
+			if (this.findPartnerForm.value.projectDuration == null || this.selectedLangProf == undefined || this.selectedCountry == ""){
+				this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id).subscribe({
+					next: (response) => {
+						this.loading = false;
+						this.resultClasses = response;
+						console.log(this.resultClasses);
+						this.router.navigate(['find-partner-class/results'], {state: {data: response, selfClass: this.selectedClass}});
+					},
+					error: (error) => {
+						this.error = error;
+						this._snackBar.open(this.error, 'Close', {
+						duration: 3000
+						});
+						this.loading = false;
+					},
+				});
+			}
+			else{
+				this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id, this.findPartnerForm.value.projectDuration.toString(), this.selectedLangProf.toString(), this.selectedCountry.toString()).subscribe({
+					next: (response) => {
+						this.loading = false;
+						this.resultClasses = response;
+						console.log(this.resultClasses);
+						this.router.navigate(['find-partner-class/results'], {state: {data: response, selfClass: this.selectedClass}});
+					},
+					error: (error) => {
+						this.error = error;
+						this._snackBar.open(this.error, 'Close', {
+						duration: 3000
+						});
+						this.loading = false;
+					},
+				});
+			}
 	
 			this.loading = false;
 		}
