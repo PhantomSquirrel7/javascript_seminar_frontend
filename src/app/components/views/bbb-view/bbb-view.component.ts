@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bbb-view.component.less']
 })
 export class BbbViewComponent implements OnInit {
+  moderatorUrl = "";
 
   constructor() { }
 
