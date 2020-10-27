@@ -82,7 +82,10 @@ function createSession(sessionId, gameType, playerName, taskId) {
         return createDrawItSession(sessionId, gameType, playerName, taskId);
     } else if (gameType == "quiz") {
         return createQuizSession(sessionId, gameType, playerName, taskId);
+    } else if (gameType == "truthlie") {
+        return createTruthlieSession (sessionId,gameType, playerName, taskId);
     }
+
 }
 
 async function createQuizSession(sessionId, gameType, playerName, taskId) {
@@ -128,6 +131,25 @@ async function createAliasSession(sessionId, gameType, playerName, taskId) {
         console.log("could not get alias game")
         return null;
     }
+}
+
+async function createTruthlieSession(sessionId, gameType, playerName, taskId){
+    var session = {
+        gameType: gameType,
+        sessionId: sessionId,
+        players: [playerName],
+        played: [],
+        currentPlayer: playerName, // The playername of the currently in charge player
+        countDownStarted: false, // indicates if countdown started, a change starts countdown for all clients
+        options: [],
+        guessed: [],
+        lie: "",// False statemenr
+        name: "",  // name of the game
+        state: 'lobby',
+        timelimit: 30,
+        timeleft: 30
+    }
+    return session;
 }
 
 async function createDrawItSession(sessionId, gameType, playerName, taskId) {
@@ -224,6 +246,8 @@ async function handleUpdateGameMessage(data) {
         await handleDrawItUpdateMessage(data);
     } else if (data.gameType == "quiz") {
         await handleQuizUpdateMessage(data);
+    } else if (data.gameType == "truthlie") {
+        await handleTruthlieUpdateMessage(data);
     } else {
         console.log("Unknown gameType: " + data.gameType);
     }
@@ -235,6 +259,11 @@ async function handleAliasUpdateMessage(data) {
 }
 
 async function handleDrawItUpdateMessage(data) {
+    io.to(data.sessionId).emit("updateGame", data);
+    openSessions.set(data.sessionId, data);
+}
+
+async function handleTruthlieUpdateMessage(data) {
     io.to(data.sessionId).emit("updateGame", data);
     openSessions.set(data.sessionId, data);
 }

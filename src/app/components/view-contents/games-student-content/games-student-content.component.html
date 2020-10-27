@@ -6,6 +6,7 @@
             <option value="quiz">Quiz</option>
             <option value="alias">Alias</option>
             <option value="drawit">Draw It</option>
+            <option value="truthlie">2 Truth 1 Lie</option>
         </select>
         <input [(ngModel)]="username">
         <input [(ngModel)]="sessionId">
@@ -25,4 +26,9 @@
     <div *ngIf="gameJoined && isSelected( 'drawit') " class="gameScreen ">
         <app-draw-it [username]="username " [taskId]="taskId " [sessionId]="sessionId " (disconnect)="onDisconnect($event) "></app-draw-it>
     </div>
+
+    <div *ngIf="gameJoined && isSelected('truthlie') " class="gameScreen ">
+        <app-truthlie [username]="username " [taskId]="taskId " [sessionId]="sessionId " (disconnect)="onDisconnect($event) "></app-truthlie>
+    </div>
+
 </div>
