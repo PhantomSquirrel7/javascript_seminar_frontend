@@ -1,0 +1,19 @@
+<div style="margin-right: 50px; margin-left: 50px;">
+    <div *ngIf=!loading>
+        <h1>Hello {{user_student.firstName}}!</h1>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <p *ngIf=noNotifications>You have no notifications</p>
+                <div *ngIf="noNotifications">
+                    <!-- Your notifications -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf=loading>
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>

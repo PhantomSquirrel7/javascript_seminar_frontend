@@ -53,10 +53,10 @@ export class ForgotPasswordViewComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: (response) => {
-          this.loading = false;         
+          this.loading = false;
           this._snackBar.open('An email is sent your address!', 'OK', {
             duration: 3000
-          }); 
+          });
         },
         error: (error) => {
           this.error = error;

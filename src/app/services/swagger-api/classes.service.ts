@@ -22,10 +22,12 @@ import { Body7 } from '../../models/swagger-model/body7';
 import { InlineResponse2001 } from '../../models/swagger-model/inlineResponse2001';
 import { InlineResponse2002 } from '../../models/swagger-model/inlineResponse2002';
 import { InlineResponse2003 } from '../../models/swagger-model/inlineResponse2003';
+import { InlineResponse2004 } from '../../models/swagger-model/inlineResponse2004';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
 import { Configuration }                                     from '../../swagger-configs/configuration';
+
 
 @Injectable({ providedIn: 'root' })
 export class ClassesService {
@@ -111,16 +113,33 @@ export class ClassesService {
      * Find similar classes
      * Find similar classes to match with
      * @param classId Class id
+     * @param projectDuration 
+     * @param languageLevel 
+     * @param country 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public classesClassIdFindGet(classId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Body7>>;
-    public classesClassIdFindGet(classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Body7>>>;
-    public classesClassIdFindGet(classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Body7>>>;
-    public classesClassIdFindGet(classId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Body7>>;
+    public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Body7>>>;
+    public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Body7>>>;
+    public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdFindGet.');
+        }
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (projectDuration !== undefined && projectDuration !== null) {
+            queryParameters = queryParameters.set('projectDuration', <any>projectDuration);
+        }
+        if (languageLevel !== undefined && languageLevel !== null) {
+            queryParameters = queryParameters.set('languageLevel', <any>languageLevel);
+        }
+        if (country !== undefined && country !== null) {
+            queryParameters = queryParameters.set('country', <any>country);
         }
 
         let headers = this.defaultHeaders;
@@ -147,6 +166,7 @@ export class ClassesService {
 
         return this.httpClient.request<Array<Body7>>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/find`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -269,9 +289,9 @@ export class ClassesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public classesClassIdStudentsGet(classId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public classesClassIdStudentsGet(classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public classesClassIdStudentsGet(classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public classesClassIdStudentsGet(classId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2004>>;
+    public classesClassIdStudentsGet(classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2004>>>;
+    public classesClassIdStudentsGet(classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2004>>>;
     public classesClassIdStudentsGet(classId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (classId === null || classId === undefined) {
@@ -300,7 +320,7 @@ export class ClassesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/students`,
+        return this.httpClient.request<Array<InlineResponse2004>>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/students`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -318,9 +338,9 @@ export class ClassesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2004>>;
+    public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2004>>>;
+    public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2004>>>;
     public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (classId === null || classId === undefined) {
@@ -353,7 +373,7 @@ export class ClassesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}`,
+        return this.httpClient.request<Array<InlineResponse2004>>('delete',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -371,9 +391,9 @@ export class ClassesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2004>>;
+    public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2004>>>;
+    public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2004>>>;
     public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (classId === null || classId === undefined) {
@@ -406,7 +426,7 @@ export class ClassesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('put',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}`,
+        return this.httpClient.request<Array<InlineResponse2004>>('put',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

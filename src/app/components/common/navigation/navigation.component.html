@@ -7,20 +7,51 @@
             </a>
             <hr class="sidebar-divider my-0">
             <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                <li class="nav-item" role="presentation"><a class="nav-link active" [routerLink]="['/dashboard']" ><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/profile']"><i class="fas fa-user"></i><span>Profile</span></a></li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" [routerLink]="['/my-class']"><i class="fas fa-table"></i><span>My Class</span></a>
-                    <a class="nav-link" [routerLink]="['/create-class']"><i class="fab fa-creative-commons"></i><span>Create Class</span></a>
+                    <a class="nav-link active" [routerLink]="['/dashboard']">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
                 </li>
-                <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/find-partner-class']"><i class="fas fa-person-booth"></i><span>Find a partner class</span></a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/create-student']"><i class="fas fa-user-circle"></i><span>Create Student</span></a>
-                    <a class="nav-link" [routerLink]="['/plan-meeting']"><i class="far fa-calendar-plus"></i><span>Plan Meeting</span></a>
-                    <a class="nav-link" [routerLink]="['/my-meeting-requests']"><i class="fas fa-share-square"></i><span>My Meeting Requests</span></a>
+                <li class="nav-item dropdown" role="presentation">
+                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-table"></i>
+                        My Classes
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" [routerLink]="['/class-information']">Class Information</a>
+                        <a class="dropdown-item" [routerLink]="['/create-class']">Create New Class</a>
+                        <a class="dropdown-item" [routerLink]="['/create-student']">Create New Student</a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown" role="presentation">
+                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-person-booth"></i>
+                        Partner Classes
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" [routerLink]="['/find-partner-class']">Find a Partner Class</a>
+                        <a class="dropdown-item" [routerLink]="['/my-connection-requests']">View Connection Requests</a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown" role="presentation">
+                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa-calendar-plus"></i>
+                        Meetings
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" [routerLink]="['/plan-meeting']">Plan New Meeting</a>
+                        <a class="dropdown-item" [routerLink]="['/my-meeting-requests']">Planned Meeting</a>
+                    </ul>
+                </li>
+                <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/games-teacher']"><i
+                            class="fa fa-gamepad"></i><span>Games</span></a></li>
+                <li class="nav-item" role="presentation">
                     <a class="nav-link" (click)="logout()"><i class="fas fa-arrow-left"></i><span>Logout</span></a>
                 </li>
-                <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/games-student']"><i class="fa fa-gamepad"></i><span>Games (Student)</span></a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/games-teacher']"><i class="fa fa-gamepad"></i><span>Games (Teacher)</span></a></li>
             </ul>
             <div class="text-center d-none d-md-inline"></div>
         </div>

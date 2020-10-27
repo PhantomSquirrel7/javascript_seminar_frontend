@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Body9 } from './body9';
+import { Body12 } from './body12';
 
-export interface Schools extends Array<Body9> { 
+export interface Schools extends Array<Body12> { 
 }

@@ -9,23 +9,18 @@
 
 - at `https://api-globy.herokuapp.com/v1/docs/swagger.json`
 
-# Games
+## Licenses for Icons and Images
 
-## To run in you local
+- See src/assets/picture_info.txt
 
-- Install dependencies `npm i`
-- To run frontend: `ng serve --open`. This will use localhost:4200
-- To run backend: `npm run start-dev`. This will use localhost:8080
+# Games (TODO -> until merged with Backend)
 
-## Adjustments for deployment
+## To run backend for games in you local
 
-- `npm run start` only runs `node server.js`, which serves front- and backend together with the GamesLogic in `gameLogic.js`.
+- To run backend: `npm run dev-games`. This will use localhost:8080
 
-## Hardcoded stuff
+- src\app\services\custom\games\games.service.ts specifies the url to the backend
 
-- src\app\services\custom\games\games.service.ts contains the url of the backend
+## Swagger document for games can be found
 
-
-## Swagger
-
-- Documents under `swagger\docs\components.yaml`. Endpoints at `http://localhost:8080/games/swagger` or `https://javascript-group-d-frontend.herokuapp.com/games/swagger`
+- at `https://javascript-group-d-frontend.herokuapp.com/games/swagger`

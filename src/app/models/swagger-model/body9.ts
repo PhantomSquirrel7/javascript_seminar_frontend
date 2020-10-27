@@ -11,6 +11,15 @@
  */
 
 export interface Body9 { 
-    id?: string;
-    name?: string;
+    date?: Date;
+    groupAssignment?: Body9.GroupAssignmentEnum;
+}
+export namespace Body9 {
+    export type GroupAssignmentEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';
+    export const GroupAssignmentEnum = {
+        Tandem: 'tandem' as GroupAssignmentEnum,
+        Group3: 'group3' as GroupAssignmentEnum,
+        Group4: 'group4' as GroupAssignmentEnum,
+        WholeClass: 'whole_class' as GroupAssignmentEnum
+    };
 }

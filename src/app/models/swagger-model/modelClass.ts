@@ -16,7 +16,12 @@ export interface ModelClass {
     name?: string;
     language?: string;
     subject?: string;
+    country?: string;
+    projectDuration?: number;
+    meetingFrequency?: number;
     level?: number;
+    languageLevel?: string;
+    topics?: Array<string>;
     teacher?: ClassesTeacher;
     students?: Array<ClassesTeacher>;
 }

@@ -11,8 +11,18 @@
  */
 
 export interface Body8 { 
-    /**
-     * the class to match with
-     */
-    _class?: string;
+    id?: string;
+    project?: string;
+    date?: Date;
+    groupAssignments?: Body8.GroupAssignmentsEnum;
+    groups?: Array<Array<string>>;
+}
+export namespace Body8 {
+    export type GroupAssignmentsEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';
+    export const GroupAssignmentsEnum = {
+        Tandem: 'tandem' as GroupAssignmentsEnum,
+        Group3: 'group3' as GroupAssignmentsEnum,
+        Group4: 'group4' as GroupAssignmentsEnum,
+        WholeClass: 'whole_class' as GroupAssignmentsEnum
+    };
 }

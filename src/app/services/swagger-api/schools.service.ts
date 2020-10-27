@@ -14,10 +14,12 @@ import { Inject, Injectable, Optional }                      from '@angular/core
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
+
 import { Observable }                                        from 'rxjs';
-import { Body9 } from '../../models/swagger-model/body9';
-import { InlineResponse2006 } from '../../models/swagger-model/inlineResponse2006';
-import { InlineResponse2007 } from '../../models/swagger-model/inlineResponse2007';
+
+import { Body12 } from '../../models/swagger-model/body12';
+import { InlineResponse20010 } from '../../models/swagger-model/inlineResponse20010';
+import { InlineResponse20011 } from '../../models/swagger-model/inlineResponse20011';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
@@ -63,9 +65,9 @@ export class SchoolsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public schoolsGet(name?: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2006>;
-    public schoolsGet(name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2006>>;
-    public schoolsGet(name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2006>>;
+    public schoolsGet(name?: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20010>;
+    public schoolsGet(name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20010>>;
+    public schoolsGet(name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20010>>;
     public schoolsGet(name?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -96,7 +98,7 @@ export class SchoolsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse2006>('get',`${this.basePath}/schools`,
+        return this.httpClient.request<InlineResponse20010>('get',`${this.basePath}/schools`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -114,10 +116,10 @@ export class SchoolsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public schoolsPost(body: Body9, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2007>;
-    public schoolsPost(body: Body9, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2007>>;
-    public schoolsPost(body: Body9, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2007>>;
-    public schoolsPost(body: Body9, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public schoolsPost(body: Body12, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20011>;
+    public schoolsPost(body: Body12, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20011>>;
+    public schoolsPost(body: Body12, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20011>>;
+    public schoolsPost(body: Body12, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling schoolsPost.');
@@ -150,7 +152,7 @@ export class SchoolsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<InlineResponse2007>('post',`${this.basePath}/schools`,
+        return this.httpClient.request<InlineResponse20011>('post',`${this.basePath}/schools`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -168,9 +170,9 @@ export class SchoolsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public schoolsSchoolIdGet(schoolId: string, observe?: 'body', reportProgress?: boolean): Observable<Body9>;
-    public schoolsSchoolIdGet(schoolId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body9>>;
-    public schoolsSchoolIdGet(schoolId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body9>>;
+    public schoolsSchoolIdGet(schoolId: string, observe?: 'body', reportProgress?: boolean): Observable<Body12>;
+    public schoolsSchoolIdGet(schoolId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body12>>;
+    public schoolsSchoolIdGet(schoolId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body12>>;
     public schoolsSchoolIdGet(schoolId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (schoolId === null || schoolId === undefined) {
@@ -199,7 +201,7 @@ export class SchoolsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Body9>('get',`${this.basePath}/schools/${encodeURIComponent(String(schoolId))}`,
+        return this.httpClient.request<Body12>('get',`${this.basePath}/schools/${encodeURIComponent(String(schoolId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

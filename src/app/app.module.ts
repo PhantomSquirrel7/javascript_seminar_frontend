@@ -2,7 +2,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './utils';
@@ -16,11 +15,13 @@ import {
   ResetPasswordViewComponent,
   RegisterViewComponent,
   FindPartnerClassViewComponent,
+  FindPartnerClassContentComponent,
   ForgotPasswordViewComponent,
   LandingViewComponent,
+  LandingViewOfferingComponent,
+  LandingViewTeamComponent,
   ProfileViewComponent,
   SettingsViewComponent,
-  MyClassViewComponent,
   PlanMeetingViewComponent,
   DashboardContentComponent,
   PlanMeetingContentComponent,
@@ -45,18 +46,36 @@ import {
   QuestionFormComponent,
   DrawItFormComponent,
   DrawItComponent,
-  TruthlieComponent
+  TruthlieComponent,
+  LandingHomeContentComponent,
+  LandingOfferingContentComponent,
+  LandingTeamContentComponent,
+  MyConnectionRequestsViewComponent,
+  ClassContactComponentComponent,
+  FindPartnerClassViewResultsComponent,
+  FindPartnerClassResultsContentComponent,
+  StudentHomeViewComponent,
+  StudentNavigationComponent,
+  StudentProfileViewComponent,
+  StudentProfileContentComponent,
+  StudentHomeContentComponent,
+  StudentAssignmentsViewComponent,
+  StudentMeetingsViewComponent,
+  StudentAssignmentsContentComponent,
+  StudentMeetingsContentComponent,
+  CreateClassComponentComponent,
+  CreateStudentComponentComponent
 
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
-import { UserService } from './services/swagger-api/api';
 import { SocketIoModule } from 'ngx-socket-io';
 import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
-
-
+import { UserService, ClassesService } from './services/swagger-api/api';
+import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
+import { ClassInformationComponentComponent } from './components/view-contents/class-information-component/class-information-component.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -83,7 +102,6 @@ import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
     PlanMeetingViewComponent,
     PlanMeetingContentComponent,
     FindPartnerClassViewComponent,
-    MyClassViewComponent,
     SettingsViewComponent,
     ProfileViewComponent,
     AboutViewComponent,
@@ -94,6 +112,29 @@ import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
     ResetPasswordViewComponent,
     DashboardContentComponent,
     ProfileViewContentComponent,
+    LandingHomeContentComponent,
+    LandingViewOfferingComponent,
+    LandingViewTeamComponent,
+    LandingTeamContentComponent,
+    LandingOfferingContentComponent,
+    MyConnectionRequestsViewComponent,
+    FindPartnerClassContentComponent,
+    ClassContactComponentComponent,
+    FindPartnerClassViewResultsComponent,
+    FindPartnerClassResultsContentComponent,
+    StudentHomeViewComponent,
+    StudentNavigationComponent,
+    StudentProfileViewComponent,
+    StudentProfileContentComponent,
+    StudentHomeContentComponent,
+    StudentAssignmentsViewComponent,
+    StudentMeetingsViewComponent,
+    StudentMeetingsContentComponent,
+    StudentAssignmentsContentComponent,
+    CreateClassComponentComponent,
+    CreateStudentComponentComponent,
+    ClassInformationViewComponent,
+    ClassInformationComponentComponent,
     GamesStudentViewComponent,
     GamesQuizComponent,
     GamesAliasComponent,
@@ -110,13 +151,15 @@ import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
     QuestionFormComponent,
     DrawItFormComponent,
     DrawItComponent,
-    TruthlieComponent],
+    TruthlieComponent
+  ],
+
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
       multi: true,
-      deps: [CustomLoginService, UserService],
+      deps: [CustomLoginService, UserService, ClassesService],
     },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
