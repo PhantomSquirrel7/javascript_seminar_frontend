@@ -54,6 +54,7 @@ export * from './view-contents/create-student-component/create-student-component
 export * from './view-contents/class-information-component/class-information-component.component';
 export * from './view-contents/my-connection-requests-content/my-connection-requests-content.component';
 export * from './view-contents/project-info-content/project-info-content.component';
+export * from './view-contents/display-partner-class-info/display-partner-class-info.component';
 
 
 

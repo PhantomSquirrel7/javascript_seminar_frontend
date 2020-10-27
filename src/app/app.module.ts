@@ -51,6 +51,7 @@ import {
   MyConnectionRequestsContentComponent,
   ProjectInfoContentComponent,
   MessageBoardComponent,
+  DisplayPartnerClassInfoComponent,
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -123,6 +124,7 @@ import { GamesViewComponent } from './components/views/games-view/games-view.com
     MyConnectionRequestsContentComponent,
     ProjectInfoContentComponent,
     MessageBoardComponent,
+    DisplayPartnerClassInfoComponent,
   ],
 
   providers: [
