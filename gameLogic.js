@@ -6,14 +6,18 @@ var openSessions = new Map();
 var io;
 
 
+var url = "https://javascript-group-d-frontend.herokuapp.com";
+// var url = "http://localhost:8080";
+
+
 module.exports = {
-    gameInit: function(ioServer) {
+    gameInit: function (ioServer) {
         console.log("Creating Games socket");
         //create a io socket
         io = ioServer
-            // io = socket(server);
+        // io = socket(server);
         const connectedUsers = new Set(); //a list of every connection to the socket
-        io.on("connection", function(socket) {
+        io.on("connection", function (socket) {
             console.log("Made socket connection");
 
             // Defines Signals to react to
@@ -78,7 +82,10 @@ function createSession(sessionId, gameType, playerName, taskId) {
         return createDrawItSession(sessionId, gameType, playerName, taskId);
     } else if (gameType == "quiz") {
         return createQuizSession(sessionId, gameType, playerName, taskId);
+    } else if (gameType == "truthlie") {
+        return createTruthlieSession (sessionId,gameType, playerName, taskId);
     }
+
 }
 
 async function createQuizSession(sessionId, gameType, playerName, taskId) {
@@ -126,6 +133,25 @@ async function createAliasSession(sessionId, gameType, playerName, taskId) {
     }
 }
 
+async function createTruthlieSession(sessionId, gameType, playerName, taskId){
+    var session = {
+        gameType: gameType,
+        sessionId: sessionId,
+        players: [playerName],
+        played: [],
+        currentPlayer: playerName, // The playername of the currently in charge player
+        countDownStarted: false, // indicates if countdown started, a change starts countdown for all clients
+        options: [],
+        guessed: [],
+        lie: "",// False statemenr
+        name: "",  // name of the game
+        state: 'lobby',
+        timelimit: 30,
+        timeleft: 30
+    }
+    return session;
+}
+
 async function createDrawItSession(sessionId, gameType, playerName, taskId) {
     var session = {
         gameType: gameType,
@@ -140,7 +166,8 @@ async function createDrawItSession(sessionId, gameType, playerName, taskId) {
         taskId: taskId,
         state: "lobby",
         timelimit: 30,
-        timeleft: 30
+        timeleft: 30,
+        drawing: null
     }
     try {
         let drawit = await getDrawItGame(taskId);
@@ -170,7 +197,7 @@ async function getAliasGame(taskId) {
     } else {
         // Find by ID
         try {
-            let alias = fetch('http://localhost:8080/games/alias/' + taskId).then(res => res.json())
+            let alias = fetch(url + '/games/alias/' + taskId).then(res => res.json())
             console.log("FETCHED ALIAS", alias);
             return alias;
         } catch (error) {
@@ -195,7 +222,7 @@ async function getDrawItGame(taskId) {
     } else {
         // Find by ID
         try {
-            let drawit = fetch('http://localhost:8080/games/drawit/' + taskId).then(res => res.json())
+            let drawit = fetch(url + '/games/drawit/' + taskId).then(res => res.json())
             console.log("FETCHED DRAW IT", alias);
             return drawit;
         } catch (error) {
@@ -219,6 +246,8 @@ async function handleUpdateGameMessage(data) {
         await handleDrawItUpdateMessage(data);
     } else if (data.gameType == "quiz") {
         await handleQuizUpdateMessage(data);
+    } else if (data.gameType == "truthlie") {
+        await handleTruthlieUpdateMessage(data);
     } else {
         console.log("Unknown gameType: " + data.gameType);
     }
@@ -234,6 +263,11 @@ async function handleDrawItUpdateMessage(data) {
     openSessions.set(data.sessionId, data);
 }
 
+async function handleTruthlieUpdateMessage(data) {
+    io.to(data.sessionId).emit("updateGame", data);
+    openSessions.set(data.sessionId, data);
+}
+
 function handleQuizUpdateMessage(data) {
     // Get new Questions!
     if (data.countDownStarted == true && data.quizes.length == 0) {
@@ -241,10 +275,10 @@ function handleQuizUpdateMessage(data) {
         var hex = /[0-9A-Fa-f]{6}/g;
         if (data.taskId == null || data.taskId == undefined || data.taskId == "" || !hex.test(data.taskId)) {
             console.log("Invalid Task ID, sending random quiz");
-            fetch('http://localhost:8080/games/quiz/quizzes').then(res => res.json()).then(json => {
+            fetch(url + '/games/quiz/quizzes').then(res => res.json()).then(json => {
                 taskId = json[Math.floor(Math.random() * json.length)]._id;
             }).then(() => {
-                fetch('http://localhost:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
+                fetch(url + '/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
                     json.forEach(question => {
                         var q = {
                             question: question.question,
@@ -264,7 +298,7 @@ function handleQuizUpdateMessage(data) {
             }).catch(err => console.log(err));
         } else {
             taskId = data.taskId;
-            fetch('http://localhost:8080/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
+            fetch(url + '/games/quiz/quizzes/' + taskId + '/questions').then(res => res.json()).then(json => {
                 json.forEach(question => {
                     var q = {
                         question: question.question,

@@ -44,7 +44,8 @@ import {
   QuizFormComponent,
   QuestionFormComponent,
   DrawItFormComponent,
-  DrawItComponent
+  DrawItComponent,
+  TruthlieComponent
 
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -53,6 +54,8 @@ import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
 import { UserService } from './services/swagger-api/api';
 import { SocketIoModule } from 'ngx-socket-io';
+import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
+
 
 @NgModule({
   imports: [
@@ -65,6 +68,7 @@ import { SocketIoModule } from 'ngx-socket-io';
     BrowserAnimationsModule,
     DemoMaterialModule,
     SocketIoModule,
+    CanvasWhiteboardModule
   ],
   declarations: [
     AppComponent,
@@ -105,8 +109,8 @@ import { SocketIoModule } from 'ngx-socket-io';
     QuizFormComponent,
     QuestionFormComponent,
     DrawItFormComponent,
-    DrawItComponent
-  ],
+    DrawItComponent,
+    TruthlieComponent],
   providers: [
     {
       provide: APP_INITIALIZER,

@@ -12,4 +12,5 @@ export interface DrawItUpdate {
     state: "lobby" | "running" | "over";
     timelimit: number;
     timeleft: number;
+    drawing: object;
 }
