@@ -30,10 +30,8 @@ export class DrawItComponent implements OnInit, OnDestroy {
 
   canvasOptionsDraw: CanvasWhiteboardOptions = {
     drawButtonEnabled: false,
-    drawButtonClass: "drawButtonClass",
     drawButtonText: "Draw",
     clearButtonEnabled: true,
-    clearButtonClass: "clearButtonClass",
     clearButtonText: "Clear",
     undoButtonText: "Undo",
     undoButtonEnabled: true,
@@ -48,30 +46,26 @@ export class DrawItComponent implements OnInit, OnDestroy {
     strokeColor: "rgb(0,0,0)",
     shouldDownloadDrawing: true,
     drawingEnabled: true,
-    batchUpdateTimeoutDuration: 100
+    batchUpdateTimeoutDuration: 100,
+    aspectRatio: 0.75
   };
 
   canvasOptionsGuess: CanvasWhiteboardOptions = {
     drawButtonEnabled: false,
-    drawButtonClass: "drawButtonClass",
-    drawButtonText: "Draw",
     clearButtonEnabled: false,
-    clearButtonClass: "clearButtonClass",
-    clearButtonText: "Clear",
-    undoButtonText: "Undo",
     undoButtonEnabled: false,
-    redoButtonText: "Redo",
     redoButtonEnabled: false,
     colorPickerEnabled: false,
-    fillColorPickerText: "Fill",
-    strokeColorPickerText: "Stroke",
+    fillColorPickerEnabled: false,
     saveDataButtonEnabled: false,
-    saveDataButtonText: "Save",
-    lineWidth: 2,
-    strokeColor: "rgb(0,0,0)",
     shouldDownloadDrawing: false,
     drawingEnabled: false,
-    batchUpdateTimeoutDuration: 100
+    shapeSelectorEnabled: false,
+    showShapeSelector: false,
+    strokeColorPickerEnabled: false,
+    showStrokeColorPicker: false,
+    showFillColorPicker: false,
+    aspectRatio: 0.75
   };
 
   constructor(public gamesService: GamesService, private _canvasWhiteboardService: CanvasWhiteboardService) {
