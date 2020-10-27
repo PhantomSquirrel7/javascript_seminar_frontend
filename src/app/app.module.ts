@@ -59,6 +59,9 @@ import { CustomLoginService } from '@app/services/custom';
 import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
 import { ClassInformationComponentComponent } from './components/view-contents/class-information-component/class-information-component.component';
+import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
+import { GamesViewComponent } from './components/views/games-view/games-view.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -115,6 +118,8 @@ import { ClassInformationComponentComponent } from './components/view-contents/c
     CreateStudentComponentComponent,
     ClassInformationViewComponent,
     ClassInformationComponentComponent,
+    BbbViewComponent,
+    GamesViewComponent,
     MyConnectionRequestsContentComponent,
     ProjectInfoContentComponent,
     MessageBoardComponent,
