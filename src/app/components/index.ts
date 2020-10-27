@@ -5,6 +5,7 @@ export * from './common/footer/footer.component';
 export * from './common/landing-header/landing-header.component';
 export * from './common/navigation/navigation.component';
 export * from './common/student-navigation/student-navigation.component';
+export * from './common/message-board/message-board.component';
 
 // views
 export * from './views/create-class-view/create-class-view.component';
@@ -51,6 +52,8 @@ export * from './view-contents/student-meetings-content/student-meetings-content
 export * from './view-contents/create-class-component/create-class-component.component';
 export * from './view-contents/create-student-component/create-student-component.component';
 export * from './view-contents/class-information-component/class-information-component.component';
+export * from './view-contents/my-connection-requests-content/my-connection-requests-content.component';
+export * from './view-contents/project-info-content/project-info-content.component';
 
 
 

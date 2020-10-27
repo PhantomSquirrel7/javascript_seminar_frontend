@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '@app/models';
 import { StudentsService } from '../../../services/swagger-api/api';
-import { FormGroup, FormBuilder } from '@angular/forms'
-import { ClassesService } from 'src/app/services/swagger-api/classes.service'
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ClassesService } from 'src/app/services/swagger-api/classes.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 

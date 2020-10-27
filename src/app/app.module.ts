@@ -48,6 +48,9 @@ import {
   StudentMeetingsContentComponent,
   CreateClassComponentComponent,
   CreateStudentComponentComponent,
+  MyConnectionRequestsContentComponent,
+  ProjectInfoContentComponent,
+  MessageBoardComponent,
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -112,6 +115,9 @@ import { ClassInformationComponentComponent } from './components/view-contents/c
     CreateStudentComponentComponent,
     ClassInformationViewComponent,
     ClassInformationComponentComponent,
+    MyConnectionRequestsContentComponent,
+    ProjectInfoContentComponent,
+    MessageBoardComponent,
   ],
 
   providers: [
