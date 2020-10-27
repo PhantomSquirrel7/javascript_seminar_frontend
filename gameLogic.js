@@ -11,13 +11,13 @@ var url = "https://javascript-group-d-frontend.herokuapp.com";
 
 
 module.exports = {
-    gameInit: function(ioServer) {
+    gameInit: function (ioServer) {
         console.log("Creating Games socket");
         //create a io socket
         io = ioServer
-            // io = socket(server);
+        // io = socket(server);
         const connectedUsers = new Set(); //a list of every connection to the socket
-        io.on("connection", function(socket) {
+        io.on("connection", function (socket) {
             console.log("Made socket connection");
 
             // Defines Signals to react to
@@ -166,7 +166,8 @@ async function createDrawItSession(sessionId, gameType, playerName, taskId) {
         taskId: taskId,
         state: "lobby",
         timelimit: 30,
-        timeleft: 30
+        timeleft: 30,
+        drawing: null
     }
     try {
         let drawit = await getDrawItGame(taskId);

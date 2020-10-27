@@ -42,6 +42,14 @@
                                 <div class="mt-4 p-3 explaining text-center"> Draw the word:
                                     {{ currentWord }}
                                 </div>
+                                <div class="drawing-container">
+                                    <div class="drawing-canvas">
+                                        <canvas-whiteboard #canvasWhiteboard [options]="canvasOptionsDraw"
+                                            (onBatchUpdate)="onCanvasDraw($event)" (onClear)="onCanvasClear()"
+                                            (onUndo)="onCanvasUndo($event)" (onRedo)="onCanvasRedo($event)">
+                                        </canvas-whiteboard>
+                                    </div>
+                                </div>
                                 <div class="mt-4 game-controls text-center">
                                     <button class="btn btn-secondary mr-2" (click)="skipWord()">Skip</button>
                                     <button class="btn btn-success" (click)="correctGuess()">Correct</button>
@@ -50,6 +58,12 @@
                             <!-- PLAYER GUESSING -->
                             <div *ngIf="username !== game.currentPlayer">
                                 <div class="mt-4 text-center">{{ game.currentPlayer }} is drawing. Guess the word!
+                                </div>
+                                <div class="drawing-container">
+                                    <div class="drawing-canvas">
+                                        <canvas-whiteboard #canvasWhiteboard [options]="canvasOptionsGuess">
+                                        </canvas-whiteboard>
+                                    </div>
                                 </div>
                             </div>
                         </div>
