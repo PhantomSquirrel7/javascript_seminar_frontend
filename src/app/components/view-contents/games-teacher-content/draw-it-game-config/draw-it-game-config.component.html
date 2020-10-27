@@ -6,8 +6,7 @@
 <app-messages></app-messages>
 
 <mat-card-content>
-    <mat-card-subtitle>Games</mat-card-subtitle>
-    <div class="mb-2">
+    <div class="mt-2">
         <mat-accordion>
             <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header>
@@ -19,19 +18,30 @@
             </mat-expansion-panel>
         </mat-accordion>
     </div>
+    <mat-card-subtitle class="mt-3">Games</mat-card-subtitle>
     <mat-accordion class="headers-align">
-        <mat-expansion-panel *ngFor="let game of games" hideToggle>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ game.name }}
-                </mat-panel-title>
-                <mat-panel-description>
-                    {{ game.description }}
-                    <mat-icon class="headers-align-right" title="delete game"
-                        (click)="$event.stopPropagation(); deleteGame(game)">delete_forever</mat-icon>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <app-draw-it-form [game]="game" (gameChange)="onGameChange($event)"></app-draw-it-form>
-        </mat-expansion-panel>
+        <div *ngIf="games; else loadingDrawitContent">
+            <mat-expansion-panel *ngFor="let game of games" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{ game.name }}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{ game.description }}
+                        <mat-icon class="headers-align-right" title="delete game"
+                            (click)="$event.stopPropagation(); deleteGame(game)">delete_forever</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <app-draw-it-form [game]="game" (gameChange)="onGameChange($event)"></app-draw-it-form>
+            </mat-expansion-panel>
+        </div>
     </mat-accordion>
 </mat-card-content>
+<ng-template #loadingDrawitContent>
+    <mat-card-content>
+        <div>
+            <mat-spinner class="loading" [diameter]="40"></mat-spinner>
+            <span class="loading">Loading Games...</span>
+        </div>
+    </mat-card-content>
+</ng-template>

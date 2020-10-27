@@ -45,11 +45,11 @@ export class QuizGameConfigComponent implements OnInit {
     });
   }
 
-  requestDeleteQuestion(question: Question){
+  requestDeleteQuestion(question: Question) {
     this.requestDelete = question._id;
   }
 
-  cancelRequestDelete(){
+  cancelRequestDelete() {
     this.requestDelete = "";
   }
 
@@ -65,7 +65,7 @@ export class QuizGameConfigComponent implements OnInit {
         this.api.getQuizzes().subscribe(data => {
           //console.log("fetch quizzes", data)
           this.quizzes = data;
-        
+
         });
       }
     });
