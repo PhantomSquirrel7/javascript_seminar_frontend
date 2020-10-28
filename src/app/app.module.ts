@@ -1,6 +1,6 @@
 ﻿import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +30,23 @@ import {
   LandingHeaderComponent,
   NavigationComponent,
   ProfileViewContentComponent,
+  GamesStudentViewComponent,
+  GamesStudentContentComponent,
+  GamesQuizComponent,
+  GamesAliasComponent,
+  GamesTeacherViewComponent,
+  GamesTeacherContentComponent,
+  AliasGameConfigComponent,
+  QuizGameConfigComponent,
+  DrawItGameConfigComponent,
+  OverviewGamesConfigComponent,
+  MessagesComponent,
+  AliasFormComponent,
+  QuizFormComponent,
+  QuestionFormComponent,
+  DrawItFormComponent,
+  DrawItComponent,
+  TruthlieComponent,
   LandingHomeContentComponent,
   LandingOfferingContentComponent,
   LandingTeamContentComponent,
@@ -50,12 +67,14 @@ import {
   CreateStudentComponentComponent,
   MyConnectionRequestsContentComponent,
   ProjectInfoContentComponent,
-  MessageBoardComponent,
+  MessageBoardComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
+import { SocketIoModule } from 'ngx-socket-io';
+import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
 import { ClassInformationComponentComponent } from './components/view-contents/class-information-component/class-information-component.component';
@@ -66,11 +85,14 @@ import { GamesViewComponent } from './components/views/games-view/games-view.com
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
+    SocketIoModule,
+    CanvasWhiteboardModule
   ],
   declarations: [
     AppComponent,
@@ -118,11 +140,28 @@ import { GamesViewComponent } from './components/views/games-view/games-view.com
     CreateStudentComponentComponent,
     ClassInformationViewComponent,
     ClassInformationComponentComponent,
+    GamesStudentViewComponent,
+    GamesQuizComponent,
+    GamesAliasComponent,
+    GamesStudentContentComponent,
+    GamesTeacherViewComponent,
+    GamesTeacherContentComponent,
+    AliasGameConfigComponent,
+    QuizGameConfigComponent,
+    DrawItGameConfigComponent,
+    OverviewGamesConfigComponent,
+    MessagesComponent,
+    AliasFormComponent,
+    QuizFormComponent,
+    QuestionFormComponent,
+    DrawItFormComponent,
+    DrawItComponent,
+    TruthlieComponent,
     BbbViewComponent,
     GamesViewComponent,
     MyConnectionRequestsContentComponent,
     ProjectInfoContentComponent,
-    MessageBoardComponent,
+    MessageBoardComponent
   ],
 
   providers: [
@@ -137,4 +176,4 @@ import { GamesViewComponent } from './components/views/games-view/games-view.com
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

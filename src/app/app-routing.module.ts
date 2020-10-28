@@ -24,7 +24,13 @@ import {
   StudentProfileViewComponent,
   StudentAssignmentsViewComponent,
   StudentMeetingsViewComponent,
-  ClassInformationViewComponent
+  ClassInformationViewComponent,
+  GamesStudentViewComponent,
+  GamesTeacherViewComponent,
+  AliasGameConfigComponent,
+  QuizGameConfigComponent,
+  DrawItGameConfigComponent,
+  OverviewGamesConfigComponent
 } from './components';
 
 const routes: Routes = [
@@ -39,97 +45,116 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'profile',
     component: ProfileViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'settings',
     component: SettingsViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'class-information',
     component: ClassInformationViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'create-class',
     component: CreateClassViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'create-student',
     component: CreateStudentViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'find-partner-class',
     component: FindPartnerClassViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'find-partner-class/results',
     component: FindPartnerClassViewResultsComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'create-student',
     component: CreateStudentViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'plan-meeting',
     component: PlanMeetingViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'my-meeting-requests',
     component: MyMeetingRequestsViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'my-connection-requests',
     component: MyConnectionRequestsViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Teacher]}
+    data: { roles: [User.RoleEnum.Teacher] }
   },
   {
     path: 'student-home',
     component: StudentHomeViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Student]}
+    data: { roles: [User.RoleEnum.Student] }
   },
   {
     path: 'student-profile',
     component: StudentProfileViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Student]}
+    data: { roles: [User.RoleEnum.Student] }
   },
   {
     path: 'student-assignments',
     component: StudentAssignmentsViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Student]}
+    data: { roles: [User.RoleEnum.Student] }
   },
   {
     path: 'student-meetings',
     component: StudentMeetingsViewComponent,
     canActivate: [AuthGuard],
-    data: { roles: [User.RoleEnum.Student]}
+    data: { roles: [User.RoleEnum.Student] }
+  },
+  {
+    path: 'student-games',
+    component: GamesStudentViewComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [User.RoleEnum.Student] }
+  },
+  {
+    path: 'games-teacher',
+    component: GamesTeacherViewComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'alias-config', component: AliasGameConfigComponent },
+      { path: 'quiz-config', component: QuizGameConfigComponent },
+      { path: 'draw-it-config', component: DrawItGameConfigComponent },
+      { path: 'overview', component: OverviewGamesConfigComponent },
+      { path: '**', redirectTo: 'overview' }
+    ],
+    data: { roles: [User.RoleEnum.Teacher] }
   },
 
   // otherwise redirect to home
@@ -140,4 +165,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

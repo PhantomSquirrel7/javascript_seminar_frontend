@@ -8,42 +8,48 @@
             <hr class="sidebar-divider my-0">
             <ul class="nav navbar-nav text-light" id="accordionSidebar">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" [routerLink]="['/dashboard']" >
+                    <a class="nav-link active" [routerLink]="['/dashboard']">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-item dropdown" role="presentation">
-                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-table"></i>
                         My Classes
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" [routerLink]="['/class-information']">Class Information</a>
-                      <a class="dropdown-item" [routerLink]="['/create-class']">Create New Class</a>
-                      <a class="dropdown-item" [routerLink]="['/create-student']">Create New Student</a>
+                        <a class="dropdown-item" [routerLink]="['/class-information']">Class Information</a>
+                        <a class="dropdown-item" [routerLink]="['/create-class']">Create New Class</a>
+                        <a class="dropdown-item" [routerLink]="['/create-student']">Create New Student</a>
                     </ul>
                 </li>
                 <li class="nav-item dropdown" role="presentation">
-                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-person-booth"></i>
                         Partner Classes
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" [routerLink]="['/find-partner-class']">Find a Partner Class</a>
-                      <a class="dropdown-item" [routerLink]="['/my-connection-requests']">Your Partner Classes</a>
+                        <a class="dropdown-item" [routerLink]="['/find-partner-class']">Find a Partner Class</a>
+                        <a class="dropdown-item" [routerLink]="['/my-connection-requests']">View Connection Requests</a>
+
                     </ul>
                 </li>
                 <li class="nav-item dropdown" role="presentation">
-                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                         <i class="far fa-calendar-plus"></i>
                         Meetings
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" [routerLink]="['/plan-meeting']">Plan New Meeting</a>
-                      <a class="dropdown-item" [routerLink]="['/my-meeting-requests']">Planned Meeting</a>
+                        <a class="dropdown-item" [routerLink]="['/plan-meeting']">Plan New Meeting</a>
+                        <a class="dropdown-item" [routerLink]="['/my-meeting-requests']">Planned Meeting</a>
                     </ul>
-                </li> 
+                </li>
+                <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/games-teacher']"><i
+                            class="fa fa-gamepad"></i><span>Games</span></a></li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" (click)="logout()"><i class="fas fa-arrow-left"></i><span>Logout</span></a>
                 </li>

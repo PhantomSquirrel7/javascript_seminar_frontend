@@ -12,14 +12,14 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   templateUrl: './plan-meeting-content.component.html',
   styleUrls: ['./plan-meeting-content.component.less']
 })
-export class PlanMeetingContentComponent implements OnInit  { 
-  list1 = [    
+export class PlanMeetingContentComponent implements OnInit {
+  list1 = [
     'Episode I - The Phantom Menace',
     'Episode II - Attack of the Clones',
     'Episode III - Revenge of the Sith'
   ];
 
-  list2 = [    
+  list2 = [
     'Episode IV - A New Hope',
     'Episode V - The Empire Strikes Back',
     'Episode VI - The Empire Strikes Back'
@@ -34,7 +34,7 @@ export class PlanMeetingContentComponent implements OnInit  {
   selectedTypeOfClass = ''
   selectedDuration: number;
   durations = [30, 45, 60, 90, 120];
-  typeOfClasses = ['Quiz','Ice-Breaker Game','Others',]
+  typeOfClasses = ['Quiz', 'Ice-Breaker Game', 'Others',]
   loading = false;
   selectedArrangement = '';
 
@@ -45,8 +45,8 @@ export class PlanMeetingContentComponent implements OnInit  {
     private router: Router,
     private classService: ClassesService,
     private _snackBar: MatSnackBar,
-  ) {}
- 
+  ) { }
+
   ngOnInit() {
     this.selectedArrangement = 'tandem';
     this.clsSelecForm = this.fb.group({
@@ -61,22 +61,22 @@ export class PlanMeetingContentComponent implements OnInit  {
       error: (error) => {
         this.error = error;
         this._snackBar.open(this.error, 'Close', {
-        duration: 3000
+          duration: 3000
         });
         this.loading = false;
       },
     });
   }
 
-  classSelected(){
+  classSelected() {
     this.selectedClass = this.clsSelecForm.value.selectedClass;
     this.isSelected = true;
-  }  
+  }
 
   typeSelected(event) {
     let type = this.stringFormatter(event.target.value);
 
-    switch(type) {
+    switch (type) {
       case "quiz": {
         this.selectedTypeOfClass = 'quiz'
         break
