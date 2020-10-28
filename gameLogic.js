@@ -6,8 +6,8 @@ var openSessions = new Map();
 var io;
 
 
-var url = "https://javascript-group-d-frontend.herokuapp.com";
-// var url = "http://localhost:8080";
+//var url = "https://javascript-group-d-frontend.herokuapp.com";
+var url = "http://localhost:8080";
 
 
 module.exports = {
@@ -83,7 +83,7 @@ function createSession(sessionId, gameType, playerName, taskId) {
     } else if (gameType == "quiz") {
         return createQuizSession(sessionId, gameType, playerName, taskId);
     } else if (gameType == "truthlie") {
-        return createTruthlieSession (sessionId,gameType, playerName, taskId);
+        return createTruthlieSession(sessionId, gameType, playerName, taskId);
     }
 
 }
@@ -133,7 +133,7 @@ async function createAliasSession(sessionId, gameType, playerName, taskId) {
     }
 }
 
-async function createTruthlieSession(sessionId, gameType, playerName, taskId){
+async function createTruthlieSession(sessionId, gameType, playerName, taskId) {
     var session = {
         gameType: gameType,
         sessionId: sessionId,

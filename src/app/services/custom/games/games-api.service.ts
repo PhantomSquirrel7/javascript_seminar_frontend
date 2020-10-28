@@ -13,7 +13,8 @@ import { DrawIt } from '@app/models/game-models/drawIt';
 })
 export class GamesApiService {
 
-  private url = "https://javascript-group-d-frontend.herokuapp.com";
+  //private url = "https://javascript-group-d-frontend.herokuapp.com";
+  private url = "http://localhost:8080";
 
   private httpOptionsJson = {
     headers: new HttpHeaders({
