@@ -3,12 +3,23 @@
         <h1>Your Meetings {{user_student.firstName}}!</h1>
         <br>
         <div class="card">
-            <div class="card-body">
-                <p *ngIf=noMeetings>You have no meetings</p>
-                <div *ngIf="noMeetings">
+            <div *ngIf=false class="card-body">
+                <p>You have no meetings</p>
+                <div>
                     <!-- Your notifications -->
                 </div>
+
             </div>
+            <div fxLayout="row" *ngIf=noMeetings>
+                <div fxFlex="0 0 80%" class="card-body">
+                    <app-bbb-view></app-bbb-view>
+                </div>
+                <div class="card-body">
+                    <app-games-view></app-games-view>
+                </div>
+            </div>
+
+
         </div>
     </div>
     <div *ngIf=loading>

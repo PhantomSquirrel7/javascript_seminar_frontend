@@ -5,6 +5,7 @@ export * from './common/footer/footer.component';
 export * from './common/landing-header/landing-header.component';
 export * from './common/navigation/navigation.component';
 export * from './common/student-navigation/student-navigation.component';
+export * from './common/message-board/message-board.component';
 
 // views
 export * from './views/create-class-view/create-class-view.component';
@@ -66,3 +67,6 @@ export * from './view-contents/games-teacher-content/alias-game-config/alias-for
 export * from './view-contents/games-teacher-content/quiz-game-config/quiz-form/quiz-form.component';
 export * from './view-contents/games-teacher-content/quiz-game-config/question-form/question-form.component';
 export * from './view-contents/games-teacher-content/draw-it-game-config/draw-it-form/draw-it-form.component';
+export * from './view-contents/my-connection-requests-content/my-connection-requests-content.component';
+export * from './view-contents/project-info-content/project-info-content.component';
+

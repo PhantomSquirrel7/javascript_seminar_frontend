@@ -6,8 +6,8 @@
           <h1>Class Information</h1>
           <br />
           <form [formGroup]="getClassForm" (ngSubmit)="getClassInformation()">
-            <div class="form-groups">
-              <div class="form-group">
+            <div  class="form-groups">
+              <div fxFlex="1 1 25%" class="form-group">
                 <label for="language">Class Name</label>
                 <select  formControlName="selectedClassId" [(ngModel)]="selectedClassId" class="form-control">
                   <option [ngValue]="null" disabled>Class name</option>
@@ -17,10 +17,12 @@
                 </select>
               </div>
             </div>
-            <button [disabled]="loading" class="btn btn-outline-primary btn-lg btn-block btn-user" type="submit">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-              Get class information
-            </button>
+            <div fxFlex="1 1 25%">
+              <button [disabled]="loading" class="btn btn-outline-primary btn-sm btn-block btn-user" type="submit">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Get class information
+              </button>
+            </div>
           </form>
         </div>
       </mat-card>

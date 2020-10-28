@@ -64,8 +64,10 @@ import {
   StudentAssignmentsContentComponent,
   StudentMeetingsContentComponent,
   CreateClassComponentComponent,
-  CreateStudentComponentComponent
-
+  CreateStudentComponentComponent,
+  MyConnectionRequestsContentComponent,
+  ProjectInfoContentComponent,
+  MessageBoardComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -76,6 +78,9 @@ import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
 import { ClassInformationComponentComponent } from './components/view-contents/class-information-component/class-information-component.component';
+import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
+import { GamesViewComponent } from './components/views/games-view/games-view.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -151,7 +156,12 @@ import { ClassInformationComponentComponent } from './components/view-contents/c
     QuestionFormComponent,
     DrawItFormComponent,
     DrawItComponent,
-    TruthlieComponent
+    TruthlieComponent,
+    BbbViewComponent,
+    GamesViewComponent,
+    MyConnectionRequestsContentComponent,
+    ProjectInfoContentComponent,
+    MessageBoardComponent
   ],
 
   providers: [
