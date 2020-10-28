@@ -1,0 +1,23 @@
+<div style="margin: 25px;">
+    <div *ngIf="actProject.state == 'pending'">
+        <h1>Want to accept the project offering?</h1>
+        <app-message-board> [sender] [recipient] [messages] </app-message-board>
+        <div class="form-group" style="margin-right: 50px">
+            <form [formGroup]="projectForm" (ngSubmit)="acceptOffer()">
+                <button class="btn btn-outline-success btn-lg" [disabled]="btnAcceptable">Accept Project</button>
+            </form>
+            <div *ngIf=accepted>
+                <br>
+                <div class="alert alert-success" role="alert">
+                    You accepted the project offering successfully!
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div *ngIf="actProject.state == 'ongoing'">
+        <h1>Ongoing</h1>
+    </div>
+    <div *ngIf="actProject.state == 'done'">
+        <h1>Done</h1>
+    </div>
+</div>

@@ -74,7 +74,7 @@
 
           <div class="form-group">
             <label for="languageLevel">Language Level</label>
-            <input type="number" id="languageLevel" formControlName="languageLevel" class="form-control"
+            <input type="text" id="languageLevel" formControlName="languageLevel" class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f.languageLevel.errors }" />
             <div *ngIf="submitted && f.languageLevel.errors" class="invalid-feedback">
               <div *ngIf="f.languageLevel.errors.required">language level is required</div>

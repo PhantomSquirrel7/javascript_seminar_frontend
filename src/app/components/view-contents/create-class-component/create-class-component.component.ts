@@ -39,7 +39,7 @@ export class CreateClassComponentComponent implements OnInit {
       level: ['', Validators.required],
       languageLevel: ['', Validators.required]
     });
-   this.classLangProfs = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+   this.classLangProfs = ['de', 'tr'];
    this.classCountries = ['DE', 'US', 'TR', 'CZ'];
   }
   get f() {
@@ -54,7 +54,13 @@ export class CreateClassComponentComponent implements OnInit {
       this.loading = false;
       return;
     }
-    this.loading = true;   
+    this.loading = true;  
+    let teacher = {
+      email: this.userService.userValue.email,
+      firstName : this.userService.userValue.firstName,
+      lastName : '',
+      role: this.userService.userValue.role
+    };
     this.classService
       .classesPost({
         name: this.f.name.value, 
@@ -65,8 +71,6 @@ export class CreateClassComponentComponent implements OnInit {
         meetingFrequency: this.f.meetingFrequency.value,
         level: this.f.level.value,
         languageLevel: this.f.languageLevel.value,
-        teacher : this.userService.userValue,
-        students: []
       })
       .pipe(first())
       .subscribe({

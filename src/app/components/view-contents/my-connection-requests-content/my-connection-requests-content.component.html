@@ -1,0 +1,39 @@
+<div class="form-group" style="margin-left: 100px; margin-right: 50px">
+    <div *ngIf="!loading">
+        <div style="margin-right: 50px;">
+            <div *ngFor="let item of user_projects" class="card shadow-lg rounded" style="margin-top: 40px;">
+                <div class="card-header">Projects for: {{item.class.name}}
+                </div>
+                <div class="card-body">
+                    <div *ngIf="item.projects.length">
+                        <div *ngFor="let project of item.projects" class="card shadow-lg rounded" style="margin: 20px;">
+                            <div class="card-header">Partner: {{project.partnerClass.name}}
+                                <span *ngIf="project.state == 'ongoing'" class="badge badge-success">Ongoing</span>
+                                <span *ngIf="project.state == 'done'" class="badge badge-secondary">Done</span>
+                                <span *ngIf="project.state == 'pending'" class="badge badge-warning">Pending</span>
+                            </div>
+                            <div class="card-body">
+                                <form [formGroup]="requestInfoForm" (ngSubmit)="detailsFor(item.class, project)">
+                                    <button class="btn btn-link btn-outline-primary" data-toggle="modal" data-target="#projectInfo">More</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!item.projects.length">
+                        <h2>No projects!</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="loading">
+        <span class="spinner-border spinner-border-sm mr-1"></span>
+    </div>
+    <div id="projectInfo" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <app-project-info-content [actClass]="actClass" [actProject]="actProject"></app-project-info-content>
+            </div>
+        </div>
+    </div>
+</div> 
