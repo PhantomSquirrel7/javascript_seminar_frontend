@@ -79,52 +79,64 @@ export class MyConnectionRequestsContentComponent implements OnInit {
           "id": "message1id",
           "message": "textMessage1",
           "from": {
-            "email": "fake@example.com",
-            "firstName": "Max",
-            "lastName": "Test",
-            "role": "teacher"
+            "email": "test@mail.de",
+​            "firstName": "Peter",         ​
+            "id": "5f685056d6bf4e0016d9931e",
+            "lastName": "Tester",
+            "role": "teacher",
+            "schoolName": "test school"
           },
           "to": {
-            "email": "fake@example.com",
-            "firstName": "Max",
-            "lastName": "Test",
-            "role": "teacher"
+            "email": "test@mail.de",
+​            "firstName": "Peter",         ​
+            "id": "0000000",
+            "lastName": "Tester",
+            "role": "teacher",
+            "schoolName": "test school"
           },
-          "timestamp": "12.12.2012"
+          "timestamp": "1603911873563"
         },
         {
           "id": "message2id",
           "message": "textMessage2",
           "from": {
-            "email": "fake@example.com",
-            "firstName": "Max",
-            "lastName": "Test",
-            "role": "teacher"
+            "email": "test@mail.de",
+​            "firstName": "Peter",         ​
+            "id": "5f685056d6bf4e0016d9931e",
+            "lastName": "Tester",
+            "role": "teacher",
+            "schoolName": "test school"
           },
           "to": {
-            "email": "fake@example.com",
-            "firstName": "Max",
-            "lastName": "Test",
-            "role": "teacher"
+            "email": "test@mail.de",
+​            "firstName": "Peter",         ​
+            "id": "0000000",
+            "lastName": "Tester",
+            "role": "teacher",
+            "schoolName": "test school"
           },
-          "timestamp": "13.12.2012"
+          "timestamp": "1603911873517"
         },
         {
           "id": "message3id",
           "message": "textMessage3",
           "from": {
-            "email": "fake@example.com",
-            "firstName": "Max",
-            "lastName": "Test",
-            "role": "teacher"
+            "email": "test@mail.de",
+​            "firstName": "Peter",         ​
+            "id": "00000",
+            "lastName": "Tester",
+            "role": "teacher",
+            "schoolName": "test school"
           },
           "to": {
-            "email": "fake@example.com",
-            "firstName": "Max",
-            "lastName": "Test",
-            "role": "teacher"
+            "email": "test@mail.de",
+​            "firstName": "Peter",         ​
+            "id": "00000000",
+            "lastName": "Tester",
+            "role": "teacher",
+            "schoolName": "test school"
           },
-          "timestamp": "14.12.2012"
+          "timestamp": "1603911873541"
         }
       ]
     ],
@@ -191,7 +203,7 @@ export class MyConnectionRequestsContentComponent implements OnInit {
             "role": "teacher",
             "schoolName": "test school"
           },
-          "timestamp": "12.12.2012"
+          "timestamp": "1603911873563"
         },
         {
           "id": "message2id",
@@ -212,7 +224,7 @@ export class MyConnectionRequestsContentComponent implements OnInit {
             "role": "teacher",
             "schoolName": "test school"
           },
-          "timestamp": "13.12.2012"
+          "timestamp": "1603911873517"
         },
         {
           "id": "message3id",
@@ -233,7 +245,7 @@ export class MyConnectionRequestsContentComponent implements OnInit {
             "role": "teacher",
             "schoolName": "test school"
           },
-          "timestamp": "14.12.2012"
+          "timestamp": "1603911873541"
         }
       ]
     ],
@@ -253,7 +265,7 @@ export class MyConnectionRequestsContentComponent implements OnInit {
           next: (response) => {
             // this.loading = false;
             this.user = response;
-            this._snackBar.open('Welcome to find-partner-class page!', 'Close', {
+            this._snackBar.open('Welcome to your partner classes page!', 'Close', {
               duration: 3000
             });
           },

@@ -2,7 +2,9 @@
     <div *ngIf="actProject.state == 'pending'">
         <h1>Want to accept the project offering?</h1>
         <app-display-partner-class-info [project]="actProject"></app-display-partner-class-info>
-        <app-message-board [sender]="actSender" [recipientId]="actProject.partnerClass.teacher" [messages]="actProject.messages"></app-message-board>
+        <br>
+        <app-message-board [sender]="actSender" [recipientId]="actProject.partnerClass.teacher" [messages]="actProject.messages[0]"></app-message-board>
+        <br>
         <div class="form-group" style="margin-right: 50px">
             <form [formGroup]="projectForm" (ngSubmit)="acceptOffer()">
                 <button class="btn btn-outline-success btn-lg" [disabled]="btnAcceptable">Accept Project</button>
@@ -18,7 +20,8 @@
     <div *ngIf="actProject.state == 'ongoing'">
         <h1>Talk to your partner teacher...</h1>
         <app-display-partner-class-info [project]="actProject"></app-display-partner-class-info>
-        <app-message-board> [sender] [recipient] [messages] </app-message-board>
+        <br>
+        <app-message-board [sender]="actSender" [recipientId]="actProject.partnerClass.teacher" [messages]="actProject.messages[0]"></app-message-board>
     </div>
     <div *ngIf="actProject.state == 'done'">
         <h1>Done</h1>
