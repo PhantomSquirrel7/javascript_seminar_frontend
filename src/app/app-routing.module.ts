@@ -24,7 +24,8 @@ import {
   StudentProfileViewComponent,
   StudentAssignmentsViewComponent,
   StudentMeetingsViewComponent,
-  ClassInformationViewComponent
+  ClassInformationViewComponent,
+  StudentMeetingsContentComponent
 } from './components';
 
 const routes: Routes = [
@@ -128,6 +129,12 @@ const routes: Routes = [
   {
     path: 'student-meetings',
     component: StudentMeetingsViewComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [User.RoleEnum.Student]}
+  },
+  {
+    path: 'student-meetings-content',
+    component: StudentMeetingsContentComponent,
     canActivate: [AuthGuard],
     data: { roles: [User.RoleEnum.Student]}
   },
