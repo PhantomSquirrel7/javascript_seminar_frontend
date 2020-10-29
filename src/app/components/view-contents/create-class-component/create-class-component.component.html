@@ -24,14 +24,24 @@
           </div>
 
           <div class="form-group">
-            <label for="language">Language proficiency</label>
+            <label for="language">Language</label>
             <select formControlName="language"  class="form-control" [(ngModel)]="selectedLanguage">
-              <option [ngValue]="null" disabled>Language proficiency</option>
+              <option [ngValue]="null" disabled>Language</option>
               <option *ngFor="let language of languageList" [ngValue]="language.value">
                 {{language.name}}
               </option>
             </select>
           </div>
+
+
+          <div class="form-group">
+            <label for="languageLevel">Language Level</label>
+            <select formControlName="languageLevel" class="form-control" [(ngModel)]="selectedLanguageLevel">
+              <option [ngValue]="null" disabled>Language Level</option>
+              <option *ngFor="let langLvl of languageLevelList" [ngValue]="langLvl">
+                {{langLvl}}</option>
+            </select>
+          </div>          
 
 
           <div class="form-group">
@@ -62,7 +72,7 @@
           </div>
 
           <div class="form-group">
-            <label for="levet">Level</label>
+            <label for="levet">Class level</label>
             <input type="number" id="level" formControlName="level" class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f.level.errors }" />
             <div *ngIf="submitted && f.level.errors" class="invalid-feedback">
@@ -70,14 +80,6 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="languageLevel">Language Level</label>
-            <select formControlName="languageLevel" class="form-control" [(ngModel)]="selectedLanguageLevel">
-              <option [ngValue]="null" disabled>Language Level</option>
-              <option *ngFor="let langLvl of languageLevelList" [ngValue]="langLvl">
-                {{langLvl}}</option>
-            </select>
-          </div>
 
 
         </div>
