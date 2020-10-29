@@ -24,25 +24,23 @@
           </div>
 
           <div class="form-group">
-
             <label for="language">Language proficiency</label>
-            <select formControlName="selectedLangProf" [(ngModel)]="selectedLangProf" class="form-control">
+            <select formControlName="language"  class="form-control" [(ngModel)]="selectedLanguage">
               <option [ngValue]="null" disabled>Language proficiency</option>
-              <option *ngFor="let selectedLangProf of classLangProfs" [ngValue]="selectedLangProf">{{selectedLangProf}}
+              <option *ngFor="let language of languageList" [ngValue]="language.value">
+                {{language.name}}
               </option>
             </select>
           </div>
-
 
 
           <div class="form-group">
             <label for="selectedCountry">Country</label>
             <select formControlName="selectedCountry" class="form-control" [(ngModel)]="selectedClassCountry">
               <option [ngValue]="null" disabled>Country</option>
-              <option *ngFor="let selectedClassCountry of classCountries" [ngValue]="selectedClassCountry">
-                {{selectedClassCountry}}</option>
+              <option *ngFor="let country of countryList" [ngValue]="country.code">
+                {{country.name}}</option>
             </select>
-
           </div>
 
           <div class="form-group">
@@ -74,12 +72,13 @@
 
           <div class="form-group">
             <label for="languageLevel">Language Level</label>
-            <input type="text" id="languageLevel" formControlName="languageLevel" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.languageLevel.errors }" />
-            <div *ngIf="submitted && f.languageLevel.errors" class="invalid-feedback">
-              <div *ngIf="f.languageLevel.errors.required">language level is required</div>
-            </div>
+            <select formControlName="languageLevel" class="form-control" [(ngModel)]="selectedLanguageLevel">
+              <option [ngValue]="null" disabled>Language Level</option>
+              <option *ngFor="let langLvl of languageLevelList" [ngValue]="langLvl">
+                {{langLvl}}</option>
+            </select>
           </div>
+
 
         </div>
 

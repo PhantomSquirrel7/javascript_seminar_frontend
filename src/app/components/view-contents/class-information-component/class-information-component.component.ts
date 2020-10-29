@@ -4,7 +4,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { InlineResponse2001 } from '@app/models';
 import { CustomLoginService } from '@app/services/custom/login/login.service';
 import { first } from 'rxjs/operators';
-import { ClassesService, StudentsService } from '../../../services/swagger-api/api';
+import {
+  ClassesService,
+  StudentsService,
+} from '../../../services/swagger-api/api';
+
+
 
 @Component({
   selector: 'app-class-information-component',
@@ -20,17 +25,18 @@ export class ClassInformationComponentComponent implements OnInit {
   selectedClassId;
   getClassForm: FormGroup;
 
+
   constructor(
     private classService: ClassesService,
     private _snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
-    private userService: CustomLoginService,
+    private userService: CustomLoginService
   ) {}
 
   ngOnInit() {
     this.getClassForm = this.formBuilder.group({
-      selectedClassId: ['', Validators.required]
-    });    
+      selectedClassId: ['', Validators.required],
+    });
     this.retrieveClassListOfTeacher();
   }
 
@@ -48,7 +54,7 @@ export class ClassInformationComponentComponent implements OnInit {
     this.submitted = true;
     this.loading = true;
     this.classService
-      .classesClassIdGet("5f93e6bff27d5000162cfb1a")
+      .classesClassIdGet('5f93e6bff27d5000162cfb1a')
       .pipe(first())
       .subscribe({
         next: (response) => {
