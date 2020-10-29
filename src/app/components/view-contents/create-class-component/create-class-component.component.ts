@@ -19,11 +19,9 @@ export class CreateClassComponentComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
-  classCountries = null;
-  classLangProfs = null;
-  languageList = [{name : 'tr', value : 'TR'}];
-  countryList;
-  languageLevelList;
+  languageList = null;
+  countryList = null;
+  languageLevelList= null;
   selectedLanguageLevel = null;
   selectedLanguage = null;
   selectedClassCountry = null;

@@ -1,32 +1,132 @@
 <mat-tab-group>
   <mat-tab label="View class information">
+    <br>
     <div class="get-class-component" style="margin-left: 50px; margin-right: 50px">
-      <mat-card>
+      <mat-card style="text-align: center;">
         <div fxFlex="1 1 100%" class="login-form">
           <h1>Class Information</h1>
           <br />
-          <form [formGroup]="getClassForm" (ngSubmit)="getClassInformation()">
-            <div  class="form-groups">
-              <div fxFlex="1 1 25%" class="form-group">
-                <label for="language">Class Name</label>
-                <select  formControlName="selectedClassId" [(ngModel)]="selectedClassId" class="form-control">
-                  <option [ngValue]="null" disabled>Class name</option>
-                  <option *ngFor="let selectedClass of classList" [ngValue]="selectedClass.id">
-                    {{selectedClass.name}}
-                  </option>
-                </select>
-              </div>
+          <form [formGroup]="getClassInformationForm" (ngSubmit)="getClassInformation()">
+            <div class="form-groups">
+              <label for="language">Class Name</label>
+              <select formControlName="selectedClassInformationId" class="form-control" [(ngModel)]="selectedClassInformationId">
+                <option [ngValue]="null" disabled>Class name</option>
+                <option *ngFor="let selectedClass of classList" [ngValue]="selectedClass.id">
+                  {{selectedClass.name}}
+                </option>
+              </select>
             </div>
-            <div fxFlex="1 1 25%">
-              <button [disabled]="loading" class="btn btn-outline-primary btn-sm btn-block btn-user" type="submit">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                Get class information
-              </button>
-            </div>
+            <br>
+            <button [disabled]="loading" class="btn btn-outline-primary btn-sm btn-block btn-user" type="submit">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Get class information
+            </button>
           </form>
         </div>
       </mat-card>
     </div>
+
+    <br>
+    <div *ngIf="selectedClass" class="selected-class-component" style="margin-left: 50px; margin-right: 50px">
+      <mat-card>
+        <div fxFlex="1 1 100%" class="login-form">
+          <br />
+          <form [formGroup]="selectedClassForm" (ngSubmit)="updateClassInformation()">
+            <div class="form-groups">
+
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" formControlName="name" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.name.errors }" [ngModel]="selectedClass.name" />
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors.required">Name is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" formControlName="subject" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.subject.errors }" />
+                <div *ngIf="submitted && f.subject.errors" class="invalid-feedback">
+                  <div *ngIf="f.subject.errors.required">subject is required</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="language">Language</label>
+                <select formControlName="language" class="form-control" [(ngModel)]="selectedLanguage">
+                  <option [ngValue]="null" disabled>Language</option>
+                  <option *ngFor="let language of languageList" [ngValue]="language.value">
+                    {{language.name}}
+                  </option>
+                </select>
+              </div>
+
+
+              <div class="form-group">
+                <label for="languageLevel">Language Level</label>
+                <select formControlName="languageLevel" class="form-control" [(ngModel)]="selectedLanguageLevel">
+                  <option [ngValue]="null" disabled>Language Level</option>
+                  <option *ngFor="let langLvl of languageLevelList" [ngValue]="langLvl">
+                    {{langLvl}}</option>
+                </select>
+              </div>
+
+
+              <div class="form-group">
+                <label for="selectedCountry">Country</label>
+                <select formControlName="selectedCountry" class="form-control" [(ngModel)]="selectedClassCountry">
+                  <option [ngValue]="null" disabled>Country</option>
+                  <option *ngFor="let country of countryList" [ngValue]="country.code">
+                    {{country.name}}</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="projectDuration">Project Duration</label>
+                <input type="number" id="projectDuration" formControlName="projectDuration" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.projectDuration.errors }" />
+                <div *ngIf="submitted && f.projectDuration.errors" class="invalid-feedback">
+                  <div *ngIf="f.projectDuration.errors.required">project duration is required</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="meetingFrequency">Meeting Frequency</label>
+                <input type="number" id="meetingFrequency" formControlName="meetingFrequency" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.meetingFrequency.errors }" />
+                <div *ngIf="submitted && f.meetingFrequency.errors" class="invalid-feedback">
+                  <div *ngIf="f.meetingFrequency.errors.required">meeting frequency is required</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="levet">Class level</label>
+                <input type="number" id="level" formControlName="level" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.level.errors }" />
+                <div *ngIf="submitted && f.level.errors" class="invalid-feedback">
+                  <div *ngIf="f.level.errors.required">level is required</div>
+                </div>
+              </div>
+
+
+
+            </div>
+
+            <button [disabled]="loading" class="btn btn-outline-primary btn-lg btn-block btn-user" type="submit">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Update Class
+            </button>
+          </form>
+          <button ng-click="deleteClass()" [disabled]="loading" ng
+            class="btn btn-outline-danger btn-lg btn-block btn-user" type="submit">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Delete Class
+          </button>
+        </div>
+      </mat-card>
+    </div>
+
+
   </mat-tab>
   <mat-tab label="Assign student to class">
 
