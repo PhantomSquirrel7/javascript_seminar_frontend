@@ -128,7 +128,7 @@ import { GamesViewComponent } from './components/views/games-view/games-view.com
     DisplayPartnerClassInfoComponent,
     ConfirmDialogComponent
   ],
-  entryComponents: [],
+  entryComponents: [ConfirmDialogComponent],
   providers: [
     {
       provide: APP_INITIALIZER,

@@ -125,6 +125,7 @@ export class ClassInformationContentComponent implements OnInit {
             duration: 3000,
           });
           this.getClassLoading = false;
+          this.getClassSubmitted = false;
         },
       });
   }
