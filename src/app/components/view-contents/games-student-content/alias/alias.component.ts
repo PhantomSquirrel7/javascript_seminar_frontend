@@ -20,6 +20,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   timer;
   gameUpdateSubscriptionEvent;
   showHelp = false;
+  timeRunning = false;
 
   game: AliasUpdate;
 
@@ -67,14 +68,12 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
       if (this.username != this.game.currentPlayer) {
         this.timer = gameUpdate.timeleft;
       }
-      if (this.game.countDownStarted == false && gameUpdate.countDownStarted == true) {
-        console.log("STARTED GAME", this.game.words)
+      if (this.timeRunning == false && gameUpdate.countDownStarted == true) {
         this.setTimer();
       }
       this.game = gameUpdate;
     } else {
       this.game = gameUpdate;
-      this.timer = this.game.timelimit;
     }
   }
 
@@ -94,16 +93,26 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   }
 
   setTimer(): void {
-    this.timeInterval = setInterval(() => {
-      if (this.timer > 0) this.timer -= 1;
-      //current player is reference for timer and initializes game over
-      if (this.username == this.game.currentPlayer) {
-        this.game.timeleft = this.timer;
-        if (this.timer <= 0) {
-          this.onGameOver();
-        }
-      }
-    }, 1000);
+    this.timeRunning = true;
+    this.timer = this.game.timelimit;
+    this.sleep(900)
+      .then(() => {
+        this.timeInterval = setInterval(() => {
+          if (this.timer > 0) this.timer -= 1;
+          //current player is reference for timer and initializes game over
+          if (this.username == this.game.currentPlayer) {
+            this.game.timeleft = this.timer;
+            this.gamesService.sendUpdate(this.game);
+            if (this.timer <= 0) {
+              this.onGameOver();
+            }
+          }
+        }, 1000);
+      })
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /*
