@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConfirmDialogComponent, ConfirmDialogModel } from '@app/components';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '@app/components/common/confirm-dialog/confirm-dialog.component';
 import { first } from 'rxjs/operators';
 import { CustomLoginService } from '../../../services/custom/login/login.service';
 import { StudentsService } from '../../../services/swagger-api/api';
