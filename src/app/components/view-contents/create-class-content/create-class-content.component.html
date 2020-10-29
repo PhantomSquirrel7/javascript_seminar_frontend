@@ -3,7 +3,7 @@
     <div fxFlex="1 1 100%" class="login-form">
       <h1>Create Class</h1>
       <br />
-      <form [formGroup]="createClassForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="createClassForm" (ngSubmit)="createClassConfirmationDialog()">
         <div class="form-groups">
 
           <div class="form-group">

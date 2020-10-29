@@ -7,13 +7,15 @@ import { ClassesService } from '../../../services/swagger-api/api';
 import { LANGUAGE_LIST } from '../../common/backend-util/common-structures/languages';
 import { COUNTRY_LIST } from '../../common/backend-util/common-structures/countries';
 import { LANGUAGE_LEVEL_LIST } from '../../common/backend-util/common-structures/language-level';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '@app/components/common/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-create-class-component',
-  templateUrl: './create-class-component.component.html',
-  styleUrls: ['./create-class-component.component.less'],
+  selector: 'app-create-class-content',
+  templateUrl: './create-class-content.component.html',
+  styleUrls: ['./create-class-content.component.less'],
 })
-export class CreateClassComponentComponent implements OnInit {
+export class CreateClassContentComponent implements OnInit {
   createClassForm: FormGroup;
   loading = false;
   submitted = false;
@@ -30,7 +32,8 @@ export class CreateClassComponentComponent implements OnInit {
     private userService: CustomLoginService,
     private classService: ClassesService,
     private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -51,6 +54,21 @@ export class CreateClassComponentComponent implements OnInit {
   }
   get f() {
     return this.createClassForm.controls;
+  }
+
+
+  createClassConfirmationDialog() : void {
+    const message = `Are you sure you want to create class?`;
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+ 
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if(dialogResult == true)
+        this.onSubmit();
+    });
   }
 
   onSubmit(): void {

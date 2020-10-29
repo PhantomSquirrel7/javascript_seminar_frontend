@@ -12,11 +12,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '@app/components/common/confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: 'app-class-information-component',
-  templateUrl: './class-information-component.component.html',
-  styleUrls: ['./class-information-component.component.less'],
+  selector: 'app-class-information-content',
+  templateUrl: './class-information-content.component.html',
+  styleUrls: ['./class-information-content.component.less'],
 })
-export class ClassInformationComponentComponent implements OnInit {
+export class ClassInformationContentComponent implements OnInit {
   getClassLoading = false;
   getClassSubmitted = false;
 
@@ -59,7 +59,7 @@ export class ClassInformationComponentComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private userService: CustomLoginService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
       ) {}
 
   ngOnInit() {
@@ -129,6 +129,20 @@ export class ClassInformationComponentComponent implements OnInit {
       });
   }
 
+  openUpdateConfirmationDialog() : void {
+    const message = `Are you sure you want to update class?`;
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+ 
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if(dialogResult == true)
+        this.updateClassInformation();
+    });
+  };
+
   updateClassInformation(): void {
     this.updateClassLoading = true;
     this.updateClassStudentsSubmitted = true;
@@ -189,6 +203,7 @@ export class ClassInformationComponentComponent implements OnInit {
           this._snackBar.open('Class deleted successfully!', 'Close', {
             duration: 3000,
           });
+          this.retrieveClassListOfTeacher();
         },
         error: (error) => {
           this.error = error;

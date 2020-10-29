@@ -3,7 +3,7 @@
         <div fxFlex="1 1 100%" class="login-form" >
             <h1>Create Student</h1>
             <br/>
-            <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="studentForm" (ngSubmit)="createStudentConfirmation()">
                 <div class="form-groups">
                     <div class="form-group">
                         <label for="firstName">Student's name:</label>

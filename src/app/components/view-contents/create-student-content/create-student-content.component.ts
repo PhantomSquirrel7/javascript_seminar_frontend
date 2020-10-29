@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '@app/components';
 import { first } from 'rxjs/operators';
 import { CustomLoginService } from '../../../services/custom/login/login.service';
 import { StudentsService } from '../../../services/swagger-api/api';
 
 @Component({
-  selector: 'app-create-student-component',
-  templateUrl: './create-student-component.component.html',
-  styleUrls: ['./create-student-component.component.less']
+  selector: 'app-create-student-content',
+  templateUrl: './create-student-content.component.html',
+  styleUrls: ['./create-student-content.component.less']
 })
-export class CreateStudentComponentComponent implements OnInit {
+export class CreateStudentContentComponent implements OnInit {
 
   studentForm: FormGroup;
   loading = false;
@@ -21,7 +23,8 @@ export class CreateStudentComponentComponent implements OnInit {
   constructor( private userService: CustomLoginService,
               private studentService : StudentsService,
               private formBuilder: FormBuilder,
-              private _snackBar: MatSnackBar) { }
+              private _snackBar: MatSnackBar,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.studentForm = this.formBuilder.group({
@@ -34,6 +37,20 @@ export class CreateStudentComponentComponent implements OnInit {
   }
   get f() {
     return this.studentForm.controls;
+  }
+
+  createStudentConfirmation() : void {
+    const message = `Are you sure you want to create student?`;
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+ 
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if(dialogResult == true)
+        this.onSubmit();
+    });
   }
 
   onSubmit() : void{
