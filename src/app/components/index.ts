@@ -6,6 +6,7 @@ export * from './common/landing-header/landing-header.component';
 export * from './common/navigation/navigation.component';
 export * from './common/student-navigation/student-navigation.component';
 export * from './common/message-board/message-board.component';
+export * from './common/confirm-dialog/confirm-dialog.component';
 
 // views
 export * from './views/create-class-view/create-class-view.component';
