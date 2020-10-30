@@ -13,7 +13,7 @@ export class DrawItGameConfigComponent implements OnInit {
   games: DrawIt[];
 
   newGame: DrawIt = {
-    _id: "-1",
+    id: "-1",
     name: "",
     description: "",
     words: []
@@ -32,7 +32,7 @@ export class DrawItGameConfigComponent implements OnInit {
     this.api.deleteDrawItGame(game).subscribe(data => {
       if (data) {
         //console.log("delete game", data)
-        this.games = this.games.filter(elem => elem._id !== game._id);
+        this.games = this.games.filter(elem => elem.id !== game.id);
         this.messageService.add("Game '" + game.name + "' was deleted.", "success");
       }
     });
@@ -54,7 +54,7 @@ export class DrawItGameConfigComponent implements OnInit {
       if (data) {
         //console.log("changed game", data)
         this.games[this.games.findIndex(g => {
-          return g._id === data._id
+          return g.id === data.id
         })] = data;
         this.messageService.add("Game '" + game.name + "' updated successfully.", "success");
       }
@@ -63,7 +63,7 @@ export class DrawItGameConfigComponent implements OnInit {
 
   resetNewGame() {
     this.newGame = {
-      _id: "-1",
+      id: "-1",
       name: "",
       description: "",
       words: []

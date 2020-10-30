@@ -79,7 +79,7 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
     //set initial selected questions of quiz
     let qs = [];
     this.game.questions.forEach(questId => {
-      let q = allQs.find(elem => elem._id === questId);
+      let q = allQs.find(elem => elem.id === questId);
       if (q) qs.push(q);
     });
     this.questGroupsCtrl.setValue(qs);
@@ -99,7 +99,7 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filteredQuestGroups
       .pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(() => {
-        this.multiSelect.compareWith = (a: Question, b: Question) => a && b && a._id === b._id;
+        this.multiSelect.compareWith = (a: Question, b: Question) => a && b && a.id === b.id;
       });
   }
 
@@ -119,7 +119,7 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getQuestionsIds(questions) {
-    return questions.map(quest => quest._id);
+    return questions.map(quest => quest.id);
   }
 
   onSubmit() {
@@ -129,7 +129,7 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.addQuestion(id);
     });
     let updated = this.quiz.value;
-    updated._id = this.game._id;
+    updated.id = this.game.id;
     this.quizChange.emit(updated);
   }
 

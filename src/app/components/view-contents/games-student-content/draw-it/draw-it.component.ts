@@ -25,6 +25,7 @@ export class DrawItComponent implements OnInit, OnDestroy {
   timer;
   gameUpdateSubscriptionEvent;
   showHelp = false;
+  timeRunning = false;
 
   game: DrawItUpdate;
 
@@ -112,14 +113,13 @@ export class DrawItComponent implements OnInit, OnDestroy {
       if (this.username != this.game.currentPlayer) {
         this.timer = gameUpdate.timeleft;
       }
-      if (this.game.countDownStarted == false && gameUpdate.countDownStarted == true) {
+      if (this.timeRunning == false && gameUpdate.countDownStarted == true) {
         this.setTimer();
       }
       this.game = gameUpdate;
       if (gameUpdate.drawing) this.handleCanvasUpdate(gameUpdate.drawing);
     } else {
       this.game = gameUpdate;
-      this.timer = this.game.timelimit;
     }
   }
 
@@ -139,16 +139,26 @@ export class DrawItComponent implements OnInit, OnDestroy {
   }
 
   setTimer(): void {
-    this.timeInterval = setInterval(() => {
-      if (this.timer > 0) this.timer -= 1;
-      //current player is reference for timer and initializes game over
-      if (this.username == this.game.currentPlayer) {
-        this.game.timeleft = this.timer;
-        if (this.timer <= 0) {
-          this.onGameOver();
-        }
-      }
-    }, 1000);
+    this.timeRunning = true;
+    this.timer = this.game.timelimit;
+    this.sleep(900)
+      .then(() => {
+        this.timeInterval = setInterval(() => {
+          if (this.timer > 0) this.timer -= 1;
+          //current player is reference for timer and initializes game over
+          if (this.username == this.game.currentPlayer) {
+            this.game.timeleft = this.timer;
+            this.gamesService.sendUpdate(this.game);
+            if (this.timer <= 0) {
+              this.onGameOver();
+            }
+          }
+        }, 1000);
+      })
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /*

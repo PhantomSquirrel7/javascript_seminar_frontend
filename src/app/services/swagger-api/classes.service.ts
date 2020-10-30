@@ -10,12 +10,14 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
+import { Inject, Injectable, Optional } from '@angular/core';
+import {
+    HttpClient, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent
+} from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec } from '../../swagger-configs/encoder';
 
-import { Observable }                                        from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Body6 } from '../../models/swagger-model/body6';
 import { Body7 } from '../../models/swagger-model/body7';
@@ -25,18 +27,19 @@ import { InlineResponse2003 } from '../../models/swagger-model/inlineResponse200
 import { InlineResponse2004 } from '../../models/swagger-model/inlineResponse2004';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
-import { Configuration }                                     from '../../swagger-configs/configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../../swagger-configs/variables';
+import { Configuration } from '../../swagger-configs/configuration';
 
 
 @Injectable({ providedIn: 'root' })
 export class ClassesService {
 
-    protected basePath = 'https://api-globy.herokuapp.com/v1';
+    //protected basePath = 'https://api-globy.herokuapp.com/v1';
+    protected basePath = "http://localhost:5000/v1";
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -71,7 +74,7 @@ export class ClassesService {
     public classesClassIdDelete(classId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2003>;
     public classesClassIdDelete(classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2003>>;
     public classesClassIdDelete(classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2003>>;
-    public classesClassIdDelete(classId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdDelete(classId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdDelete.');
@@ -99,7 +102,7 @@ export class ClassesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse2003>('delete',`${this.basePath}/classes/${encodeURIComponent(String(classId))}`,
+        return this.httpClient.request<InlineResponse2003>('delete', `${this.basePath}/classes/${encodeURIComponent(String(classId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -122,7 +125,7 @@ export class ClassesService {
     public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Body7>>;
     public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Body7>>>;
     public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Body7>>>;
-    public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdFindGet.');
@@ -131,7 +134,7 @@ export class ClassesService {
 
 
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         if (projectDuration !== undefined && projectDuration !== null) {
             queryParameters = queryParameters.set('projectDuration', <any>projectDuration);
         }
@@ -164,7 +167,7 @@ export class ClassesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<Body7>>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/find`,
+        return this.httpClient.request<Array<Body7>>('get', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/find`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -185,7 +188,7 @@ export class ClassesService {
     public classesClassIdGet(classId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2003>;
     public classesClassIdGet(classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2003>>;
     public classesClassIdGet(classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2003>>;
-    public classesClassIdGet(classId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdGet(classId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdGet.');
@@ -213,7 +216,7 @@ export class ClassesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse2003>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}`,
+        return this.httpClient.request<InlineResponse2003>('get', `${this.basePath}/classes/${encodeURIComponent(String(classId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -234,7 +237,7 @@ export class ClassesService {
     public classesClassIdPut(body: Body7, classId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
     public classesClassIdPut(body: Body7, classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public classesClassIdPut(body: Body7, classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public classesClassIdPut(body: Body7, classId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdPut(body: Body7, classId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling classesClassIdPut.');
@@ -271,7 +274,7 @@ export class ClassesService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('put',`${this.basePath}/classes/${encodeURIComponent(String(classId))}`,
+        return this.httpClient.request<any>('put', `${this.basePath}/classes/${encodeURIComponent(String(classId))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -292,7 +295,7 @@ export class ClassesService {
     public classesClassIdStudentsGet(classId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2004>>;
     public classesClassIdStudentsGet(classId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2004>>>;
     public classesClassIdStudentsGet(classId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2004>>>;
-    public classesClassIdStudentsGet(classId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdStudentsGet(classId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdStudentsGet.');
@@ -320,7 +323,7 @@ export class ClassesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse2004>>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/students`,
+        return this.httpClient.request<Array<InlineResponse2004>>('get', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/students`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -341,7 +344,7 @@ export class ClassesService {
     public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2004>>;
     public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2004>>>;
     public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2004>>>;
-    public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdStudentsStudentIdDelete(classId: string, studentId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdStudentsStudentIdDelete.');
@@ -373,7 +376,7 @@ export class ClassesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse2004>>('delete',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}`,
+        return this.httpClient.request<Array<InlineResponse2004>>('delete', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -394,7 +397,7 @@ export class ClassesService {
     public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2004>>;
     public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2004>>>;
     public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2004>>>;
-    public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdStudentsStudentIdPut(classId: string, studentId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdStudentsStudentIdPut.');
@@ -426,7 +429,7 @@ export class ClassesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse2004>>('put',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}`,
+        return this.httpClient.request<Array<InlineResponse2004>>('put', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -445,7 +448,7 @@ export class ClassesService {
     public classesGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2001>>;
     public classesGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2001>>>;
     public classesGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2001>>>;
-    public classesGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -469,7 +472,7 @@ export class ClassesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse2001>>('get',`${this.basePath}/classes`,
+        return this.httpClient.request<Array<InlineResponse2001>>('get', `${this.basePath}/classes`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -489,7 +492,7 @@ export class ClassesService {
     public classesPost(body: Body6, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2002>;
     public classesPost(body: Body6, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2002>>;
     public classesPost(body: Body6, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2002>>;
-    public classesPost(body: Body6, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesPost(body: Body6, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling classesPost.');
@@ -522,7 +525,7 @@ export class ClassesService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<InlineResponse2002>('post',`${this.basePath}/classes`,
+        return this.httpClient.request<InlineResponse2002>('post', `${this.basePath}/classes`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

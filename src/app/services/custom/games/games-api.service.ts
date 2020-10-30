@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MessageService } from '../messages/message.service';
 import { Observable } from 'rxjs';
@@ -7,23 +7,43 @@ import { Alias } from '@app/models/game-models/alias';
 import { Question } from '@app/models/game-models/question';
 import { Quiz } from '@app/models/game-models/quiz';
 import { DrawIt } from '@app/models/game-models/drawIt';
+import { Configuration } from '@app/swagger-configs/configuration';
+import { BASE_PATH } from '@app/swagger-configs/variables';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GamesApiService {
 
-  //private url = "https://javascript-group-d-frontend.herokuapp.com";
-  private url = "http://localhost:8080";
+  protected url = "http://localhost:5000/v1";
 
-  private httpOptionsJson = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: ''   // TODO
-    })
-  };
+  //protected url = 'https://api-globy.herokuapp.com/v1';
+  public configuration = new Configuration();
 
-  constructor(private http: HttpClient, private messageService: MessageService) { }
+  constructor(private messageService: MessageService, protected http: HttpClient, @Optional() @Inject(BASE_PATH) url: string, @Optional() configuration: Configuration) {
+    if (url) {
+      this.url = url;
+    }
+    if (configuration) {
+      this.configuration = configuration;
+      this.url = url || configuration.basePath || this.url;
+    }
+    // authentication (bearerAuth) required
+  }
+
+
+  getHeaders(accept = "application/json") {
+    let headers = new HttpHeaders();
+    let accessToken = "";
+    if (this.configuration.accessToken) {
+      accessToken = typeof this.configuration.accessToken === 'function'
+        ? this.configuration.accessToken()
+        : this.configuration.accessToken;
+    }
+    headers = headers.set('Authorization', 'Bearer ' + accessToken).set('Accept', accept).set('Content-Type', accept);
+    console.log(headers)
+    return headers;
+  }
 
   //display message for user
   private displaylog(message: string, type: string) {
@@ -42,7 +62,7 @@ export class GamesApiService {
 
   // ------------------ ALIAS -------------------
   getAliasGames(): Observable<Alias[]> {
-    return this.http.get<Alias[]>(this.url + "/games/alias/games", this.httpOptionsJson)
+    return this.http.get<Alias[]>(this.url + "/games/alias/games", { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Alias[]>('Loading Alias Games', [])
         ));
@@ -50,8 +70,8 @@ export class GamesApiService {
 
   createAliasGame(game: Alias): Observable<Alias> {
     //return of(game);
-    delete game['_id'];
-    return this.http.post<Alias>(this.url + "/games/alias/create", game, this.httpOptionsJson)
+    delete game['id'];
+    return this.http.post<Alias>(this.url + "/games/alias/create", game, { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Alias>('Saving new game')
         ));
@@ -59,7 +79,7 @@ export class GamesApiService {
 
   updateAliasGame(game: Alias): Observable<Alias> {
     //return of(game);
-    return this.http.put<Alias>(this.url + "/games/alias/" + game._id, game, this.httpOptionsJson)
+    return this.http.put<Alias>(this.url + "/games/alias/" + game.id, game, { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Alias>('Updating game')
         ));
@@ -67,7 +87,7 @@ export class GamesApiService {
 
   deleteAliasGame(game: Alias): Observable<any> {
     //return of(game);
-    return this.http.delete(this.url + "/games/alias/" + game._id, { responseType: 'text' })
+    return this.http.delete(this.url + "/games/alias/" + game.id, { headers: this.getHeaders("text"), responseType: 'text' })
       .pipe(
         catchError(this.handleError<any>('Deleting game')
         ));
@@ -77,7 +97,7 @@ export class GamesApiService {
   getQuizzes(): Observable<Quiz[]> {
     //this.displaylog("Loading Quizzes");
     //return of(this.quizzes);
-    return this.http.get<Quiz[]>(this.url + "/games/quiz/quizzes", this.httpOptionsJson)
+    return this.http.get<Quiz[]>(this.url + "/games/quiz/quizzes", { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Quiz[]>('Loading Quizzes', [])
         ));
@@ -86,7 +106,7 @@ export class GamesApiService {
   getQuiz(id: string): Observable<Quiz> {
     //this.displaylog("Loading Quiz");
     //return of(this.quizzes[0]);
-    return this.http.get<Quiz>(this.url + "/games/quiz/quizzes/" + id, this.httpOptionsJson)
+    return this.http.get<Quiz>(this.url + "/games/quiz/quizzes/" + id, { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Quiz>('Loading Quiz')
         ));
@@ -95,7 +115,7 @@ export class GamesApiService {
   getQuestionsForQuiz(quiz: Quiz): Observable<Question[]> {
     //this.displaylog("Loading Quizzes");
     //return of(this.questions);
-    return this.http.get<Question[]>(this.url + "/games/quiz/quizzes/" + quiz._id + "/questions", this.httpOptionsJson)
+    return this.http.get<Question[]>(this.url + "/games/quiz/quizzes/" + quiz.id + "/questions", { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Question[]>('Loading Questions for quiz', [])
         ));
@@ -104,7 +124,7 @@ export class GamesApiService {
   getQuestions(): Observable<Question[]> {
     //this.displaylog("Loading Questions");
     //return of(this.questions);
-    return this.http.get<Question[]>(this.url + "/games/quiz/questions", this.httpOptionsJson)
+    return this.http.get<Question[]>(this.url + "/games/quiz/questions", { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Question[]>('Loading Questions', [])
         ));
@@ -113,23 +133,23 @@ export class GamesApiService {
   getQuestion(id: string): Observable<Question> {
     //this.displaylog("Loading Questions");
     //return of(this.questions[0]);
-    return this.http.get<Question>(this.url + "/games/quiz/question/" + id, this.httpOptionsJson)
+    return this.http.get<Question>(this.url + "/games/quiz/question/" + id, { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Question>('Loading Question')
         ));
   }
 
   createQuiz(quiz: Quiz): Observable<Quiz> {
-    delete quiz['_id'];
-    return this.http.post<Quiz>(this.url + "/games/quiz/create", quiz, this.httpOptionsJson)
+    delete quiz['id'];
+    return this.http.post<Quiz>(this.url + "/games/quiz/create", quiz, { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Quiz>('Creating new quiz')
         ));
   }
 
   createQuestion(question: Question): Observable<Question> {
-    delete question['_id'];
-    return this.http.post<Question>(this.url + "/games/quiz/question/create", question, this.httpOptionsJson)
+    delete question['id'];
+    return this.http.post<Question>(this.url + "/games/quiz/question/create", question, { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Question>('Creating new question')
         ));
@@ -137,7 +157,7 @@ export class GamesApiService {
 
   updateQuiz(quiz: Quiz): Observable<Quiz> {
     //return of(quiz);
-    return this.http.put<Quiz>(this.url + "/games/quiz/" + quiz._id, quiz, this.httpOptionsJson)
+    return this.http.put<Quiz>(this.url + "/games/quiz/" + quiz.id, quiz, { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Quiz>('Updating quiz')
         ));
@@ -145,7 +165,7 @@ export class GamesApiService {
 
   updateQuestion(question: Question): Observable<Question> {
     //return of(question);
-    return this.http.put<Question>(this.url + "/games/quiz/question/" + question._id, question, this.httpOptionsJson)
+    return this.http.put<Question>(this.url + "/games/quiz/question/" + question.id, question, { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<Question>('Updating question')
         ));
@@ -153,7 +173,7 @@ export class GamesApiService {
 
   deleteQuiz(quiz: Quiz): Observable<any> {
     //return of(quiz);
-    return this.http.delete(this.url + "/games/quiz/" + quiz._id, { responseType: 'text' })
+    return this.http.delete(this.url + "/games/quiz/" + quiz.id, { headers: this.getHeaders("text"), responseType: 'text' })
       .pipe(
         catchError(this.handleError<any>('Deleting quiz')
         ));
@@ -161,7 +181,7 @@ export class GamesApiService {
 
   deleteQuestion(question: Question): Observable<any> {
     //return of(question);
-    return this.http.delete(this.url + "/games/quiz/question/" + question._id, { responseType: 'text' })
+    return this.http.delete(this.url + "/games/quiz/question/" + question.id, { headers: this.getHeaders("text"), responseType: 'text' })
       .pipe(
         catchError(this.handleError<any>('Deleting question')
         ));
@@ -169,29 +189,29 @@ export class GamesApiService {
 
   // ------------------ Draw It -------------------
   getDrawItGames(): Observable<DrawIt[]> {
-    return this.http.get<DrawIt[]>(this.url + "/games/drawit/games", this.httpOptionsJson)
+    return this.http.get<DrawIt[]>(this.url + "/games/drawit/games", { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<DrawIt[]>('Loading DrawIt Games', [])
         ));
   }
 
   createDrawItGame(game: DrawIt): Observable<DrawIt> {
-    delete game['_id'];
-    return this.http.post<DrawIt>(this.url + "/games/drawit/create", game, this.httpOptionsJson)
+    delete game['id'];
+    return this.http.post<DrawIt>(this.url + "/games/drawit/create", game, { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<DrawIt>('Saving new game')
         ));
   }
 
   updateDrawItGame(game: DrawIt): Observable<DrawIt> {
-    return this.http.put<DrawIt>(this.url + "/games/drawit/" + game._id, game, this.httpOptionsJson)
+    return this.http.put<DrawIt>(this.url + "/games/drawit/" + game.id, game, { headers: this.getHeaders() })
       .pipe(
         catchError(this.handleError<DrawIt>('Updating game')
         ));
   }
 
   deleteDrawItGame(game: DrawIt): Observable<any> {
-    return this.http.delete(this.url + "/games/drawit/" + game._id, { responseType: 'text' })
+    return this.http.delete(this.url + "/games/drawit/" + game.id, { headers: this.getHeaders("text"), responseType: 'text' })
       .pipe(
         catchError(this.handleError<any>('Deleting game')
         ));

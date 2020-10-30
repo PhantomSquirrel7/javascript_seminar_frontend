@@ -19,8 +19,8 @@ export class GamesService extends Socket {
   // TODO make this adjustable
   constructor() {
     super({
-      url: "http://localhost:8080/", options: {}
-      //url: "https://javascript-group-d-frontend.herokuapp.com/", options: {}
+      url: "http://localhost:5000", options: {}
+      //url: "https://api-globy.herokuapp.com", options: {}
     });
     console.log("Try connecting");
 
@@ -70,6 +70,7 @@ export class GamesService extends Socket {
 
   // Send a joinGame Message
   sendjoinGame(playerName: string, sessionId: string, gameType: string, taskId: string) {
+    console.log("join game")
     let joinMessage: JoinGameMessage = new JoinGameMessage(sessionId, playerName, gameType, taskId);
     this.emit("joinGame", joinMessage);
   }

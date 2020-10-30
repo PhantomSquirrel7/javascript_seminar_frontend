@@ -56,7 +56,7 @@ export class DrawItFormComponent implements OnInit {
       }
     }
     let updated = this.drawit.value;
-    updated._id = this.game._id;
+    updated.id = this.game.id;
     this.gameChange.emit(updated);
   }
 

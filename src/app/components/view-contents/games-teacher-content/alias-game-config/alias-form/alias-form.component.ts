@@ -56,7 +56,7 @@ export class AliasFormComponent implements OnInit {
       }
     }
     let updated = this.alias.value;
-    updated._id = this.game._id;
+    updated.id = this.game.id;
     this.gameChange.emit(updated);
   }
 
