@@ -30,7 +30,7 @@
                             <mat-panel-title>
                                 {{ question.name }}
                             </mat-panel-title>
-                            <mat-panel-description *ngIf="requestDelete == question._id; else quizDescription">
+                            <mat-panel-description *ngIf="requestDelete == question.id; else quizDescription">
                                 Are you sure you want to delete this question and remove it from all quizzes?
                                 <button class="btn btn-sm btn-secondary"
                                     (click)="$event.stopPropagation(); cancelRequestDelete()">Cancel</button>

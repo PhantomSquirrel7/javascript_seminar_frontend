@@ -10,12 +10,14 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
+import { Inject, Injectable, Optional } from '@angular/core';
+import {
+    HttpClient, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent
+} from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec } from '../../swagger-configs/encoder';
 
-import { Observable }                                        from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Body } from '../../models/swagger-model/body';
 import { Body1 } from '../../models/swagger-model/body1';
@@ -27,18 +29,19 @@ import { InlineResponse200 } from '../../models/swagger-model/inlineResponse200'
 import { InlineResponse201 } from '../../models/swagger-model/inlineResponse201';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
-import { Configuration }                                     from '../../swagger-configs/configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../../swagger-configs/variables';
+import { Configuration } from '../../swagger-configs/configuration';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    protected basePath = 'https://api-globy.herokuapp.com/v1';
+    //protected basePath = 'https://api-globy.herokuapp.com/v1';
+    protected basePath = "http://localhost:5000/v1";
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -73,7 +76,7 @@ export class AuthService {
     public authForgotPasswordPost(body: Body4, observe?: 'body', reportProgress?: boolean): Observable<any>;
     public authForgotPasswordPost(body: Body4, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public authForgotPasswordPost(body: Body4, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public authForgotPasswordPost(body: Body4, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public authForgotPasswordPost(body: Body4, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling authForgotPasswordPost.');
@@ -99,7 +102,7 @@ export class AuthService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/auth/forgot-password`,
+        return this.httpClient.request<any>('post', `${this.basePath}/auth/forgot-password`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -120,7 +123,7 @@ export class AuthService {
     public authLoginPost(body: Body1, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse201>;
     public authLoginPost(body: Body1, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse201>>;
     public authLoginPost(body: Body1, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse201>>;
-    public authLoginPost(body: Body1, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public authLoginPost(body: Body1, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling authLoginPost.');
@@ -146,7 +149,7 @@ export class AuthService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<InlineResponse201>('post',`${this.basePath}/auth/login`,
+        return this.httpClient.request<InlineResponse201>('post', `${this.basePath}/auth/login`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -167,7 +170,7 @@ export class AuthService {
     public authLogoutPost(body: Body2, observe?: 'body', reportProgress?: boolean): Observable<any>;
     public authLogoutPost(body: Body2, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public authLogoutPost(body: Body2, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public authLogoutPost(body: Body2, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public authLogoutPost(body: Body2, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling authLogoutPost.');
@@ -193,7 +196,7 @@ export class AuthService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/auth/logout`,
+        return this.httpClient.request<any>('post', `${this.basePath}/auth/logout`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -214,7 +217,7 @@ export class AuthService {
     public authRefreshTokensPost(body: Body3, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse200>;
     public authRefreshTokensPost(body: Body3, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse200>>;
     public authRefreshTokensPost(body: Body3, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse200>>;
-    public authRefreshTokensPost(body: Body3, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public authRefreshTokensPost(body: Body3, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling authRefreshTokensPost.');
@@ -240,7 +243,7 @@ export class AuthService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<InlineResponse200>('post',`${this.basePath}/auth/refresh-tokens`,
+        return this.httpClient.request<InlineResponse200>('post', `${this.basePath}/auth/refresh-tokens`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -261,7 +264,7 @@ export class AuthService {
     public authRegisterPost(body: Body, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse201>;
     public authRegisterPost(body: Body, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse201>>;
     public authRegisterPost(body: Body, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse201>>;
-    public authRegisterPost(body: Body, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public authRegisterPost(body: Body, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling authRegisterPost.');
@@ -287,7 +290,7 @@ export class AuthService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<InlineResponse201>('post',`${this.basePath}/auth/register`,
+        return this.httpClient.request<InlineResponse201>('post', `${this.basePath}/auth/register`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -309,7 +312,7 @@ export class AuthService {
     public authResetPasswordPost(body: Body5, token: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
     public authResetPasswordPost(body: Body5, token: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public authResetPasswordPost(body: Body5, token: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public authResetPasswordPost(body: Body5, token: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public authResetPasswordPost(body: Body5, token: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling authResetPasswordPost.');
@@ -319,7 +322,7 @@ export class AuthService {
             throw new Error('Required parameter token was null or undefined when calling authResetPasswordPost.');
         }
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         if (token !== undefined && token !== null) {
             queryParameters = queryParameters.set('token', <any>token);
         }
@@ -344,7 +347,7 @@ export class AuthService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/auth/reset-password`,
+        return this.httpClient.request<any>('post', `${this.basePath}/auth/reset-password`,
             {
                 body: body,
                 params: queryParameters,

@@ -38,7 +38,7 @@ export class QuestionFormComponent implements OnInit {
       this.answer.setValidators(Validators.required);
       this.answer.updateValueAndValidity();
     }
-    if (this.quest._id != '-1') {
+    if (this.quest.id != '-1') {
       this.question.get('type').disable();
     }
   }
@@ -145,7 +145,7 @@ export class QuestionFormComponent implements OnInit {
       }
     }
     let updated = this.question.value;
-    updated._id = this.quest._id;
+    updated.id = this.quest.id;
     this.questionChange.emit(updated);
   }
 

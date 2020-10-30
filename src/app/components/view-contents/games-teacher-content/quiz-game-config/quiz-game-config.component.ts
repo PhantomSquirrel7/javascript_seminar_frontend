@@ -15,14 +15,14 @@ export class QuizGameConfigComponent implements OnInit {
   questions: Question[];
 
   newQuiz: Quiz = {
-    _id: "-1",
+    id: "-1",
     name: "",
     description: "",
     questions: []
   };
 
   newQuestion: Question = {
-    _id: "-1",
+    id: "-1",
     type: "select",
     name: "",
     question: "",
@@ -46,7 +46,7 @@ export class QuizGameConfigComponent implements OnInit {
   }
 
   requestDeleteQuestion(question: Question) {
-    this.requestDelete = question._id;
+    this.requestDelete = question.id;
   }
 
   cancelRequestDelete() {
@@ -57,7 +57,7 @@ export class QuizGameConfigComponent implements OnInit {
     this.api.deleteQuestion(question).subscribe(data => {
       if (data) {
         //console.log("delete question", data)
-        this.questions = this.questions.filter(elem => elem._id !== question._id);
+        this.questions = this.questions.filter(elem => elem.id !== question.id);
         this.messageService.add("Question '" + question.name + "' was deleted.", "success");
         this.requestDelete = "";
 
@@ -75,7 +75,7 @@ export class QuizGameConfigComponent implements OnInit {
     this.api.deleteQuiz(quiz).subscribe(data => {
       if (data) {
         //console.log("delete quiz", data)
-        this.quizzes = this.quizzes.filter(elem => elem._id !== quiz._id);
+        this.quizzes = this.quizzes.filter(elem => elem.id !== quiz.id);
         this.messageService.add("Quiz '" + quiz.name + "' was deleted.", "success");
       }
     });
@@ -106,7 +106,7 @@ export class QuizGameConfigComponent implements OnInit {
       if (data) {
         //console.log("changed question", data)
         this.questions[this.questions.findIndex(g => {
-          return g._id === question._id
+          return g.id === question.id
         })] = data;
         this.messageService.add("Question '" + question.name + "' updated successfully.", "success");
       }
@@ -118,7 +118,7 @@ export class QuizGameConfigComponent implements OnInit {
       if (data) {
         //console.log("changed quiz", data)
         this.quizzes[this.quizzes.findIndex(g => {
-          return g._id === quiz._id
+          return g.id === quiz.id
         })] = data;
         this.messageService.add("Quiz '" + quiz.name + "' updated successfully.", "success");
       }
@@ -127,7 +127,7 @@ export class QuizGameConfigComponent implements OnInit {
 
   resetNewQuestion() {
     this.newQuestion = {
-      _id: "-1",
+      id: "-1",
       type: "select",
       name: "",
       question: "",
@@ -138,7 +138,7 @@ export class QuizGameConfigComponent implements OnInit {
 
   resetNewQuiz() {
     this.newQuiz = {
-      _id: "-1",
+      id: "-1",
       name: "",
       description: "",
       questions: []

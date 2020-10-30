@@ -10,30 +10,33 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
+import { Inject, Injectable, Optional } from '@angular/core';
+import {
+    HttpClient, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent
+} from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec } from '../../swagger-configs/encoder';
 
-import { Observable }                                        from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Body8 } from '../../models/swagger-model/body8';
 import { Body9 } from '../../models/swagger-model/body9';
 import { InlineResponse2005 } from '../../models/swagger-model/inlineResponse2005';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
-import { Configuration }                                     from '../../swagger-configs/configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../../swagger-configs/variables';
+import { Configuration } from '../../swagger-configs/configuration';
 
 
 @Injectable({ providedIn: 'root' })
 export class MeetingsService {
 
-    protected basePath = 'https://api-globy.herokuapp.com/v1';
+    //protected basePath = 'https://api-globy.herokuapp.com/v1';
+    protected basePath = "http://localhost:5000/v1";
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -70,7 +73,7 @@ export class MeetingsService {
     public classesClassIdProjectsProjectIdMeetingMeetingIdGet(classId: string, projectId: string, meetingId: string, observe?: 'body', reportProgress?: boolean): Observable<Body8>;
     public classesClassIdProjectsProjectIdMeetingMeetingIdGet(classId: string, projectId: string, meetingId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body8>>;
     public classesClassIdProjectsProjectIdMeetingMeetingIdGet(classId: string, projectId: string, meetingId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body8>>;
-    public classesClassIdProjectsProjectIdMeetingMeetingIdGet(classId: string, projectId: string, meetingId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdProjectsProjectIdMeetingMeetingIdGet(classId: string, projectId: string, meetingId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdMeetingMeetingIdGet.');
@@ -106,7 +109,7 @@ export class MeetingsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Body8>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meeting/${encodeURIComponent(String(meetingId))}`,
+        return this.httpClient.request<Body8>('get', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meeting/${encodeURIComponent(String(meetingId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -127,7 +130,7 @@ export class MeetingsService {
     public classesClassIdProjectsProjectIdMeetingsGet(classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2005>;
     public classesClassIdProjectsProjectIdMeetingsGet(classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2005>>;
     public classesClassIdProjectsProjectIdMeetingsGet(classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2005>>;
-    public classesClassIdProjectsProjectIdMeetingsGet(classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdProjectsProjectIdMeetingsGet(classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsGet.');
@@ -159,7 +162,7 @@ export class MeetingsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse2005>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
+        return this.httpClient.request<InlineResponse2005>('get', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -181,7 +184,7 @@ export class MeetingsService {
     public classesClassIdProjectsProjectIdMeetingsPost(body: Body9, classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<Body8>;
     public classesClassIdProjectsProjectIdMeetingsPost(body: Body9, classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body8>>;
     public classesClassIdProjectsProjectIdMeetingsPost(body: Body9, classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body8>>;
-    public classesClassIdProjectsProjectIdMeetingsPost(body: Body9, classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdProjectsProjectIdMeetingsPost(body: Body9, classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling classesClassIdProjectsProjectIdMeetingsPost.');
@@ -222,7 +225,7 @@ export class MeetingsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<Body8>('post',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
+        return this.httpClient.request<Body8>('post', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -245,7 +248,7 @@ export class MeetingsService {
     public classesClassIdProjectsProjectIdMeetingsPut(body: Body8, classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<Body8>;
     public classesClassIdProjectsProjectIdMeetingsPut(body: Body8, classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body8>>;
     public classesClassIdProjectsProjectIdMeetingsPut(body: Body8, classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body8>>;
-    public classesClassIdProjectsProjectIdMeetingsPut(body: Body8, classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdProjectsProjectIdMeetingsPut(body: Body8, classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling classesClassIdProjectsProjectIdMeetingsPut.');
@@ -286,7 +289,7 @@ export class MeetingsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<Body8>('put',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
+        return this.httpClient.request<Body8>('put', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -309,7 +312,7 @@ export class MeetingsService {
     public classesClassIdStudentsStudentIdMeetingsMeetingIdDelete(classId: string, studentId: string, meetingId: string, observe?: 'body', reportProgress?: boolean): Observable<Body8>;
     public classesClassIdStudentsStudentIdMeetingsMeetingIdDelete(classId: string, studentId: string, meetingId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body8>>;
     public classesClassIdStudentsStudentIdMeetingsMeetingIdDelete(classId: string, studentId: string, meetingId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body8>>;
-    public classesClassIdStudentsStudentIdMeetingsMeetingIdDelete(classId: string, studentId: string, meetingId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public classesClassIdStudentsStudentIdMeetingsMeetingIdDelete(classId: string, studentId: string, meetingId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdStudentsStudentIdMeetingsMeetingIdDelete.');
@@ -345,7 +348,7 @@ export class MeetingsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Body8>('delete',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}/meetings/${encodeURIComponent(String(meetingId))}`,
+        return this.httpClient.request<Body8>('delete', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}/meetings/${encodeURIComponent(String(meetingId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
