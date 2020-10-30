@@ -9,7 +9,8 @@
           <form [formGroup]="getClassInformationForm" (ngSubmit)="getClassInformation()">
             <div class="form-groups">
               <label for="language">Class Name</label>
-              <select formControlName="selectedClassInformationId" class="form-control" [(ngModel)]="selectedClassInformationId">
+              <select formControlName="selectedClassInformationId" class="form-control"
+                [(ngModel)]="selectedClassInformationId">
                 <option [ngValue]="null" disabled>Class name</option>
                 <option *ngFor="let selectedClass of classList" [ngValue]="selectedClass.id">
                   {{selectedClass.name}}
@@ -17,7 +18,8 @@
               </select>
             </div>
             <br>
-            <button [disabled]="getClassLoading" class="btn btn-outline-primary btn-sm btn-block btn-user" type="submit">
+            <button [disabled]="getClassLoading" class="btn btn-outline-primary btn-sm btn-block btn-user"
+              type="submit">
               <span *ngIf="getClassLoading" class="spinner-border spinner-border-sm mr-1"></span>
               Get class information
             </button>
@@ -45,7 +47,8 @@
               <div class="form-group">
                 <label for="subject">Subject</label>
                 <input type="text" id="subject" formControlName="subject" class="form-control"
-                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.subject.errors }"  [ngModel]="selectedClass.subject" />
+                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.subject.errors }"
+                  [ngModel]="selectedClass.subject" />
                 <div *ngIf="updateClassSubmitted && f.subject.errors" class="invalid-feedback">
                   <div *ngIf="f.subject.errors.required">subject is required</div>
                 </div>
@@ -54,8 +57,8 @@
               <div class="form-group">
                 <label for="language">Language</label>
                 <select formControlName="language" class="form-control" [(ngModel)]="selectedLanguage">
-                  <option [ngValue]="selectedLanguage.value" >{{selectedLanguage.name}}</option>
-                  <option *ngFor="let language of languageList" [ngValue]="language.value"  >
+                  <option [ngValue]="selectedLanguage.value">{{selectedLanguage.name}}</option>
+                  <option *ngFor="let language of languageList" [ngValue]="language.value">
                     {{language.name}}
                   </option>
                 </select>
@@ -73,8 +76,8 @@
 
               <div class="form-group">
                 <label for="selectedCountry">Country</label>
-                <select formControlName="selectedCountry" class="form-control"  [(ngModel)]="selectedClassCountry">
-                  <option [ngValue]="selectedClassCountry.code" >{{selectedClassCountry.name}}</option>                  
+                <select formControlName="selectedCountry" class="form-control" [(ngModel)]="selectedClassCountry">
+                  <option [ngValue]="selectedClassCountry.code">{{selectedClassCountry.name}}</option>
                   <option *ngFor="let country of countryList" [ngValue]="country.code">
                     {{country.name}}</option>
                 </select>
@@ -83,7 +86,8 @@
               <div class="form-group">
                 <label for="projectDuration">Project Duration</label>
                 <input type="number" id="projectDuration" formControlName="projectDuration" class="form-control"
-                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.projectDuration.errors }" [(ngModel)]="selectedClass.projectDuration" />
+                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.projectDuration.errors }"
+                  [(ngModel)]="selectedClass.projectDuration" />
                 <div *ngIf="updateClassSubmitted && f.projectDuration.errors" class="invalid-feedback">
                   <div *ngIf="f.projectDuration.errors.required">project duration is required</div>
                 </div>
@@ -92,7 +96,8 @@
               <div class="form-group">
                 <label for="meetingFrequency">Meeting Frequency</label>
                 <input type="number" id="meetingFrequency" formControlName="meetingFrequency" class="form-control"
-                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.meetingFrequency.errors }" [(ngModel)]="selectedClass.meetingFrequency" />
+                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.meetingFrequency.errors }"
+                  [(ngModel)]="selectedClass.meetingFrequency" />
                 <div *ngIf="updateClassSubmitted && f.meetingFrequency.errors" class="invalid-feedback">
                   <div *ngIf="f.meetingFrequency.errors.required">meeting frequency is required</div>
                 </div>
@@ -101,7 +106,8 @@
               <div class="form-group">
                 <label for="levet">Class level</label>
                 <input type="number" id="level" formControlName="level" class="form-control"
-                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.level.errors }" [(ngModel)]="selectedClass.level" />
+                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.level.errors }"
+                  [(ngModel)]="selectedClass.level" />
                 <div *ngIf="updateClassSubmitted && f.level.errors" class="invalid-feedback">
                   <div *ngIf="f.level.errors.required">level is required</div>
                 </div>
@@ -111,7 +117,8 @@
 
             </div>
 
-            <button [disabled]="updateClassLoading" class="btn btn-outline-primary btn-lg btn-block btn-user" type="submit">
+            <button [disabled]="updateClassLoading" class="btn btn-outline-primary btn-lg btn-block btn-user"
+              type="submit">
               <span *ngIf="updateClassLoading" class="spinner-border spinner-border-sm mr-1"></span>
               Update Class
             </button>
@@ -137,7 +144,8 @@
           <form [formGroup]="getClassStudentsForm" (ngSubmit)="generateStudentList()">
             <div class="form-groups">
               <label for="language">Class Name</label>
-              <select formControlName="selectedClassIdForStudentList" class="form-control" [(ngModel)]="selectedClassIdForStudentList">
+              <select formControlName="selectedClassIdForStudentList" class="form-control"
+                [(ngModel)]="selectedClassIdForStudentList">
                 <option [ngValue]="null" disabled>Class name</option>
                 <option *ngFor="let selectedClass of classList" [ngValue]="selectedClass.id">
                   {{selectedClass.name}}
@@ -145,17 +153,30 @@
               </select>
             </div>
             <br>
-            <button [disabled]="getClassStudentLoading" class="btn btn-outline-primary btn-sm btn-block btn-user" type="submit">
+            <button [disabled]="getClassStudentLoading" class="btn btn-outline-primary btn-sm btn-block btn-user"
+              type="submit">
               <span *ngIf="getClassStudentLoading" class="spinner-border spinner-border-sm mr-1"></span>
               Get student list
             </button>
           </form>
           <br>
-          <!-- <button [disabled]="insertClassStudentsLoading" class="btn btn-outline-danger btn-sm btn-block btn-user" type="submit">
-            <span *ngIf="insertClassStudentsLoading" class="spinner-border spinner-border-sm mr-1"></span>
-              Add student to class
-          </button>           -->
-        </div>
+
+
+          <div *ngIf="concatStudentsLoaded">
+            <div *ngFor="let student of studentsOfTeacher; index as i">
+              <input type="checkbox" [checked]="student.flag">
+              {{student.name}}
+            </div>
+          </div>
+          <!-- <div *ngIf=" concatStudentsLoaded" class="invalid-feedback">
+              <ul>
+                <li *ngFor="let n of studentsOfTeacher">
+                  <input type="checkbox" [(ngModel)]="n.flag">{{n.name}}
+                </li>
+              </ul>
+            </div> -->
+
+          </div>
       </mat-card>
     </div>
 

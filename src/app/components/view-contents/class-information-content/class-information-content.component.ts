@@ -9,7 +9,10 @@ import { LANGUAGE_LIST } from '../../common/backend-util/common-structures/langu
 import { COUNTRY_LIST } from '../../common/backend-util/common-structures/countries';
 import { LANGUAGE_LEVEL_LIST } from '../../common/backend-util/common-structures/language-level';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent, ConfirmDialogModel } from '@app/components/common/confirm-dialog/confirm-dialog.component';
+import {
+  ConfirmDialogComponent,
+  ConfirmDialogModel,
+} from '@app/components/common/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-class-information-content',
@@ -26,7 +29,8 @@ export class ClassInformationContentComponent implements OnInit {
   deleteClassLoading = false;
   deleteClassSubmitted = false;
 
-  getClassStudentLoading= false;
+  getClassStudentLoading = false;
+  concatStudentsLoaded = false;
 
   insertClassStudentsLoading = false;
   insertClassStudentsSubmitted = false;
@@ -36,7 +40,6 @@ export class ClassInformationContentComponent implements OnInit {
 
   deleteClassStudentsLoading = false;
   deleteClassStudentsSubmitted = false;
-
 
   returnUrl: string;
   error = '';
@@ -56,7 +59,7 @@ export class ClassInformationContentComponent implements OnInit {
   selectedLanguage = null;
   selectedClassCountry = null;
   selectedClassIdForStudentList = null;
-  studentListOfTeacher: import("c:/Users/Tarik/Desktop/WS 20-21/Seminar/javascript_seminar_frontend/src/app/models/index").InlineResponse2004[];
+  studentListOfTeacher: import('c:/Users/Tarik/Desktop/WS 20-21/Seminar/javascript_seminar_frontend/src/app/models/index').InlineResponse2004[];
 
   constructor(
     private classService: ClassesService,
@@ -64,8 +67,8 @@ export class ClassInformationContentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: CustomLoginService,
     private userApi: UserService,
-    public dialog: MatDialog,
-      ) {}
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.languageList = LANGUAGE_LIST;
@@ -116,9 +119,13 @@ export class ClassInformationContentComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.selectedClass = response;
-          this.selectedLanguage = this.languageList.find(item=>item.value== this.selectedClass.language);
+          this.selectedLanguage = this.languageList.find(
+            (item) => item.value == this.selectedClass.language
+          );
           this.selectedLanguageLevel = this.selectedClass.languageLevel;
-          this.selectedClassCountry = this.countryList.find(item => item.code == this.selectedClass.country);
+          this.selectedClassCountry = this.countryList.find(
+            (item) => item.code == this.selectedClass.country
+          );
           this.getClassLoading = false;
           this._snackBar.open('Class information retrieved!', 'Close', {
             duration: 3000,
@@ -135,34 +142,36 @@ export class ClassInformationContentComponent implements OnInit {
       });
   }
 
-  openUpdateConfirmationDialog() : void {
+  openUpdateConfirmationDialog(): void {
     const message = `Are you sure you want to update class?`;
-    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogData = new ConfirmDialogModel('Confirm Action', message);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: "400px",
-      data: dialogData
+      maxWidth: '400px',
+      data: dialogData,
     });
- 
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if(dialogResult == true)
-        this.updateClassInformation();
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult == true) this.updateClassInformation();
     });
-  };
+  }
 
   updateClassInformation(): void {
     this.updateClassLoading = true;
     this.updateClassStudentsSubmitted = true;
     this.classService
-      .classesClassIdPut({
-        name: this.f.name.value,
-        language: this.selectedLanguage.value,
-        subject: this.f.subject.value,
-        country: this.selectedClassCountry.code,
-        projectDuration: this.f.projectDuration.value,
-        meetingFrequency: this.f.meetingFrequency.value,
-        level: this.f.level.value,
-        languageLevel: this.selectedLanguageLevel,
-      }, this.selectedClassInformationId)
+      .classesClassIdPut(
+        {
+          name: this.f.name.value,
+          language: this.selectedLanguage.value,
+          subject: this.f.subject.value,
+          country: this.selectedClassCountry.code,
+          projectDuration: this.f.projectDuration.value,
+          meetingFrequency: this.f.meetingFrequency.value,
+          level: this.f.level.value,
+          languageLevel: this.selectedLanguageLevel,
+        },
+        this.selectedClassInformationId
+      )
       .pipe(first())
       .subscribe({
         next: (response) => {
@@ -182,17 +191,16 @@ export class ClassInformationContentComponent implements OnInit {
       });
   }
 
-  openDeleteConfirmationDialog() : void {
+  openDeleteConfirmationDialog(): void {
     const message = `Are you sure you want to delete class?`;
-    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogData = new ConfirmDialogModel('Confirm Action', message);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: "400px",
-      data: dialogData
+      maxWidth: '400px',
+      data: dialogData,
     });
- 
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if(dialogResult == true)
-        this.deleteClass();
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult == true) this.deleteClass();
     });
   }
 
@@ -221,25 +229,41 @@ export class ClassInformationContentComponent implements OnInit {
       });
   }
 
-  generateStudentList() : void {
+  generateStudentList(): void {
+    this.concatStudentsLoaded = false;
     this.getClassStudentLoading = true;
-    this.userApi.meStudentsGet().toPromise().then(meStudentsResponse => {
-      this.classService
-      .classesClassIdStudentsGet(this.selectedClassIdForStudentList).toPromise().then(studentsOfClassResponse => {
-        this.getClassStudentLoading = false;
-        console.log("student created by me : " + meStudentsResponse);
-        console.log("students of selected class : " + studentsOfClassResponse);
-      }).catch(error => {
-        this.getClassStudentLoading = false;
-        this.error = error;
-        this._snackBar.open(this.error, 'Close', {
-
-          duration: 3000,
-        });
-      })
-    })
+    this.userApi
+      .meStudentsGet()
+      .toPromise()
+      .then((meStudentsResponse) => {
+        this.classService
+          .classesClassIdStudentsGet(this.selectedClassIdForStudentList)
+          .toPromise()
+          .then((studentsOfClassResponse) => {
+            this.getClassStudentLoading = false;
+            this.findConcatOfStudents(
+              meStudentsResponse,
+              studentsOfClassResponse
+            );
+          })
+          .catch((error) => {
+            this.getClassStudentLoading = false;
+            this.error = error;
+            this._snackBar.open(this.error, 'Close', {
+              duration: 3000,
+            });
+          });
+      });
   }
 
+  findConcatOfStudents(studentsOfTeacher, studentsOfClass) {
+    studentsOfTeacher.forEach((element) => {
+      let found = studentsOfClass.find((item) => item.id == element.id);
+      if (found) element.flag = true;
+      else element.flag = false;
+    });
+    this.concatStudentsLoaded = true;
+  }
 
   removeStudentFromClass(): void {
     this.deleteClassStudentsLoading = true;
@@ -302,6 +326,4 @@ export class ClassInformationContentComponent implements OnInit {
         },
       });
   }
-
 }
-
