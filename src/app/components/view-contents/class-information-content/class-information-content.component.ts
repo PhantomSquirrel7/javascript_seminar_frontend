@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { InlineResponse2001 } from '@app/models';
 import { CustomLoginService } from '@app/services/custom/login/login.service';
 import { first } from 'rxjs/operators';
-import { ClassesService } from '../../../services/swagger-api/api';
+import { ClassesService, UserService } from '../../../services/swagger-api/api';
 import { LANGUAGE_LIST } from '../../common/backend-util/common-structures/languages';
 import { COUNTRY_LIST } from '../../common/backend-util/common-structures/countries';
 import { LANGUAGE_LEVEL_LIST } from '../../common/backend-util/common-structures/language-level';
@@ -26,8 +26,10 @@ export class ClassInformationContentComponent implements OnInit {
   deleteClassLoading = false;
   deleteClassSubmitted = false;
 
-  getClassStudentsLoading = false;
-  getClassStudentsSubmitted = false;
+  getClassStudentLoading= false;
+
+  insertClassStudentsLoading = false;
+  insertClassStudentsSubmitted = false;
 
   updateClassStudentsLoading = false;
   updateClassStudentsSubmitted = false;
@@ -53,12 +55,15 @@ export class ClassInformationContentComponent implements OnInit {
   selectedLanguageLevel = null;
   selectedLanguage = null;
   selectedClassCountry = null;
+  selectedClassIdForStudentList = null;
+  studentListOfTeacher: import("c:/Users/Tarik/Desktop/WS 20-21/Seminar/javascript_seminar_frontend/src/app/models/index").InlineResponse2004[];
 
   constructor(
     private classService: ClassesService,
     private _snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private userService: CustomLoginService,
+    private userApi: UserService,
     public dialog: MatDialog,
       ) {}
 
@@ -216,29 +221,25 @@ export class ClassInformationContentComponent implements OnInit {
       });
   }
 
-  getStudentsOfClass(): void {
-    this.getClassStudentsLoading = true;
-    this.getClassStudentsSubmitted = true;
-    this.classService
-      .classesClassIdStudentsGet(this.selectedClassInformationId)
-      .pipe(first())
-      .subscribe({
-        next: (response) => {
-          this.selectedClassStudentList = response;
-          this.getClassStudentsLoading = false;
-          this._snackBar.open('Students retrieved successfully!', 'Close', {
-            duration: 3000,
-          });
-        },
-        error: (error) => {
-          this.error = error;
-          this._snackBar.open(this.error, 'Close', {
-            duration: 3000,
-          });
-          this.getClassStudentsLoading = false;
-        },
-      });
+  generateStudentList() : void {
+    this.getClassStudentLoading = true;
+    this.userApi.meStudentsGet().toPromise().then(meStudentsResponse => {
+      this.classService
+      .classesClassIdStudentsGet(this.selectedClassIdForStudentList).toPromise().then(studentsOfClassResponse => {
+        this.getClassStudentLoading = false;
+        console.log("student created by me : " + meStudentsResponse);
+        console.log("students of selected class : " + studentsOfClassResponse);
+      }).catch(error => {
+        this.getClassStudentLoading = false;
+        this.error = error;
+        this._snackBar.open(this.error, 'Close', {
+
+          duration: 3000,
+        });
+      })
+    })
   }
+
 
   removeStudentFromClass(): void {
     this.deleteClassStudentsLoading = true;
@@ -301,5 +302,6 @@ export class ClassInformationContentComponent implements OnInit {
         },
       });
   }
+
 }
 
