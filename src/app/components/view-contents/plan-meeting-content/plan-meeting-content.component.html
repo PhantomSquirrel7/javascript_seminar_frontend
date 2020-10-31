@@ -1,4 +1,4 @@
-<div style="margin-left: 50px; margin-top: 50px">
+<div fxLayoutGap="25px" fxLayout="column" style="margin-left: 50px; margin-top: 50px">
     <form [formGroup]="clsSelecForm" class="class-selection">
         For which class would you like to plan next meeting?
         <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
@@ -6,10 +6,25 @@
             <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.name}}</option>
         </select>
     </form>
-    <div *ngIf="isSelected" class="planning-section">
-        <div class="card" style="width: 70vmax; margin-top: 50px;">
+
+    <div *ngIf="isClassSelected"> 
+        <form  [formGroup]="projectSelectForm" class="project-selection">
+            Please Choose Project: 
+            <select formControlName="selectedProject" (change)="projectSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+                <option [ngValue]="null" disabled>Select your Project</option>
+                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">{{selectedProject.id}}</option>
+            </select>
+        </form>
+    </div>
+
+
+    <div *ngIf="isProjectSelected" class="planning-section">
+        <div class="card" style="width: 70vmax;">
             <div class="card-body">
-                <h3 class="card-title">You're planning for: <span class="text-primary">{{selectedClass.name}}</span> </h3>
+                <h3 class="card-title">
+                    You're planning for: <span class="text-primary">{{selectedClass.name}}</span> 
+                    and Project: <span class="text-primary">{{selectedProject.id}}</span> 
+                </h3>
 
                 <div fxLayout="row" fxLayoutAlign="start center">
                     <div fxFlex="0 0 45%">When would you like to meet?</div>
@@ -18,7 +33,7 @@
                         <input matInput [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
+                        </mat-form-field>
                 </div>
 
                 <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
@@ -37,7 +52,7 @@
                             type="button" class="btn" [ngClass]="selectedArrangement == 'tandem' ? 'btn-primary' : 'btn-light'">Tandem</button>
                         <button (click)="selectArrangement('wholeclass')" 
                             type="button" class="btn" [ngClass]="selectedArrangement == 'wholeclass' ? 'btn-primary' : 'btn-light'">Whole Class</button>
-                      </div>
+                        </div>
                 </div>
 
                 <div *ngIf="selectedArrangement !== 'wholeclass'" class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
@@ -79,7 +94,6 @@
                         </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
