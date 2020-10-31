@@ -159,9 +159,9 @@ export class ClassInformationContentComponent implements OnInit {
       .classesClassIdPut(
         {
           name: this.f.name.value,
-          language: this.selectedLanguage,
+          language: this.selectedLanguage.value,
           subject: this.f.subject.value,
-          country: this.selectedClassCountry,
+          country: this.selectedClassCountry.code,
           projectDuration: this.f.projectDuration.value,
           meetingFrequency: this.f.meetingFrequency.value,
           level: this.f.level.value,
