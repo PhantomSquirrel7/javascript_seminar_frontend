@@ -38,9 +38,6 @@ export class ClassInformationContentComponent implements OnInit {
   updateClassStudentsLoading = false;
   updateClassStudentsSubmitted = false;
 
-  deleteClassStudentsLoading = false;
-  deleteClassStudentsSubmitted = false;
-
   returnUrl: string;
   error = '';
   classList: InlineResponse2001[];
@@ -59,7 +56,7 @@ export class ClassInformationContentComponent implements OnInit {
   selectedLanguage = null;
   selectedClassCountry = null;
   selectedClassIdForStudentList = null;
-  studentListOfTeacher: import('c:/Users/Tarik/Desktop/WS 20-21/Seminar/javascript_seminar_frontend/src/app/models/index').InlineResponse2004[];
+  studentsOfTeacher = null;
 
   constructor(
     private classService: ClassesService,
@@ -162,9 +159,9 @@ export class ClassInformationContentComponent implements OnInit {
       .classesClassIdPut(
         {
           name: this.f.name.value,
-          language: this.selectedLanguage.value,
+          language: this.selectedLanguage,
           subject: this.f.subject.value,
-          country: this.selectedClassCountry.code,
+          country: this.selectedClassCountry,
           projectDuration: this.f.projectDuration.value,
           meetingFrequency: this.f.meetingFrequency.value,
           level: this.f.level.value,
@@ -206,7 +203,6 @@ export class ClassInformationContentComponent implements OnInit {
 
   deleteClass(): void {
     this.deleteClassLoading = true;
-    this.deleteClassStudentsSubmitted = true;
     this.classService
       .classesClassIdDelete(this.selectedClassInformationId)
       .pipe(first())
@@ -263,21 +259,29 @@ export class ClassInformationContentComponent implements OnInit {
       else element.flag = false;
     });
     this.concatStudentsLoaded = true;
+    this.studentsOfTeacher = studentsOfTeacher;
   }
 
-  removeStudentFromClass(): void {
-    this.deleteClassStudentsLoading = true;
-    this.deleteClassStudentsSubmitted = true;
+  toggleStudentCheckBox(index){
+    this.studentsOfTeacher[index].flag = ! this.studentsOfTeacher[index].flag;
+    if(this.studentsOfTeacher[index].flag)
+        this.addStudentToClass(this.studentsOfTeacher[index]);
+    else
+      this.removeStudentFromClass(this.studentsOfTeacher[index])
+  }
+
+  removeStudentFromClass(student): void {
+    this.updateClassStudentsLoading = true;
     this.classService
       .classesClassIdStudentsStudentIdDelete(
-        this.selectedClassInformationId,
-        this.selectedStudentId
+        this.selectedClassIdForStudentList,
+        student.id
       )
       .pipe(first())
       .subscribe({
         next: (response) => {
           this.selectedClassStudentList = response;
-          this.deleteClassStudentsLoading = false;
+          this.updateClassStudentsLoading = false;
           this._snackBar.open(
             'Student removed from class successfully!',
             'Close',
@@ -291,18 +295,18 @@ export class ClassInformationContentComponent implements OnInit {
           this._snackBar.open(this.error, 'Close', {
             duration: 3000,
           });
-          this.deleteClassStudentsLoading = false;
+          this.updateClassStudentsLoading = false;
         },
       });
   }
 
-  addStudentToClass(): void {
+  addStudentToClass(student): void {
     this.updateClassStudentsLoading = true;
     this.updateClassStudentsSubmitted = true;
     this.classService
       .classesClassIdStudentsStudentIdPut(
-        this.selectedClassInformationId,
-        this.selectedStudentId
+        this.selectedClassIdForStudentList,
+        student.id
       )
       .pipe(first())
       .subscribe({
