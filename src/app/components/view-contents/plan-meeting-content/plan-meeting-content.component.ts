@@ -248,6 +248,7 @@ export class PlanMeetingContentComponent implements OnInit  {
 
   clsSelecForm: FormGroup;
   projectSelectForm: FormGroup;
+  planningSectionForm: FormGroup;
 
   user: User;
   error = '';
@@ -256,6 +257,7 @@ export class PlanMeetingContentComponent implements OnInit  {
   selectedTypeOfClass = ''
   selectedDuration: number;
   durations = [30, 45, 60, 90, 120];
+  date: Date;
   typeOfClasses = ['Quiz','Ice-Breaker Game','Others',]
   loading = false;
   selectedArrangement = '';
@@ -278,7 +280,10 @@ export class PlanMeetingContentComponent implements OnInit  {
     });
     this.projectSelectForm = this.fb.group({
       selectedProject: [null]
-    })
+    });
+    this.planningSectionForm = this.fb.group({
+      selectedDuration: [null]
+    });
     this.classService.classesGet().subscribe({
       next: (response) => {
         this.loading = false;
@@ -339,5 +344,20 @@ export class PlanMeetingContentComponent implements OnInit  {
 
   selectArrangement(arrangement: string) {
     this.selectedArrangement = arrangement;
+  }
+
+  submitForm() {
+    console.log(this.date);
+    console.log(this.selectedDuration);
+    console.log(this.selectedArrangement)
+    console.log(this.selectedProject.id);
+  }
+
+  onDateSelected(event) {
+    this.date = event.value;
+  }
+  
+  durationSelected() {
+    this.selectedDuration = this.planningSectionForm.value.selectedDuration;
   }
 }
