@@ -5,11 +5,11 @@ import { timer } from 'rxjs';
 import { report } from 'process';
 
 @Component({
-  selector: 'app-class-contact-component',
-  templateUrl: './class-contact-component.component.html',
-  styleUrls: ['./class-contact-component.component.less']
+  selector: 'app-class-contact-content',
+  templateUrl: './class-contact-content.component.html',
+  styleUrls: ['./class-contact-content.component.less']
 })
-export class ClassContactComponentComponent{
+export class ClassContactContentComponent{
   
   @Input() actClass: any;
   @Input() teacher: any;

@@ -31,35 +31,35 @@ export class StudentMeetingsContentComponent implements OnInit {
 
 
 	ngOnInit() {
-    this.userService.getMe().pipe(
-      flatMap( (user) =>
-        this.user2Service.meMeetingsGet().pipe(
-          map(
-            meetings => {
-              this.user_student = user;
-              console.log(user);
-              this.meetings = meetings;
-              console.log(meetings);
-              if (this.meetings.length > 0){
-                this.noMeetings = false;
-              }
-              return user;
-            } 
-          )
-        )
-      )
-    ).subscribe({
-      next: (response) => {
-        this.loading = false;
-        this.user_student = response;
-      },
-      error: (error) => {
-        this.error = error;
-        this._snackBar.open(this.error, 'Close', {
-        duration: 3000
-        });
-        this.loading = false;
-      },
-    });
+    // this.userService.getMe().pipe(
+    //   flatMap( (user) =>
+    //     this.user2Service.meMeetingsGet().pipe(
+    //       map(
+    //         meetings => {
+    //           this.user_student = user;
+    //           console.log(user);
+    //           this.meetings = meetings;
+    //           console.log(meetings);
+    //           if (this.meetings.length > 0){
+    //             this.noMeetings = false;
+    //           }
+    //           return user;
+    //         } 
+    //       )
+    //     )
+    //   )
+    // ).subscribe({
+    //   next: (response) => {
+    //     this.loading = false;
+    //     this.user_student = response;
+    //   },
+    //   error: (error) => {
+    //     this.error = error;
+    //     this._snackBar.open(this.error, 'Close', {
+    //     duration: 3000
+    //     });
+    //     this.loading = false;
+    //   },
+    // });
   }
 }
