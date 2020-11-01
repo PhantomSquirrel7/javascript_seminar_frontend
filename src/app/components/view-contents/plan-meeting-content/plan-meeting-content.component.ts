@@ -5,6 +5,7 @@ import { ClassesService } from 'src/app/services/swagger-api/classes.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ProjectsService } from '@app/services/swagger-api/projects.service';
 
 
 @Component({
@@ -25,226 +26,7 @@ export class PlanMeetingContentComponent implements OnInit  {
     'Episode VI - The Empire Strikes Back'
   ];
 
-  // Dummy Project assigned to Class. TODO: Fetch it from backend
-  exampleProject1 = {
-    "id": "projectId1",
-    "classes": [
-      {
-        "id": "5f8c63862d6a720016449f23",
-        "name": "Class 1",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      },
-      {
-        "id": "class2id",
-        "name": "Class 2",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      }
-    ],
-    "state": "ongoing",
-    "messages": [
-      [
-        {
-          "id": "message1id",
-          "message": "textMessage1",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "0000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873563"
-        },
-        {
-          "id": "message2id",
-          "message": "textMessage2",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "0000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873517"
-        },
-        {
-          "id": "message3id",
-          "message": "textMessage3",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873541"
-        }
-      ]
-    ],
-    "meetings": [
-      {}
-    ]
-  }
-
-  exampleProject2 = {
-    "id": "projectId2",
-    "classes": [
-      {
-        "id": "5f8c63862d6a720016449f23",
-        "name": "Class 1",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      },
-      {
-        "id": "class2id",
-        "name": "Class 2",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      }
-    ],
-    "state": "ongoing",
-    "messages": [
-      [
-        {
-          "id": "message1id",
-          "message": "textMessage1",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "0000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873563"
-        },
-        {
-          "id": "message2id",
-          "message": "textMessage2",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "0000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873517"
-        },
-        {
-          "id": "message3id",
-          "message": "textMessage3",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873541"
-        }
-      ]
-    ],
-    "meetings": [
-      {}
-    ]
-  }
-
-  projectList = [this.exampleProject1, this.exampleProject2];
+  projectList = [];
 
   clsSelecForm: FormGroup;
   projectSelectForm: FormGroup;
@@ -270,6 +52,7 @@ export class PlanMeetingContentComponent implements OnInit  {
     private fb: FormBuilder,
     private router: Router,
     private classService: ClassesService,
+    private projectService: ProjectsService,
     private _snackBar: MatSnackBar,
   ) {}
  
@@ -303,6 +86,16 @@ export class PlanMeetingContentComponent implements OnInit  {
   classSelected(){
     this.selectedClass = this.clsSelecForm.value.selectedClass;
     this.isClassSelected = true;
+    console.log('teacher:'+ this.selectedClass.id)
+
+    this.projectService.classesClassIdProjectsGet(this.selectedClass.id).subscribe({
+      next: (response) => {
+        this.projectList = response;
+        console.log(this.projectList)
+      }
+    });
+
+
   }  
 
   projectSelected(){
