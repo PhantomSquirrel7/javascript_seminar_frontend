@@ -18,7 +18,8 @@ export class QuizGameConfigComponent implements OnInit {
     id: "-1",
     name: "",
     description: "",
-    questions: []
+    questions: [],
+    duration: 300
   };
 
   newQuestion: Question = {
@@ -141,7 +142,8 @@ export class QuizGameConfigComponent implements OnInit {
       id: "-1",
       name: "",
       description: "",
-      questions: []
+      questions: [],
+      duration: 300
     }
   }
 }

@@ -16,7 +16,8 @@ export class DrawItFormComponent implements OnInit {
     name: ['', Validators.required],
     description: [''],
     words: this.fb.array([
-    ], invalidWordsValidator)
+    ], invalidWordsValidator),
+    duration: ['', Validators.required]
   })
 
   constructor(private fb: FormBuilder) {
@@ -67,7 +68,8 @@ export class DrawItFormComponent implements OnInit {
   updateGame(update: DrawIt) {
     this.drawit.patchValue({
       name: update.name,
-      description: update.description
+      description: update.description,
+      duration: update.duration
     })
     this.words.clear();
     update.words.forEach(word => {

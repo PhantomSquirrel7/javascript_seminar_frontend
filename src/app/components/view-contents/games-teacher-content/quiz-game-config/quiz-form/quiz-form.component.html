@@ -4,11 +4,15 @@
         <input type="text" matInput formControlName="name" required>
     </mat-form-field>
     <mat-form-field class="ml-4" appearance="outline">
+        <mat-label>Duration (seconds): </mat-label>
+        <input type="number" matInput formControlName="duration" required>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
         <mat-label>Description: </mat-label>
         <input type="text" matInput formControlName="description">
     </mat-form-field>
     <div>
-        <mat-form-field class="w-75">
+        <mat-form-field class="w-100">
             <mat-select [formControl]="questGroupsCtrl" placeholder="Questions" [multiple]="true" #multiSelect>
                 <mat-option>
                     <ngx-mat-select-search [formControl]="questGroupsFilterCtrl"></ngx-mat-select-search>

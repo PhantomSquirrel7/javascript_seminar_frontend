@@ -15,7 +15,8 @@ export class AliasGameConfigComponent implements OnInit {
     id: "-1",
     name: "",
     description: "",
-    words: []
+    words: [],
+    duration: 120
   };
 
   constructor(private api: GamesApiService, private messageService: MessageService) { }
@@ -65,7 +66,8 @@ export class AliasGameConfigComponent implements OnInit {
       id: "-1",
       name: "",
       description: "",
-      words: []
+      words: [],
+      duration: 120
     }
   }
 }
