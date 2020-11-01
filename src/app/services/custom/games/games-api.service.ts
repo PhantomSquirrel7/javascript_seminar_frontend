@@ -41,7 +41,6 @@ export class GamesApiService {
         : this.configuration.accessToken;
     }
     headers = headers.set('Authorization', 'Bearer ' + accessToken).set('Accept', accept).set('Content-Type', accept);
-    console.log(headers)
     return headers;
   }
 

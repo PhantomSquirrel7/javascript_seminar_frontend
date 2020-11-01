@@ -29,7 +29,8 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
   quiz = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    questions: this.fb.array([])
+    questions: this.fb.array([]),
+    duration: ['', Validators.required]
   })
 
   public questGroupsCtrl: FormControl = new FormControl();
@@ -54,7 +55,8 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.quiz.patchValue({
       name: this.game.name,
-      description: this.game.description
+      description: this.game.description,
+      duration: this.game.duration
     })
     this.refreshQuestions();
     this.questGroupsFilterCtrl.valueChanges
@@ -136,7 +138,8 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
   updateGame(update: Quiz) {
     this.quiz.patchValue({
       name: update.name,
-      description: update.description
+      description: update.description,
+      duration: update.duration
     })
 
     //refresh questions of quiz 

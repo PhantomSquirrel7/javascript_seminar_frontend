@@ -84,15 +84,4 @@ export class GamesService extends Socket {
     this.emit("updateGame", updateGame);
   }
 
-  // Submit a solution
-  sendPlayerResult(playerResultMessage) {
-    // console.log("Send Playerresult" + JSON.stringify(playerResultMessage));
-    this.emit("playerResult", playerResultMessage);
-  }
-
-  // Draw It Canvas Update
-  sendDrawingUpdate(drawing) {
-    this.emit("drawingUpdate", drawing);
-  }
-
 }
