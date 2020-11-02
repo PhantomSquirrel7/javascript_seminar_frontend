@@ -1,0 +1,94 @@
+<div class="create-class-component" style="margin-left: 50px; margin-right: 50px">
+    <mat-card>
+        <div fxFlex="1 1 100%" class="login-form" >
+            <h1>Create Student</h1>
+            <br/>
+            <form [formGroup]="studentForm" (ngSubmit)="createStudentConfirmation()">
+                <div class="form-groups">
+                    <div class="form-group">
+                        <label for="firstName">Student's name:</label>
+                        <input type="text" id="firstName" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                            <div *ngIf="f.firstName.errors.required">First name is required</div>
+                        </div>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="lastName">Student's last name:</label>
+                        <input type="text" id="lastName" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                            <div *ngIf="f.lastName.errors.required">Last name is required</div>
+                        </div>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="email">Student's email:</label>
+                        <input  type="text" id="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Student's password:</label>
+                        <input  type="password" id="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="age">Student's age:</label>
+                        <input  type="age" id="age" formControlName="age" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.age.errors }" />
+                        <div *ngIf="submitted && f.age.errors" class="invalid-feedback">
+                            <div *ngIf="f.age.errors.required">Age is required</div>
+                        </div>
+                    </div>
+                                    
+                    <div class="form-group">
+                        <label for="hobbies">Student's hobbies:</label>
+                        <input  type="hobbies" id="hobbies" formControlName="hobbies" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.hobbies.errors }" />
+                        <div *ngIf="submitted && f.hobbies.errors" class="invalid-feedback">
+                            <div *ngIf="f.hobbies.errors.required">Hobbies is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Student's notes:</label>
+                        <input  type="notes" id="notes" formControlName="notes" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.notes.errors }" />
+                        <div *ngIf="submitted && f.notes.errors" class="invalid-feedback">
+                            <div *ngIf="f.notes.errors.required">Hobbies is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="proficiencyLevel">Student's proficiency level:</label>
+                        <input  type="proficiencyLevel" id="proficiencyLevel" formControlName="proficiencyLevel" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.proficiencyLevel.errors }" />
+                        <div *ngIf="submitted && f.proficiencyLevel.errors" class="invalid-feedback">
+                            <div *ngIf="f.proficiencyLevel.errors.required">proficiency level is required</div>
+                        </div>
+                    </div>    -->
+                    
+                    <div class="form-groups">
+                        <label for="selectedClassInformationId">Class Name</label>
+                        <select formControlName="selectedClassInformationId" class="form-control" [(ngModel)]="selectedClassInformationId">
+                          <option [ngValue]="null" disabled>Class name</option>
+                          <option *ngFor="let selectedClass of classList" [ngValue]="selectedClass.id">
+                            {{selectedClass.name}}
+                          </option>
+                        </select>
+                        <div *ngIf="submitted && f.selectedClassInformationId.errors" class="invalid-feedback">
+                            <div *ngIf="f.selectedClassInformationId.errors.required">Class is required</div>
+                        </div>                        
+                      </div>                    
+                </div>
+
+                <br>
+                <button [disabled]="loading" class="btn btn-outline-primary btn-lg btn-block btn-user"  type="submit">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Create Student
+                </button>
+            </form>
+
+
+
+            
+        </div>
+    </mat-card>
+</div>

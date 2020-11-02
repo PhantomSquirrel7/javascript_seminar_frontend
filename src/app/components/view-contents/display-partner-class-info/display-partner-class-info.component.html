@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-header">
+      <div class="left-header">
+        <img class="" src="../../../assets/pexels-meliani-idriss-2982449.jpg" alt="class profile picture"> 
+        <h2>{{project.partnerClass.name}}</h2>
+      </div>
+      <div class="right-header">
+        <span class="flag-icon flag-icon-{{project.partnerClass.country}} flag-icon"></span>
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <div style="display: flex;">
+        <span style="margin-right: 170px;">Year:</span>
+        <span>Subject:</span>
+      </div>
+      <div style="display: flex;">
+        <span style="margin-left: 50px; margin-right: 195px;">{{project.partnerClass.level + 3 }}</span> 
+        <!-- TODO: eventually change "actClass.level" to "actClass.year" -->
+        <span>{{project.partnerClass.subject}}</span>
+      </div>
+    </div>
+    
+    <ul class="list-group list-group-flush">
+      
+      <li class="list-group-item">
+        <div style="display: flex;">
+          <span style="margin-right: 135px;">Language:</span>
+          <span>Language proficiency:</span>
+        </div>
+        <div style="display: flex;">
+          <span style="margin-left: 50px; margin-right: 155px;">{{project.partnerClass.language}}</span>
+          <span>{{project.partnerClass.languageLevel}}</span>
+        </div>
+      </li>
+      
+      <li class="list-group-item">
+        <div style="display: flex;">
+          <span style="margin-right: 60px;">Project duration (days):</span>
+          <span>Meeting frequency:</span>
+        </div>
+        <div style="display: flex;">
+          <span style="margin-left: 50px; margin-right: 150px;">{{project.partnerClass.projectDuration}}</span>
+          <span>{{project.partnerClass.meetingFrequency}}x/week</span>
+        </div>
+      </li>
+    </ul>
+</div>

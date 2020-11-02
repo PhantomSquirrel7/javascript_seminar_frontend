@@ -1,0 +1,185 @@
+<mat-tab-group>
+  <mat-tab label="View class information">
+    <br>
+    <div class="get-class-component" style="margin-left: 50px; margin-right: 50px">
+      <mat-card style="text-align: center;">
+        <div fxFlex="1 1 100%" class="login-form">
+          <h1>Class Information</h1>
+          <br />
+          <form [formGroup]="getClassInformationForm" (ngSubmit)="getClassInformation()">
+            <div class="form-groups">
+              <label for="language">Class Name</label>
+              <select formControlName="selectedClassInformationId" class="form-control border rounded shadow-lg"
+                [(ngModel)]="selectedClassInformationId">
+                <option [ngValue]="null" disabled>Class name</option>
+                <option *ngFor="let selectedClass of classList" [ngValue]="selectedClass.id">
+                  {{selectedClass.name}}
+                </option>
+              </select>
+            </div>
+            <br>
+            <button [disabled]="getClassLoading" class="btn btn-outline-primary btn-sm btn-block btn-user"
+              type="submit">
+              <span *ngIf="getClassLoading" class="spinner-border spinner-border-sm mr-1"></span>
+              Get class information
+            </button>
+          </form>
+        </div>
+      </mat-card>
+    </div>
+
+    <br>
+    <div *ngIf="selectedClass" class="selected-class-component" style="margin-left: 50px; margin-right: 50px">
+      <mat-card>
+        <div fxFlex="1 1 100%" class="login-form">
+          <br />
+          <form [formGroup]="selectedClassForm" (ngSubmit)="openUpdateConfirmationDialog()">
+            <div class="form-groups">
+
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" formControlName="name" class="form-control"
+                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.name.errors }" [ngModel]="selectedClass.name" />
+                <div *ngIf="updateClassSubmitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors.required">Name is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" formControlName="subject" class="form-control"
+                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.subject.errors }"
+                  [ngModel]="selectedClass.subject" />
+                <div *ngIf="updateClassSubmitted && f.subject.errors" class="invalid-feedback">
+                  <div *ngIf="f.subject.errors.required">subject is required</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="languageText">Language</label>
+                <select formControlName="language" class="form-control" [(ngModel)]="selectedLanguage">
+                  <!-- <option [ngValue]="selectedLanguage.value">{{selectedLanguage.name}}</option> -->
+                  
+                  <option disabled [selected]="true">{{selectedLanguage.name}}</option>
+                  <option *ngFor="let language of languageList" [ngValue]="language">
+                    {{language.name}}
+                  </option>
+                </select>
+              </div>
+
+
+              <div class="form-group">
+                <label for="languageLevel">Language Level</label>
+                <select formControlName="languageLevel" class="form-control" [(ngModel)]="selectedLanguageLevel">
+                  <option disabled [selected]="true">{{selectedLanguageLevel}}</option>
+                  <option *ngFor="let langLvl of languageLevelList" [ngValue]="selectedLanguageLevel">
+                    {{langLvl}}</option>
+                </select>
+              </div>
+
+
+              <div class="form-group">
+                <label for="selectedCountry">Country</label>
+                <select formControlName="selectedCountry" class="form-control" [(ngModel)]="selectedClassCountry">
+                  <option [ngValue]="selectedClassCountry.code" [selected]="true">{{selectedClassCountry.name}}</option>
+                  <option *ngFor="let country of countryList" [ngValue]="country">
+                    {{country.name}}</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="projectDuration">Project Duration</label>
+                <input type="number" id="projectDuration" formControlName="projectDuration" class="form-control"
+                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.projectDuration.errors }"
+                  [(ngModel)]="selectedClass.projectDuration" />
+                <div *ngIf="updateClassSubmitted && f.projectDuration.errors" class="invalid-feedback">
+                  <div *ngIf="f.projectDuration.errors.required">project duration is required</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="meetingFrequency">Meeting Frequency</label>
+                <input type="number" id="meetingFrequency" formControlName="meetingFrequency" class="form-control"
+                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.meetingFrequency.errors }"
+                  [(ngModel)]="selectedClass.meetingFrequency" />
+                <div *ngIf="updateClassSubmitted && f.meetingFrequency.errors" class="invalid-feedback">
+                  <div *ngIf="f.meetingFrequency.errors.required">meeting frequency is required</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="levet">Class level</label>
+                <input type="number" id="level" formControlName="level" class="form-control"
+                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.level.errors }"
+                  [(ngModel)]="selectedClass.level" />
+                <div *ngIf="updateClassSubmitted && f.level.errors" class="invalid-feedback">
+                  <div *ngIf="f.level.errors.required">level is required</div>
+                </div>
+              </div>
+
+
+
+            </div>
+
+            <button [disabled]="updateClassLoading" class="btn btn-outline-primary btn-lg btn-block btn-user"
+              type="submit">
+              <span *ngIf="updateClassLoading" class="spinner-border spinner-border-sm mr-1"></span>
+              Update Class
+            </button>
+          </form>
+          <button (click)="openDeleteConfirmationDialog()" [disabled]="deleteClassLoading" ng
+            class="btn btn-outline-danger btn-lg btn-block btn-user" type="submit">
+            <span *ngIf="deleteClassLoading" class="spinner-border spinner-border-sm mr-1"></span>
+            Delete Class
+          </button>
+        </div>
+      </mat-card>
+    </div>
+
+
+  </mat-tab>
+  <mat-tab label="Assign student to class">
+
+    <div class="get-class-students-component" style="margin-left: 50px; margin-right: 50px">
+      <mat-card style="text-align: center;">
+        <div fxFlex="1 1 100%" class="login-form">
+
+          <h1 style="margin-left: 20px;">Students of class</h1>
+          <form [formGroup]="getClassStudentsForm" (ngSubmit)="generateStudentList()">
+            <div class="form-groups">
+              <select id="language" formControlName="selectedClassIdForStudentList"
+                class="form-control border rounded shadow-lg"
+                [(ngModel)]="selectedClassIdForStudentList">
+
+                <option [ngValue]="null" disabled>Class name</option>
+                <option *ngFor="let selectedClass of classList" [ngValue]="selectedClass.id">
+                  {{selectedClass.name}}
+                </option>
+              </select>
+            </div>
+            <br>
+            <button [disabled]="getClassStudentLoading" class="btn btn-outline-primary btn-sm btn-block btn-user" type="submit">
+              <span *ngIf="getClassStudentLoading" class="spinner-border spinner-border-sm mr-1"></span>
+              Get student list
+            </button>
+          </form>
+          <br>
+
+          <div *ngIf="concatStudentsLoaded">
+            <div ngShow="!updateClassStudentsLoading">
+              <div class="row" *ngFor="let student of studentsOfTeacher; index as i">
+                <div class="col">
+                  <input [checked]="student.flag" type="checkbox" style="width: 30px;height: 20px;" (click)="toggleStudentCheckBox(i)" />
+                  <label style="margin-left:10px ;" class="text-secondary" style="font-size: 20px;">{{student.firstName}}
+                    {{student.lastName}} {{student.email}}</label>
+                  </div>
+                </div>
+              </div>
+            <br>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+
+  </mat-tab>
+</mat-tab-group>

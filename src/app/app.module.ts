@@ -51,7 +51,7 @@ import {
   LandingOfferingContentComponent,
   LandingTeamContentComponent,
   MyConnectionRequestsViewComponent,
-  ClassContactComponentComponent,
+  ClassContactContentComponent,
   FindPartnerClassViewResultsComponent,
   FindPartnerClassResultsContentComponent,
   StudentHomeViewComponent,
@@ -63,11 +63,14 @@ import {
   StudentMeetingsViewComponent,
   StudentAssignmentsContentComponent,
   StudentMeetingsContentComponent,
-  CreateClassComponentComponent,
-  CreateStudentComponentComponent,
+  CreateClassContentComponent,
+  CreateStudentContentComponent,
   MyConnectionRequestsContentComponent,
   ProjectInfoContentComponent,
-  MessageBoardComponent
+  MessageBoardComponent,
+  DisplayPartnerClassInfoComponent,
+  ClassInformationContentComponent,
+  ConfirmDialogComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -77,10 +80,12 @@ import { SocketIoModule } from 'ngx-socket-io';
 import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
-import { ClassInformationComponentComponent } from './components/view-contents/class-information-component/class-information-component.component';
 import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
 import { GamesViewComponent } from './components/views/games-view/games-view.component';;
+<<<<<<< HEAD
 import { SimpleTaskFormComponent } from './components/view-contents/tasks-teacher-content/simple-task-config/simple-task-form/simple-task-form.component'
+=======
+>>>>>>> b18e0e417b0de2761251c764004e0744347e43d8
 
 @NgModule({
   imports: [
@@ -125,7 +130,7 @@ import { SimpleTaskFormComponent } from './components/view-contents/tasks-teache
     LandingOfferingContentComponent,
     MyConnectionRequestsViewComponent,
     FindPartnerClassContentComponent,
-    ClassContactComponentComponent,
+    ClassContactContentComponent,
     FindPartnerClassViewResultsComponent,
     FindPartnerClassResultsContentComponent,
     StudentHomeViewComponent,
@@ -137,10 +142,9 @@ import { SimpleTaskFormComponent } from './components/view-contents/tasks-teache
     StudentMeetingsViewComponent,
     StudentMeetingsContentComponent,
     StudentAssignmentsContentComponent,
-    CreateClassComponentComponent,
-    CreateStudentComponentComponent,
+    CreateClassContentComponent,
+    CreateStudentContentComponent,
     ClassInformationViewComponent,
-    ClassInformationComponentComponent,
     GamesStudentViewComponent,
     GamesQuizComponent,
     GamesAliasComponent,
@@ -158,14 +162,17 @@ import { SimpleTaskFormComponent } from './components/view-contents/tasks-teache
     DrawItFormComponent,
     DrawItComponent,
     TruthlieComponent,
+    ClassInformationContentComponent,
     BbbViewComponent,
     GamesViewComponent,
     MyConnectionRequestsContentComponent,
     ProjectInfoContentComponent,
     MessageBoardComponent,
-    SimpleTaskFormComponent
+    SimpleTaskFormComponent,
+    DisplayPartnerClassInfoComponent,
+    ConfirmDialogComponent
   ],
-
+  entryComponents: [ConfirmDialogComponent],
   providers: [
     {
       provide: APP_INITIALIZER,

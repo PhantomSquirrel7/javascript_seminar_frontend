@@ -3,7 +3,7 @@
     <div fxFlex="1 1 100%" class="login-form">
       <h1>Create Class</h1>
       <br />
-      <form [formGroup]="createClassForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="createClassForm" (ngSubmit)="createClassConfirmationDialog()">
         <div class="form-groups">
 
           <div class="form-group">
@@ -24,12 +24,22 @@
           </div>
 
           <div class="form-group">
-            <label for="language">Language proficiency</label>
-            <select formControlName="language"  class="form-control" [(ngModel)]="selectedLanguage">
-              <option [ngValue]="null" disabled>Language proficiency</option>
+            <label for="language">Language</label>
+            <select formControlName="language" class="form-control" [(ngModel)]="selectedLanguage">
+              <option [ngValue]="null" disabled>Language</option>
               <option *ngFor="let language of languageList" [ngValue]="language.value">
                 {{language.name}}
               </option>
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <label for="languageLevel">Language Level</label>
+            <select formControlName="languageLevel" class="form-control" [(ngModel)]="selectedLanguageLevel">
+              <option [ngValue]="null" disabled>Language Level</option>
+              <option *ngFor="let langLvl of languageLevelList" [ngValue]="langLvl">
+                {{langLvl}}</option>
             </select>
           </div>
 
@@ -62,24 +72,13 @@
           </div>
 
           <div class="form-group">
-            <label for="levet">Level</label>
+            <label for="levet">Class level</label>
             <input type="number" id="level" formControlName="level" class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f.level.errors }" />
             <div *ngIf="submitted && f.level.errors" class="invalid-feedback">
               <div *ngIf="f.level.errors.required">level is required</div>
             </div>
           </div>
-
-          <div class="form-group">
-            <label for="languageLevel">Language Level</label>
-            <select formControlName="languageLevel" class="form-control" [(ngModel)]="selectedLanguageLevel">
-              <option [ngValue]="null" disabled>Language Level</option>
-              <option *ngFor="let langLvl of languageLevelList" [ngValue]="langLvl">
-                {{langLvl}}</option>
-            </select>
-          </div>
-
-
         </div>
 
         <button [disabled]="loading" class="btn btn-outline-primary btn-lg btn-block btn-user" type="submit">

@@ -14,7 +14,6 @@ export class ProjectInfoContentComponent {
   @Input() actClass: any;
   @Input() actProject: any;
   @Input() me: any;
-  @Input() exchangeTeacher: any;
   constructor(
     private fb: FormBuilder,
     private projectsService: ProjectsService,
@@ -23,13 +22,25 @@ export class ProjectInfoContentComponent {
 
   projectForm: FormGroup;
 
+  exchangeClass:any = {};
+
   accepted = false;
   btnAcceptable = false;
+
+  actSender:any = {};
+  actRecipient:any = {};
+  actMessages:any[] = [];
 
   ngOnInit(): void {
     this.projectForm = this.fb.group({
       messageText: [""]
     });
+    console.log("my project:");
+    console.log(this.actProject);
+    this.exchangeClass = this.actProject.partnerClass;
+    this.actSender = this.me;
+    this.actRecipient = this.actClass.teacher;
+    this.actMessages = this.actProject.messages; 
   }
 
   acceptOffer(){

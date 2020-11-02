@@ -3,8 +3,25 @@
     <div class="home-right-content" fxFlex="1 1 100%">
         <app-header></app-header>
         <div class="home-content">
-            <app-student-meetings-content></app-student-meetings-content>
+            <!-- Replace this ngIf with appropriate conditon -->
+            <div *ngIf="true; else noMeeting">
+                <h1>Your Meetings {{user_student.firstName}}!</h1>
+                <mat-card>
+                    Meeting 1
+                    <mat-card-actions>
+                        <button [routerLink]="'/student-meetings-content'" mat-button>Join</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
         </div>
         <app-footer></app-footer>
     </div>
 </div>
+
+
+<ng-template #noMeeting>
+    <div class="card-body">
+        <p>You have no meetings</p>
+        <!-- Your notifications -->
+    </div>
+</ng-template>
