@@ -370,7 +370,7 @@ export class PlanMeetingContentComponent implements OnInit {
     });
   }
 
-  onCreateQuestion(question: Question) { //change to onCreateTask
+  onCreateQuestion(question: Question) {
     this.api.createQuestion(question).subscribe(data => {
       if (data) {
         this.questions = [...this.questions, data];
@@ -379,6 +379,8 @@ export class PlanMeetingContentComponent implements OnInit {
       }
     });
   }
+
+  // TODO onCreateTask
 
   resetNewTask() {
     this.newTask = {

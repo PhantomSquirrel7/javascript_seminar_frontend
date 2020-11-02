@@ -153,7 +153,7 @@
                                                         Create New Task
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>
-                                                <app-simple-task-form [simpleTask]="newTask" (taskChange)="onCreateQuestion($event)">
+                                                <app-simple-task-form [simpleTask]="newTask" (taskChange)="onCreateQuestion($event)"> <!-- replace onCreateTask($event) -->
                                                 </app-simple-task-form>
                                             </mat-expansion-panel>
                                         </mat-accordion>
@@ -171,9 +171,9 @@
                                                 {{ question.name }}
                                             </mat-panel-title>
                                             <mat-panel-description> {{ question.question }}
-                                                <button type="button" title="add task" mat-icon-button aria-label="add task" (click)="onQuestionChange($event)">
+                                                <!--<button type="button" title="add task" mat-icon-button aria-label="add task" (click)="onQuestionChange($event)">
                                                     <mat-icon>add</mat-icon>
-                                                </button>
+                                                </button>-->
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
                                         <app-question-form [quest]="question" (questionChange)="onQuestionChange($event)">
@@ -228,53 +228,7 @@
                     </mat-tab-group>
                 </mat-card-content>
             </div>
-            <button (click)="submitForm()" type="button" class="btn btn-primary">Confirm</button>
         </div>
+        <button (click)="submitForm()" type="button" class="btn btn-primary">Confirm</button>
     </div>
 </div>
-
-<!-- CheckList for GAMES Section -->
-<!--
-    <form [formGroup]="quiz" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline">
-        <mat-label>Name: </mat-label>
-        <input type="text" matInput formControlName="name" required>
-    </mat-form-field>
-    <mat-form-field class="ml-4" appearance="outline">
-        <mat-label>Description: </mat-label>
-        <input type="text" matInput formControlName="description">
-    </mat-form-field>
-    <div>
-        <mat-form-field class="w-75">
-            <mat-select [formControl]="questGroupsCtrl" placeholder="Questions" [multiple]="true" #multiSelect>
-                <mat-option>
-                    <ngx-mat-select-search [formControl]="questGroupsFilterCtrl"></ngx-mat-select-search>
-                </mat-option>
-                <mat-optgroup *ngFor="let group of filteredQuestGroups | async" [label]="group.type">
-                    <mat-option *ngFor="let quest of group.questions" [value]="quest">
-                        {{quest.name}}
-                    </mat-option>
-                </mat-optgroup>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div>
-        <div class="mb-4 mt-4">
-            <b>Selected Questions:</b>
-        </div>
-        <ol>
-            <ng-container *ngFor="let q of questGroupsCtrl?.value">
-                <li class="mb-2">{{q.name}} - {{ q.question }} </li>
-            </ng-container>
-        </ol>
-
-
-        <button (click)="submitForm()" type="button" class="btn btn-primary">Confirm</button>
-
-    </div>
-    <mat-action-row>
-        <button class="btn btn-sm" [ngClass]="{'btn-success': quiz.valid, 'btn-secondary': !quiz.valid}" type="submit"
-            [disabled]="!quiz.valid">Save</button>
-    </mat-action-row>
-</form>
--->
