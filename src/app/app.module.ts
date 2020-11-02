@@ -62,7 +62,8 @@ import { CustomLoginService } from '@app/services/custom';
 import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
 import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
-import { GamesViewComponent } from './components/views/games-view/games-view.component';;
+import { GamesViewComponent } from './components/views/games-view/games-view.component';
+import { MyMeetingRequestsContentComponent } from './components/view-contents/my-meeting-requests-content/my-meeting-requests-content.component';
 
 @NgModule({
   imports: [
@@ -126,7 +127,8 @@ import { GamesViewComponent } from './components/views/games-view/games-view.com
     ProjectInfoContentComponent,
     MessageBoardComponent,
     DisplayPartnerClassInfoComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    MyMeetingRequestsContentComponent 
   ],
   entryComponents: [ConfirmDialogComponent],
   providers: [
