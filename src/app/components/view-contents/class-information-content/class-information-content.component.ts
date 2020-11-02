@@ -104,6 +104,10 @@ export class ClassInformationContentComponent implements OnInit {
       .toPromise()
       .then((response) => {
         this.classList = response;
+        if(this.classList.length !=0){
+          this.selectedClassInformationId = this.classList[0].id;
+          this.selectedClassIdForStudentList = this.classList[0].id;
+        }
       });
   }
 
