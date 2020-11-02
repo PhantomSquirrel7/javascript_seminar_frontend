@@ -18,8 +18,8 @@ import { CustomHttpUrlEncodingCodec }                        from '../../swagger
 import { Observable }                                        from 'rxjs';
 
 import { Body8 } from '../../models/swagger-model/body8';
-import { InlineResponse20012 } from '../../models/swagger-model/inlineResponse20012';
-import { InlineResponse20013 } from '../../models/swagger-model/inlineResponse20013';
+import { InlineResponse20015 } from '../../models/swagger-model/inlineResponse20015';
+import { InlineResponse20016 } from '../../models/swagger-model/inlineResponse20016';
 import { InlineResponse2004 } from '../../models/swagger-model/inlineResponse2004';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
@@ -151,9 +151,9 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public meNotificationsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse20012>>;
-    public meNotificationsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse20012>>>;
-    public meNotificationsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse20012>>>;
+    public meNotificationsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse20015>>;
+    public meNotificationsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse20015>>>;
+    public meNotificationsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse20015>>>;
     public meNotificationsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -178,7 +178,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse20012>>('get',`${this.basePath}/me/notifications`,
+        return this.httpClient.request<Array<InlineResponse20015>>('get',`${this.basePath}/me/notifications`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -195,9 +195,9 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public meNotificationsIdGet(id: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20013>;
-    public meNotificationsIdGet(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20013>>;
-    public meNotificationsIdGet(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20013>>;
+    public meNotificationsIdGet(id: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20016>;
+    public meNotificationsIdGet(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20016>>;
+    public meNotificationsIdGet(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20016>>;
     public meNotificationsIdGet(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
@@ -226,7 +226,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse20013>('get',`${this.basePath}/me/notifications/${encodeURIComponent(String(id))}`,
+        return this.httpClient.request<InlineResponse20016>('get',`${this.basePath}/me/notifications/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

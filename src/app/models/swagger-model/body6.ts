@@ -9,10 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ClassesTeacher } from './classesTeacher';
 
 export interface Body6 { 
-    id?: string;
     name?: string;
     language?: string;
     subject?: string;
@@ -22,6 +20,4 @@ export interface Body6 {
     level?: number;
     languageLevel?: string;
     topics?: Array<string>;
-    teacher?: ClassesTeacher;
-    students?: Array<ClassesTeacher>;
 }

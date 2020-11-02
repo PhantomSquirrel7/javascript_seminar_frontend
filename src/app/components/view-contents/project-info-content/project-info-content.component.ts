@@ -48,16 +48,16 @@ export class ProjectInfoContentComponent {
     this.btnAcceptable = true;
 
     // TODO: activate when working on backend-side
-    // this.projectsService.classesClassIdProjectsProjectIdAcceptInvitationPost(this.actClass.id, this.actProject.id).subscribe(
-    //   (response) => {
-    //     console.log(response);
-    //     this.btnAcceptable = false;
-    //   });
+    this.projectsService.classesClassIdProjectsProjectIdAcceptInvitationPost(this.actClass.id, this.actProject.id).subscribe(
+      (response) => {
+        console.log(response);
+        this.btnAcceptable = false;
+        const source = timer(1500);
+        source.subscribe(data => {
+          this.accepted=false
+        });
+      });
 
-    const source = timer(1500);
-    source.subscribe(data => {
-      this.accepted=false
-    });
 
   }
 

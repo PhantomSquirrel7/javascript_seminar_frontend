@@ -1,5 +1,5 @@
 <div class="form-group" style="margin-left: 100px; margin-right: 50px">
-    <div *ngIf="!loading">
+    <div *ngIf="!loading && allDataLoaded">
         <div style="margin-right: 50px;">
             <div *ngFor="let item of user_projects" class="card shadow-lg rounded" style="margin-top: 40px;">
                 <div class="card-header">Projects for: {{item.class.name}}

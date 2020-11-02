@@ -41,6 +41,8 @@ export class FindPartnerClassContentComponent implements OnInit {
 	
 	// user_duration = ['1', '1 week', '2 weeks', '3 weeks', '4 weeks +'];
 	projectDuration: string = "";
+
+	meetingFrequency: string = "";
 	
 	user_country = [];
 	selectedCountry: any;
@@ -55,9 +57,10 @@ export class FindPartnerClassContentComponent implements OnInit {
 	ngOnInit() {
 		this.findPartnerForm = this.fb.group({
 		selectedClass: [null],
-		selectedLangProf: [],
+		// selectedLangProf: [],
 		projectDuration: [],
 		selectedCountry: [],
+		meetingFrequency: [],
 		});
 
 		this.countryService.countriesGet().subscribe({
@@ -96,9 +99,9 @@ export class FindPartnerClassContentComponent implements OnInit {
 		this.isSelected = true;
 	}
 		
-	langProfSelected(){
-		this.selectedLangProf = this.findPartnerForm.value.selectedLangProf;
-	}
+	// langProfSelected(){
+	// 	this.selectedLangProf = this.findPartnerForm.value.selectedLangProf;
+	// }
 	
 	// durationSelected(){
 	// 	this.selectedDuration = this.findPartnerForm.value.selectedDuration;
@@ -120,10 +123,10 @@ export class FindPartnerClassContentComponent implements OnInit {
 			console.log(this.findPartnerForm.value);
 			console.log(this.selectedClass.id);
 			console.log(this.findPartnerForm.value.projectDuration);
-			console.log(this.selectedLangProf);
+			console.log(this.findPartnerForm.value.meetingFrequency);
 			console.log(this.selectedCountry);
 			
-			if (this.findPartnerForm.value.projectDuration == null || this.selectedLangProf == undefined || this.selectedCountry == ""){
+			if (this.findPartnerForm.value.projectDuration == null || this.findPartnerForm.value.meetingFrequency == null || this.selectedCountry == ""){
 				this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id).subscribe({
 					next: (response) => {
 						this.loading = false;
@@ -141,10 +144,11 @@ export class FindPartnerClassContentComponent implements OnInit {
 				});
 			}
 			else{
-				this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id, this.findPartnerForm.value.projectDuration.toString(), this.selectedLangProf.toString(), this.selectedCountry.toString()).subscribe({
+				this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id, this.findPartnerForm.value.projectDuration.toString(), this.findPartnerForm.value.meetingFrequency.toString(), this.selectedCountry.code.toString()).subscribe({
 					next: (response) => {
 						this.loading = false;
 						this.resultClasses = response;
+						console.log("Search with parameter:")
 						console.log(this.resultClasses);
 						this.router.navigate(['find-partner-class/results'], {state: {data: response, selfClass: this.selectedClass}});
 					},

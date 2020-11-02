@@ -3,6 +3,7 @@ import { ProjectsService } from '../../../services/swagger-api/api';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { timer } from 'rxjs';
 import { report } from 'process';
+import { Body10 } from '@app/models';
 
 @Component({
   selector: 'app-class-contact-content',
@@ -44,8 +45,20 @@ export class ClassContactContentComponent{
     console.log(this.contactTeacherForm.value.messageText);
     // this.sent = true;
 
-    this.projectsService.classesClassIdProjectsPost(this.actClass.id, this.selfClass.id, "body", true).subscribe(
-      data => this. sent = true
+    console.log("Classes for Project:");
+    console.log(this.actClass);
+    console.log(this.selfClass);
+
+    let myBody= {
+      "_class": this.actClass.id.toString()
+    };
+
+
+    this.projectsService.classesClassIdProjectsPost(myBody, this.selfClass.id.toString()).subscribe(
+      data => {
+        console.log(data);
+        this.sent = true;
+      }
     );
 
     const source = timer(4000);

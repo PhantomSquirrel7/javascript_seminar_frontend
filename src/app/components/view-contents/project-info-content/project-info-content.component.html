@@ -3,7 +3,7 @@
         <h1>Want to accept the project offering?</h1>
         <app-display-partner-class-info [project]="actProject"></app-display-partner-class-info>
         <br>
-        <app-message-board [sender]="actSender" [recipientId]="actProject.partnerClass.teacher" [messages]="actProject.messages[0]"></app-message-board>
+        <app-message-board [sender]="actSender" [recipient]="actProject.partnerClass" [myClass]="actClass" [myProject]="actProject"></app-message-board>
         <br>
         <div class="form-group" style="margin-right: 50px">
             <form [formGroup]="projectForm" (ngSubmit)="acceptOffer()">
@@ -21,7 +21,7 @@
         <h1>Talk to your partner teacher...</h1>
         <app-display-partner-class-info [project]="actProject"></app-display-partner-class-info>
         <br>
-        <app-message-board [sender]="actSender" [recipientId]="actProject.partnerClass.teacher" [messages]="actProject.messages[0]"></app-message-board>
+        <app-message-board [sender]="actSender" [recipient]="actProject.partnerClass.teacher" [myClass]="actClass" [myProject]="actProject"></app-message-board>
     </div>
     <div *ngIf="actProject.state == 'done'">
         <h1>Done</h1>

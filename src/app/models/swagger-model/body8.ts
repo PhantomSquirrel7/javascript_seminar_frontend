@@ -16,6 +16,7 @@ export interface Body8 {
     date?: Date;
     groupAssignments?: Body8.GroupAssignmentsEnum;
     groups?: Array<Array<string>>;
+    taskList?: Array<string>;
 }
 export namespace Body8 {
     export type GroupAssignmentsEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';

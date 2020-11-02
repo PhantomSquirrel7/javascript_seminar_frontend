@@ -9,7 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { InlineResponse20012 } from './inlineResponse20012';
 
-export interface Messages extends Array<InlineResponse20012> { 
+export interface InlineResponse20014School { 
+    id?: string;
+    name?: string;
 }

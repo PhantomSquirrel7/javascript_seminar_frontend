@@ -296,31 +296,47 @@ export class MyConnectionRequestsContentComponent implements OnInit {
         map( (classes) =>
           classes.map( 
             (cls) => this.projectService.classesClassIdProjectsGet(cls.id).subscribe(result => {
-              let partnerClass = {};
-              for (let p of this.exampleProject1.classes){
-                if (p.id != cls.id){
-                  partnerClass = p;
+              let clsProjects = [];
+              for (let project of result){
+                let partnerClass = {};
+                let modProject = project;
+                
+                for (let p of project.classes){
+                  if (p.id != cls.id){
+                    partnerClass = p;
+                  }  
                 }
+                
+                modProject["partnerClass"] = partnerClass;
+                clsProjects.push(modProject);
               }
-              this.exampleProject1["partnerClass"] = partnerClass;
-              this.exampleProject2["partnerClass"] = partnerClass;
-              if (cls.name == "Class 1"){
-                this.user_projects.push({"class": cls, "projects": [this.exampleProject1, this.exampleProject2]}); //TODO: replace with result});
-              }
-              else if (cls.name == "Class 2"){
-                this.user_projects.push({"class": cls, "projects": []});
-              }
-              else{
-                this.user_projects.push({"class": cls, "projects": [this.exampleProject2]}); //TODO: replace with result});
-              }
-              return result;
+              this.user_projects.push({"class": cls, "projects": clsProjects});
+              // for (let p of this.exampleProject1.classes){
+              //   if (p.id != cls.id){
+              //     partnerClass = p;
+              //   }
+              // }
+              // this.exampleProject1["partnerClass"] = partnerClass;
+              // this.exampleProject2["partnerClass"] = partnerClass;
+              // if (cls.name == "Class 1"){
+              //   this.user_projects.push({"class": cls, "projects": [this.exampleProject1, this.exampleProject2]}); //TODO: replace with result});
+              // }
+              // else if (cls.name == "Class 2"){
+              //   this.user_projects.push({"class": cls, "projects": []});
+              // }
+              // else{
+              //   this.user_projects.push({"class": cls, "projects": [this.exampleProject2]}); //TODO: replace with result});
+              // }
+              // return result;
               })
             )
           )
           ).subscribe({
               next: (response) => {
                 this.loading = false;
-                this.allDataLoaded = true;   
+                this.allDataLoaded = true;
+                console.log("all Projects:");
+                console.log(this.user_projects) 
               },
               error: (error) => {
                 this.error = error;
@@ -331,6 +347,7 @@ export class MyConnectionRequestsContentComponent implements OnInit {
               },
             });
   }
+
   detailsFor(cls, prjct){
     this.actClass = cls;
     this.actProject = prjct;

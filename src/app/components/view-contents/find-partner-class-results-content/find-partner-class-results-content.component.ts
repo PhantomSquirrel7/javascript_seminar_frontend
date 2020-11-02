@@ -83,16 +83,19 @@ export class FindPartnerClassResultsContentComponent implements OnInit {
 	detailsFor(actClass){
 		this.details = true;
 		this.contactClass = actClass;
+		this.contactTeacher = actClass.teacher;
 
 		// TODO: replace when allowed from backend
-		this.contactTeacher = {
-			"email": "test@mail.de",
-			"schoolName": "test school",
-			"firstName": "Peter",
-			"lastName": "Tester",
-			"role": "teacher",
-			"id": "5f685056d6bf4e0016d9931e"
-		}
+		// this.contactTeacher = {
+		// 	"email": "test@mail.de",
+		// 	"schoolName": "test school",
+		// 	"firstName": "Peter",
+		// 	"lastName": "Tester",
+		// 	"role": "teacher",
+		// 	"id": "5f685056d6bf4e0016d9931e"
+		// }
+		// console.log("Details For: ");
+		// console.log(actClass);
 		// this.userService.studentsStudentIdGet(actClass.teacher).subscribe({
 		// 	next: (response) => {
 		// 		this.contactTeacher = response;
