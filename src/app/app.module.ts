@@ -82,10 +82,7 @@ import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
 import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
 import { GamesViewComponent } from './components/views/games-view/games-view.component';;
-<<<<<<< HEAD
 import { SimpleTaskFormComponent } from './components/view-contents/tasks-teacher-content/simple-task-config/simple-task-form/simple-task-form.component'
-=======
->>>>>>> b18e0e417b0de2761251c764004e0744347e43d8
 
 @NgModule({
   imports: [
