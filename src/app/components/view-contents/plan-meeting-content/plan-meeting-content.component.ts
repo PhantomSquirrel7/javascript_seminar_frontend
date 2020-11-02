@@ -86,6 +86,7 @@ export class PlanMeetingContentComponent implements OnInit  {
   classSelected(){
     this.selectedClass = this.clsSelecForm.value.selectedClass;
     this.isClassSelected = true;
+    this.isProjectSelected = false;
     console.log('teacher:'+ this.selectedClass.id)
 
     this.projectService.classesClassIdProjectsGet(this.selectedClass.id).subscribe({
