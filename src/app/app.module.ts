@@ -79,7 +79,8 @@ import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
 import { ClassInformationComponentComponent } from './components/view-contents/class-information-component/class-information-component.component';
 import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
-import { GamesViewComponent } from './components/views/games-view/games-view.component';
+import { GamesViewComponent } from './components/views/games-view/games-view.component';;
+import { SimpleTaskFormComponent } from './components/view-contents/tasks-teacher-content/simple-task-config/simple-task-form/simple-task-form.component'
 
 @NgModule({
   imports: [
@@ -161,7 +162,8 @@ import { GamesViewComponent } from './components/views/games-view/games-view.com
     GamesViewComponent,
     MyConnectionRequestsContentComponent,
     ProjectInfoContentComponent,
-    MessageBoardComponent
+    MessageBoardComponent,
+    SimpleTaskFormComponent
   ],
 
   providers: [

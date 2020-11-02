@@ -99,24 +99,20 @@
 
         <div class="card" style="width: 70vmax; margin-top: 50px;">
             <div class="card-header" fxLayout="row" fxLayoutAlign="start center">
-                <div fxFlex="0 0 45%">Please select Type of Class:</div>
+                <div fxFlex="0 0 45%">Create Task List for meeting:</div>
                 <select (change)="typeSelected($event)" class="form-control form-control-sm fa-pull-right"
                     style="max-width: 300px;">
-                    <option [ngValue]="null" disabled>Please Select Type of Class</option>
+                    <option [ngValue]="null" disabled>Please Select Type of Task</option>
                     <option *ngFor="let typeOfClass of typeOfClasses">{{typeOfClass}}</option>
                 </select>
             </div>
 
             <div *ngIf="selectedTypeOfClass === 'quiz'" style="width: 70vmax;">
-                <div class="card-body">
-                    Dummy game component Here
-                </div>
+                <option *ngFor="let question of questions" class = "card-body" style="border-bottom: 1px solid #e3e6f0;"> {{question.name}} </option>
             </div>
 
             <div *ngIf="selectedTypeOfClass === 'ice-breaker'" style="width: 70vmax;">
-                <div class="card-body">
-                    Ice Breaker game component Here
-                </div>
+                <option *ngFor="let quiz of quizzes" class = "card-body" style="border-bottom: 1px solid #e3e6f0;"> {{quiz.name}} </option>
             </div>
 
             <div *ngIf="selectedTypeOfClass === 'other'" style="width: 70vmax;">
@@ -124,6 +120,137 @@
                     Other component Here
                 </div>
             </div>
+            <div>
+                <mat-card-content>
+                    <mat-tab-group>
+                        <mat-tab label="Tasks">
+                            <mat-card>
+                                <mat-accordion class="headers-align">
+                                    <div class="mb-2">
+                                        <mat-accordion>
+                                            <mat-expansion-panel hideToggle>
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                        Create New Task
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <app-simple-task-form [simpleTask]="newTask" (taskChange)="onCreateQuestion($event)">
+                                                </app-simple-task-form>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                </mat-accordion>
+                            </mat-card>
+                        </mat-tab>
+                        <mat-tab label="Games">
+                            <mat-card>
+                                <mat-accordion class="headers-align">
+                                    <mat-card-subtitle class="mt-3">Questions</mat-card-subtitle>
+                                    <mat-expansion-panel *ngFor="let question of questions" hideToggle>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                {{ question.name }}
+                                            </mat-panel-title>
+                                            <mat-panel-description> {{ question.question }}
+                                                <button type="button" title="add task" mat-icon-button aria-label="add task" (click)="onQuestionChange($event)">
+                                                    <mat-icon>add</mat-icon>
+                                                </button>
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                                        <app-question-form [quest]="question" (questionChange)="onQuestionChange($event)">
+                                        </app-question-form>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                <mat-accordion class="headers-align">
+                                    <mat-card-subtitle class="mt-3">Quizzes</mat-card-subtitle>
+                                    <mat-expansion-panel *ngFor="let quiz of quizzes" hideToggle>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                {{ quiz.name }}
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                {{ quiz.description }}
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                                        <app-quiz-form [game]="quiz" [allQuestions]="questions" (quizChange)="onQuizChange($event)">
+                                        </app-quiz-form>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                <mat-accordion class="headers-align">
+                                    <mat-card-subtitle class="mt-3">Alias Games</mat-card-subtitle>
+                                    <mat-expansion-panel *ngFor="let aliasGame of aliasGames" hideToggle>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                {{ aliasGame.name }}
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                {{ aliasGame.description }}
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                                        <app-alias-form [game]="aliasGame" (gameChange)="onGameChange($event)"></app-alias-form>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                <mat-accordion class="headers-align">
+                                    <mat-card-subtitle class="mt-3">Draw-It Games</mat-card-subtitle>
+                                    <mat-expansion-panel *ngFor="let drawGame of drawGames" hideToggle>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                {{ drawGame.name }}
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                {{ drawGame.description }}
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                                        <app-draw-it-form [game]="drawGame" (gameChange)="onGameChange($event)"></app-draw-it-form>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </mat-card>
+                        </mat-tab>
+                    </mat-tab-group>
+                </mat-card-content>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- CheckList for GAMES Section -->
+<!--
+    <form [formGroup]="quiz" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>Name: </mat-label>
+        <input type="text" matInput formControlName="name" required>
+    </mat-form-field>
+    <mat-form-field class="ml-4" appearance="outline">
+        <mat-label>Description: </mat-label>
+        <input type="text" matInput formControlName="description">
+    </mat-form-field>
+    <div>
+        <mat-form-field class="w-75">
+            <mat-select [formControl]="questGroupsCtrl" placeholder="Questions" [multiple]="true" #multiSelect>
+                <mat-option>
+                    <ngx-mat-select-search [formControl]="questGroupsFilterCtrl"></ngx-mat-select-search>
+                </mat-option>
+                <mat-optgroup *ngFor="let group of filteredQuestGroups | async" [label]="group.type">
+                    <mat-option *ngFor="let quest of group.questions" [value]="quest">
+                        {{quest.name}}
+                    </mat-option>
+                </mat-optgroup>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <div class="mb-4 mt-4">
+            <b>Selected Questions:</b>
+        </div>
+        <ol>
+            <ng-container *ngFor="let q of questGroupsCtrl?.value">
+                <li class="mb-2">{{q.name}} - {{ q.question }} </li>
+            </ng-container>
+        </ol>
+    </div>
+    <mat-action-row>
+        <button class="btn btn-sm" [ngClass]="{'btn-success': quiz.valid, 'btn-secondary': !quiz.valid}" type="submit"
+            [disabled]="!quiz.valid">Save</button>
+    </mat-action-row>
+</form>
+-->
