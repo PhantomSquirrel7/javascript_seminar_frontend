@@ -5,8 +5,6 @@ import { QuizUpdate } from '../messages/quizUpdate';
 import { Quiz } from "../model/quiz";
 
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { getTreeNoValidDataSourceError } from '@angular/cdk/tree';
-
 
 @Component({
   selector: 'app-quiz',
@@ -26,8 +24,8 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   currentQuiz: Quiz;
   timeLimit: number = 30;
   timeLeftSeconds: number = this.timeLimit;
-  timeInterval;    
-  showHelp : boolean = false;
+  timeInterval;
+  showHelp: boolean = false;
 
   constructor(public gamesService: GamesService) {
     this.quizUpdate = {
@@ -117,7 +115,6 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
     this.quizUpdate.state = "running";
     this.quizUpdate.countDownStarted = true;
     this.gamesService.sendUpdate(this.quizUpdate);
-    
   }
 
   setTimer(): void {
@@ -129,10 +126,6 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
       }
     }, 1000);
   }
-
-
-
-
 
   // Updates the current view with a recieved update
   handleRecievedUpdateGame(quizUpdate: QuizUpdate) {
@@ -210,7 +203,7 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
 
   toggleHelp() {
     this.showHelp = !this.showHelp;
-    console.log(this.quizUpdate.state);
+    //console.log(this.quizUpdate.state);
   }
 
   disconnectGame() {

@@ -17,11 +17,15 @@
                         <div *ngIf="game.state == 'lobby'">
                             <div>
                                 Welcome to the game! <br>
-                                Please wait for all players. {{ game.currentPlayer }} should start the game.
+                                Please wait for all your classmates to join.
+                                <div *ngIf="username !== game.currentPlayer">{{ game.currentPlayer }} should start the
+                                    game.</div>
                             </div>
                             <!-- only first player connected can start the game -->
-                            <div *ngIf="username === game.currentPlayer" class="mt-2 mb-2 text-center">
-                                <button class="btn btn-success" (click)="startGame()">Start Game</button>
+                            <div *ngIf="username === game.currentPlayer" class="mt-2 mb-4">
+                                <div>You should start the game.</div>
+                                <div class="text-center mt-4">
+                                    <button class="btn btn-success" (click)="startGame()">Start Game</button></div>
                             </div>
                         </div>
                         <!-- GAME RUNNING -->
@@ -55,10 +59,10 @@
                         </div>
                         <div *ngIf="game.state == 'over'">
                             <div class="text-center">
-                                GAME ENDED <br>
-                                You guessed
-                                {{game.numberOfGuessedWords}}
-                                words correctly!
+                                The game is over! <br>
+                                <span *ngIf="username === game.currentPlayer">Your classmates</span>
+                                <span *ngIf="username !== game.currentPlayer">You</span>
+                                guessed {{game.numberOfGuessedWords}} words correctly!
                             </div>
                         </div>
                     </div>
@@ -78,7 +82,7 @@
                 <div class="players-list">
                     <div class="list-header">Connected Players:</div>
                     <div class="player" *ngFor="let player of game.players">
-                        {{ player }} <span *ngIf="username === player">(me)</span>
+                        {{ player }} <span *ngIf="username === player">(you)</span>
                     </div>
                 </div>
             </div>
@@ -95,10 +99,15 @@
             </button>
             <h1>How to play "Alias"</h1>
             <p>
-                Please start the game once everybody is ready.<br>Explain the word verbally without
-                using it!
-                <br>If someone guesses correctly press "correct". <br>If a word is to hard you can "skip"
-                it.
+                Please wait for everyone in your class to join the game.
+                The player who entered the game first is the one who should start the game and will also be the one
+                explaining!
+                <br>Explain the word verbally without using it while your classmates are guessing.
+                <br>If you are guessing and you think you know the word, just say it out loud!
+                <br>If someone guesses correctly the player explaining should press "correct".
+                <br>If a word is to hard you can "skip" it by pressing the "skip" button. Notice: the word will not be
+                gone forever, you might be
+                able to try it again after guessing/skipping other words, or if it is the only word left.
             </p>
         </div>
     </div>

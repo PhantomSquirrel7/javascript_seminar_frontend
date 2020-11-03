@@ -73,7 +73,10 @@
   }
 
 .truth {
-    background: rgba(120, 228, 116, 0.5);
+    background: rgb(191, 233, 190);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 0.25em;
+    padding: 0.25em;
 }
 
 .truthdisplay {
@@ -86,7 +89,10 @@
 
 
 .lie {
-    background: rgba(233, 17, 17, 0.5);
+    background: rgb(240, 172, 172);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25em;
+    padding: 0.25em;
 }
 
 .timer {

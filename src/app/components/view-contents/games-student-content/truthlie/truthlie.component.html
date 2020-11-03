@@ -16,16 +16,22 @@
                         <!-- LOBBY -->
                         <div *ngIf="game.state == 'lobby'">
                             <div>
-                                Welcome to the game! <br>
-                                {{ game.currentPlayer }} should wait for everyone and then start the game after entering their 2 Truth and 1 Lie.
+                                <div *ngIf="username !== game.currentPlayer" class="mt-2">Please wait for
+                                    {{ game.currentPlayer }}
+                                    to type in two truths and one lie...
+                                </div>
+                                <div *ngIf="username === game.currentPlayer" class="mt-2 mb-2">
+                                    It is your turn! Please enter two truths and one lie about yourself. </div>
                             </div>
                             <!-- only first player connected can start the game -->
                             <div *ngIf="username === game.currentPlayer" class="mt-2 mb-2 text-center">
-                                <br> <input class="truth" [(ngModel)]="truth1">
-                                <br> <input class="truth" [(ngModel)]="truth2">
-                                <br> <input class="lie" [(ngModel)]="lie">
+                                <input class="truth mb-1 w-75" [(ngModel)]="truth1" placeholder="A truth about you...">
+                                <input class="truth mb-1 w-75" [(ngModel)]="truth2"
+                                    placeholder="Another truth about you...">
+                                <input class=" lie mb-1 w-75" [(ngModel)]="lie" placeholder="A lie about you...">
                                 <br>
-                                <button class="btn btn-success" [disabled]="!truth1 || !truth2 || !lie" (click)="startGame()">Start Game</button>
+                                <button class=" btn btn-success" [disabled]="!truth1 || !truth2 || !lie"
+                                    (click)="startGame()">Start Game</button>
                             </div>
                         </div>
                         <!-- GAME RUNNING -->
@@ -41,58 +47,48 @@
                             <div *ngIf="username === game.currentPlayer">
                                 <div class="col text-center">
                                     <div>Your submission:</div>
-                                    <div class = "truthdisplay">{{truth1}}</div>
-                                    <div class = "truthdisplay">{{truth2}}</div>
-                                    <div class = "liedisplay">{{lie}}</div>
+                                    <div class="truthdisplay">{{truth1}}</div>
+                                    <div class="truthdisplay">{{truth2}}</div>
+                                    <div class="liedisplay">{{lie}}</div>
                                 </div>
                             </div>
 
                             <!-- PLAYER GUESSING -->
                             <div *ngIf="username !== game.currentPlayer">
                                 <div> Guess the lie! </div>
-                                <mat-radio-group
-                                        class="options"
-                                            [(ngModel)]="chosen">
-                                    <mat-radio-button class="options-button" *ngFor="let option of game.options" [value]="option" >
-                                            {{option}}
+                                <mat-radio-group class="options" [(ngModel)]="chosen">
+                                    <mat-radio-button class="options-button" *ngFor="let option of game.options"
+                                        [value]="option">
+                                        {{option}}
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>
                         </div>
-                        
 
-                    <div *ngIf="game.state == 'result'">
-
+                        <div *ngIf="game.state == 'result'">
                             <div *ngIf="username == game.currentPlayer">
-                                <div> Players that have guessed the lie: </div>
+                                <div> Players who guessed the lie correctly: </div>
                                 <div *ngFor="let g of game.guessed">
                                     {{g}}
                                 </div>
-                                <div *ngIf="next">
-                                <button class="btn btn-success" (click)="continueGame()">Continue Game</button>
+                                <div *ngIf="game.next" class="mt-4 text-center">
+                                    <button class="btn btn-success" (click)="continueGame()">Continue Game</button>
                                 </div>
-                                <div *ngIf="!next">
-                                   Game finished!
-                                </div>
-
 
                             </div>
-
                             <div *ngIf="username !== game.currentPlayer">
                                 <div *ngIf="correct">
-                                    You guessed the lie! Well done!
+                                    You guessed the lie. Well done!
                                 </div>
                                 <div *ngIf="!correct">
-                                    You are sadly wrong. The lie was {{game.lie}}
+                                    You guessed wrong.
+                                </div>
+                                <div class="mt-2">
+                                    The lie was: {{game.lie}}
                                 </div>
                             </div>
-                           
-                        </div>
-
-
-                        <div *ngIf="game.state == 'over'">
-                            <div class="text-center">
-                                GAME ENDED <br>
+                            <div *ngIf="!game.next" class="mt-4 text-center">
+                                The game is over! You can disconnect now.
                             </div>
                         </div>
                     </div>
@@ -129,9 +125,12 @@
             </button>
             <h1>How to play 2 Truth and 1 Lie</h1>
             <p>
-                Please start the game once everybody is ready.<br> Think of 2 true and 1 false fact about yourself. <br> Write down the true statements in the green boxes and the false one in the red box. 
-                <br>If you are guessing, select the sentence you think is false and click submit.
-        
+                Please start the game once everybody is ready.<br> Think of 2 true and 1 false fact about yourself. <br>
+                Write down the true statements in the green boxes and the false one in the red box.
+                <br>Talk to each other and try to find out which of the statements is the lie!
+                If one of the statements is for example "I have an older brother", you could ask the person more about
+                their brother. <br>
+                Select your guess before the time is up.
             </p>
         </div>
     </div>

@@ -1,6 +1,5 @@
 import { Component, Input, Output, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import { GamesService } from '@app/services/custom/games/games.service';
-import { textChangeRangeIsUnchanged } from 'typescript';
 import { TruthlieUpdate } from '../messages/truthlieUpdate';
 
 @Component({
@@ -12,18 +11,18 @@ export class TruthlieComponent implements OnInit, OnDestroy {
   @Input() username: string;
   @Input() sessionId: string;
   @Input() taskId: string;
-  @Input() truth1: string;
-  @Input() truth2: string;
-  @Input() lie: string;
   @Output() disconnect: EventEmitter<string> = new EventEmitter<string>();
-  
+
+
+  truth1: string;
+  truth2: string;
+  lie: string;
   correct: boolean;
   chosen: string;
   timeInterval;
   timer;
   gameUpdateSubscriptionEvent;
   showHelp = false;
-  next = false;
 
   game: TruthlieUpdate;
 
@@ -44,9 +43,6 @@ export class TruthlieComponent implements OnInit, OnDestroy {
   }
 
   startGame(): void {
-    //clearInterval(this.timeInterval); 
-    console.log(this.game.currentPlayer + " started game");
-    console.log(this.game);
     this.game.countDownStarted = true;
     this.game.timeleft = this.game.timelimit;
     this.game.state = "running";
@@ -56,7 +52,7 @@ export class TruthlieComponent implements OnInit, OnDestroy {
     this.timer = this.game.timelimit;
     this.sendUpdateGame();
     this.setTimer();
-    
+
   }
 
   continueGame(): void {
@@ -73,8 +69,8 @@ export class TruthlieComponent implements OnInit, OnDestroy {
 
   setTimer(): void {
     this.timeInterval = setInterval(() => {
-      if(this.game.state == 'running'){
-      if (this.timer > 0) this.timer -= 1;
+      if (this.game.state == 'running') {
+        if (this.timer > 0) this.timer -= 1;
         this.game.timeleft = this.timer;
         if (this.timer <= 0) {
           this.onGameOver();
@@ -84,47 +80,45 @@ export class TruthlieComponent implements OnInit, OnDestroy {
   }
 
   onGameOver(): void {
-    clearInterval(this.timeInterval); 
-   // console.log('chosen ' + this.chosen);
-    if (this.game.currentPlayer !== this.username && this.chosen === this.game.lie){
-        this.correct = true;
-        this.game.guessed[0] = this.username;
-        this.game.state = 'result';
-        this.gamesService.sendUpdate(this.game);
-        this.game.countDownStarted = false;
+    clearInterval(this.timeInterval);
+    if (this.game.currentPlayer !== this.username && this.chosen === this.game.lie) {
+      this.correct = true;
+      this.game.guessed[0] = this.username;
+      this.game.state = 'result';
+      this.game.countDownStarted = false;
     } else {
       this.game.state = 'result';
       this.game.countDownStarted = false;
-      if (this.game.played.length < this.game.players.length){
-          this.next = true;
+      if (this.game.played.length < this.game.players.length) {
+        this.game.next = true;
       }
       else {
-        this.next = false;
+        this.game.next = false;
+      }
     }
-    }
+    this.gamesService.sendUpdate(this.game);
   }
 
-   // Updates the current view with a recieved update
-   handleRecievedUpdateGame(truthlieUpdate: TruthlieUpdate) {
-    console.log(truthlieUpdate);
-    if (truthlieUpdate.state === "result" && this.username === truthlieUpdate.currentPlayer){
-        this.game.guessed.push(truthlieUpdate.guessed[0]);
+  // Updates the current view with a recieved update
+  handleRecievedUpdateGame(truthlieUpdate: TruthlieUpdate) {
+    if (truthlieUpdate.state === "result" && this.username === truthlieUpdate.currentPlayer) {
+      this.game.guessed.push(truthlieUpdate.guessed[0]);
     }
-    else if (truthlieUpdate.state === "result") {}
+    else if (truthlieUpdate.state === "result") { }
     else {
-    if (this.game){
-    if (this.game.countDownStarted == false && truthlieUpdate.countDownStarted) {
-      // Start Countdown Now!
-      this.timer = this.game.timelimit;
-      this.setTimer();
+      if (this.game) {
+        if (this.game.countDownStarted == false && truthlieUpdate.countDownStarted) {
+          // Start Countdown Now!
+          this.timer = this.game.timelimit;
+          this.setTimer();
+        }
+        this.game = truthlieUpdate;
+      }
+      else {
+        this.game = truthlieUpdate;
+        this.timer = this.game.timelimit;
+      }
     }
-    this.game = truthlieUpdate;
-  }
-    else {
-    this.game = truthlieUpdate;
-    this.timer = this.game.timelimit;
-  }
-  }
   }
 
   sendUpdateGame(): void {
@@ -132,46 +126,46 @@ export class TruthlieComponent implements OnInit, OnDestroy {
   }
 
 
-    shuffle(array) {
-      var currentIndex = array.length, temporaryValue, randomIndex;
-      // While there remain elements to shuffle...
-      while (0 !== currentIndex) { 
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
-      return array;
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
     }
+    return array;
+  }
 
 
-    toggleHelp() {
-      this.showHelp = !this.showHelp;
-    }
+  toggleHelp() {
+    this.showHelp = !this.showHelp;
+  }
 
-    get countdown() {
-      let minutes = Math.floor(this.timer / 60);
-      let min;
-      if (minutes < 10) {
-        min = `0${minutes}`;
-      } else {
-        min = minutes;
-      }
-      let seconds = this.timer % 60;
-      let sec;
-      if (seconds < 10) {
-        sec = `0${seconds}`;
-      } else {
-        sec = seconds;
-      }
-      return `${min}:${sec}`
+  get countdown() {
+    let minutes = Math.floor(this.timer / 60);
+    let min;
+    if (minutes < 10) {
+      min = `0${minutes}`;
+    } else {
+      min = minutes;
     }
+    let seconds = this.timer % 60;
+    let sec;
+    if (seconds < 10) {
+      sec = `0${seconds}`;
+    } else {
+      sec = seconds;
+    }
+    return `${min}:${sec}`
+  }
 
-    disconnectGame() {
-      this.disconnect.emit("disconnect");
-    }
+  disconnectGame() {
+    this.disconnect.emit("disconnect");
+  }
 
 }

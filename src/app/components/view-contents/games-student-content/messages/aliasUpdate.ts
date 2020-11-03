@@ -10,6 +10,5 @@ export interface AliasUpdate {
     description: string;    // description of the game
     taskId: string; // ID of the words that will be selected from the database(Not yet implemented) TODO
     state: "lobby" | "running" | "over";
-    timelimit: number;
     timeleft: number;
 }

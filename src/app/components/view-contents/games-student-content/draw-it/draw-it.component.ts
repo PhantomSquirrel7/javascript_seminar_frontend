@@ -109,17 +109,16 @@ export class DrawItComponent implements OnInit, OnDestroy {
     if (this.gamesService == undefined) {
       return;
     }
-    if (this.game) {
-      if (this.username != this.game.currentPlayer) {
-        this.timer = gameUpdate.timeleft;
+    this.game = gameUpdate;
+
+    if (this.username != this.game.currentPlayer) {
+      // synchronize timer 
+      if (this.timer != gameUpdate.timeleft) {
+        this.setTimer(gameUpdate.timeleft);
       }
-      if (this.timeRunning == false && gameUpdate.countDownStarted == true) {
-        this.setTimer();
-      }
-      this.game = gameUpdate;
-      if (gameUpdate.drawing) this.handleCanvasUpdate(gameUpdate.drawing);
-    } else {
-      this.game = gameUpdate;
+    }
+    if (this.timeRunning == false && gameUpdate.countDownStarted == true) {
+      this.setTimer(gameUpdate.timeleft);
     }
   }
 
@@ -129,7 +128,7 @@ export class DrawItComponent implements OnInit, OnDestroy {
     this.game.state = "running";
     this.currentWord = this.game.words[0];
     this.gamesService.sendUpdate(this.game);
-    this.setTimer();
+    this.setTimer(this.game.timeleft);
   }
 
   onGameOver(): void {
@@ -138,23 +137,26 @@ export class DrawItComponent implements OnInit, OnDestroy {
     this.gamesService.sendUpdate(this.game);
   }
 
-  setTimer(): void {
+  setTimer(timeleft): void {
+    if (this.timeInterval) {
+      clearInterval(this.timeInterval);
+    }
     this.timeRunning = true;
-    this.timer = this.game.timelimit;
-    this.sleep(900)
-      .then(() => {
-        this.timeInterval = setInterval(() => {
-          if (this.timer > 0) this.timer -= 1;
-          //current player is reference for timer and initializes game over
-          if (this.username == this.game.currentPlayer) {
-            this.game.timeleft = this.timer;
-            this.gamesService.sendUpdate(this.game);
-            if (this.timer <= 0) {
-              this.onGameOver();
-            }
-          }
-        }, 1000);
-      })
+    this.timer = timeleft;
+    // this.sleep(950)
+    //   .then(() => {
+    this.timeInterval = setInterval(() => {
+      if (this.timer > 0) this.timer -= 1;
+      //current player is reference for timer and initializes game over
+      if (this.username == this.game.currentPlayer) {
+        this.game.timeleft = this.timer;
+        this.gamesService.sendUpdate(this.game);
+        if (this.timer <= 0) {
+          this.onGameOver();
+        }
+      }
+    }, 1000);
+    // })
   }
 
   sleep(ms) {

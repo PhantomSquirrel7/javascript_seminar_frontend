@@ -12,4 +12,5 @@ export interface TruthlieUpdate {
     state: 'lobby' | 'result' | 'running' | 'over';
     timelimit: number;
     timeleft: number;
+    next: Boolean;
 }
