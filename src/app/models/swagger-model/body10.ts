@@ -15,4 +15,5 @@ export interface Body10 {
      * the class to match with
      */
     _class?: string;
+    initialMessage?: string;
 }

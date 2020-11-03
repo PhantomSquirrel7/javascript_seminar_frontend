@@ -14,6 +14,7 @@ export interface Body9 {
     date?: Date;
     groupAssignment?: Body9.GroupAssignmentEnum;
     taskList?: Array<string>;
+    duration?: number;
 }
 export namespace Body9 {
     export type GroupAssignmentEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';

@@ -158,7 +158,8 @@ export class ProjectsService {
         }
 
         let myBody = {
-            "class": body._class
+            "class": body._class,
+            "initialMessage": body.initialMessage
         }
 
         return this.httpClient.request<InlineResponse20010>('post',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects`,

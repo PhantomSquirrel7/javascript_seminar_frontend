@@ -9,6 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ClassesTeacher } from './classesTeacher';
 import { ClassesclassIdprojectsClasses } from './classesclassIdprojectsClasses';
 
 export interface InlineResponse20010 { 
@@ -17,6 +18,7 @@ export interface InlineResponse20010 {
     state?: InlineResponse20010.StateEnum;
     messages?: Array<Array<any>>;
     meetings?: Array<any>;
+    startedBy?: ClassesTeacher;
 }
 export namespace InlineResponse20010 {
     export type StateEnum = 'pending' | 'ongoing' | 'done';

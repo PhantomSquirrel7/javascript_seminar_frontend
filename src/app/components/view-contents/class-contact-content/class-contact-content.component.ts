@@ -49,8 +49,9 @@ export class ClassContactContentComponent{
     console.log(this.actClass);
     console.log(this.selfClass);
 
-    let myBody= {
-      "_class": this.actClass.id.toString()
+    let myBody: Body10= {
+      "_class": this.actClass.id.toString(),
+      "initialMessage": this.contactTeacherForm.value.messageText
     };
 
 

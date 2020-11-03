@@ -12,8 +12,7 @@
 import { ClassesTeacher } from './classesTeacher';
 import { InlineResponse201Tokens } from './inlineResponse201Tokens';
 
-export interface InlineResponse201 {
-    student: any;
+export interface InlineResponse201 { 
     user?: ClassesTeacher;
     tokens?: InlineResponse201Tokens;
 }
