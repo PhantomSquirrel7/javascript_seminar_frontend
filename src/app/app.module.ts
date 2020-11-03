@@ -82,8 +82,11 @@ import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
 import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
 import { GamesViewComponent } from './components/views/games-view/games-view.component';;
-import { SimpleTaskFormComponent } from './components/view-contents/tasks-teacher-content/simple-task-config/simple-task-form/simple-task-form.component'
-
+import { SimpleTaskFormComponent } from './components/view-contents/tasklist-teacher-content/simple-task-form/simple-task-form.component'
+;
+import { TasklistTeacherContentComponent } from './components/view-contents/tasklist-teacher-content/tasklist-teacher-content.component'
+;
+import { GamesListFormComponent } from './components/view-contents/tasklist-teacher-content/games-list-form/games-list-form.component'
 @NgModule({
   imports: [
     BrowserModule,
@@ -168,7 +171,10 @@ import { SimpleTaskFormComponent } from './components/view-contents/tasks-teache
     SimpleTaskFormComponent,
     DisplayPartnerClassInfoComponent,
     ConfirmDialogComponent
-  ],
+,
+    TasklistTeacherContentComponent
+,
+    GamesListFormComponent  ],
   entryComponents: [ConfirmDialogComponent],
   providers: [
     {
