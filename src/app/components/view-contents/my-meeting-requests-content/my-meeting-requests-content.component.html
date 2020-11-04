@@ -23,12 +23,18 @@
                 <div fxLayout="column" class="card-body">
                     <div><span fxFlex="0 0 25%">Date: </span> {{meeting.date}} </div>
                     <div><span fxFlex="0 0 25%"> Group Assignment: </span> {{meeting.groupAssignment}}</div>
-                    <div><span fxFlex="0 0 25%"> Groups: </span>  <button class="btn btn-warning btn-sm">View/Edit Groups</button></div>
+
+                    <div>
+                        <span fxFlex="0 0 25%"> Groups: </span>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                            View/Edit Groups
+                        </button>
+                    </div>
                     <div><span fxFlex="0 0 25%"> Task Lists: </span> <button class="btn btn-warning btn-sm">View/Edit Task Lists</button></div>
                 </div>
 
-                <div class="card-footer text-right">
-                    <button class="btn btn-warning btn-sm">Update Meeting</button>
+                <div class="card-footer text-center">
+                    <!-- <button class="btn btn-warning btn-sm">Update Meeting</button> -->
                     <button class="btn btn-danger btn-sm">Delete Meeting</button>
                 </div>
         </div>
@@ -38,4 +44,39 @@
 
 
 
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">View/Edit Arrangement</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div fxLayout="row" fxLayoutGap="25px" class="modal-body">
+            <div>
+                Your Class
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, list1)">
+                    <div class="example-box" *ngFor="let list of list1" cdkDrag>{{list}}</div>
+                </div>
+            </div>
+
+            <div>
+                Partner Class
+                <div cdkDropList cdkDropListDisabled class="example-list" (cdkDropListDropped)="drop($event, list2)">
+                    <div class="example-box" *ngFor="let list of list2" cdkDrag>{{list}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button (click)="saveArrangement()" type="button" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+    </div>
 </div>

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MeetingsService } from '@app/services/swagger-api/meetings.service';
 import { ClassesService } from '@app/services/swagger-api/classes.service';
 import { ProjectsService } from '@app/services/swagger-api/projects.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-my-meeting-requests-content',
@@ -22,6 +23,18 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   loading = false;
   user_classes = [];
   error = '';
+
+  list1 = [    
+    'Episode I - The Phantom Menace',
+    'Episode II - Attack of the Clones',
+    'Episode III - Revenge of the Sith'
+  ];
+
+  list2 = [    
+    'Episode IV - A New Hope',
+    'Episode V - The Empire Strikes Back',
+    'Episode VI - The Empire Strikes Back'
+  ];
  
   constructor(
     private fb: FormBuilder, 
@@ -92,5 +105,15 @@ export class MyMeetingRequestsContentComponent implements OnInit {
       },
     });
 
+  }
+
+
+  drop(event: CdkDragDrop<string[]>, list) {
+    moveItemInArray(list, event.previousIndex, event.currentIndex);
+  }
+
+  saveArrangement() {
+    console.log(this.list1)
+    console.log(this.list2)
   }
 }

@@ -14,18 +14,6 @@ import { ProjectsService } from '@app/services/swagger-api/projects.service';
   styleUrls: ['./plan-meeting-content.component.less']
 })
 export class PlanMeetingContentComponent implements OnInit  { 
-  list1 = [    
-    'Episode I - The Phantom Menace',
-    'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith'
-  ];
-
-  list2 = [    
-    'Episode IV - A New Hope',
-    'Episode V - The Empire Strikes Back',
-    'Episode VI - The Empire Strikes Back'
-  ];
-
   projectList = [];
 
   clsSelecForm: FormGroup;
@@ -125,15 +113,6 @@ export class PlanMeetingContentComponent implements OnInit  {
 
   stringFormatter(text: string) {
     return text.toLowerCase();
-  }
-
-  drop(event: CdkDragDrop<string[]>, list) {
-    moveItemInArray(list, event.previousIndex, event.currentIndex);
-  }
-
-  saveArrangement() {
-    console.log(this.list1)
-    console.log(this.list2)
   }
 
   selectArrangement(arrangement: string) {
