@@ -19,8 +19,7 @@ export class GamesService extends Socket {
   // TODO make this adjustable
   constructor() {
     super({
-      url: "http://localhost:5000", options: {}
-      //url: "https://api-globy.herokuapp.com", options: {}
+      url: "https://api-globy.herokuapp.com", options: {}
     });
     console.log("Try connecting");
 

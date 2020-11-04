@@ -36,8 +36,8 @@ import { Configuration } from '../../swagger-configs/configuration';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    //protected basePath = 'https://api-globy.herokuapp.com/v1';
-    protected basePath = "http://localhost:5000/v1";
+    protected basePath = 'https://api-globy.herokuapp.com/v1';
+
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
