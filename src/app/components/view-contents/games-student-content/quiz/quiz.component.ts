@@ -79,7 +79,7 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
     this.quizUpdate.quizOver = true;
     this.sendUpdateGame();
     clearInterval(this.timeInterval);
-    console.log("TODO Gameover");
+    //console.log("TODO Gameover");
   }
 
   /*
@@ -129,7 +129,7 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
 
   // Updates the current view with a recieved update
   handleRecievedUpdateGame(quizUpdate: QuizUpdate) {
-    console.log(quizUpdate)
+    //console.log(quizUpdate)
     if (quizUpdate.quizes.length > 0) {
       this.currentQuiz = quizUpdate.quizes[quizUpdate.quizIndex];
     }

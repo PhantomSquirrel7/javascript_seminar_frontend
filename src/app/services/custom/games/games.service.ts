@@ -43,24 +43,13 @@ export class GamesService extends Socket {
     });
     this.on("drawingUpdate", (data) => {
       this.handleDrawingUpdate(data);
-    })
-    this.on("gameResult", (data) => {
-      this.handleGameResultMessage(data);
     });
-
   }
 
   // Recieve and save and updated gameSession and let listeners update
   handleUpdateGameMessage(session) {
-    console.log("Recieved Upadte " + JSON.stringify(session));
-    // TODO Move gameSession to component
     this.gameSession = session;
     this.gameUpdateEvent.emit(session);
-  }
-
-  // Handle a game Result message
-  handleGameResultMessage(data) {
-    console.log("Got Result: ", data);
   }
 
   handleDrawingUpdate(drawing) {

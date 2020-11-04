@@ -220,7 +220,7 @@ export class DrawItComponent implements OnInit, OnDestroy {
       return;
     }
     //update for guessing players only
-    console.log(newMessage)
+    //console.log(newMessage)
     switch (newMessage.type) {
       case "draw":
         let updates = newMessage.data;
