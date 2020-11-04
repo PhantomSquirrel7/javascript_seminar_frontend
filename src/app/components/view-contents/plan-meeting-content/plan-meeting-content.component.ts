@@ -13,6 +13,7 @@ import { ProjectsService } from '@app/services/swagger-api/projects.service';
   templateUrl: './plan-meeting-content.component.html',
   styleUrls: ['./plan-meeting-content.component.less']
 })
+<<<<<<< HEAD
 export class PlanMeetingContentComponent implements OnInit {
   list1 = [
     'Episode I - The Phantom Menace',
@@ -26,6 +27,9 @@ export class PlanMeetingContentComponent implements OnInit {
     'Episode VI - The Empire Strikes Back'
   ];
 
+=======
+export class PlanMeetingContentComponent implements OnInit  { 
+>>>>>>> origin/master
   projectList = [];
 
   clsSelecForm: FormGroup;
@@ -125,15 +129,6 @@ export class PlanMeetingContentComponent implements OnInit {
 
   stringFormatter(text: string) {
     return text.toLowerCase();
-  }
-
-  drop(event: CdkDragDrop<string[]>, list) {
-    moveItemInArray(list, event.previousIndex, event.currentIndex);
-  }
-
-  saveArrangement() {
-    console.log(this.list1)
-    console.log(this.list2)
   }
 
   selectArrangement(arrangement: string) {
