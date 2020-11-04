@@ -13,23 +13,7 @@ import { ProjectsService } from '@app/services/swagger-api/projects.service';
   templateUrl: './plan-meeting-content.component.html',
   styleUrls: ['./plan-meeting-content.component.less']
 })
-<<<<<<< HEAD
 export class PlanMeetingContentComponent implements OnInit {
-  list1 = [
-    'Episode I - The Phantom Menace',
-    'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith'
-  ];
-
-  list2 = [
-    'Episode IV - A New Hope',
-    'Episode V - The Empire Strikes Back',
-    'Episode VI - The Empire Strikes Back'
-  ];
-
-=======
-export class PlanMeetingContentComponent implements OnInit  { 
->>>>>>> origin/master
   projectList = [];
 
   clsSelecForm: FormGroup;
