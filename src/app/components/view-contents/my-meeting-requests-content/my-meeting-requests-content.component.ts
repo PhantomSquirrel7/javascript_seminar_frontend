@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MeetingsService } from '@app/services/swagger-api/meetings.service';
 import { ClassesService } from '@app/services/swagger-api/classes.service';
 import { ProjectsService } from '@app/services/swagger-api/projects.service';
 
@@ -17,17 +18,15 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   isClassSelected = false;
   isProjectSelected = false;
   projectList = [];
+  meetingList: any;
   loading = false;
   user_classes = [];
   error = '';
-
-
-
-
  
   constructor(
     private fb: FormBuilder, 
     private projectService: ProjectsService,
+    private meetingService: MeetingsService,
     private classService: ClassesService,
     private _snackBar: MatSnackBar,
 
@@ -71,6 +70,27 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   projectSelected(){
     this.selectedProject = this.projectSelectForm.value.selectedProject;
     this.isProjectSelected = true;
+    this.fetchMeetings();
   }  
 
+  fetchMeetings() {
+    const classID = this.selectedClass.id
+    const projectID = this.selectedProject.id
+
+    this.meetingService.classesClassIdProjectsProjectIdMeetingsGet(classID, projectID).subscribe({
+      next: (response) => {
+        this.meetingList = response;
+        this.loading = false;
+        console.log(this.meetingList)
+      },
+      error: (error) => {
+        this.error = error;
+        this._snackBar.open(this.error, 'Close', {
+        duration: 3000
+        });
+        this.loading = false;
+      },
+    });
+
+  }
 }
