@@ -1,6 +1,6 @@
 ﻿import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +30,23 @@ import {
   LandingHeaderComponent,
   NavigationComponent,
   ProfileViewContentComponent,
+  GamesStudentViewComponent,
+  GamesStudentContentComponent,
+  GamesQuizComponent,
+  GamesAliasComponent,
+  GamesTeacherViewComponent,
+  GamesTeacherContentComponent,
+  AliasGameConfigComponent,
+  QuizGameConfigComponent,
+  DrawItGameConfigComponent,
+  OverviewGamesConfigComponent,
+  MessagesComponent,
+  AliasFormComponent,
+  QuizFormComponent,
+  QuestionFormComponent,
+  DrawItFormComponent,
+  DrawItComponent,
+  TruthlieComponent,
   LandingHomeContentComponent,
   LandingOfferingContentComponent,
   LandingTeamContentComponent,
@@ -59,6 +76,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { CustomLoginService } from '@app/services/custom';
+import { SocketIoModule } from 'ngx-socket-io';
+import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
 import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
@@ -69,11 +88,14 @@ import { MyMeetingRequestsContentComponent } from './components/view-contents/my
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
+    SocketIoModule,
+    CanvasWhiteboardModule
   ],
   declarations: [
     AppComponent,
@@ -120,6 +142,23 @@ import { MyMeetingRequestsContentComponent } from './components/view-contents/my
     CreateClassContentComponent,
     CreateStudentContentComponent,
     ClassInformationViewComponent,
+    GamesStudentViewComponent,
+    GamesQuizComponent,
+    GamesAliasComponent,
+    GamesStudentContentComponent,
+    GamesTeacherViewComponent,
+    GamesTeacherContentComponent,
+    AliasGameConfigComponent,
+    QuizGameConfigComponent,
+    DrawItGameConfigComponent,
+    OverviewGamesConfigComponent,
+    MessagesComponent,
+    AliasFormComponent,
+    QuizFormComponent,
+    QuestionFormComponent,
+    DrawItFormComponent,
+    DrawItComponent,
+    TruthlieComponent,
     ClassInformationContentComponent,
     BbbViewComponent,
     GamesViewComponent,
@@ -128,7 +167,7 @@ import { MyMeetingRequestsContentComponent } from './components/view-contents/my
     MessageBoardComponent,
     DisplayPartnerClassInfoComponent,
     ConfirmDialogComponent,
-    MyMeetingRequestsContentComponent 
+    MyMeetingRequestsContentComponent
   ],
   entryComponents: [ConfirmDialogComponent],
   providers: [
@@ -143,4 +182,4 @@ import { MyMeetingRequestsContentComponent } from './components/view-contents/my
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

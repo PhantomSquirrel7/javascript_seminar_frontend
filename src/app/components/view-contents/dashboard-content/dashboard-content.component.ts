@@ -16,7 +16,7 @@ export class DashboardContentComponent implements OnInit {
   }
 
   navigateTo(pageName: string) {
-    switch(pageName) {
+    switch (pageName) {
       case "classPage": {
         this.router.navigate(['/class-information']);
         break
@@ -35,5 +35,5 @@ export class DashboardContentComponent implements OnInit {
       }
     }
   }
-    
+
 }
