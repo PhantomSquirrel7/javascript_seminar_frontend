@@ -1,1 +1,44 @@
-<p>message-board works!</p>
+<h1>Your Chat with {{recipient.firstName}} {{recipient.lastName}}</h1>
+  <div class="form-group" style="margin-right: 50px">
+    <form [formGroup]="contactTeacherForm" (ngSubmit)="onSubmit()">
+      <div class="oldMessages">
+        <p *ngIf="messages == []">No of messages yet</p>
+        <div *ngIf="messages != []">
+            <div class="card outer-clard">
+                <div class="card-body" style="width: 100%; display: flex; flex-direction: column;">
+                    <div *ngFor="let message of messages">
+                        <div *ngIf="message.from == sender.id" style="margin-left: 100px;" class="card bg-light text-dark">
+                            <div class="card-body">
+                                {{message.message}}                               
+                                <p class="font-weight-lighter">
+                                    {{getTime(message.timestamp)}}
+                                </p>
+                            </div>
+                        </div>
+                        <div *ngIf="message.from != sender.id" style="margin-right: 100px;" class="card bg-info text-light">
+                            <div class="card-body">
+                                {{message.message}}
+                                <br>
+                                <p class="font-weight-lighter">
+                                    {{getTime(message.timestamp)}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+      </div>
+      <div class="newMessage" style="display: flex; align-items: flex-end; justify-content: space-between;">
+          <textarea class="form-control" rows="1" id="comment" formControlName="messageText" [(ngModel)]="messageTextValue"></textarea>
+          <button class="btn btn-outline-success btn-lg" style="margin-left: 20px;">Send</button>
+      </div>
+    </form>
+    <div *ngIf=sent>
+      <br>
+      <div class="alert alert-success" role="alert">
+        Your message was sent successfully!
+      </div>
+    </div>
+  </div> 

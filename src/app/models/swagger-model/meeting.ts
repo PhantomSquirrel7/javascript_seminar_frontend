@@ -16,6 +16,8 @@ export interface Meeting {
     date?: Date;
     groupAssignments?: Meeting.GroupAssignmentsEnum;
     groups?: Array<Array<string>>;
+    taskList?: Array<string>;
+    duration?: number;
 }
 export namespace Meeting {
     export type GroupAssignmentsEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';

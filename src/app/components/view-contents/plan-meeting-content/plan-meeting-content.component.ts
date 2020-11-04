@@ -5,6 +5,7 @@ import { ClassesService } from 'src/app/services/swagger-api/classes.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ProjectsService } from '@app/services/swagger-api/projects.service';
 
 
 @Component({
@@ -25,18 +26,25 @@ export class PlanMeetingContentComponent implements OnInit {
     'Episode VI - The Empire Strikes Back'
   ];
 
+  projectList = [];
+
   clsSelecForm: FormGroup;
+  projectSelectForm: FormGroup;
+  planningSectionForm: FormGroup;
 
   user: User;
   error = '';
-  isSelected = false;
+  isClassSelected = false;
   selectedClass: any; // Type Class
   selectedTypeOfClass = ''
   selectedDuration: number;
   durations = [30, 45, 60, 90, 120];
+  date: Date;
   typeOfClasses = ['Quiz', 'Ice-Breaker Game', 'Others',]
   loading = false;
   selectedArrangement = '';
+  selectedProject: any; // Type Project
+  isProjectSelected = false;
 
   user_classes = [];
 
@@ -44,6 +52,7 @@ export class PlanMeetingContentComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private classService: ClassesService,
+    private projectService: ProjectsService,
     private _snackBar: MatSnackBar,
   ) { }
 
@@ -51,6 +60,12 @@ export class PlanMeetingContentComponent implements OnInit {
     this.selectedArrangement = 'tandem';
     this.clsSelecForm = this.fb.group({
       selectedClass: [null]
+    });
+    this.projectSelectForm = this.fb.group({
+      selectedProject: [null]
+    });
+    this.planningSectionForm = this.fb.group({
+      selectedDuration: [null]
     });
     this.classService.classesGet().subscribe({
       next: (response) => {
@@ -70,7 +85,23 @@ export class PlanMeetingContentComponent implements OnInit {
 
   classSelected() {
     this.selectedClass = this.clsSelecForm.value.selectedClass;
-    this.isSelected = true;
+    this.isClassSelected = true;
+    this.isProjectSelected = false;
+    console.log('teacher:' + this.selectedClass.id)
+
+    this.projectService.classesClassIdProjectsGet(this.selectedClass.id).subscribe({
+      next: (response) => {
+        this.projectList = response;
+        console.log(this.projectList)
+      }
+    });
+
+
+  }
+
+  projectSelected() {
+    this.selectedProject = this.projectSelectForm.value.selectedProject;
+    this.isProjectSelected = true;
   }
 
   typeSelected(event) {
@@ -107,5 +138,20 @@ export class PlanMeetingContentComponent implements OnInit {
 
   selectArrangement(arrangement: string) {
     this.selectedArrangement = arrangement;
+  }
+
+  submitForm() {
+    console.log(this.date);
+    console.log(this.selectedDuration);
+    console.log(this.selectedArrangement)
+    console.log(this.selectedProject.id);
+  }
+
+  onDateSelected(event) {
+    this.date = event.value;
+  }
+
+  durationSelected() {
+    this.selectedDuration = this.planningSectionForm.value.selectedDuration;
   }
 }

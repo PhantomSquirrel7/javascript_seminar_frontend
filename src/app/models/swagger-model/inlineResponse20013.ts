@@ -9,23 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ClassesTeacher } from './classesTeacher';
-import { MenotificationsCta } from './menotificationsCta';
 
 export interface InlineResponse20013 { 
     id?: string;
-    title?: string;
-    text?: string;
-    opened?: boolean;
-    type?: InlineResponse20013.TypeEnum;
-    cta?: MenotificationsCta;
-    user?: ClassesTeacher;
-}
-export namespace InlineResponse20013 {
-    export type TypeEnum = 'notification' | 'email' | 'all';
-    export const TypeEnum = {
-        Notification: 'notification' as TypeEnum,
-        Email: 'email' as TypeEnum,
-        All: 'all' as TypeEnum
-    };
+    name?: string;
 }

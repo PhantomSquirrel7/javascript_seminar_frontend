@@ -30,7 +30,8 @@ import {
   AliasGameConfigComponent,
   QuizGameConfigComponent,
   DrawItGameConfigComponent,
-  OverviewGamesConfigComponent
+  OverviewGamesConfigComponent,
+  StudentMeetingsContentComponent
 } from './components';
 
 const routes: Routes = [
@@ -155,6 +156,12 @@ const routes: Routes = [
       { path: '**', redirectTo: 'overview' }
     ],
     data: { roles: [User.RoleEnum.Teacher] }
+  },
+  {
+    path: 'student-meetings-content',
+    component: StudentMeetingsContentComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [User.RoleEnum.Student] }
   },
 
   // otherwise redirect to home

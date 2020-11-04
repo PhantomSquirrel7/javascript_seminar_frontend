@@ -16,6 +16,8 @@ export interface InlineResponse2005 {
     date?: Date;
     groupAssignments?: InlineResponse2005.GroupAssignmentsEnum;
     groups?: Array<Array<string>>;
+    taskList?: Array<string>;
+    duration?: number;
 }
 export namespace InlineResponse2005 {
     export type GroupAssignmentsEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';

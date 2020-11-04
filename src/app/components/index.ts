@@ -6,6 +6,7 @@ export * from './common/landing-header/landing-header.component';
 export * from './common/navigation/navigation.component';
 export * from './common/student-navigation/student-navigation.component';
 export * from './common/message-board/message-board.component';
+export * from './common/confirm-dialog/confirm-dialog.component';
 
 // views
 export * from './views/create-class-view/create-class-view.component';
@@ -44,14 +45,11 @@ export * from './view-contents/profile-view-content/profile-view-content.compone
 export * from './view-contents/landing-home-content/landing-home-content.component';
 export * from './view-contents/landing-offering-content/landing-offering-content.component';
 export * from './view-contents/landing-team-content/landing-team-content.component';
-export * from './view-contents/class-contact-component/class-contact-component.component';
+export * from './view-contents/class-contact-content/class-contact-content.component';
 export * from './view-contents/student-profile-content/student-profile-content.component';
 export * from './view-contents/student-home-content/student-home-content.component';
 export * from './view-contents/student-assignments-content/student-assignments-content.component';
 export * from './view-contents/student-meetings-content/student-meetings-content.component';
-export * from './view-contents/create-class-component/create-class-component.component';
-export * from './view-contents/create-student-component/create-student-component.component';
-export * from './view-contents/class-information-component/class-information-component.component';
 export * from './view-contents/games-student-content/games-student-content.component';
 export * from './view-contents/games-student-content/alias/alias.component';
 export * from './view-contents/games-student-content/quiz/quiz.component';
@@ -67,6 +65,10 @@ export * from './view-contents/games-teacher-content/alias-game-config/alias-for
 export * from './view-contents/games-teacher-content/quiz-game-config/quiz-form/quiz-form.component';
 export * from './view-contents/games-teacher-content/quiz-game-config/question-form/question-form.component';
 export * from './view-contents/games-teacher-content/draw-it-game-config/draw-it-form/draw-it-form.component';
+export * from './view-contents/create-class-content/create-class-content.component';
+export * from './view-contents/create-student-content/create-student-content.component';
+export * from './view-contents/class-information-content/class-information-content.component';
 export * from './view-contents/my-connection-requests-content/my-connection-requests-content.component';
 export * from './view-contents/project-info-content/project-info-content.component';
+export * from './view-contents/display-partner-class-info/display-partner-class-info.component';
 

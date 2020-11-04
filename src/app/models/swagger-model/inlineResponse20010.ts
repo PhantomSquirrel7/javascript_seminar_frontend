@@ -9,8 +9,22 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ClassesTeacher } from './classesTeacher';
+import { ClassesclassIdprojectsClasses } from './classesclassIdprojectsClasses';
 
 export interface InlineResponse20010 { 
     id?: string;
-    name?: string;
+    classes?: Array<ClassesclassIdprojectsClasses>;
+    state?: InlineResponse20010.StateEnum;
+    messages?: Array<Array<any>>;
+    meetings?: Array<any>;
+    startedBy?: ClassesTeacher;
+}
+export namespace InlineResponse20010 {
+    export type StateEnum = 'pending' | 'ongoing' | 'done';
+    export const StateEnum = {
+        Pending: 'pending' as StateEnum,
+        Ongoing: 'ongoing' as StateEnum,
+        Done: 'done' as StateEnum
+    };
 }

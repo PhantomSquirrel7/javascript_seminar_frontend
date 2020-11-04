@@ -3,13 +3,14 @@ import { ProjectsService } from '../../../services/swagger-api/api';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { timer } from 'rxjs';
 import { report } from 'process';
+import { Body10 } from '@app/models';
 
 @Component({
-  selector: 'app-class-contact-component',
-  templateUrl: './class-contact-component.component.html',
-  styleUrls: ['./class-contact-component.component.less']
+  selector: 'app-class-contact-content',
+  templateUrl: './class-contact-content.component.html',
+  styleUrls: ['./class-contact-content.component.less']
 })
-export class ClassContactComponentComponent{
+export class ClassContactContentComponent{
   
   @Input() actClass: any;
   @Input() teacher: any;
@@ -44,8 +45,21 @@ export class ClassContactComponentComponent{
     console.log(this.contactTeacherForm.value.messageText);
     // this.sent = true;
 
-    this.projectsService.classesClassIdProjectsPost(this.actClass.id, this.selfClass.id, "body", true).subscribe(
-      data => this. sent = true
+    console.log("Classes for Project:");
+    console.log(this.actClass);
+    console.log(this.selfClass);
+
+    let myBody: Body10= {
+      "_class": this.actClass.id.toString(),
+      "initialMessage": this.contactTeacherForm.value.messageText
+    };
+
+
+    this.projectsService.classesClassIdProjectsPost(myBody, this.selfClass.id.toString()).subscribe(
+      data => {
+        console.log(data);
+        this.sent = true;
+      }
     );
 
     const source = timer(4000);

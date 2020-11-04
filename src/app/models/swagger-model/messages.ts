@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { InlineResponse2009 } from './inlineResponse2009';
+import { InlineResponse20012 } from './inlineResponse20012';
 
-export interface Messages extends Array<InlineResponse2009> { 
+export interface Messages extends Array<InlineResponse20012> { 
 }

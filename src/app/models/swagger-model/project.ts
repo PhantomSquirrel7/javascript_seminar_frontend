@@ -9,6 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ClassesTeacher } from './classesTeacher';
 import { ClassesclassIdprojectsClasses } from './classesclassIdprojectsClasses';
 
 export interface Project { 
@@ -17,6 +18,7 @@ export interface Project {
     state?: Project.StateEnum;
     messages?: Array<Array<any>>;
     meetings?: Array<any>;
+    startedBy?: ClassesTeacher;
 }
 export namespace Project {
     export type StateEnum = 'pending' | 'ongoing' | 'done';

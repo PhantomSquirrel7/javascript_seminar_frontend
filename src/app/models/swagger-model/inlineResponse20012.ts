@@ -10,22 +10,11 @@
  * Do not edit the class manually.
  */
 import { ClassesTeacher } from './classesTeacher';
-import { MenotificationsCta } from './menotificationsCta';
 
 export interface InlineResponse20012 { 
     id?: string;
-    title?: string;
-    text?: string;
-    opened?: boolean;
-    type?: InlineResponse20012.TypeEnum;
-    cta?: MenotificationsCta;
-    user?: ClassesTeacher;
-}
-export namespace InlineResponse20012 {
-    export type TypeEnum = 'notification' | 'email' | 'all';
-    export const TypeEnum = {
-        Notification: 'notification' as TypeEnum,
-        Email: 'email' as TypeEnum,
-        All: 'all' as TypeEnum
-    };
+    message?: string;
+    from?: ClassesTeacher;
+    to?: ClassesTeacher;
+    timestamp?: string;
 }

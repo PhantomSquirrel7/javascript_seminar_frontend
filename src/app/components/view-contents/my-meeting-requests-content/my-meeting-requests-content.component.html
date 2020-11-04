@@ -1,0 +1,20 @@
+<div fxLayoutGap="25px" fxLayout="column" style="margin-left: 50px; margin-top: 50px">
+    <form [formGroup]="clsSelecForm" class="class-selection">
+        Please Choose Class:
+        <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+            <option [ngValue]="null" disabled>Select your class</option>
+            <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.name}}</option>
+        </select>
+    </form>
+
+    <div *ngIf="isClassSelected && projectList.length > 0"> 
+        <form  [formGroup]="projectSelectForm" class="project-selection">
+            Please Choose Project: 
+            <select formControlName="selectedProject" (change)="projectSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+                <option [ngValue]="null" disabled>Select your Project</option>
+                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">{{selectedProject.id}}</option>
+            </select>
+        </form>
+    </div>
+
+</div>

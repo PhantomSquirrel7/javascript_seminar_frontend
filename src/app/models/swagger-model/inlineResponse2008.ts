@@ -9,12 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ClassesTeacher } from './classesTeacher';
 
 export interface InlineResponse2008 { 
-    id?: string;
-    message?: string;
-    from?: ClassesTeacher;
-    to?: ClassesTeacher;
-    timestamp?: string;
+    name?: string;
+    value?: string;
 }

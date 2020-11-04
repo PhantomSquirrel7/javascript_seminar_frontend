@@ -1,5 +1,5 @@
 <div class="form-group" style="margin-left: 100px; margin-right: 50px">
-    <div *ngIf="!loading">
+    <div *ngIf="!loading && allDataLoaded">
         <div style="margin-right: 50px;">
             <div *ngFor="let item of user_projects" class="card shadow-lg rounded" style="margin-top: 40px;">
                 <div class="card-header">Projects for: {{item.class.name}}
@@ -29,10 +29,10 @@
     <div *ngIf="loading">
         <span class="spinner-border spinner-border-sm mr-1"></span>
     </div>
-    <div id="projectInfo" class="modal fade" role="dialog">
+    <div *ngIf="allDataLoaded" id="projectInfo" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <app-project-info-content [actClass]="actClass" [actProject]="actProject"></app-project-info-content>
+                <app-project-info-content *ngIf="allDataLoaded" [actClass]="actClass" [actProject]="actProject" [me]="user"></app-project-info-content>
             </div>
         </div>
     </div>

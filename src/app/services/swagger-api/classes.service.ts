@@ -114,18 +114,18 @@ export class ClassesService {
 
     /**
      * Find similar classes
-     * Find similar classes to match with
+     * Find similar classes to match with. It returns all classes that are from a different teacher, with the same subject, language and languageLevel. Also the level of the classes must be similar (+-1) and the number of students as well (+-4). Additionally the request can be filtered for projectDuration, meetingFrequency and country
      * @param classId Class id
      * @param projectDuration 
-     * @param languageLevel 
+     * @param meetingFrequency 
      * @param country 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Body7>>;
-    public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Body7>>>;
-    public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Body7>>>;
-    public classesClassIdFindGet(classId: string, projectDuration?: string, languageLevel?: string, country?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public classesClassIdFindGet(classId: string, projectDuration?: string, meetingFrequency?: string, country?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Body7>>;
+    public classesClassIdFindGet(classId: string, projectDuration?: string, meetingFrequency?: string, country?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Body7>>>;
+    public classesClassIdFindGet(classId: string, projectDuration?: string, meetingFrequency?: string, country?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Body7>>>;
+    public classesClassIdFindGet(classId: string, projectDuration?: string, meetingFrequency?: string, country?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdFindGet.');
@@ -138,8 +138,8 @@ export class ClassesService {
         if (projectDuration !== undefined && projectDuration !== null) {
             queryParameters = queryParameters.set('projectDuration', <any>projectDuration);
         }
-        if (languageLevel !== undefined && languageLevel !== null) {
-            queryParameters = queryParameters.set('languageLevel', <any>languageLevel);
+        if (meetingFrequency !== undefined && meetingFrequency !== null) {
+            queryParameters = queryParameters.set('meetingFrequency', <any>meetingFrequency);
         }
         if (country !== undefined && country !== null) {
             queryParameters = queryParameters.set('country', <any>country);

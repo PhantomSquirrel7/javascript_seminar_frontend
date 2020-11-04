@@ -1,4 +1,4 @@
-<div style="margin-left: 50px; margin-top: 50px">
+<div fxLayoutGap="25px" fxLayout="column" style="margin-left: 50px; margin-top: 50px">
     <form [formGroup]="clsSelecForm" class="class-selection">
         For which class would you like to plan next meeting?
         <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right"
@@ -7,97 +7,116 @@
             <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.name}}</option>
         </select>
     </form>
-    <div *ngIf="isSelected" class="planning-section">
-        <div class="card" style="width: 70vmax; margin-top: 50px;">
+
+    <div *ngIf="isClassSelected && projectList.length > 0">
+        <form [formGroup]="projectSelectForm" class="project-selection">
+            Please Choose Project:
+            <select formControlName="selectedProject" (change)="projectSelected()" class="form-control fa-pull-right"
+                style="margin-right: 10vw; max-width: 300px;">
+                <option [ngValue]="null" disabled>Select your Project</option>
+                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">{{selectedProject.id}}
+                </option>
+            </select>
+        </form>
+    </div>
+
+
+    <div *ngIf="isProjectSelected" class="planning-section">
+        <div class="card" style="width: 70vmax;">
             <div class="card-body">
-                <h3 class="card-title">You're planning for: <span class="text-primary">{{selectedClass.name}}</span>
+                <h3 class="card-title">
+                    You're planning for: <span class="text-primary">{{selectedClass.name}}</span>
+                    and Project: <span class="text-primary">{{selectedProject.id}}</span>
                 </h3>
 
-                <div fxLayout="row" fxLayoutAlign="start center">
-                    <div fxFlex="0 0 45%">When would you like to meet?</div>
-                    <mat-form-field>
-                        <mat-label>Choose a date</mat-label>
-                        <input matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                </div>
+                <div class="planning-section-form">
+                    <form [formGroup]="planningSectionForm">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <div fxFlex="0 0 45%">When would you like to meet?</div>
+                            <mat-form-field>
+                                <mat-label>Choose a date</mat-label>
+                                <input (dateInput)="onDateSelected($event)" matInput [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
 
-                <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
-                    <div fxFlex="0 0 45%">How long would you like to meet?</div>
-                    <select class="form-control form-control-sm fa-pull-right" style="max-width: 300px;">
-                        <option [ngValue]="null" disabled>Please Select Duration of meeting</option>
-                        <option [ngValue]="selectedDuration" *ngFor="let duration of durations">{{duration}} mins
-                        </option>
-                    </select>
-                </div>
+                        <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
+                            <div fxFlex="0 0 45%">How long would you like to meet?</div>
+                            <select formControlName="selectedDuration" (change)="durationSelected()"
+                                class="form-control form-control-sm fa-pull-right" style="max-width: 300px;">
+                                <option [ngValue]="null" disabled>Please Select Duration of meeting</option>
+                                <option [ngValue]="selectedDuration" *ngFor="let selectedDuration of durations">
+                                    {{selectedDuration}} mins</option>
+                            </select>
+                        </div>
 
-                <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
-                    <div fxFlex="0 0 45%">How would you like to organize the students?</div>
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <button (click)="selectArrangement('tandem')" type="button" class="btn"
-                            [ngClass]="selectedArrangement == 'tandem' ? 'btn-primary' : 'btn-light'">Tandem</button>
-                        <button (click)="selectArrangement('grp3')" type="button" class="btn"
-                            [ngClass]="selectedArrangement == 'grp3' ? 'btn-primary' : 'btn-light'">Group of 3</button>
-                        <button (click)="selectArrangement('grp4')" type="button" class="btn"
-                            [ngClass]="selectedArrangement == 'grp4' ? 'btn-primary' : 'btn-light'">Group of 4</button>
-                        <button (click)="selectArrangement('wholeclass')" type="button" class="btn"
-                            [ngClass]="selectedArrangement == 'wholeclass' ? 'btn-primary' : 'btn-light'">Whole
-                            Class</button>
-                    </div>
-                </div>
+                        <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
+                            <div fxFlex="0 0 45%">How would you like to organize the students?</div>
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                <button (click)="selectArrangement('tandem')" type="button" class="btn"
+                                    [ngClass]="selectedArrangement == 'tandem' ? 'btn-primary' : 'btn-light'">Tandem</button>
+                                <button (click)="selectArrangement('wholeclass')" type="button" class="btn"
+                                    [ngClass]="selectedArrangement == 'wholeclass' ? 'btn-primary' : 'btn-light'">Whole
+                                    Class</button>
+                            </div>
+                        </div>
 
-                <div *ngIf="selectedArrangement !== 'wholeclass'" class="padding-fix" fxLayout="row"
-                    fxLayoutAlign="start center">
-                    <div fxFlex="0 0 45%">Based on your choice, we've organized the students for you</div>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#exampleModal">
-                        View/Edit
-                    </button>
+                        <div *ngIf="selectedArrangement !== 'wholeclass'" class="padding-fix" fxLayout="row"
+                            fxLayoutAlign="start center">
+                            <div fxFlex="0 0 45%">Based on your choice, we've organized the students for you</div>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                data-target="#exampleModal">
+                                View/Edit
+                            </button>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">View/Edit Arrangement</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div fxLayout="row" fxLayoutGap="25px" class="modal-body">
-                                    <div>
-                                        Your Class
-                                        <div cdkDropList class="example-list"
-                                            (cdkDropListDropped)="drop($event, list1)">
-                                            <div class="example-box" *ngFor="let list of list1" cdkDrag>{{list}}</div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">View/Edit Arrangement</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div fxLayout="row" fxLayoutGap="25px" class="modal-body">
+                                            <div>
+                                                Your Class
+                                                <div cdkDropList class="example-list"
+                                                    (cdkDropListDropped)="drop($event, list1)">
+                                                    <div class="example-box" *ngFor="let list of list1" cdkDrag>{{list}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                Partner Class
+                                                <div cdkDropList cdkDropListDisabled class="example-list"
+                                                    (cdkDropListDropped)="drop($event, list2)">
+                                                    <div class="example-box" *ngFor="let list of list2" cdkDrag>{{list}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button (click)="saveArrangement()" type="button"
+                                                class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
-
-                                    <div>
-                                        Partner Class
-                                        <div cdkDropList cdkDropListDisabled class="example-list"
-                                            (cdkDropListDropped)="drop($event, list2)">
-                                            <div class="example-box" *ngFor="let list of list2" cdkDrag>{{list}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button (click)="saveArrangement()" type="button" class="btn btn-primary">Save
-                                        changes</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    </form>
                 </div>
             </div>
         </div>
 
-        <div class="card" style="width: 70vmax; margin-top: 50px;">
+        <!-- <div class="card" style="width: 70vmax; margin-top: 50px;">
             <div class="card-header" fxLayout="row" fxLayoutAlign="start center">
                 <div fxFlex="0 0 45%">Please select Type of Class:</div>
                 <select (change)="typeSelected($event)" class="form-control form-control-sm fa-pull-right"
@@ -124,6 +143,10 @@
                     Other component Here
                 </div>
             </div>
-        </div>
+        </div> -->
+
+
+        <button (click)="submitForm()" type="button" class="btn btn-primary">Confirm</button>
+
     </div>
 </div>

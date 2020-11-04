@@ -51,7 +51,7 @@ import {
   LandingOfferingContentComponent,
   LandingTeamContentComponent,
   MyConnectionRequestsViewComponent,
-  ClassContactComponentComponent,
+  ClassContactContentComponent,
   FindPartnerClassViewResultsComponent,
   FindPartnerClassResultsContentComponent,
   StudentHomeViewComponent,
@@ -63,11 +63,14 @@ import {
   StudentMeetingsViewComponent,
   StudentAssignmentsContentComponent,
   StudentMeetingsContentComponent,
-  CreateClassComponentComponent,
-  CreateStudentComponentComponent,
+  CreateClassContentComponent,
+  CreateStudentContentComponent,
   MyConnectionRequestsContentComponent,
   ProjectInfoContentComponent,
-  MessageBoardComponent
+  MessageBoardComponent,
+  DisplayPartnerClassInfoComponent,
+  ClassInformationContentComponent,
+  ConfirmDialogComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -77,9 +80,9 @@ import { SocketIoModule } from 'ngx-socket-io';
 import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
-import { ClassInformationComponentComponent } from './components/view-contents/class-information-component/class-information-component.component';
 import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
 import { GamesViewComponent } from './components/views/games-view/games-view.component';
+import { MyMeetingRequestsContentComponent } from './components/view-contents/my-meeting-requests-content/my-meeting-requests-content.component';
 
 @NgModule({
   imports: [
@@ -124,7 +127,7 @@ import { GamesViewComponent } from './components/views/games-view/games-view.com
     LandingOfferingContentComponent,
     MyConnectionRequestsViewComponent,
     FindPartnerClassContentComponent,
-    ClassContactComponentComponent,
+    ClassContactContentComponent,
     FindPartnerClassViewResultsComponent,
     FindPartnerClassResultsContentComponent,
     StudentHomeViewComponent,
@@ -136,10 +139,9 @@ import { GamesViewComponent } from './components/views/games-view/games-view.com
     StudentMeetingsViewComponent,
     StudentMeetingsContentComponent,
     StudentAssignmentsContentComponent,
-    CreateClassComponentComponent,
-    CreateStudentComponentComponent,
+    CreateClassContentComponent,
+    CreateStudentContentComponent,
     ClassInformationViewComponent,
-    ClassInformationComponentComponent,
     GamesStudentViewComponent,
     GamesQuizComponent,
     GamesAliasComponent,
@@ -157,13 +159,17 @@ import { GamesViewComponent } from './components/views/games-view/games-view.com
     DrawItFormComponent,
     DrawItComponent,
     TruthlieComponent,
+    ClassInformationContentComponent,
     BbbViewComponent,
     GamesViewComponent,
     MyConnectionRequestsContentComponent,
     ProjectInfoContentComponent,
-    MessageBoardComponent
+    MessageBoardComponent,
+    DisplayPartnerClassInfoComponent,
+    ConfirmDialogComponent,
+    MyMeetingRequestsContentComponent
   ],
-
+  entryComponents: [ConfirmDialogComponent],
   providers: [
     {
       provide: APP_INITIALIZER,

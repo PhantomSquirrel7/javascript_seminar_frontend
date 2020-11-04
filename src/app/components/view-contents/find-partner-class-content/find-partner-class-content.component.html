@@ -19,15 +19,6 @@
             </form>
             <br>
             <br>
-            <form [formGroup]="findPartnerForm" class="langprof-selection">
-                What level of the language your students would speak?
-                <select formControlName="selectedLangProf" (change)="langProfSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
-                    <option [ngValue]="null" disabled>language proficiency</option>
-                    <option *ngFor="let selectedLangProf of user_lang_profs" [ngValue]="selectedLangProf">{{selectedLangProf}}</option>
-                </select>
-            </form>
-            <br>
-            <br>
             <form [formGroup]="findPartnerForm" class="duration-selection">
                 
                 <!-- <select formControlName="selectedDuration" (change)="durationSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
@@ -39,8 +30,18 @@
             </form>
             <br>
             <br>
+            <form [formGroup]="findPartnerForm" class="meetFrequ-selection">
+                <!-- <select formControlName="selectedLangProf" (change)="langProfSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+                    <option [ngValue]="null" disabled>language proficiency</option>
+                    <option *ngFor="let selectedLangProf of user_lang_profs" [ngValue]="selectedLangProf">{{selectedLangProf}}</option>
+                </select> -->
+                <label for="meetingFrequencyInput">How often do you like to meet? (in days)?</label>
+                <input id="meetingFrequencyInput" placeholder="days per week" value="{{meetingFrequency}}" type="number" formControlName="meetingFrequency" class="form-control" style="margin-right: 10vw; max-width: 300px;">
+            </form>
+            <br>
+            <br>
             <form [formGroup]="findPartnerForm" class="country-selection">
-                What's the duration of your project?
+                From wich country should your partner come?
                 <select formControlName="selectedCountry" (change)="countrySelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
                     <option [ngValue]="null" disabled>partner country</option>
                     <option *ngFor="let selectedCountry of user_country" [ngValue]="selectedCountry">{{selectedCountry.name}}</option>

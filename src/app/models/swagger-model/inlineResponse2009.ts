@@ -10,11 +10,21 @@
  * Do not edit the class manually.
  */
 import { ClassesTeacher } from './classesTeacher';
+import { ClassesclassIdprojectsClasses } from './classesclassIdprojectsClasses';
 
 export interface InlineResponse2009 { 
     id?: string;
-    message?: string;
-    from?: ClassesTeacher;
-    to?: ClassesTeacher;
-    timestamp?: string;
+    classes?: Array<ClassesclassIdprojectsClasses>;
+    state?: InlineResponse2009.StateEnum;
+    messages?: Array<Array<any>>;
+    meetings?: Array<any>;
+    startedBy?: ClassesTeacher;
+}
+export namespace InlineResponse2009 {
+    export type StateEnum = 'pending' | 'ongoing' | 'done';
+    export const StateEnum = {
+        Pending: 'pending' as StateEnum,
+        Ongoing: 'ongoing' as StateEnum,
+        Done: 'done' as StateEnum
+    };
 }
