@@ -19,15 +19,14 @@
 
     <div *ngIf="meetingList"> 
         <div *ngFor="let meeting of meetingList" class="card shadow-lg rounded" style="margin: 20px;">
-                <div class="card-header">Meeting ID: {{meeting.id}} </div>
+                <div class="card-header">Date: {{meeting.date}} </div>
                 <div fxLayout="column" class="card-body">
-                    <div><span fxFlex="0 0 25%">Date: </span> {{meeting.date}} </div>
                     <div><span fxFlex="0 0 25%"> Group Assignment: </span> {{meeting.groupAssignment}}</div>
 
                     <div>
-                        <span fxFlex="0 0 25%"> Groups: </span>
+                        <span fxFlex="0 0 25%"> Group Organization: </span>
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-                            View/Edit Groups
+                            View/Edit Group Arrangement
                         </button>
                     </div>
                     <div><span fxFlex="0 0 25%"> Task Lists: </span> <button class="btn btn-warning btn-sm">View/Edit Task Lists</button></div>
@@ -35,7 +34,7 @@
 
                 <div class="card-footer text-center">
                     <!-- <button class="btn btn-warning btn-sm">Update Meeting</button> -->
-                    <button class="btn btn-danger btn-sm">Delete Meeting</button>
+                    <button (click)="deleteMeeting(meeting.id)" class="btn btn-danger btn-sm">Delete Meeting</button>
                 </div>
         </div>
     </div>

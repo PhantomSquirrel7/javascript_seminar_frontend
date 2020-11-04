@@ -116,4 +116,11 @@ export class MyMeetingRequestsContentComponent implements OnInit {
     console.log(this.list1)
     console.log(this.list2)
   }
+
+  deleteMeeting(meetingId) {
+    // TODO
+    console.log(this.selectedClass.id);
+    console.log(this.selectedProject.id);
+    console.log(meetingId);
+  }
 }
