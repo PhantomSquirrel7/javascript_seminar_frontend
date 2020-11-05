@@ -37,9 +37,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
 
   // Remove self from players List, Send update and unsubscribe to changes
   ngOnDestroy(): void {
-    //let session: AliasUpdate = this.gamesService.gameSession;
-    this.game.players = this.game.players.filter(playerName => playerName !== this.username);
-    this.gamesService.sendUpdate(this.game);
+    clearInterval(this.timeInterval);
     this.gameUpdateSubscriptionEvent.unsubscribe();
   }
 
@@ -76,6 +74,9 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     if (this.timeRunning == false && gameUpdate.countDownStarted == true) {
       this.setTimer(gameUpdate.timeleft);
     }
+    if (this.username == this.game.currentPlayer && this.timeRunning && this.currentWord == "") {
+      this.currentWord = this.game.words[0];
+    }
   }
 
 
@@ -100,8 +101,6 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     }
     this.timeRunning = true;
     this.timer = timeleft;
-    // this.sleep(950)
-    //   .then(() => {
     this.timeInterval = setInterval(() => {
       if (this.timer > 0) this.timer -= 1;
       //current player is reference for timer and initializes game over
@@ -113,11 +112,6 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
         }
       }
     }, 1000);
-    // })
-  }
-
-  sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /*
