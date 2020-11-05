@@ -13,7 +13,7 @@ import { ProjectsService } from '@app/services/swagger-api/projects.service';
   templateUrl: './plan-meeting-content.component.html',
   styleUrls: ['./plan-meeting-content.component.less']
 })
-export class PlanMeetingContentComponent implements OnInit  { 
+export class PlanMeetingContentComponent implements OnInit {
   projectList = [];
 
   clsSelecForm: FormGroup;
@@ -28,7 +28,7 @@ export class PlanMeetingContentComponent implements OnInit  {
   selectedDuration: number;
   durations = [30, 45, 60, 90, 120];
   date: Date;
-  typeOfClasses = ['Quiz','Ice-Breaker Game','Others',]
+  typeOfClasses = ['Quiz', 'Ice-Breaker Game', 'Others',]
   loading = false;
   selectedArrangement = '';
   selectedProject: any; // Type Project
@@ -42,8 +42,8 @@ export class PlanMeetingContentComponent implements OnInit  {
     private classService: ClassesService,
     private projectService: ProjectsService,
     private _snackBar: MatSnackBar,
-  ) {}
- 
+  ) { }
+
   ngOnInit() {
     this.selectedArrangement = 'tandem';
     this.clsSelecForm = this.fb.group({
@@ -64,18 +64,18 @@ export class PlanMeetingContentComponent implements OnInit  {
       error: (error) => {
         this.error = error;
         this._snackBar.open(this.error, 'Close', {
-        duration: 3000
+          duration: 3000
         });
         this.loading = false;
       },
     });
   }
 
-  classSelected(){
+  classSelected() {
     this.selectedClass = this.clsSelecForm.value.selectedClass;
     this.isClassSelected = true;
     this.isProjectSelected = false;
-    console.log('teacher:'+ this.selectedClass.id)
+    console.log('teacher:' + this.selectedClass.id)
 
     this.projectService.classesClassIdProjectsGet(this.selectedClass.id).subscribe({
       next: (response) => {
@@ -85,17 +85,17 @@ export class PlanMeetingContentComponent implements OnInit  {
     });
 
 
-  }  
+  }
 
-  projectSelected(){
+  projectSelected() {
     this.selectedProject = this.projectSelectForm.value.selectedProject;
     this.isProjectSelected = true;
-  }  
+  }
 
   typeSelected(event) {
     let type = this.stringFormatter(event.target.value);
 
-    switch(type) {
+    switch (type) {
       case "quiz": {
         this.selectedTypeOfClass = 'quiz'
         break
@@ -129,7 +129,7 @@ export class PlanMeetingContentComponent implements OnInit  {
   onDateSelected(event) {
     this.date = event.value;
   }
-  
+
   durationSelected() {
     this.selectedDuration = this.planningSectionForm.value.selectedDuration;
   }

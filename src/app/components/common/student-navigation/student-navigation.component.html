@@ -8,22 +8,30 @@
             <hr class="sidebar-divider my-0">
             <ul class="nav navbar-nav text-light" id="accordionSidebar">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" [routerLink]="['/student-home']" >
+                    <a class="nav-link active" [routerLink]="['/student-home']">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Home</span>
                     </a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" [routerLink]="['/student-profile']"><i class="fas fa-user"></i><span>My Profile</span></a>
+                    <a class="nav-link active" [routerLink]="['/student-profile']"><i class="fas fa-user"></i><span>My
+                            Profile</span></a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" [routerLink]="['/student-assignments']"><i class="fas fa-tasks"></i><span>My Assignments</span></a>
+                    <a class="nav-link active" [routerLink]="['/student-assignments']"><i
+                            class="fas fa-tasks"></i><span>My Assignments</span></a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" [routerLink]="['/student-meetings']"><i class="fas fa-phone"></i><span>My Meetings</span></a>
+                    <a class="nav-link active" [routerLink]="['/student-meetings']"><i class="fas fa-phone"></i><span>My
+                            Meetings</span></a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" (click)="logout()"><i class="fas fa-arrow-left"></i><span>Logout</span></a>
+                    <a class="nav-link active" [routerLink]="['/student-games']"><i
+                            class="fa fa-gamepad"></i><span>Games</span></a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" (click)="logout()"><i
+                            class="fas fa-arrow-left"></i><span>Logout</span></a>
                 </li>
             </ul>
             <div class="text-center d-none d-md-inline"></div>
