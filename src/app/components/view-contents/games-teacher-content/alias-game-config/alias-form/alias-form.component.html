@@ -1,0 +1,33 @@
+<form [formGroup]="alias" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>Name: </mat-label>
+        <input type="text" matInput formControlName="name" required>
+    </mat-form-field>
+    <mat-form-field class="ml-4" appearance="outline">
+        <mat-label>Duration (seconds): </mat-label>
+        <input type="number" matInput formControlName="duration" required>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Description: </mat-label>
+        <input type="text" matInput formControlName="description">
+    </mat-form-field>
+    <div formArrayName="words">
+        <mat-label>Words:</mat-label>
+        <div *ngFor="let word of words.controls; let i=index">
+            <button type="button" mat-icon-button aria-label="delete word" title="delete word" (click)="deleteWord(i)">
+                <mat-icon>delete_forever</mat-icon>
+            </button>
+            <mat-form-field class="mr-2">
+                <input (keydown.enter)="$event.preventDefault()" type="text" matInput [formControlName]="i">
+            </mat-form-field>
+            <button type="button" *ngIf="i == words.controls.length-1" title="add word" mat-icon-button
+                aria-label="add word" (click)="addWord()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+    <mat-action-row>
+        <button class="btn btn-sm" [ngClass]="{'btn-success': alias.valid, 'btn-secondary': !alias.valid}" type="submit"
+            [disabled]="!alias.valid">Save</button>
+    </mat-action-row>
+</form>

@@ -1,0 +1,42 @@
+<form [formGroup]="quiz" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>Name: </mat-label>
+        <input type="text" matInput formControlName="name" required>
+    </mat-form-field>
+    <mat-form-field class="ml-4" appearance="outline">
+        <mat-label>Duration (seconds): </mat-label>
+        <input type="number" matInput formControlName="duration" required>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Description: </mat-label>
+        <input type="text" matInput formControlName="description">
+    </mat-form-field>
+    <div>
+        <mat-form-field class="w-100">
+            <mat-select [formControl]="questGroupsCtrl" placeholder="Questions" [multiple]="true" #multiSelect>
+                <mat-option>
+                    <ngx-mat-select-search [formControl]="questGroupsFilterCtrl"></ngx-mat-select-search>
+                </mat-option>
+                <mat-optgroup *ngFor="let group of filteredQuestGroups | async" [label]="group.type">
+                    <mat-option *ngFor="let quest of group.questions" [value]="quest">
+                        {{quest.name}}
+                    </mat-option>
+                </mat-optgroup>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <div class="mb-4 mt-4">
+            <b>Selected Questions:</b>
+        </div>
+        <ol>
+            <ng-container *ngFor="let q of questGroupsCtrl?.value">
+                <li class="mb-2">{{q.name}} - {{ q.question }} </li>
+            </ng-container>
+        </ol>
+    </div>
+    <mat-action-row>
+        <button class="btn btn-sm" [ngClass]="{'btn-success': quiz.valid, 'btn-secondary': !quiz.valid}" type="submit"
+            [disabled]="!quiz.valid">Save</button>
+    </mat-action-row>
+</form>

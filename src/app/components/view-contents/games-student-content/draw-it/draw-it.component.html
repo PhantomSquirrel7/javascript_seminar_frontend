@@ -1,0 +1,131 @@
+<div class="container-fluid drawit-game">
+    <div *ngIf="game" class="row">
+        <div class="col">
+            <div class="row game-header">
+                <div class="col logo">Draw It</div>
+                <div class="col-auto">
+                    <button class="help-button" aria-label="help" (click)="toggleHelp()">
+                        ?
+                    </button>
+                </div>
+            </div>
+            <div class="row justify-content-center game-content">
+                <div class="col">
+                    <!-- CONNECTED -->
+                    <div *ngIf="gamesService.connected">
+                        <!-- LOBBY -->
+                        <div *ngIf="game.state == 'lobby'">
+                            <div>
+                                Welcome to the game! <br>
+                                Please wait for all your classmates to join.
+                                <div *ngIf="username !== game.currentPlayer">{{ game.currentPlayer }} should start the
+                                    game.</div>
+                            </div>
+                            <!-- only first player connected can start the game -->
+                            <div *ngIf="username === game.currentPlayer" class="mt-2 mb-2">
+                                <div>You should start the game.</div>
+                                <div class="text-center mt-4">
+                                    <button class="btn btn-success" (click)="startGame()">Start Game</button></div>
+                            </div>
+                        </div>
+                        <!-- GAME RUNNING -->
+                        <div *ngIf="game.state == 'running'">
+                            <div class="row">
+                                <!-- ALL PLAYERS -->
+                                <div class="col text-center">
+                                    <div>Time Left:</div>
+                                    <div class="timer">{{countdown}}</div>
+                                </div>
+                                <div class="col text-center">
+                                    <div>Guessed Words:</div>
+                                    <div class="timer">{{game.numberOfGuessedWords}}</div>
+                                </div>
+                            </div>
+                            <!-- PLAYER EXPLAINING -->
+                            <div *ngIf="username === game.currentPlayer">
+                                <div class="mt-4 p-3 explaining text-center"> Draw the word:
+                                    {{ currentWord }}
+                                </div>
+                                <div class="drawing-container">
+                                    <div class="drawing-canvas">
+                                        <canvas-whiteboard #canvasWhiteboard [options]="canvasOptionsDraw"
+                                            (onBatchUpdate)="onCanvasDraw($event)" (onClear)="onCanvasClear()"
+                                            (onUndo)="onCanvasUndo($event)" (onRedo)="onCanvasRedo($event)">
+                                        </canvas-whiteboard>
+                                    </div>
+                                </div>
+                                <div class="mt-4 game-controls text-center">
+                                    <button class="btn btn-secondary mr-2" (click)="skipWord()">Skip</button>
+                                    <button class="btn btn-success" (click)="correctGuess()">Correct</button>
+                                </div>
+                            </div>
+                            <!-- PLAYER GUESSING -->
+                            <div *ngIf="username !== game.currentPlayer">
+                                <div class="mt-4 text-center">{{ game.currentPlayer }} is drawing. Guess the word!
+                                </div>
+                                <div class="drawing-container">
+                                    <div class="drawing-canvas">
+                                        <canvas-whiteboard #canvasWhiteboard [options]="canvasOptionsGuess">
+                                        </canvas-whiteboard>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="game.state == 'over'">
+                            <div class="text-center">
+                                The game is over! <br>
+                                <span *ngIf="username === game.currentPlayer">Your classmates</span>
+                                <span *ngIf="username !== game.currentPlayer">You</span>
+                                guessed {{game.numberOfGuessedWords}} words correctly!
+                            </div>
+                        </div>
+                    </div>
+                    <!-- NOT CONNECTED-->
+                    <div *ngIf="!gamesService.connected">
+                        <div class="row connecting" *ngIf="!gamesService.connected">
+                            Connecting...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- sidebar with playerslist and game settings when connected-->
+        <div *ngIf="gamesService.connected" class="col-auto settings">
+            <div class="row justify-content-end">
+                <div class="players-list">
+                    <div class="list-header">Connected Players:</div>
+                    <div class="player" *ngFor="let player of game.players">
+                        {{ player }} <span *ngIf="username === player">(you)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 mb-2 justify-content-center">
+                <button class="btn btn-secondary" (click)="disconnectGame()">Disconnect</button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showHelp" class="help">
+        <div class="help-content">
+            <button class="help-close" mat-mini-fab color="accent" aria-label="close help" (click)="toggleHelp()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <h1>How to play "Draw It"</h1>
+            <p>
+                Please wait for everyone in your class to join the game.
+                The player who entered the game first is the one who should start the game and will also be the one
+                drawing!
+                <br>Draw the word! You are not allowed to write anything on the canvas.
+                <br>If you are guessing and you think you know the word, just say it out loud!
+                <br>If someone guesses correctly the player drawing should press "correct".
+                <br>If a word is to hard you can "skip" it by pressing the "skip" button. Notice: the word will not be
+                gone forever, you might be
+                able to try it again after guessing/skipping other words, or if it is the only word left.
+            </p>
+        </div>
+    </div>
+    <div *ngIf="!game" class="row">
+        Creating Game session. Please wait...
+    </div>
+</div>

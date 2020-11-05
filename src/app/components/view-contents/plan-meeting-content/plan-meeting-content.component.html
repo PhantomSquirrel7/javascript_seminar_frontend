@@ -1,18 +1,21 @@
 <div fxLayoutGap="25px" fxLayout="column" style="margin-left: 50px; margin-top: 50px">
     <form [formGroup]="clsSelecForm" class="class-selection">
         For which class would you like to plan next meeting?
-        <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+        <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right"
+            style="margin-right: 10vw; max-width: 300px;">
             <option [ngValue]="null" disabled>Select your class</option>
             <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.name}}</option>
         </select>
     </form>
 
-    <div *ngIf="isClassSelected && projectList.length > 0"> 
-        <form  [formGroup]="projectSelectForm" class="project-selection">
-            Please Choose Project: 
-            <select formControlName="selectedProject" (change)="projectSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+    <div *ngIf="isClassSelected && projectList.length > 0">
+        <form [formGroup]="projectSelectForm" class="project-selection">
+            Please Choose Project:
+            <select formControlName="selectedProject" (change)="projectSelected()" class="form-control fa-pull-right"
+                style="margin-right: 10vw; max-width: 300px;">
                 <option [ngValue]="null" disabled>Select your Project</option>
-                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">{{selectedProject.id}}</option>
+                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">{{selectedProject.id}}
+                </option>
             </select>
         </form>
     </div>
@@ -22,8 +25,8 @@
         <div class="card" style="width: 70vmax;">
             <div class="card-body">
                 <h3 class="card-title">
-                    You're planning for: <span class="text-primary">{{selectedClass.name}}</span> 
-                    and Project: <span class="text-primary">{{selectedProject.id}}</span> 
+                    You're planning for: <span class="text-primary">{{selectedClass.name}}</span>
+                    and Project: <span class="text-primary">{{selectedProject.id}}</span>
                 </h3>
 
                 <div class="planning-section-form">
@@ -37,64 +40,25 @@
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
                         </div>
-        
+
                         <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
                             <div fxFlex="0 0 45%">How long would you like to meet?</div>
-                            <select formControlName="selectedDuration" (change)="durationSelected()" class="form-control form-control-sm fa-pull-right"
-                            style="max-width: 300px;">
+                            <select formControlName="selectedDuration" (change)="durationSelected()"
+                                class="form-control form-control-sm fa-pull-right" style="max-width: 300px;">
                                 <option [ngValue]="null" disabled>Please Select Duration of meeting</option>
-                                <option [ngValue]="selectedDuration" *ngFor="let selectedDuration of durations">{{selectedDuration}} mins</option>
+                                <option [ngValue]="selectedDuration" *ngFor="let selectedDuration of durations">
+                                    {{selectedDuration}} mins</option>
                             </select>
                         </div>
-        
+
                         <div class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
                             <div fxFlex="0 0 45%">How would you like to organize the students?</div>
                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                <button (click)="selectArrangement('tandem')" 
-                                    type="button" class="btn" [ngClass]="selectedArrangement == 'tandem' ? 'btn-primary' : 'btn-light'">Tandem</button>
-                                <button (click)="selectArrangement('wholeclass')" 
-                                    type="button" class="btn" [ngClass]="selectedArrangement == 'wholeclass' ? 'btn-primary' : 'btn-light'">Whole Class</button>
-                                </div>
-                        </div>
-        
-                        <div *ngIf="selectedArrangement !== 'wholeclass'" class="padding-fix" fxLayout="row" fxLayoutAlign="start center">
-                            <div fxFlex="0 0 45%">Based on your choice, we've organized the students for you</div>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-                                View/Edit
-                            </button>
-                            
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">View/Edit Arrangement</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div fxLayout="row" fxLayoutGap="25px" class="modal-body">
-                                        <div>
-                                            Your Class
-                                            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, list1)">
-                                                <div class="example-box" *ngFor="let list of list1" cdkDrag>{{list}}</div>
-                                            </div>
-                                        </div>
-        
-                                        <div>
-                                            Partner Class
-                                            <div cdkDropList cdkDropListDisabled class="example-list" (cdkDropListDropped)="drop($event, list2)">
-                                                <div class="example-box" *ngFor="let list of list2" cdkDrag>{{list}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button (click)="saveArrangement()" type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                                </div>
+                                <button (click)="selectArrangement('tandem')" type="button" class="btn"
+                                    [ngClass]="selectedArrangement == 'tandem' ? 'btn-primary' : 'btn-light'">Tandem</button>
+                                <button (click)="selectArrangement('wholeclass')" type="button" class="btn"
+                                    [ngClass]="selectedArrangement == 'wholeclass' ? 'btn-primary' : 'btn-light'">Whole
+                                    Class</button>
                             </div>
                         </div>
                     </form>
@@ -106,7 +70,7 @@
             <div class="card-header" fxLayout="row" fxLayoutAlign="start center">
                 <div fxFlex="0 0 45%">Please select Type of Class:</div>
                 <select (change)="typeSelected($event)" class="form-control form-control-sm fa-pull-right"
-                style="max-width: 300px;">
+                    style="max-width: 300px;">
                     <option [ngValue]="null" disabled>Please Select Type of Class</option>
                     <option *ngFor="let typeOfClass of typeOfClasses">{{typeOfClass}}</option>
                 </select>
@@ -117,13 +81,13 @@
                     Dummy game component Here
                 </div>
             </div>
-    
+
             <div *ngIf="selectedTypeOfClass === 'ice-breaker'" style="width: 70vmax;">
                 <div class="card-body">
                     Ice Breaker game component Here
                 </div>
             </div>
-    
+
             <div *ngIf="selectedTypeOfClass === 'other'" style="width: 70vmax;">
                 <div class="card-body">
                     Other component Here
@@ -132,9 +96,7 @@
         </div> -->
 
 
-        <button (click)="submitForm()" 
-        type="button" class="btn btn-primary">Confirm</button>
+        <button (click)="submitForm()" type="button" class="btn btn-primary">Confirm</button>
 
     </div>
 </div>
-    
