@@ -15,7 +15,8 @@ import { BASE_PATH } from '@app/swagger-configs/variables';
 })
 export class GamesApiService {
 
-  protected url = 'https://api-globy.herokuapp.com/v1';
+  //protected url = 'https://api-globy.herokuapp.com/v1';
+  protected url = 'http://localhost:5000/v1';
 
   public configuration = new Configuration();
 

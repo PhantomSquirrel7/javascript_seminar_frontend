@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnDestroy, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { GamesService } from '@app/services/custom/games/games.service';
 import { TruthlieUpdate } from '../messages/truthlieUpdate';
 
@@ -8,11 +8,12 @@ import { TruthlieUpdate } from '../messages/truthlieUpdate';
   styleUrls: ['./truthlie.component.less']
 })
 export class TruthlieComponent implements OnInit, OnDestroy {
+
+  // finished to notify parent component
+  @Output() disconnect = new EventEmitter<string>();
   @Input() username: string;
   @Input() sessionId: string;
   @Input() taskId: string;
-  @Output() disconnect: EventEmitter<string> = new EventEmitter<string>();
-
 
   truth1: string;
   truth2: string;
@@ -165,6 +166,7 @@ export class TruthlieComponent implements OnInit, OnDestroy {
   }
 
   disconnectGame() {
+    this.gamesService.sendDisconnect();
     this.disconnect.emit("disconnect");
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, isDevMode } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-games-student-content',
@@ -10,19 +10,17 @@ export class GamesStudentContentComponent implements OnInit {
   constructor() {
 
   }
-  selectedGame : String = "quiz";
-  gameJoined : boolean = false;
-  taskId : string = "taskId";
-
-  @Input() sessionId: String;
-  @Input() username: String;
-
+  selectedGame: String = "quiz";
+  gameJoined: boolean = false;
+  taskId: string = "taskId";
+  username = "Username";
+  sessionId = "sessionId";
 
   ngOnInit(): void {
   }
 
   public onJoinGameButton() {
-    this.gameJoined = true; 
+    this.gameJoined = true;
   }
 
   isSelected(game) {
@@ -32,6 +30,5 @@ export class GamesStudentContentComponent implements OnInit {
   onDisconnect(event: string = "") {
     this.gameJoined = false;
   }
-
-
 }
+

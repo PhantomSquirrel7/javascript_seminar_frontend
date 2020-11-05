@@ -19,7 +19,8 @@ export class GamesService extends Socket {
   // TODO make this adjustable
   constructor() {
     super({
-      url: "https://api-globy.herokuapp.com", options: {}
+      //url: "https://api-globy.herokuapp.com", options: {}
+      url: "http://localhost:5000", options: {}
     });
     console.log("Try connecting");
 
@@ -70,6 +71,10 @@ export class GamesService extends Socket {
   sendUpdate(updateGame) {
     // console.log("Send Update" + JSON.stringify(updateGame));
     this.emit("updateGame", updateGame);
+  }
+
+  sendDisconnect() {
+    this.emit("customDisconnect");
   }
 
 }

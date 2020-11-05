@@ -1,6 +1,7 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://api-globy.herokuapp.com',
+    //apiUrl: 'https://api-globy.herokuapp.com',
+    apiUrl: 'http://localhost:5000',
     registerUrl: '/auth/register',
     loginUrl: '/auth/login',
     logoutUrl: '/auth/logout',

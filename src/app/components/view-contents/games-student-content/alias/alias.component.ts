@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnDestroy, OnInit, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { GamesService } from '@app/services/custom/games/games.service';
 import { AliasUpdate } from '../messages/aliasUpdate';
 
@@ -9,10 +9,11 @@ import { AliasUpdate } from '../messages/aliasUpdate';
 })
 export class GamesAliasComponent implements OnInit, OnDestroy {
 
+  // finished to notify parent component
+  @Output() disconnect = new EventEmitter<string>();
   @Input() username: string;
   @Input() sessionId: string;
   @Input() taskId: string;
-  @Output() disconnect: EventEmitter<string> = new EventEmitter<string>();
 
   currentWord = "";
   currentWordIndex = 0;
@@ -146,6 +147,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   }
 
   disconnectGame() {
+    this.gamesService.sendDisconnect();
     this.disconnect.emit("disconnect");
   }
 }
