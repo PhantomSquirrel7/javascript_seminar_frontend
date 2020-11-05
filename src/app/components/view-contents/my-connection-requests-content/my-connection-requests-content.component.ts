@@ -30,229 +30,12 @@ export class MyConnectionRequestsContentComponent implements OnInit {
   user: User;
   user_classes: any[];
   user_projects: any[] = [];
+  base_projects: any[] = [];
+
 
   actClass: any = {};
   actProject: any = {};
   exchangeTeacher: any = {};
-
-
-  exampleProject1 = {
-    "id": "projectId1",
-    "classes": [
-      {
-        "id": "5f8c63862d6a720016449f23",
-        "name": "Class 1",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      },
-      {
-        "id": "class2id",
-        "name": "Class 2",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      }
-    ],
-    "state": "ongoing",
-    "messages": [
-      [
-        {
-          "id": "message1id",
-          "message": "textMessage1",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "0000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873563"
-        },
-        {
-          "id": "message2id",
-          "message": "textMessage2",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "0000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873517"
-        },
-        {
-          "id": "message3id",
-          "message": "textMessage3",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873541"
-        }
-      ]
-    ],
-    "meetings": [
-      {}
-    ]
-  }
-
-  exampleProject2 = {
-    "id": "projectId2",
-    "classes": [
-      {
-        "id": "5f8c63862d6a720016449f23",
-        "name": "Class 1",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      },
-      {
-        "id": "class2id",
-        "name": "Class 2",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      }
-    ],
-    "state": "pending",
-    "messages": [
-      [
-        {
-          "id": "message1id",
-          "message": "textMessage1",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873563"
-        },
-        {
-          "id": "message2id",
-          "message": "textMessage2",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873517"
-        },
-        {
-          "id": "message3id",
-          "message": "textMessage3",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873541"
-        }
-      ]
-    ],
-    "meetings": [
-      {}
-    ]
-  }
 
 
   ngOnInit() {
@@ -311,23 +94,21 @@ export class MyConnectionRequestsContentComponent implements OnInit {
                 clsProjects.push(modProject);
               }
               this.user_projects.push({"class": cls, "projects": clsProjects});
-              // for (let p of this.exampleProject1.classes){
-              //   if (p.id != cls.id){
-              //     partnerClass = p;
-              //   }
-              // }
-              // this.exampleProject1["partnerClass"] = partnerClass;
-              // this.exampleProject2["partnerClass"] = partnerClass;
-              // if (cls.name == "Class 1"){
-              //   this.user_projects.push({"class": cls, "projects": [this.exampleProject1, this.exampleProject2]}); //TODO: replace with result});
-              // }
-              // else if (cls.name == "Class 2"){
-              //   this.user_projects.push({"class": cls, "projects": []});
-              // }
-              // else{
-              //   this.user_projects.push({"class": cls, "projects": [this.exampleProject2]}); //TODO: replace with result});
-              // }
-              // return result;
+              // Sorting of the projects
+              this.user_projects = this.user_projects.sort( (a, b) => {
+                var clsNameA = a.class.name.toLowerCase();
+                var clsNameB = b.class.name.toLowerCase();
+                if (clsNameA < clsNameB){
+                  return -1
+                }
+                else if (clsNameA > clsNameB){
+                  return 1
+                }
+                else{
+                 return 0 
+                }  
+              });
+              this.base_projects = [].concat(this.user_projects);
               })
             )
           )
@@ -351,6 +132,41 @@ export class MyConnectionRequestsContentComponent implements OnInit {
   detailsFor(cls, prjct){
     this.actClass = cls;
     this.actProject = prjct;
+  }
+
+  filterByCreator(creator){
+    var tmp = [].concat(this.base_projects);
+    console.log("TMP:");
+    console.log(tmp);
+    for (let clsProj of tmp){
+      clsProj.projects = clsProj.projects.filter( singleProj =>{
+        if (singleProj.startedBy != undefined){
+          if (creator == "me"){
+            return singleProj.startedBy.id == this.user.id;
+          }
+          else if (creator == "other"){
+            return singleProj.startedBy.id != this.user.id;
+          }
+          else {
+            return singleProj;
+          }
+        }
+        else{
+          if (creator == "me"){
+            return singleProj.partnerClass.id == clsProj.class.id;
+          }
+          else if (creator == "other"){
+            return singleProj.partnerClass.id != clsProj.class.id;
+          }
+          else {
+            return singleProj;
+          }
+        }
+      });
+    };
+    this.user_projects = [...tmp];
+    console.log("filtered: ");
+    console.log(tmp);
   }
   
 }
