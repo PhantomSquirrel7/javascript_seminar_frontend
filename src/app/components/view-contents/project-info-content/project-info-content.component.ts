@@ -3,6 +3,7 @@ import { ProjectsService } from '../../../services/swagger-api/api';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
+import { first, flatMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-project-info-content',
@@ -52,13 +53,21 @@ export class ProjectInfoContentComponent {
       (response) => {
         console.log(response);
         this.btnAcceptable = false;
+        // this.reloadProject();
         const source = timer(1500);
         source.subscribe(data => {
           this.accepted=false
         });
       });
-
-
   }
+
+  // reloadProject(){
+  //   this.projectsService.classesClassIdProjectsProjectIdGet(this.actClass.id, this.actProject.id).pipe(
+  //     map(prjct => {
+  //       this.actProject = prjct;
+  //     })
+  //   );
+  // }
+
 
 }

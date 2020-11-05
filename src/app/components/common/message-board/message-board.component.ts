@@ -84,6 +84,7 @@ export class MessageBoardComponent implements OnInit {
         console.log("Answer sending:")
         console.log(data);
         this.sent = true;
+        this.loadMessages();
         const source = timer(4000);
         source.subscribe(data => this.sent = false);
       }
@@ -98,6 +99,19 @@ export class MessageBoardComponent implements OnInit {
   getTime(timestamp){
     let myTimestamp = new Date(timestamp);
     return myTimestamp.toLocaleString()
+  }
+
+  loadMessages(){
+    this.projectsService.classesClassIdProjectsProjectIdMessagesGet(this.sender.id, this.myProject.id).subscribe(
+      data => {
+        console.log("Messages resp:");
+        console.log(data);
+        this.messages = data;
+        this.messages = this.messages.sort( (a, b) => {
+          return Number(a.timestamp) - Number(b.timestamp)
+        });
+      }
+    );
   }
 
 }
