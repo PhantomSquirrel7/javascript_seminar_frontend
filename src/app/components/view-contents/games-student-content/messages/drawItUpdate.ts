@@ -12,4 +12,5 @@ export interface DrawItUpdate {
     state: "lobby" | "running" | "over";
     timeleft: number;
     drawing: object;
+    drawingHistory: Array<any>;
 }

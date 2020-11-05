@@ -27,6 +27,7 @@ export class DrawItComponent implements OnInit, OnDestroy {
   gameUpdateSubscriptionEvent;
   showHelp = false;
   timeRunning = false;
+  firstUpdate = false;
 
   game: DrawItUpdate;
 
@@ -75,9 +76,9 @@ export class DrawItComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gameUpdateSubscriptionEvent = this.gamesService.gameUpdateEvent.subscribe(gameUpdate => {
-      this.updateGame(gameUpdate);
+      if (gameUpdate && this.gamesService) this.updateGame(gameUpdate);
     });
-    this.gamesService.sendjoinGame(this.username, this.sessionId, "alias", this.taskId);
+    this.gamesService.sendjoinGame(this.username, this.sessionId, "drawit", this.taskId);
   }
 
   // Remove self from players List, Send update and unsubscribe to changes
@@ -105,15 +106,21 @@ export class DrawItComponent implements OnInit, OnDestroy {
   }
 
   updateGame(gameUpdate: DrawItUpdate) {
-    if (this.gamesService == undefined) {
-      return;
-    }
     let drawing = null;
     if (gameUpdate.drawing) {
       drawing = gameUpdate.drawing;
       gameUpdate.drawing = null;
     }
     this.game = gameUpdate;
+    // get canvas history on rejoin 
+    console.log(gameUpdate)
+    if (!this.firstUpdate && gameUpdate.drawingHistory.length > 0) {
+      this.firstUpdate = true;
+      setTimeout(() => {
+        this.setWholeCanvas(gameUpdate.drawingHistory);
+      }, 200)
+
+    }
 
     if (this.username != this.game.currentPlayer) {
       // synchronize timer 
@@ -202,6 +209,7 @@ export class DrawItComponent implements OnInit, OnDestroy {
 
   // Canvas Events
   onCanvasDraw(event) {
+    if (!this.firstUpdate) this.firstUpdate = true;
     this.gamesService.sendUpdate({ ...this.game, drawing: { type: 'draw', data: event } });
   }
 
@@ -240,5 +248,26 @@ export class DrawItComponent implements OnInit, OnDestroy {
         this._canvasWhiteboardService.redoCanvas(newMessage.UUID);
         break;
     }
+  }
+
+  setWholeCanvas(history: Array<any>): void {
+    this._canvasWhiteboardService.clearCanvas();
+    history.forEach(newMessage => {
+      switch (newMessage.type) {
+        case "draw":
+          let updates = newMessage.data;
+          this._canvasWhiteboardService.drawCanvas(updates);
+          break;
+        case "clear":
+          this._canvasWhiteboardService.clearCanvas();
+          break;
+        case "undo":
+          this._canvasWhiteboardService.undoCanvas(newMessage.UUID);
+          break;
+        case "redo":
+          this._canvasWhiteboardService.redoCanvas(newMessage.UUID);
+          break;
+      }
+    });
   }
 }
