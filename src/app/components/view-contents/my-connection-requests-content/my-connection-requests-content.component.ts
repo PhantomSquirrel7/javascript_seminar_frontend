@@ -145,6 +145,24 @@ export class MyConnectionRequestsContentComponent implements OnInit {
       }
       return true;
   }
+
+
+  filterByState(state){
+    this.user_projects = [];
+      if (state == "pending"){
+          this.loadPendingProjects();
+      }
+      else if (state == "ongoing"){
+          this.loadOngoingProjects();
+      }
+      else if (state == 'done'){
+          this.loadDoneProjects();
+      }
+      else{
+          this.loadAllProjects();
+      }
+      return true;
+  }
   
 
   loadMyProjects(){
@@ -333,6 +351,179 @@ export class MyConnectionRequestsContentComponent implements OnInit {
           });
   }
 
+
+  loadPendingProjects(){
+    this.classService.classesGet().pipe(
+      map( (classes) =>
+        classes.map( 
+          (cls) => this.projectService.classesClassIdProjectsGet(cls.id).subscribe(result => { // result = list of projects for one class
+            let clsProjects = [];
+            for (let project of result){
+              let partnerClass: any = {};
+              let modProject = project;
+              
+              for (let p of project.classes){
+                if (p.id != cls.id){
+                  partnerClass = p;
+                }  
+              }
+              if (project.state == 'pending'){
+                modProject["partnerClass"] = partnerClass;
+                clsProjects.push(modProject);
+              }
+              
+            }
+            
+            this.user_projects.push({"class": cls, "projects": clsProjects});
+            // Sorting of the projects
+            this.user_projects = this.user_projects.sort( (a, b) => {
+              var clsNameA = a.class.name.toLowerCase();
+              var clsNameB = b.class.name.toLowerCase();
+              if (clsNameA < clsNameB){
+                return -1
+              }
+              else if (clsNameA > clsNameB){
+                return 1
+              }
+              else{
+               return 0 
+              }  
+            });
+            })
+          )
+        )
+        ).subscribe({
+            next: (response) => {
+              this.loading = false;
+              this.allDataLoaded = true;
+              console.log("all Projects:");
+              console.log(this.user_projects) 
+            },
+            error: (error) => {
+              this.error = error;
+              this._snackBar.open(this.error, 'Close', {
+              duration: 3000
+              });
+              this.loading = false;
+            },
+          });
+  }
+
+
+  loadOngoingProjects(){
+    this.classService.classesGet().pipe(
+      map( (classes) =>
+        classes.map( 
+          (cls) => this.projectService.classesClassIdProjectsGet(cls.id).subscribe(result => { // result = list of projects for one class
+            let clsProjects = [];
+            for (let project of result){
+              let partnerClass: any = {};
+              let modProject = project;
+              
+              for (let p of project.classes){
+                if (p.id != cls.id){
+                  partnerClass = p;
+                }  
+              }
+              if (project.state == 'ongoing'){
+                modProject["partnerClass"] = partnerClass;
+                clsProjects.push(modProject);
+              }
+              
+            }
+            
+            this.user_projects.push({"class": cls, "projects": clsProjects});
+            // Sorting of the projects
+            this.user_projects = this.user_projects.sort( (a, b) => {
+              var clsNameA = a.class.name.toLowerCase();
+              var clsNameB = b.class.name.toLowerCase();
+              if (clsNameA < clsNameB){
+                return -1
+              }
+              else if (clsNameA > clsNameB){
+                return 1
+              }
+              else{
+               return 0 
+              }  
+            });
+            })
+          )
+        )
+        ).subscribe({
+            next: (response) => {
+              this.loading = false;
+              this.allDataLoaded = true;
+              console.log("all Projects:");
+              console.log(this.user_projects) 
+            },
+            error: (error) => {
+              this.error = error;
+              this._snackBar.open(this.error, 'Close', {
+              duration: 3000
+              });
+              this.loading = false;
+            },
+          });
+  }
+
+
+  loadDoneProjects(){
+    this.classService.classesGet().pipe(
+      map( (classes) =>
+        classes.map( 
+          (cls) => this.projectService.classesClassIdProjectsGet(cls.id).subscribe(result => { // result = list of projects for one class
+            let clsProjects = [];
+            for (let project of result){
+              let partnerClass: any = {};
+              let modProject = project;
+              
+              for (let p of project.classes){
+                if (p.id != cls.id){
+                  partnerClass = p;
+                }  
+              }
+              if (project.state == 'done'){
+                modProject["partnerClass"] = partnerClass;
+                clsProjects.push(modProject);
+              }
+              
+            }
+            
+            this.user_projects.push({"class": cls, "projects": clsProjects});
+            // Sorting of the projects
+            this.user_projects = this.user_projects.sort( (a, b) => {
+              var clsNameA = a.class.name.toLowerCase();
+              var clsNameB = b.class.name.toLowerCase();
+              if (clsNameA < clsNameB){
+                return -1
+              }
+              else if (clsNameA > clsNameB){
+                return 1
+              }
+              else{
+               return 0 
+              }  
+            });
+            })
+          )
+        )
+        ).subscribe({
+            next: (response) => {
+              this.loading = false;
+              this.allDataLoaded = true;
+              console.log("all Projects:");
+              console.log(this.user_projects) 
+            },
+            error: (error) => {
+              this.error = error;
+              this._snackBar.open(this.error, 'Close', {
+              duration: 3000
+              });
+              this.loading = false;
+            },
+          });
+  }
 
 }
 
