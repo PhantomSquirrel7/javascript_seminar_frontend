@@ -24,11 +24,11 @@ export class PlanMeetingContentComponent implements OnInit {
   error = '';
   isClassSelected = false;
   selectedClass: any; // Type Class
-  selectedTypeOfClass = ''
+  selectedTypeOfTask = ''
   selectedDuration: number;
   durations = [30, 45, 60, 90, 120];
   date: Date;
-  typeOfClasses = ['Quiz', 'Ice-Breaker Game', 'Others',]
+  typeOfTasks = ['Quiz', 'Alias', 'Draw-It', '2 Truths 1 Lie', 'Simple Task']
   loading = false;
   selectedArrangement = '';
   selectedProject: any; // Type Project
@@ -97,15 +97,23 @@ export class PlanMeetingContentComponent implements OnInit {
 
     switch (type) {
       case "quiz": {
-        this.selectedTypeOfClass = 'quiz'
+        this.selectedTypeOfTask = 'quiz'
         break
       }
-      case "ice-breaker game": {
-        this.selectedTypeOfClass = 'ice-breaker'
+      case "alias": {
+        this.selectedTypeOfTask = 'alias'
+        break
+      }
+      case "draw-it": {
+        this.selectedTypeOfTask = 'draw-it'
+        break
+      }
+      case "2 truths 1 lie": {
+        this.selectedTypeOfTask = '2t1l'
         break
       }
       default: {
-        this.selectedTypeOfClass = 'other'
+        this.selectedTypeOfTask = 'simple-task'
         break
       }
     }

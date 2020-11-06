@@ -66,35 +66,46 @@
             </div>
         </div>
 
-        <!-- <div class="card" style="width: 70vmax; margin-top: 50px;">
+        <div class="card" style="width: 70vmax; margin-top: 50px;">
             <div class="card-header" fxLayout="row" fxLayoutAlign="start center">
-                <div fxFlex="0 0 45%">Please select Type of Class:</div>
+                <div fxFlex="0 0 45%">Create Task List for meeting:</div>
                 <select (change)="typeSelected($event)" class="form-control form-control-sm fa-pull-right"
                     style="max-width: 300px;">
-                    <option [ngValue]="null" disabled>Please Select Type of Class</option>
-                    <option *ngFor="let typeOfClass of typeOfClasses">{{typeOfClass}}</option>
+                    <option [ngValue]="null" disabled>Please Select Type of Task</option>
+                    <option *ngFor="let typeOfTask of typeOfTasks">{{typeOfTask}}</option>
                 </select>
             </div>
 
-            <div *ngIf="selectedTypeOfClass === 'quiz'" style="width: 70vmax;">
+            <div *ngIf="selectedTypeOfTask === 'quiz'" style="width: 70vmax;">
                 <div class="card-body">
-                    Dummy game component Here
+                    Quiz component Here
                 </div>
             </div>
 
-            <div *ngIf="selectedTypeOfClass === 'ice-breaker'" style="width: 70vmax;">
+            <div *ngIf="selectedTypeOfTask === 'alias'" style="width: 70vmax;">
                 <div class="card-body">
-                    Ice Breaker game component Here
+                    Alias component Here
                 </div>
             </div>
 
-            <div *ngIf="selectedTypeOfClass === 'other'" style="width: 70vmax;">
+            <div *ngIf="selectedTypeOfTask === 'draw-it'" style="width: 70vmax;">
                 <div class="card-body">
-                    Other component Here
+                    Draw-It component Here
                 </div>
             </div>
-        </div> -->
 
+            <div *ngIf="selectedTypeOfTask === '2t1l'" style="width: 70vmax;">
+                <div class="card-body">
+                    2 Truths 1 Lie component Here
+                </div>
+            </div>
+
+            <div *ngIf="selectedTypeOfTask === 'simple-task'" style="width: 70vmax;">
+                <div class="card-body">
+                    Simple Task component Here
+                </div>
+            </div>
+        </div>
 
         <button (click)="submitForm()" type="button" class="btn btn-primary">Confirm</button>
 
