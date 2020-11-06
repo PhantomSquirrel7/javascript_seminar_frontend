@@ -57,15 +57,13 @@ export class MessageBoardComponent implements OnInit {
     
     console.log("Recipient:");
     console.log(this.recipient);
+ 
+  }
 
 
-    // console.log("messeges before");
-    // console.log(this.messages)
-    // this.messages = this.messages.sort( (a, b) => {
-    //   return Number(a.timestamp) - Number(b.timestamp)
-    // });
-    // console.log("Messages (sorted):");
-    // console.log(this.messages);    
+  ngOnChanges(){
+    console.log("Changes detected!");
+    this.loadMessages()
   }
 
 
