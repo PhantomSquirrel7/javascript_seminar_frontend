@@ -1,7 +1,7 @@
-import { Component, Input, Output, OnDestroy, OnInit, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { GamesService } from '@app/services/custom/games/games.service';
 import { DrawItUpdate } from '../messages/drawItUpdate';
-import { CanvasWhiteboardComponent, CanvasWhiteboardOptions, CanvasWhiteboardService, CanvasWhiteboardUpdate } from 'ng2-canvas-whiteboard';
+import { CanvasWhiteboardComponent, CanvasWhiteboardOptions, CanvasWhiteboardService } from 'ng2-canvas-whiteboard';
 
 @Component({
   selector: 'app-draw-it',
@@ -14,10 +14,11 @@ export class DrawItComponent implements OnInit, OnDestroy {
 
   @ViewChild('canvasWhiteboard') canvasWhiteboard: CanvasWhiteboardComponent;
 
+  // finished to notify parent component
+  @Output() disconnect = new EventEmitter<string>();
   @Input() username: string;
   @Input() sessionId: string;
   @Input() taskId: string;
-  @Output() disconnect: EventEmitter<string> = new EventEmitter<string>();
 
   currentWord = "";
   currentWordIndex = 0;
@@ -26,6 +27,7 @@ export class DrawItComponent implements OnInit, OnDestroy {
   gameUpdateSubscriptionEvent;
   showHelp = false;
   timeRunning = false;
+  firstUpdate = false;
 
   game: DrawItUpdate;
 
@@ -74,16 +76,14 @@ export class DrawItComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gameUpdateSubscriptionEvent = this.gamesService.gameUpdateEvent.subscribe(gameUpdate => {
-      this.updateGame(gameUpdate);
+      if (gameUpdate && this.gamesService) this.updateGame(gameUpdate);
     });
-    this.gamesService.sendjoinGame(this.username, this.sessionId, "alias", this.taskId);
+    this.gamesService.sendjoinGame(this.username, this.sessionId, "drawit", this.taskId);
   }
 
   // Remove self from players List, Send update and unsubscribe to changes
   ngOnDestroy(): void {
-    //let session: AliasUpdate = this.gamesService.gameSession;
-    this.game.players = this.game.players.filter(playerName => playerName !== this.username);
-    this.gamesService.sendUpdate(this.game);
+    clearInterval(this.timeInterval);
     this.gameUpdateSubscriptionEvent.unsubscribe();
   }
 
@@ -106,16 +106,27 @@ export class DrawItComponent implements OnInit, OnDestroy {
   }
 
   updateGame(gameUpdate: DrawItUpdate) {
-    if (this.gamesService == undefined) {
-      return;
+    let drawing = null;
+    if (gameUpdate.drawing) {
+      drawing = gameUpdate.drawing;
+      gameUpdate.drawing = null;
     }
     this.game = gameUpdate;
+    // get canvas history on rejoin 
+    if (!this.firstUpdate && gameUpdate.drawingHistory.length > 0) {
+      this.firstUpdate = true;
+      setTimeout(() => {
+        this.setWholeCanvas(gameUpdate.drawingHistory);
+      }, 200)
+
+    }
 
     if (this.username != this.game.currentPlayer) {
       // synchronize timer 
       if (this.timer != gameUpdate.timeleft) {
         this.setTimer(gameUpdate.timeleft);
       }
+      if (drawing) this.handleCanvasUpdate(drawing);
     }
     if (this.timeRunning == false && gameUpdate.countDownStarted == true) {
       this.setTimer(gameUpdate.timeleft);
@@ -150,6 +161,7 @@ export class DrawItComponent implements OnInit, OnDestroy {
       //current player is reference for timer and initializes game over
       if (this.username == this.game.currentPlayer) {
         this.game.timeleft = this.timer;
+        this.game.drawing = null;
         this.gamesService.sendUpdate(this.game);
         if (this.timer <= 0) {
           this.onGameOver();
@@ -190,28 +202,26 @@ export class DrawItComponent implements OnInit, OnDestroy {
   }
 
   disconnectGame() {
+    this.gamesService.sendDisconnect();
     this.disconnect.emit("disconnect");
   }
 
   // Canvas Events
   onCanvasDraw(event) {
-    this.game.drawing = { type: 'draw', data: event };
-    this.gamesService.sendUpdate(this.game);
+    if (!this.firstUpdate) this.firstUpdate = true;
+    this.gamesService.sendUpdate({ ...this.game, drawing: { type: 'draw', data: event } });
   }
 
   onCanvasClear() {
-    this.game.drawing = { type: 'clear' };
-    this.gamesService.sendUpdate(this.game);
+    this.gamesService.sendUpdate({ ...this.game, drawing: { type: 'clear' } });
   }
 
   onCanvasUndo(event) {
-    this.game.drawing = { type: 'undo', UUID: event };
-    this.gamesService.sendUpdate(this.game);
+    this.gamesService.sendUpdate({ ...this.game, drawing: { type: 'undo', UUID: event } });
   }
 
   onCanvasRedo(event) {
-    this.game.drawing = { type: 'redo', UUID: event };
-    this.gamesService.sendUpdate(this.game);
+    this.gamesService.sendUpdate({ ...this.game, drawing: { type: 'redo', UUID: event } });
   }
 
   // receive canvas event
@@ -236,5 +246,26 @@ export class DrawItComponent implements OnInit, OnDestroy {
         this._canvasWhiteboardService.redoCanvas(newMessage.UUID);
         break;
     }
+  }
+
+  setWholeCanvas(history: Array<any>): void {
+    this._canvasWhiteboardService.clearCanvas();
+    history.forEach(newMessage => {
+      switch (newMessage.type) {
+        case "draw":
+          let updates = newMessage.data;
+          this._canvasWhiteboardService.drawCanvas(updates);
+          break;
+        case "clear":
+          this._canvasWhiteboardService.clearCanvas();
+          break;
+        case "undo":
+          this._canvasWhiteboardService.undoCanvas(newMessage.UUID);
+          break;
+        case "redo":
+          this._canvasWhiteboardService.redoCanvas(newMessage.UUID);
+          break;
+      }
+    });
   }
 }

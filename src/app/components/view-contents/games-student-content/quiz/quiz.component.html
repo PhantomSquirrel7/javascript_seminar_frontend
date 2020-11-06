@@ -18,7 +18,9 @@
                             <div>
                                 Welcome to the game!
                             </div>
-                            <button class="btn btn-success" (click)="onStartQuiz()">Start Game</button>
+                            <div class="text-center">
+                                <button class="btn btn-success mt-2" (click)="onStartQuiz()">Start Game</button>
+                            </div>
                         </div>
                         <!-- GAME RUNNING -->
                         <div *ngIf="this.quizUpdate.state == 'running'">
@@ -32,7 +34,7 @@
 
                             <div class="question"
                                 *ngIf="gamesService.connected && this.currentQuiz != undefined && this.currentQuiz.type == 'select'">
-                                {{ this.currentQuiz.question }}<br>
+                                <strong>{{ this.currentQuiz.question }}</strong> <br>
                                 <mat-selection-list #answerSelection [(ngModel)]="this.currentQuiz.selectedAnswers"
                                     (ngModelChange)="onSelectionChange($event)">
                                     <mat-list-option [style.backgroundColor]="this.getBackgroundColorSelection(answer)"
@@ -42,8 +44,8 @@
                                     </mat-list-option>
                                 </mat-selection-list>
 
-                                <div class="questionSolution" *ngIf="this.quizUpdate.quizOver">
-                                    Correct would have been:
+                                <div class="questionSolution mt-2 mb-2" *ngIf="this.quizUpdate.quizOver">
+                                    <strong>The correct answer(s) are:</strong>
                                     <div class="questionSolutionLine"
                                         *ngFor="let solution of this.currentQuiz.correctAnswers">
                                         {{this.currentQuiz.answers[solution]}}
@@ -51,48 +53,50 @@
                                 </div>
                             </div>
 
-                            <div class="matchingQuestion"
+                            <div
                                 *ngIf="gamesService.connected && this.currentQuiz != undefined && this.currentQuiz.type == 'match'">
-                                {{ this.currentQuiz.question }}<br>
-                                <div class="example-container">
-                                    <div cdkDropList #todoList="cdkDropList"
-                                        [cdkDropListData]="this.currentQuiz.leftAnswers"
-                                        [cdkDropListConnectedTo]="[doneList]" class="example-list"
-                                        (cdkDropListDropped)="drop($event)">
-                                        <div [cdkDragDisabled]="this.quizUpdate.quizOver"
-                                            [style.backgroundColor]="this.getBackgroundColorMatching(item, 'left')"
-                                            class="example-box" *ngFor="let item of this.currentQuiz.leftAnswers"
-                                            cdkDrag>{{item}}</div>
+                                <strong> {{ this.currentQuiz.question }}</strong><br>
+                                <div class="row inline-block-row matching">
+                                    <div class="example-container col">
+                                        <div cdkDropList #todoList="cdkDropList"
+                                            [cdkDropListData]="this.currentQuiz.leftAnswers"
+                                            [cdkDropListConnectedTo]="[doneList]" class="example-list"
+                                            (cdkDropListDropped)="drop($event)">
+                                            <div [cdkDragDisabled]="this.quizUpdate.quizOver"
+                                                [style.backgroundColor]="this.getBackgroundColorMatching(item, 'left')"
+                                                class="example-box" *ngFor="let item of this.currentQuiz.leftAnswers"
+                                                cdkDrag>{{item}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="example-container col">
+                                        <div cdkDropList #doneList="cdkDropList"
+                                            [cdkDropListData]="this.currentQuiz.rightAnswers"
+                                            [cdkDropListConnectedTo]="[todoList]" class="example-list"
+                                            (cdkDropListDropped)="drop($event)">
+                                            <div [cdkDragDisabled]="this.quizUpdate.quizOver"
+                                                [style.backgroundColor]="this.getBackgroundColorMatching(item, 'right')"
+                                                class="example-box" *ngFor="let item of this.currentQuiz.rightAnswers"
+                                                cdkDrag>{{item}}</div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="example-container">
-                                    <div cdkDropList #doneList="cdkDropList"
-                                        [cdkDropListData]="this.currentQuiz.rightAnswers"
-                                        [cdkDropListConnectedTo]="[todoList]" class="example-list"
-                                        (cdkDropListDropped)="drop($event)">
-                                        <div [cdkDragDisabled]="this.quizUpdate.quizOver"
-                                            [style.backgroundColor]="this.getBackgroundColorMatching(item, 'right')"
-                                            class="example-box" *ngFor="let item of this.currentQuiz.rightAnswers"
-                                            cdkDrag>{{item}}</div>
-                                    </div>
-                                </div>
-                                <br>
-
-                                <div class="matchingSolution" *ngIf="this.quizUpdate.quizOver">
+                                <div class="matchingSolution mt-2 mb-2" *ngIf="this.quizUpdate.quizOver">
+                                    <strong>The correct matches are:</strong>
                                     <div class="matchingSolutionLine"
                                         *ngFor="let solution of this.currentQuiz.correctAnswers">
                                         {{this.currentQuiz.answers[solution[0]]}} matches with
                                         {{this.currentQuiz.answers[solution[1]]}}
                                     </div>
                                 </div>
-
                             </div>
+
                             <div class="navigationButtos"
                                 *ngIf="gamesService.connected && this.currentQuiz != undefined">
-                                <button mat-raised-button color="primary" (click)="onPreviousQuestion()">Back</button>
+                                <button class="mr-1" mat-raised-button color="primary"
+                                    (click)="onPreviousQuestion()">Back</button>
                                 <button mat-raised-button color="primary" (click)="onNextQuestion()">Next</button>
                                 <button *ngIf="this.quizUpdate.quizOver == false" mat-raised-button color="primary"
-                                    (click)="onSubmitAnswers()">Submit</button>
+                                    class="ml-1" (click)="onSubmitAnswers()">Submit</button>
                             </div>
 
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { GamesService } from '@app/services/custom/games/games.service';
 import { QuizUpdate } from '../messages/quizUpdate';
@@ -61,10 +61,8 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Remove self from players and unsubscribe to changes
+  //Unsubscribe to changes
   ngOnDestroy(): void {
-    this.quizUpdate.players = this.quizUpdate.players.filter(playerName => playerName !== this.username);
-    this.gamesService.sendUpdate(this.quizUpdate);
     this.gameUpdateSubscriptionEvent.unsubscribe();
   }
 
@@ -158,10 +156,10 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
           !this.quizUpdate.quizes[this.quizUpdate.quizIndex].selectedAnswers.includes(answer)
           && !this.quizUpdate.quizes[this.quizUpdate.quizIndex].correctAnswers.includes(i)
         )) {
-        return "green";
+        return "#b5f1b5";
       }
       else {
-        return "red";
+        return "#eeaca4";
       }
     } else {
       return "white";
@@ -194,10 +192,10 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
         || (correctAnswers[i][0] == selectedAnswerMatch[1] && correctAnswers[i][1] == selectedAnswerMatch[0]
         )
       ) {
-        return "green";
+        return "#b5f1b5";
       }
     }
-    return "red";
+    return "#eeaca4";
   }
 
 
@@ -207,6 +205,7 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   }
 
   disconnectGame() {
+    this.gamesService.sendDisconnect();
     this.disconnect.emit("disconnect");
   }
 }

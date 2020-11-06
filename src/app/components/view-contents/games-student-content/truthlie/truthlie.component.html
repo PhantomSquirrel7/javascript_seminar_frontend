@@ -68,7 +68,7 @@
                         <div *ngIf="game.state == 'result'">
                             <div *ngIf="username == game.currentPlayer">
                                 <div> Players who guessed the lie correctly: </div>
-                                <div *ngFor="let g of game.guessed">
+                                <div *ngFor="let g of correctPlayers">
                                     {{g}}
                                 </div>
                                 <div *ngIf="game.next" class="mt-4 text-center">

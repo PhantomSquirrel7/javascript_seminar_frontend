@@ -72,4 +72,8 @@ export class GamesService extends Socket {
     this.emit("updateGame", updateGame);
   }
 
+  sendDisconnect() {
+    this.emit("customDisconnect");
+  }
+
 }

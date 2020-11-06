@@ -14,21 +14,25 @@
     </div>
 
     <div *ngIf="gameJoined && isSelected('quiz')" class="gameScreen">
-        <app-quiz (disconnect)="onDisconnect($event)" [username]="username " [taskId]="taskId " [sessionId]="sessionId "></app-quiz>
+        <app-quiz (disconnect)="onDisconnect($event)" [username]="username " [taskId]="taskId" [sessionId]="sessionId ">
+        </app-quiz>
     </div>
 
 
     <div *ngIf="gameJoined && isSelected( 'alias') " class="gameScreen ">
-        <app-alias [username]="username " [taskId]="taskId " [sessionId]="sessionId " (disconnect)="onDisconnect($event) ">
+        <app-alias (disconnect)="onDisconnect($event)" [username]="username " [taskId]="taskId "
+            [sessionId]="sessionId">
         </app-alias>
     </div>
 
     <div *ngIf="gameJoined && isSelected( 'drawit') " class="gameScreen ">
-        <app-draw-it [username]="username " [taskId]="taskId " [sessionId]="sessionId " (disconnect)="onDisconnect($event) "></app-draw-it>
+        <app-draw-it (disconnect)="onDisconnect($event)" [username]="username " [taskId]="taskId "
+            [sessionId]="sessionId"></app-draw-it>
     </div>
 
     <div *ngIf="gameJoined && isSelected('truthlie') " class="gameScreen ">
-        <app-truthlie [username]="username " [taskId]="taskId " [sessionId]="sessionId " (disconnect)="onDisconnect($event) "></app-truthlie>
+        <app-truthlie (disconnect)="onDisconnect($event)" [username]="username " [taskId]="taskId "
+            [sessionId]="sessionId"></app-truthlie>
     </div>
 
 </div>

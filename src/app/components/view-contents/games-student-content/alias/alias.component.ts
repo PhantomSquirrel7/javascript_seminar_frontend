@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnDestroy, OnInit, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { GamesService } from '@app/services/custom/games/games.service';
 import { AliasUpdate } from '../messages/aliasUpdate';
 
@@ -9,10 +9,11 @@ import { AliasUpdate } from '../messages/aliasUpdate';
 })
 export class GamesAliasComponent implements OnInit, OnDestroy {
 
+  // finished to notify parent component
+  @Output() disconnect = new EventEmitter<string>();
   @Input() username: string;
   @Input() sessionId: string;
   @Input() taskId: string;
-  @Output() disconnect: EventEmitter<string> = new EventEmitter<string>();
 
   currentWord = "";
   currentWordIndex = 0;
@@ -36,9 +37,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
 
   // Remove self from players List, Send update and unsubscribe to changes
   ngOnDestroy(): void {
-    //let session: AliasUpdate = this.gamesService.gameSession;
-    this.game.players = this.game.players.filter(playerName => playerName !== this.username);
-    this.gamesService.sendUpdate(this.game);
+    clearInterval(this.timeInterval);
     this.gameUpdateSubscriptionEvent.unsubscribe();
   }
 
@@ -72,8 +71,11 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
         this.setTimer(gameUpdate.timeleft);
       }
     }
-    if (this.timeRunning == false && gameUpdate.countDownStarted == true) {
+    if (!this.timeRunning && gameUpdate.countDownStarted) {
       this.setTimer(gameUpdate.timeleft);
+    }
+    if (this.username == this.game.currentPlayer && this.timeRunning && this.currentWord == "") {
+      this.currentWord = this.game.words[0];
     }
   }
 
@@ -99,8 +101,6 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
     }
     this.timeRunning = true;
     this.timer = timeleft;
-    // this.sleep(950)
-    //   .then(() => {
     this.timeInterval = setInterval(() => {
       if (this.timer > 0) this.timer -= 1;
       //current player is reference for timer and initializes game over
@@ -112,11 +112,6 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
         }
       }
     }, 1000);
-    // })
-  }
-
-  sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /*
@@ -146,6 +141,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
   }
 
   disconnectGame() {
+    this.gamesService.sendDisconnect();
     this.disconnect.emit("disconnect");
   }
 }
