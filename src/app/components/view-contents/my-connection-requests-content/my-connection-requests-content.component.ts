@@ -31,228 +31,10 @@ export class MyConnectionRequestsContentComponent implements OnInit {
   user_classes: any[];
   user_projects: any[] = [];
 
+
   actClass: any = {};
   actProject: any = {};
   exchangeTeacher: any = {};
-
-
-  exampleProject1 = {
-    "id": "projectId1",
-    "classes": [
-      {
-        "id": "5f8c63862d6a720016449f23",
-        "name": "Class 1",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      },
-      {
-        "id": "class2id",
-        "name": "Class 2",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      }
-    ],
-    "state": "ongoing",
-    "messages": [
-      [
-        {
-          "id": "message1id",
-          "message": "textMessage1",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "0000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873563"
-        },
-        {
-          "id": "message2id",
-          "message": "textMessage2",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "0000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873517"
-        },
-        {
-          "id": "message3id",
-          "message": "textMessage3",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873541"
-        }
-      ]
-    ],
-    "meetings": [
-      {}
-    ]
-  }
-
-  exampleProject2 = {
-    "id": "projectId2",
-    "classes": [
-      {
-        "id": "5f8c63862d6a720016449f23",
-        "name": "Class 1",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      },
-      {
-        "id": "class2id",
-        "name": "Class 2",
-        "language": "en",
-        "country": "DE",
-        "projectDuration": 10,
-        "meetingFrequency": 2,
-        "languageLevel": "A1",
-        "subject": "mathematics",
-        "topics": [
-          "addition",
-          "subtraction"
-        ],
-        "teacher": "id",
-        "level": 2
-      }
-    ],
-    "state": "pending",
-    "messages": [
-      [
-        {
-          "id": "message1id",
-          "message": "textMessage1",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873563"
-        },
-        {
-          "id": "message2id",
-          "message": "textMessage2",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873517"
-        },
-        {
-          "id": "message3id",
-          "message": "textMessage3",
-          "from": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "5f685056d6bf4e0016d9931e",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "to": {
-            "email": "test@mail.de",
-​            "firstName": "Peter",         ​
-            "id": "00000000",
-            "lastName": "Tester",
-            "role": "teacher",
-            "schoolName": "test school"
-          },
-          "timestamp": "1603911873541"
-        }
-      ]
-    ],
-    "meetings": [
-      {}
-    ]
-  }
 
 
   ngOnInit() {
@@ -311,23 +93,20 @@ export class MyConnectionRequestsContentComponent implements OnInit {
                 clsProjects.push(modProject);
               }
               this.user_projects.push({"class": cls, "projects": clsProjects});
-              // for (let p of this.exampleProject1.classes){
-              //   if (p.id != cls.id){
-              //     partnerClass = p;
-              //   }
-              // }
-              // this.exampleProject1["partnerClass"] = partnerClass;
-              // this.exampleProject2["partnerClass"] = partnerClass;
-              // if (cls.name == "Class 1"){
-              //   this.user_projects.push({"class": cls, "projects": [this.exampleProject1, this.exampleProject2]}); //TODO: replace with result});
-              // }
-              // else if (cls.name == "Class 2"){
-              //   this.user_projects.push({"class": cls, "projects": []});
-              // }
-              // else{
-              //   this.user_projects.push({"class": cls, "projects": [this.exampleProject2]}); //TODO: replace with result});
-              // }
-              // return result;
+              // Sorting of the projects
+              this.user_projects = this.user_projects.sort( (a, b) => {
+                var clsNameA = a.class.name.toLowerCase();
+                var clsNameB = b.class.name.toLowerCase();
+                if (clsNameA < clsNameB){
+                  return -1
+                }
+                else if (clsNameA > clsNameB){
+                  return 1
+                }
+                else{
+                 return 0 
+                }  
+              });
               })
             )
           )
@@ -352,5 +131,400 @@ export class MyConnectionRequestsContentComponent implements OnInit {
     this.actClass = cls;
     this.actProject = prjct;
   }
+
+  filterByCreator(creator){
+    this.user_projects = [];
+      if (creator == "me"){
+          this.loadMyProjects();
+      }
+      else if (creator == "other"){
+          this.loadOtherProjects();
+      }
+      else {
+          this.loadAllProjects();
+      }
+      return true;
+  }
+
+
+  filterByState(state){
+    this.user_projects = [];
+      if (state == "pending"){
+          this.loadPendingProjects();
+      }
+      else if (state == "ongoing"){
+          this.loadOngoingProjects();
+      }
+      else if (state == 'done'){
+          this.loadDoneProjects();
+      }
+      else{
+          this.loadAllProjects();
+      }
+      return true;
+  }
   
+
+  loadMyProjects(){
+    this.classService.classesGet().pipe(
+      map( (classes) =>
+        classes.map( 
+          (cls) => this.projectService.classesClassIdProjectsGet(cls.id).subscribe(result => { // result = list of projects for one class
+            let clsProjects = [];
+            for (let project of result){
+              let partnerClass: any = {};
+              let modProject = project;
+              
+              for (let p of project.classes){
+                if (p.id != cls.id){
+                  partnerClass = p;
+                }  
+              }
+              if (project.startedBy != undefined){  // needed for possible errors on projects created before change in api
+                if (project.startedBy.id == this.user.id){
+                  modProject["partnerClass"] = partnerClass;
+                  clsProjects.push(modProject);
+                }
+              }
+              else{
+                if (partnerClass.id == cls.id){
+                    modProject["partnerClass"] = partnerClass;
+                    clsProjects.push(modProject);
+                }
+              }
+              
+            }
+            
+            this.user_projects.push({"class": cls, "projects": clsProjects});
+            // Sorting of the projects
+            this.user_projects = this.user_projects.sort( (a, b) => {
+              var clsNameA = a.class.name.toLowerCase();
+              var clsNameB = b.class.name.toLowerCase();
+              if (clsNameA < clsNameB){
+                return -1
+              }
+              else if (clsNameA > clsNameB){
+                return 1
+              }
+              else{
+               return 0 
+              }  
+            });
+            })
+          )
+        )
+        ).subscribe({
+            next: (response) => {
+              this.loading = false;
+              this.allDataLoaded = true;
+              console.log("all Projects:");
+              console.log(this.user_projects) 
+            },
+            error: (error) => {
+              this.error = error;
+              this._snackBar.open(this.error, 'Close', {
+              duration: 3000
+              });
+              this.loading = false;
+            },
+          });
+  }
+
+
+  loadOtherProjects(){
+    this.classService.classesGet().pipe(
+      map( (classes) =>
+        classes.map( 
+          (cls) => this.projectService.classesClassIdProjectsGet(cls.id).subscribe(result => { // result = list of projects for one class
+            let clsProjects = [];
+            for (let project of result){
+              let partnerClass: any = {};
+              let modProject = project;
+              
+              for (let p of project.classes){
+                if (p.id != cls.id){
+                  partnerClass = p;
+                }  
+              }
+
+              if (project.startedBy != undefined){  // needed for possible errors on projects created before change in api
+                if (project.startedBy.id != this.user.id){
+                  modProject["partnerClass"] = partnerClass;
+                  clsProjects.push(modProject);
+                }
+              }
+              else{
+                if (partnerClass.id != cls.id){
+                    modProject["partnerClass"] = partnerClass;
+                    clsProjects.push(modProject);
+                }
+              }             
+            }
+            
+            this.user_projects.push({"class": cls, "projects": clsProjects});
+            // Sorting of the projects
+            this.user_projects = this.user_projects.sort( (a, b) => {
+              var clsNameA = a.class.name.toLowerCase();
+              var clsNameB = b.class.name.toLowerCase();
+              if (clsNameA < clsNameB){
+                return -1
+              }
+              else if (clsNameA > clsNameB){
+                return 1
+              }
+              else{
+               return 0 
+              }  
+            });
+            })
+          )
+        )
+        ).subscribe({
+            next: (response) => {
+              this.loading = false;
+              this.allDataLoaded = true;
+              console.log("all Projects:");
+              console.log(this.user_projects) 
+            },
+            error: (error) => {
+              this.error = error;
+              this._snackBar.open(this.error, 'Close', {
+              duration: 3000
+              });
+              this.loading = false;
+            },
+          });
+  }
+
+
+  loadAllProjects(){
+    this.classService.classesGet().pipe(
+      map( (classes) =>
+        classes.map( 
+          (cls) => this.projectService.classesClassIdProjectsGet(cls.id).subscribe(result => {
+            let clsProjects = [];
+            for (let project of result){
+              let partnerClass = {};
+              let modProject = project;
+              
+              for (let p of project.classes){
+                if (p.id != cls.id){
+                  partnerClass = p;
+                }  
+              }
+              
+              modProject["partnerClass"] = partnerClass;
+              clsProjects.push(modProject);
+            }
+            this.user_projects.push({"class": cls, "projects": clsProjects});
+            // Sorting of the projects
+            this.user_projects = this.user_projects.sort( (a, b) => {
+              var clsNameA = a.class.name.toLowerCase();
+              var clsNameB = b.class.name.toLowerCase();
+              if (clsNameA < clsNameB){
+                return -1
+              }
+              else if (clsNameA > clsNameB){
+                return 1
+              }
+              else{
+               return 0 
+              }  
+            });
+            })
+          )
+        )
+        ).subscribe({
+            next: (response) => {
+              this.loading = false;
+              this.allDataLoaded = true;
+              console.log("all Projects:");
+              console.log(this.user_projects) 
+            },
+            error: (error) => {
+              this.error = error;
+              this._snackBar.open(this.error, 'Close', {
+              duration: 3000
+              });
+              this.loading = false;
+            },
+          });
+  }
+
+
+  loadPendingProjects(){
+    this.classService.classesGet().pipe(
+      map( (classes) =>
+        classes.map( 
+          (cls) => this.projectService.classesClassIdProjectsGet(cls.id).subscribe(result => { // result = list of projects for one class
+            let clsProjects = [];
+            for (let project of result){
+              let partnerClass: any = {};
+              let modProject = project;
+              
+              for (let p of project.classes){
+                if (p.id != cls.id){
+                  partnerClass = p;
+                }  
+              }
+              if (project.state == 'pending'){
+                modProject["partnerClass"] = partnerClass;
+                clsProjects.push(modProject);
+              }
+              
+            }
+            
+            this.user_projects.push({"class": cls, "projects": clsProjects});
+            // Sorting of the projects
+            this.user_projects = this.user_projects.sort( (a, b) => {
+              var clsNameA = a.class.name.toLowerCase();
+              var clsNameB = b.class.name.toLowerCase();
+              if (clsNameA < clsNameB){
+                return -1
+              }
+              else if (clsNameA > clsNameB){
+                return 1
+              }
+              else{
+               return 0 
+              }  
+            });
+            })
+          )
+        )
+        ).subscribe({
+            next: (response) => {
+              this.loading = false;
+              this.allDataLoaded = true;
+              console.log("all Projects:");
+              console.log(this.user_projects) 
+            },
+            error: (error) => {
+              this.error = error;
+              this._snackBar.open(this.error, 'Close', {
+              duration: 3000
+              });
+              this.loading = false;
+            },
+          });
+  }
+
+
+  loadOngoingProjects(){
+    this.classService.classesGet().pipe(
+      map( (classes) =>
+        classes.map( 
+          (cls) => this.projectService.classesClassIdProjectsGet(cls.id).subscribe(result => { // result = list of projects for one class
+            let clsProjects = [];
+            for (let project of result){
+              let partnerClass: any = {};
+              let modProject = project;
+              
+              for (let p of project.classes){
+                if (p.id != cls.id){
+                  partnerClass = p;
+                }  
+              }
+              if (project.state == 'ongoing'){
+                modProject["partnerClass"] = partnerClass;
+                clsProjects.push(modProject);
+              }
+              
+            }
+            
+            this.user_projects.push({"class": cls, "projects": clsProjects});
+            // Sorting of the projects
+            this.user_projects = this.user_projects.sort( (a, b) => {
+              var clsNameA = a.class.name.toLowerCase();
+              var clsNameB = b.class.name.toLowerCase();
+              if (clsNameA < clsNameB){
+                return -1
+              }
+              else if (clsNameA > clsNameB){
+                return 1
+              }
+              else{
+               return 0 
+              }  
+            });
+            })
+          )
+        )
+        ).subscribe({
+            next: (response) => {
+              this.loading = false;
+              this.allDataLoaded = true;
+              console.log("all Projects:");
+              console.log(this.user_projects) 
+            },
+            error: (error) => {
+              this.error = error;
+              this._snackBar.open(this.error, 'Close', {
+              duration: 3000
+              });
+              this.loading = false;
+            },
+          });
+  }
+
+
+  loadDoneProjects(){
+    this.classService.classesGet().pipe(
+      map( (classes) =>
+        classes.map( 
+          (cls) => this.projectService.classesClassIdProjectsGet(cls.id).subscribe(result => { // result = list of projects for one class
+            let clsProjects = [];
+            for (let project of result){
+              let partnerClass: any = {};
+              let modProject = project;
+              
+              for (let p of project.classes){
+                if (p.id != cls.id){
+                  partnerClass = p;
+                }  
+              }
+              if (project.state == 'done'){
+                modProject["partnerClass"] = partnerClass;
+                clsProjects.push(modProject);
+              }
+              
+            }
+            
+            this.user_projects.push({"class": cls, "projects": clsProjects});
+            // Sorting of the projects
+            this.user_projects = this.user_projects.sort( (a, b) => {
+              var clsNameA = a.class.name.toLowerCase();
+              var clsNameB = b.class.name.toLowerCase();
+              if (clsNameA < clsNameB){
+                return -1
+              }
+              else if (clsNameA > clsNameB){
+                return 1
+              }
+              else{
+               return 0 
+              }  
+            });
+            })
+          )
+        )
+        ).subscribe({
+            next: (response) => {
+              this.loading = false;
+              this.allDataLoaded = true;
+              console.log("all Projects:");
+              console.log(this.user_projects) 
+            },
+            error: (error) => {
+              this.error = error;
+              this._snackBar.open(this.error, 'Close', {
+              duration: 3000
+              });
+              this.loading = false;
+            },
+          });
+  }
+
 }
+
+
