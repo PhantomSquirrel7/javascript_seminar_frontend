@@ -7,7 +7,8 @@ export interface TruthlieUpdate {
     countDownStarted: boolean; // indicates if countdown started, a change starts countdown for all clients
     options: string[];
     guessed: string[];
-    lie: string; // False statemenr
+    lie: string; // False statement
+    truths: Array<string>; // true statements
     name: string;   // name of the game
     state: 'lobby' | 'result' | 'running' | 'over';
     timelimit: number;

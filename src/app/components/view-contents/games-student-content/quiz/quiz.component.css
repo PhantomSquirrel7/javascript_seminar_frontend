@@ -1,8 +1,7 @@
 .example-container {
-    width: 400px;
+    min-width: 75px;
     max-width: 100%;
-    margin: 0 25px 25px 0;
-    display: inline-block;
+    margin: 0;
     vertical-align: top;
 }
 
@@ -27,6 +26,12 @@
     cursor: move;
     background: white;
     font-size: 14px;
+}
+
+.matching {
+    margin: 0.5em 0;
+    min-width: 200px;
+    overflow: auto;
 }
 
 .cdk-drag-preview {

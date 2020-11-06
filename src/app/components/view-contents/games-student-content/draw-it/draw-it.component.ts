@@ -113,7 +113,6 @@ export class DrawItComponent implements OnInit, OnDestroy {
     }
     this.game = gameUpdate;
     // get canvas history on rejoin 
-    console.log(gameUpdate)
     if (!this.firstUpdate && gameUpdate.drawingHistory.length > 0) {
       this.firstUpdate = true;
       setTimeout(() => {
@@ -230,7 +229,6 @@ export class DrawItComponent implements OnInit, OnDestroy {
     if (this.username == this.game.currentPlayer || this.game.state == "over") {
       return;
     }
-    console.log("drawing update", newMessage)
     //update for guessing players only
     //console.log(newMessage)
     switch (newMessage.type) {

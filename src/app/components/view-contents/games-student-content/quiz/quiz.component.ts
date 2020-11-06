@@ -156,10 +156,10 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
           !this.quizUpdate.quizes[this.quizUpdate.quizIndex].selectedAnswers.includes(answer)
           && !this.quizUpdate.quizes[this.quizUpdate.quizIndex].correctAnswers.includes(i)
         )) {
-        return "green";
+        return "#b5f1b5";
       }
       else {
-        return "red";
+        return "#eeaca4";
       }
     } else {
       return "white";
@@ -192,10 +192,10 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
         || (correctAnswers[i][0] == selectedAnswerMatch[1] && correctAnswers[i][1] == selectedAnswerMatch[0]
         )
       ) {
-        return "green";
+        return "#b5f1b5";
       }
     }
-    return "red";
+    return "#eeaca4";
   }
 
 
