@@ -71,7 +71,7 @@ export class GamesAliasComponent implements OnInit, OnDestroy {
         this.setTimer(gameUpdate.timeleft);
       }
     }
-    if (this.timeRunning == false && gameUpdate.countDownStarted == true) {
+    if (!this.timeRunning && gameUpdate.countDownStarted) {
       this.setTimer(gameUpdate.timeleft);
     }
     if (this.username == this.game.currentPlayer && this.timeRunning && this.currentWord == "") {

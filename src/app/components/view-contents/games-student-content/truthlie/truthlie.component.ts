@@ -15,15 +15,17 @@ export class TruthlieComponent implements OnInit, OnDestroy {
   @Input() sessionId: string;
   @Input() taskId: string;
 
-  truth1: string;
-  truth2: string;
-  lie: string;
+  truth1 = "";
+  truth2 = "";
+  lie = "";
   correct: boolean;
   chosen: string;
   timeInterval;
   timer;
   gameUpdateSubscriptionEvent;
   showHelp = false;
+  timeRunning = false;
+  correctPlayers = [];
 
   game: TruthlieUpdate;
 
@@ -38,8 +40,7 @@ export class TruthlieComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.game.players = this.game.players.filter(playerName => playerName !== this.username);
-    this.gamesService.sendUpdate(this.game);
+    clearInterval(this.timeInterval);
     this.gameUpdateSubscriptionEvent.unsubscribe();
   }
 
@@ -49,11 +50,10 @@ export class TruthlieComponent implements OnInit, OnDestroy {
     this.game.state = "running";
     this.game.played.push(this.game.currentPlayer);
     this.game.lie = this.lie;
+    this.game.truths = [this.truth1, this.truth2];
     this.game.options = this.shuffle([this.lie, this.truth1, this.truth2]);
-    this.timer = this.game.timelimit;
     this.sendUpdateGame();
-    this.setTimer();
-
+    this.setTimer(this.game.timeleft);
   }
 
   continueGame(): void {
@@ -63,33 +63,43 @@ export class TruthlieComponent implements OnInit, OnDestroy {
     this.game.countDownStarted = false;
     this.game.options = [];
     this.game.guessed = [];
+    this.game.lie = "";
+    this.game.truths = ["", ""];
     this.sendUpdateGame();
     this.correct = false;
+    this.correctPlayers = [];
   }
 
 
-  setTimer(): void {
-    this.timeInterval = setInterval(() => {
-      if (this.game.state == 'running') {
+  setTimer(timeleft): void {
+    if (this.timeInterval) {
+      clearInterval(this.timeInterval);
+    }
+    this.timeRunning = true;
+    this.timer = timeleft;
+    if (this.game.state == 'running') {
+      this.timeInterval = setInterval(() => {
         if (this.timer > 0) this.timer -= 1;
-        this.game.timeleft = this.timer;
+        if (this.username == this.game.currentPlayer) {
+          this.game.timeleft = this.timer;
+          this.gamesService.sendUpdate(this.game);
+        }
         if (this.timer <= 0) {
           this.onGameOver();
         }
-      }
-    }, 1000);
+      }, 1000);
+    }
   }
 
   onGameOver(): void {
     clearInterval(this.timeInterval);
+    this.timeRunning = false;
+    this.game.state = 'result';
+    this.game.countDownStarted = false;
     if (this.game.currentPlayer !== this.username && this.chosen === this.game.lie) {
       this.correct = true;
       this.game.guessed[0] = this.username;
-      this.game.state = 'result';
-      this.game.countDownStarted = false;
     } else {
-      this.game.state = 'result';
-      this.game.countDownStarted = false;
       if (this.game.played.length < this.game.players.length) {
         this.game.next = true;
       }
@@ -102,23 +112,22 @@ export class TruthlieComponent implements OnInit, OnDestroy {
 
   // Updates the current view with a recieved update
   handleRecievedUpdateGame(truthlieUpdate: TruthlieUpdate) {
-    if (truthlieUpdate.state === "result" && this.username === truthlieUpdate.currentPlayer) {
-      this.game.guessed.push(truthlieUpdate.guessed[0]);
+    if (this.username === truthlieUpdate.currentPlayer && !this.correctPlayers.includes(truthlieUpdate.guessed[0])) {
+      this.correctPlayers.push(truthlieUpdate.guessed[0]);
+      truthlieUpdate.guessed = [];
     }
-    else if (truthlieUpdate.state === "result") { }
-    else {
-      if (this.game) {
-        if (this.game.countDownStarted == false && truthlieUpdate.countDownStarted) {
-          // Start Countdown Now!
-          this.timer = this.game.timelimit;
-          this.setTimer();
-        }
-        this.game = truthlieUpdate;
-      }
-      else {
-        this.game = truthlieUpdate;
-        this.timer = this.game.timelimit;
-      }
+    this.game = truthlieUpdate;
+    this.lie = this.game.lie;
+    if (this.game.truths && this.game.truths.length == 2) {
+      this.truth1 = this.game.truths[0];
+      this.truth2 = this.game.truths[1];
+    }
+    if (this.username != this.game.currentPlayer && this.timer != truthlieUpdate.timeleft) {
+      // synchronize timer 
+      this.setTimer(truthlieUpdate.timeleft);
+    }
+    if (!this.timeRunning && truthlieUpdate.countDownStarted) {
+      this.setTimer(truthlieUpdate.timeleft);
     }
   }
 
