@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+<nav class="myNavbar navbar navbar-light navbar-expand shadow mb-4 topbar static-top">
     <div class="container-fluid">
         <form [formGroup]="searchForm" (ngSubmit)="search()" class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
@@ -17,10 +17,10 @@
             <button type="button" class="btn btn-light">EN</button>
         </div> -->
 
-        <div class="d-none d-sm-block topbar-divider"></div>
+        <!-- <div class="d-none d-sm-block topbar-divider"></div> -->
 
         <button mat-icon-button  [matMenuTriggerFor]="menu">
-            <mat-icon>account_circle</mat-icon>
+            <mat-icon [ngStyle]="{'color':'white'}">account_circle</mat-icon>
         </button>
     
         <mat-menu #menu="matMenu">

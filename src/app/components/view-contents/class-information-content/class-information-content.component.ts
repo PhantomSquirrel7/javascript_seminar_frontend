@@ -13,6 +13,7 @@ import {
   ConfirmDialogComponent,
   ConfirmDialogModel,
 } from '@app/components/common/confirm-dialog/confirm-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-class-information-content',
@@ -64,7 +65,8 @@ export class ClassInformationContentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: CustomLoginService,
     private userApi: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -218,6 +220,7 @@ export class ClassInformationContentComponent implements OnInit {
             duration: 3000,
           });
           this.retrieveClassListOfTeacher();
+          this.selectedClass = false;
         },
         error: (error) => {
           this.error = error;
@@ -333,5 +336,19 @@ export class ClassInformationContentComponent implements OnInit {
           this.updateClassStudentsLoading = false;
         },
       });
+  }
+
+
+  navigateTo(pageName: string) {
+    switch (pageName) {
+      case "createClassPage": {
+        this.router.navigate(['/create-class']);
+        break
+      }
+      case "createStudentPage": {
+        this.router.navigate(['/create-student']);
+        break
+      }
+    }
   }
 }

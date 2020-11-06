@@ -26,6 +26,7 @@ export class MessageBoardComponent implements OnInit {
 
   contactTeacherForm: FormGroup;
   sent = false;
+  sending = false;
   messageTextValue = "";
 
   timeLeft: number = 60;
@@ -72,7 +73,7 @@ export class MessageBoardComponent implements OnInit {
     console.log("Sending:");
     console.log(this.contactTeacherForm.value.messageText);
     // this.sent = true;
-
+    this.sending = true;
     let msgObj: Body11 = {
       "message": this.contactTeacherForm.value.messageText,
       "from": this.sender.id.toString(),
@@ -83,10 +84,9 @@ export class MessageBoardComponent implements OnInit {
       data => {
         console.log("Answer sending:")
         console.log(data);
-        this.sent = true;
         this.loadMessages();
-        const source = timer(4000);
-        source.subscribe(data => this.sent = false);
+        // const source = timer(4000);
+        // source.subscribe(data => this.sent = false);
       }
     );
 
@@ -110,6 +110,10 @@ export class MessageBoardComponent implements OnInit {
         this.messages = this.messages.sort( (a, b) => {
           return Number(a.timestamp) - Number(b.timestamp)
         });
+        this.sending = false;
+        this.sent = true;
+        const source = timer(4000);
+        source.subscribe(data => this.sent = false);
       }
     );
   }
