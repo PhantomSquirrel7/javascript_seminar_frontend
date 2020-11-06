@@ -1,1 +1,33 @@
-<p>games-view works!</p>
+<!-- <p>games-view works!</p> -->
+<h2 style="text-align:center"> {{ title }}</h2>
+<div *ngIf="icebreakers.length > 0">
+    <p> <b>Ice-Breaker Games</b></p>
+    <ul style="list-style-type:none; margin:0; padding: 0;">
+        <li *ngFor="let icebreaker of icebreakers" ><input type="checkbox"> {{icebreaker}}
+            <button id="playGameBtn" class="playBtn btn btn-outline-primary btn-lg btn-block btn-user" type="button">
+                Play Game
+            </button>
+        </li>
+    </ul>
+    <br>
+</div>
+<div *ngIf="quizzes.length > 0">
+    <p><b>Quizzes</b></p>
+    <ul style="list-style-type:none; margin:0; padding: 0;">
+        <li *ngFor="let quiz of quizzes"><input type="checkbox"> {{quiz}}</li>
+        <button id="doQuizBtn" class="playBtn btn btn-outline-primary btn-lg btn-block btn-user" type="button">
+            Do Quiz
+        </button>
+    </ul>
+    <br>
+</div>
+<div *ngIf="others.length > 0">
+    <p><b>Others</b></p>
+    <ul style="list-style-type:none; margin:0; padding: 0;">
+        <li *ngFor="let other of others"><input type="checkbox"> {{other}}</li>
+        <button id="startActivityBtn" class="playBtn btn btn-outline-primary btn-lg btn-block btn-user" type="button">
+            Start activity
+        </button>
+    </ul>
+    <br>
+</div>
