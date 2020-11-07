@@ -120,7 +120,6 @@ export class FindPartnerClassContentComponent implements OnInit {
 			next: (response) => {
 				this.loading = false;
 				this.user_classes = response;
-				console.log(this.user_classes[0]);
 			},
 			error: (error) => {
 				this.error = error;
@@ -138,22 +137,14 @@ export class FindPartnerClassContentComponent implements OnInit {
 	}
 		
 	frequencySelected(){
-		console.log("Frequency:");
-		
-		console.log(this.findPartnerForm.value.meetingFrequency);
 		this.selectedFrequency = this.findPartnerForm.value.meetingFrequency.val;
 	}
 	
 	durationSelected(){
-		console.log("Duration:");
-		console.log(this.findPartnerForm.value.projectDuration);
 		this.selectedDuration = this.findPartnerForm.value.projectDuration.val;
 	}	
 	
 	countrySelected(){
-		console.log("Country:");
-		
-		console.log(this.findPartnerForm.value.selectedCountry);
 		this.selectedCountry = this.findPartnerForm.value.selectedCountry;
 	}
 
@@ -162,55 +153,31 @@ export class FindPartnerClassContentComponent implements OnInit {
 		this.submitted = true;
 		
 		if (this.selectedClass){
-			console.log("Hello Api:");
-			console.log(this.findPartnerForm.value);
-			console.log(this.selectedClass.id);
-			console.log(this.selectedDuration);
-			console.log(this.selectedFrequency);
-			console.log(this.selectedCountry);
-			
-			if (this.selectedDuration == null || this.selectedFrequency == null || this.selectedCountry == ""){
-				console.log("easy route");
-				this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id).subscribe({
-					next: (response) => {
-						this.loading = false;
-						this.resultClasses = response;
-						console.log(this.resultClasses);
-						this.router.navigate(['find-partner-class/results'], {state: {data: response, selfClass: this.selectedClass}});
-					},
-					error: (error) => {
-						this.error = error;
-						this._snackBar.open(this.error, 'Close', {
-						duration: 3000
-						});
-						this.loading = false;
-					},
-				});
-			}
-			else{
-				this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id, this.selectedDuration.toString(), this.selectedFrequency.toString(), this.selectedCountry.code.toString()).subscribe({
-					next: (response) => {
-						this.loading = false;
-						this.resultClasses = response;
-						console.log("Search with parameter:")
-						console.log(this.resultClasses);
-						this.router.navigate(['find-partner-class/results'], {state: {data: response, selfClass: this.selectedClass}});
-					},
-					error: (error) => {
-						this.error = error;
-						this._snackBar.open(this.error, 'Close', {
-						duration: 3000
-						});
-						this.loading = false;
-					},
-				});
-			}
-	
+			this.myClasses = this.classService.classesClassIdFindGet(
+					this.selectedClass.id, 
+					(this.selectedDuration != null ? this.selectedDuration.toString() : ""), 
+					(this.selectedFrequency != null ? this.selectedFrequency.toString() : ""), 
+					(this.selectedCountry.code != undefined ? this.selectedCountry.code.toString() : "") 
+				).subscribe({
+				next: (response) => {
+					this.loading = false;
+					this.resultClasses = response;
+					console.log("Search with parameter:")
+					console.log(this.resultClasses);
+					this.router.navigate(['find-partner-class/results'], {state: {data: response, selfClass: this.selectedClass}});
+				},
+				error: (error) => {
+					this.error = error;
+					this._snackBar.open(this.error, 'Close', {
+					duration: 3000
+					});
+					this.loading = false;
+				},
+			});	
 			this.loading = false;
 		}
 		else{
 			console.log("ERROR!");
-			
 			this.classError = true;
 			this.loading = false;
 		}
