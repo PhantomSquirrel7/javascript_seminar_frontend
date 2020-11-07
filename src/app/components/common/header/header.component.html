@@ -20,7 +20,7 @@
 
     <!-- <div class="d-none d-sm-block topbar-divider"></div> -->
 
-    <div *ngIf="this.loginService.userValue.role === 'student'">
+    <div *ngIf="this.loginService.userValue && this.loginService.userValue.role === 'student'">
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon [ngStyle]="{'color':'white'}">account_circle</mat-icon>
       </button>

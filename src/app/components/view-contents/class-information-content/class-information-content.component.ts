@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { InlineResponse2001 } from '@app/models';
 import { CustomLoginService } from '@app/services/custom/login/login.service';
 import { first } from 'rxjs/operators';
-import { ClassesService, UserService } from '../../../services/swagger-api/api';
+import { ClassesService, StudentsService, UserService } from '../../../services/swagger-api/api';
 import { LANGUAGE_LIST } from '../../common/backend-util/common-structures/languages';
 import { COUNTRY_LIST } from '../../common/backend-util/common-structures/countries';
 import { LANGUAGE_LEVEL_LIST } from '../../common/backend-util/common-structures/language-level';
@@ -14,6 +14,19 @@ import {
   ConfirmDialogModel,
 } from '@app/components/common/confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+
+export interface StudentData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  flag: boolean;
+  email :string;
+}
+
+
 
 @Component({
   selector: 'app-class-information-content',
@@ -21,6 +34,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./class-information-content.component.less'],
 })
 export class ClassInformationContentComponent implements OnInit {
+
+  displayedColumns: string[] = ['Assigned to class ?','ID', 'Name', 'Surname', 'E-mail', 'Delete Button'];
+  dataSource: MatTableDataSource<StudentData>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   getClassLoading = false;
   getClassSubmitted = false;
 
@@ -38,6 +58,9 @@ export class ClassInformationContentComponent implements OnInit {
 
   updateClassStudentsLoading = false;
   updateClassStudentsSubmitted = false;
+
+  deleteStudentLoading = false;
+
 
   returnUrl: string;
   error = '';
@@ -64,6 +87,7 @@ export class ClassInformationContentComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private userService: CustomLoginService,
+    private studentService : StudentsService,
     private userApi: UserService,
     public dialog: MatDialog,
     private router: Router,
@@ -94,6 +118,17 @@ export class ClassInformationContentComponent implements OnInit {
     });
 
     this.retrieveClassListOfTeacher();
+  }
+  ngAfterViewInit() {
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   get f() {
@@ -207,6 +242,29 @@ export class ClassInformationContentComponent implements OnInit {
     });
   }
 
+  openDeleteStudentConfirmationDialog(index) : void {
+    const message = `Are you sure you want to delete student?`;
+    const dialogData = new ConfirmDialogModel('Confirm Action', message);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult == true) this.deleteStudent(this.studentsOfTeacher[index].id);
+    });
+  }
+
+  deleteStudent(studentId):void {
+    this.deleteClassLoading = true;
+    // there is no student delete service to call
+    setTimeout(() => {
+      this.deleteClassLoading = false;
+    }, 5000);
+    // this.studentService.de
+
+  }
+
   deleteClass(): void {
     this.deleteClassLoading = true;
     this.classService
@@ -264,10 +322,16 @@ export class ClassInformationContentComponent implements OnInit {
       let found = studentsOfClass.find((item) => item.id == element.id);
       if (found) element.flag = true;
       else element.flag = false;
+      delete element.role;
     });
-    this.concatStudentsLoaded = true;
     this.studentsOfTeacher = studentsOfTeacher;
-  }
+    this.dataSource = new MatTableDataSource(this.studentsOfTeacher);
+    setTimeout(() => {
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    }, 0);
+    this.concatStudentsLoaded = true;
+  };
 
   toggleStudentCheckBox(index){
     this.studentsOfTeacher[index].flag = ! this.studentsOfTeacher[index].flag;
