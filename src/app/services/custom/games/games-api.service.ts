@@ -9,6 +9,7 @@ import { Quiz } from '@app/models/game-models/quiz';
 import { DrawIt } from '@app/models/game-models/drawIt';
 import { Configuration } from '@app/swagger-configs/configuration';
 import { BASE_PATH } from '@app/swagger-configs/variables';
+import { SimpleTask } from '@app/models/game-models/simpleTask';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,36 @@ export class GamesApiService {
 
       return null;
     }
+  }
+
+  // ------------------ SIMPLE TASK -------------------
+  getSimpleTasks(): Observable<SimpleTask[]> {
+    return this.http.get<SimpleTask[]>(this.url + "/games/simpletask/games", { headers: this.getHeaders() })
+      .pipe(
+        catchError(this.handleError<SimpleTask[]>('Loading Simple Tasks', [])
+        ));
+  }
+
+  createSimpleTask(game: SimpleTask): Observable<SimpleTask> {
+    delete game['id'];
+    return this.http.post<SimpleTask>(this.url + "/games/simpletask/create", game, { headers: this.getHeaders() })
+      .pipe(
+        catchError(this.handleError<SimpleTask>('Saving new Simple Task')
+        ));
+  }
+
+  updateSimpleTask(game: SimpleTask): Observable<SimpleTask> {
+    return this.http.put<SimpleTask>(this.url + "/games/simpletask/" + game.id, game, { headers: this.getHeaders() })
+      .pipe(
+        catchError(this.handleError<SimpleTask>('Updating Simple Task')
+        ));
+  }
+
+  deleteSimpleTask(game: SimpleTask): Observable<any> {
+    return this.http.delete(this.url + "/games/simpletask/" + game.id, { headers: this.getHeaders("text"), responseType: 'text' })
+      .pipe(
+        catchError(this.handleError<any>('Deleting Simple Task')
+        ));
   }
 
   // ------------------ ALIAS -------------------

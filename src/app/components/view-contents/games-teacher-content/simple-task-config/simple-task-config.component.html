@@ -1,0 +1,30 @@
+<!-- <button mat-raised-button class="fas fa-arrow-left back-button" [routerLink]="['/games-teacher/overview']"></button> -->
+<mat-card-header>
+    <mat-card-title>Simple Task Settings</mat-card-title>
+</mat-card-header>
+
+<app-messages></app-messages>
+
+<mat-card-content>
+    <div class="mt-2">
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Create New Game
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-simple-task-form></app-simple-task-form>
+                <!--<app-alias-form [game]="newGame" (gameChange)="onCreateGame($event)"></app-alias-form>-->
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</mat-card-content>
+<ng-template #loadingAliasContent>
+    <mat-card-content>
+        <div>
+            <mat-spinner class="loading" [diameter]="40"></mat-spinner>
+            <span class="loading">Loading Games...</span>
+        </div>
+    </mat-card-content>
+</ng-template>

@@ -104,12 +104,14 @@
             </div>
 
             <div *ngIf="selectedTypeOfTask === 'simple-task'" style="width: 70vmax;">
+                <!-- CREATE SIMPLE TASK FORM -->
                 <div class="card-body">
-                    Simple Task component Here
+                    <app-simple-task-config></app-simple-task-config>
                 </div>
             </div>
         </div>
 
+        <br>
         <button (click)="submitForm()" type="button" class="btn btn-primary">Confirm</button>
 
     </div>
