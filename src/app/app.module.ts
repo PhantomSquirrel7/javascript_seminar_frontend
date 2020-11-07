@@ -83,6 +83,7 @@ import { ClassInformationViewComponent } from './components/views/class-informat
 import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
 import { GamesViewComponent } from './components/views/games-view/games-view.component';
 import { MyMeetingRequestsContentComponent } from './components/view-contents/my-meeting-requests-content/my-meeting-requests-content.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   imports: [
@@ -95,7 +96,8 @@ import { MyMeetingRequestsContentComponent } from './components/view-contents/my
     BrowserAnimationsModule,
     DemoMaterialModule,
     SocketIoModule,
-    CanvasWhiteboardModule
+    CanvasWhiteboardModule,
+    NgxMaterialTimepickerModule,
   ],
   declarations: [
     AppComponent,

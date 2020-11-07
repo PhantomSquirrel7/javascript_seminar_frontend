@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '@app/models';
+import { Body9, User } from '@app/models';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ClassesService } from 'src/app/services/swagger-api/classes.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ProjectsService } from '@app/services/swagger-api/projects.service';
+import { MeetingsService } from '@app/services/swagger-api/meetings.service';
 
 
 @Component({
@@ -20,6 +20,7 @@ export class PlanMeetingContentComponent implements OnInit {
   projectSelectForm: FormGroup;
   planningSectionForm: FormGroup;
 
+  timeValue = '';
   user: User;
   error = '';
   isClassSelected = false;
@@ -42,6 +43,7 @@ export class PlanMeetingContentComponent implements OnInit {
     private classService: ClassesService,
     private projectService: ProjectsService,
     private _snackBar: MatSnackBar,
+    private meetingService: MeetingsService,
   ) { }
 
   ngOnInit() {
@@ -53,7 +55,8 @@ export class PlanMeetingContentComponent implements OnInit {
       selectedProject: [null]
     });
     this.planningSectionForm = this.fb.group({
-      selectedDuration: [null]
+      selectedDuration: [null],
+      selectedTime: [null]
     });
     this.classService.classesGet().subscribe({
       next: (response) => {
@@ -120,10 +123,36 @@ export class PlanMeetingContentComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.date);
+    console.log(this.date.toLocaleDateString('en-CA')
+    );
     console.log(this.selectedDuration);
     console.log(this.selectedArrangement)
     console.log(this.selectedProject.id);
+    this.timeValue = this.planningSectionForm.value.selectedTime;
+
+    // Format date / time
+    let postDate = this.date;
+    let timeSplit = this.timeValue.split(":")
+    let epochTime = postDate.setHours(Number(timeSplit[0]),Number(timeSplit[1]))
+    postDate = new Date(epochTime)
+    console.log(postDate)
+
+    let myBody: Body9= {
+      "date": postDate,
+      "duration": this.selectedDuration,
+      "taskList": [],
+      "groupAssignment": this.getGroupAssignment(),
+    };
+
+    // Send POST REQUEST
+    this.meetingService.classesClassIdProjectsProjectIdMeetingsPost(myBody, 
+      this.selectedClass.id,
+      this.selectedProject.id,
+      ).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
   }
 
   onDateSelected(event) {
@@ -133,4 +162,13 @@ export class PlanMeetingContentComponent implements OnInit {
   durationSelected() {
     this.selectedDuration = this.planningSectionForm.value.selectedDuration;
   }
+
+  getGroupAssignment() {
+    if(this.selectedArrangement == 'tandem') {
+      return Body9.GroupAssignmentEnum.Tandem
+    } else {
+      return Body9.GroupAssignmentEnum.WholeClass
+    }
+  }
+
 }
