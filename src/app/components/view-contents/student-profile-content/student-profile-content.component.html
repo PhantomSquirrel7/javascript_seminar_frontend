@@ -6,7 +6,7 @@
             <div class="form-groups">
                 <div class="form-group">
                     <label for="ageInput">Your age:</label>
-                    <input id="ageInput" value="{{age}}" type="text" formControlName="age" class="form-control">
+                    <input id="ageInput" value="{{age}}" type="number" formControlName="age" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="hobbiesInput">Your hobbies:</label>
@@ -16,10 +16,10 @@
                     <label for="notesInput">Your notes:</label>
                     <input id="notesInput" value="{{notes}}" type="text" formControlName="notes" class="form-control">
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="proficiencyLevelInput">Your proficiency level:</label>
                     <input id="proficiencyLevelInput" value="{{proficiency_level}}" type="text" formControlName="proficiency_level" class="form-control">
-                </div>
+                </div> -->
             </div>
 
             <button [disabled]="loading" class="btn btn-outline-primary btn-lg btn-block btn-user" type="submit">

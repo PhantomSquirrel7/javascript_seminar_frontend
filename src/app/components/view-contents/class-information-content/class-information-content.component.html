@@ -63,6 +63,16 @@
               </div>
 
               <div class="form-group">
+                <label for="levet">Class level</label>
+                <input type="number" id="level" formControlName="level" class="form-control"
+                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.level.errors }"
+                  [(ngModel)]="selectedClass.level" />
+                <div *ngIf="updateClassSubmitted && f.level.errors" class="invalid-feedback">
+                  <div *ngIf="f.level.errors.required">level is required</div>
+                </div>
+              </div>              
+
+              <div class="form-group">
                 <label for="languageText">Language</label>
                 <select formControlName="language" class="form-control" [(ngModel)]="selectedLanguage">
                   <!-- <option [ngValue]="selectedLanguage.value">{{selectedLanguage.name}}</option> -->
@@ -114,15 +124,7 @@
                 </div>
               </div>
 
-              <div class="form-group">
-                <label for="levet">Class level</label>
-                <input type="number" id="level" formControlName="level" class="form-control"
-                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.level.errors }"
-                  [(ngModel)]="selectedClass.level" />
-                <div *ngIf="updateClassSubmitted && f.level.errors" class="invalid-feedback">
-                  <div *ngIf="f.level.errors.required">level is required</div>
-                </div>
-              </div>
+
 
 
 

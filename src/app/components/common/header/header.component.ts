@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService : CustomLoginService
+    public loginService : CustomLoginService
   ) { }
 
   ngOnInit(): void {
