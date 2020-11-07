@@ -20,28 +20,29 @@
             <br>
             <br>
             <form [formGroup]="findPartnerForm" class="duration-selection">
-                
-                <!-- <select formControlName="selectedDuration" (change)="durationSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+                What's the duration of your project?
+                <select formControlName="projectDuration" (change)="durationSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
                     <option [ngValue]="null" disabled>project duration</option>
-                    <option *ngFor="let selectedDuration of user_duration" [ngValue]="selectedDuration">{{selectedDuration}}</option>
-                </select> -->
-                <label for="projectDurationInput">What's the duration of your project (in days)?</label>
-                <input id="projectDurationInput" placeholder="number of days" value="{{projectDuration}}" type="number" formControlName="projectDuration" class="form-control" style="margin-right: 10vw; max-width: 300px;">
+                    <option *ngFor="let selectedDuration of user_projct_duration" [ngValue]="selectedDuration">{{selectedDuration.name}}</option>
+                </select>
+                <!-- <label for="projectDurationInput">What's the duration of your project?</label>
+                <input id="projectDurationInput" placeholder="number of days" value="{{projectDuration}}" type="number" formControlName="projectDuration" class="form-control" style="margin-right: 10vw; max-width: 300px;"> -->
             </form>
             <br>
             <br>
             <form [formGroup]="findPartnerForm" class="meetFrequ-selection">
-                <!-- <select formControlName="selectedLangProf" (change)="langProfSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
-                    <option [ngValue]="null" disabled>language proficiency</option>
-                    <option *ngFor="let selectedLangProf of user_lang_profs" [ngValue]="selectedLangProf">{{selectedLangProf}}</option>
-                </select> -->
-                <label for="meetingFrequencyInput">How often do you like to meet? (in days)?</label>
-                <input id="meetingFrequencyInput" placeholder="days per week" value="{{meetingFrequency}}" type="number" formControlName="meetingFrequency" class="form-control" style="margin-right: 10vw; max-width: 300px;">
+                How often do you like to meet?
+                <select formControlName="meetingFrequency" (change)="frequencySelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
+                    <option [ngValue]="null" disabled>meeting frequency</option>
+                    <option *ngFor="let selectedFrequency of user_meeting_frequency" [ngValue]="selectedFrequency">{{selectedFrequency.name}}</option>
+                </select>
+                <!-- <label for="meetingFrequencyInput">How often do you like to meet?</label>
+                <input id="meetingFrequencyInput" placeholder="days per week" value="{{meetingFrequency}}" type="number" formControlName="meetingFrequency" class="form-control" style="margin-right: 10vw; max-width: 300px;"> -->
             </form>
             <br>
             <br>
             <form [formGroup]="findPartnerForm" class="country-selection">
-                From wich country should your partner come?
+                From which country should your partner come?
                 <select formControlName="selectedCountry" (change)="countrySelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
                     <option [ngValue]="null" disabled>partner country</option>
                     <option *ngFor="let selectedCountry of user_country" [ngValue]="selectedCountry">{{selectedCountry.name}}</option>

@@ -36,8 +36,47 @@ export class FindPartnerClassContentComponent implements OnInit {
 
 	user_classes = [];
 
-	user_lang_profs = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-	selectedLangProf: string;
+	user_projct_duration = [
+		{
+			"name": "1 Week",
+			"val": 1
+		},
+		{
+			"name": "2 Weeks",
+			"val": 2
+		},
+		{
+			"name": "1 Month",
+			"val": 4
+		},
+		{
+			"name": "More than 1 Month",
+			"val": 10
+		}
+	];
+	selectedDuration: any;
+	
+	
+	user_meeting_frequency = [
+		{
+			"name": "Once per Week",
+			"val": 1
+		},
+		{
+			"name": "Once in 2 Weeks",
+			"val": 2
+		},
+		{
+			"name": "Once per Month",
+			"val": 4
+		}
+	];
+	selectedFrequency: any;
+
+
+
+	// user_lang_profs = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+	// selectedLangProf: string;
 	
 	// user_duration = ['1', '1 week', '2 weeks', '3 weeks', '4 weeks +'];
 	projectDuration: string = "";
@@ -56,11 +95,10 @@ export class FindPartnerClassContentComponent implements OnInit {
  
 	ngOnInit() {
 		this.findPartnerForm = this.fb.group({
-		selectedClass: [null],
-		// selectedLangProf: [],
-		projectDuration: [],
-		selectedCountry: [],
-		meetingFrequency: [],
+			selectedClass: [null],
+			projectDuration: [],
+			selectedCountry: [],
+			meetingFrequency: [],
 		});
 
 		this.countryService.countriesGet().subscribe({
@@ -99,13 +137,18 @@ export class FindPartnerClassContentComponent implements OnInit {
 		this.isSelected = true;
 	}
 		
-	// langProfSelected(){
-	// 	this.selectedLangProf = this.findPartnerForm.value.selectedLangProf;
-	// }
+	frequencySelected(){
+		console.log("Frequency:");
+		
+		console.log(this.findPartnerForm.value.meetingFrequency);
+		this.selectedFrequency = this.findPartnerForm.value.meetingFrequency.val;
+	}
 	
-	// durationSelected(){
-	// 	this.selectedDuration = this.findPartnerForm.value.selectedDuration;
-	// }	
+	durationSelected(){
+		console.log("Duration:");
+		console.log(this.findPartnerForm.value.projectDuration);
+		this.selectedDuration = this.findPartnerForm.value.projectDuration.val;
+	}	
 	
 	countrySelected(){
 		console.log("Country:");
@@ -122,11 +165,12 @@ export class FindPartnerClassContentComponent implements OnInit {
 			console.log("Hello Api:");
 			console.log(this.findPartnerForm.value);
 			console.log(this.selectedClass.id);
-			console.log(this.findPartnerForm.value.projectDuration);
-			console.log(this.findPartnerForm.value.meetingFrequency);
+			console.log(this.selectedDuration);
+			console.log(this.selectedFrequency);
 			console.log(this.selectedCountry);
 			
-			if (this.findPartnerForm.value.projectDuration == null || this.findPartnerForm.value.meetingFrequency == null || this.selectedCountry == ""){
+			if (this.selectedDuration == null || this.selectedFrequency == null || this.selectedCountry == ""){
+				console.log("easy route");
 				this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id).subscribe({
 					next: (response) => {
 						this.loading = false;
@@ -144,7 +188,7 @@ export class FindPartnerClassContentComponent implements OnInit {
 				});
 			}
 			else{
-				this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id, this.findPartnerForm.value.projectDuration.toString(), this.findPartnerForm.value.meetingFrequency.toString(), this.selectedCountry.code.toString()).subscribe({
+				this.myClasses = this.classService.classesClassIdFindGet(this.selectedClass.id, this.selectedDuration.toString(), this.selectedFrequency.toString(), this.selectedCountry.code.toString()).subscribe({
 					next: (response) => {
 						this.loading = false;
 						this.resultClasses = response;
