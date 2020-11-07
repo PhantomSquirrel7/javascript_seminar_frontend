@@ -84,6 +84,8 @@ import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component
 import { GamesViewComponent } from './components/views/games-view/games-view.component';
 import { MyMeetingRequestsContentComponent } from './components/view-contents/my-meeting-requests-content/my-meeting-requests-content.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   imports: [
@@ -98,6 +100,9 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     SocketIoModule,
     CanvasWhiteboardModule,
     NgxMaterialTimepickerModule,
+    BrowserModule,
+    MatTableModule,
+    MatSortModule
   ],
   declarations: [
     AppComponent,
