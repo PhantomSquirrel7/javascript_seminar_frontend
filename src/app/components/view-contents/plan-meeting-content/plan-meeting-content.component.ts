@@ -83,6 +83,17 @@ export class PlanMeetingContentComponent implements OnInit {
     this.projectService.classesClassIdProjectsGet(this.selectedClass.id).subscribe({
       next: (response) => {
         this.projectList = response;
+        
+        for (let entry of this.projectList) {
+          entry['classname'] = entry['classes'][1]['name']
+
+          if(entry['classes'][1]['teacher']['schoolName'] ) {
+            entry['schoolName'] = entry['classes'][1]['teacher']['schoolName'] 
+          } else {
+            entry['schoolName'] = entry['startedBy']['schoolName'] 
+          }
+        }
+
         console.log(this.projectList)
       }
     });
