@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ProjectsService } from '@app/services/swagger-api/projects.service';
+import { Quiz } from '../games-student-content/model/quiz';
+import { Alias } from '@app/models/game-models/alias';
+import { GamesApiService } from '@app/services/custom/games/games-api.service';
 
 
 @Component({
@@ -15,6 +18,7 @@ import { ProjectsService } from '@app/services/swagger-api/projects.service';
 })
 export class PlanMeetingContentComponent implements OnInit {
   projectList = [];
+  aliases: Alias[];
 
   clsSelecForm: FormGroup;
   projectSelectForm: FormGroup;
@@ -42,6 +46,7 @@ export class PlanMeetingContentComponent implements OnInit {
     private classService: ClassesService,
     private projectService: ProjectsService,
     private _snackBar: MatSnackBar,
+    private api: GamesApiService
   ) { }
 
   ngOnInit() {
@@ -68,6 +73,9 @@ export class PlanMeetingContentComponent implements OnInit {
         });
         this.loading = false;
       },
+    });
+    this.api.getAliasGames().subscribe(data => {
+      this.aliases = data;
     });
   }
 

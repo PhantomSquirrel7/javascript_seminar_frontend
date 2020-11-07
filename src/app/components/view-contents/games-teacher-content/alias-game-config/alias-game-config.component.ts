@@ -10,6 +10,7 @@ import { MessageService } from '@app/services/custom/messages/message.service';
 })
 export class AliasGameConfigComponent implements OnInit {
   games: Alias[];
+  selectedAliases: Alias[]=[];
 
   newGame: Alias = {
     id: "-1",
@@ -69,5 +70,16 @@ export class AliasGameConfigComponent implements OnInit {
       words: [],
       duration: 120
     }
+  }
+
+  /**
+   * adds/removes aliases depending on whether the checkbox is checked or not
+   */
+  aliasSelected(event, game: Alias) {
+    const tempGame : Alias = this.games.filter(x => x.id == game.id)[0];
+    if(event.checked)
+      this.selectedAliases.push(tempGame) ;
+    else
+      this.selectedAliases = this.selectedAliases.filter(x => x !== tempGame);
   }
 }

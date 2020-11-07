@@ -78,14 +78,13 @@
 
             <div *ngIf="selectedTypeOfTask === 'quiz'" style="width: 70vmax;">
                 <div class="card-body">
-                    Quiz component Here
+                    Quiz Component Here
                 </div>
             </div>
 
             <div *ngIf="selectedTypeOfTask === 'alias'" style="width: 70vmax;">
-                <div class="card-body">
-                    Alias component Here
-                </div>
+                <!-- CREATE ALIAS FORM -->
+                <app-alias-game-config></app-alias-game-config>
             </div>
 
             <div *ngIf="selectedTypeOfTask === 'draw-it'" style="width: 70vmax;">

@@ -1,4 +1,4 @@
-<button mat-raised-button class="fas fa-arrow-left back-button" [routerLink]="['/games-teacher/overview']"></button>
+<!-- <button mat-raised-button class="fas fa-arrow-left back-button" [routerLink]="['/games-teacher/overview']"></button> -->
 <mat-card-header>
     <mat-card-title>Alias Settings</mat-card-title>
 </mat-card-header>
@@ -24,7 +24,7 @@
             <mat-expansion-panel *ngFor="let game of games" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        {{ game.name }}
+                        <mat-checkbox (change)="aliasSelected($event, game)"> {{ game.name }} </mat-checkbox>
                     </mat-panel-title>
                     <mat-panel-description>
                         {{ game.description }}
