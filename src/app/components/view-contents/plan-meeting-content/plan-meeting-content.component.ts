@@ -6,9 +6,12 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ProjectsService } from '@app/services/swagger-api/projects.service';
-import { Quiz } from '../games-student-content/model/quiz';
+import { Quiz } from '@app/models/game-models/quiz';
 import { Alias } from '@app/models/game-models/alias';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
+import { TaskList } from '@app/models/game-models/task-list';
+import { Question } from '@app/models/game-models/question';
+import { DrawIt } from '@app/models/game-models/drawIt';
 
 
 @Component({
@@ -17,8 +20,19 @@ import { GamesApiService } from '@app/services/custom/games/games-api.service';
   styleUrls: ['./plan-meeting-content.component.less']
 })
 export class PlanMeetingContentComponent implements OnInit {
-  projectList = [];
+  // for task list
+  taskList: TaskList = {
+    id : "-1",
+    quizzes : [],
+    aliases : [],
+    drawits: []
+  };
   aliases: Alias[];
+  quizzes: Quiz[];
+  drawIts: DrawIt[];
+  // end of task list attributes
+
+  projectList = [];
 
   clsSelecForm: FormGroup;
   projectSelectForm: FormGroup;
@@ -76,6 +90,12 @@ export class PlanMeetingContentComponent implements OnInit {
     });
     this.api.getAliasGames().subscribe(data => {
       this.aliases = data;
+    });
+    this.api.getQuizzes().subscribe(data => {
+      this.quizzes = data;
+    });
+    this.api.getDrawItGames().subscribe(data => {
+      this.drawIts = data;
     });
   }
 
@@ -136,6 +156,10 @@ export class PlanMeetingContentComponent implements OnInit {
   }
 
   submitForm() {
+    this.taskList.quizzes = this.quizzes;
+    this.taskList.aliases = this.aliases;
+    this.taskList.drawits = this.drawIts;
+    console.log(this.taskList);
     console.log(this.date);
     console.log(this.selectedDuration);
     console.log(this.selectedArrangement)
