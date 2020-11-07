@@ -63,7 +63,7 @@ export class MessageBoardComponent implements OnInit {
 
   ngOnChanges(){
     console.log("Changes detected!");
-    this.loadMessages()
+    this.loadMessages("noFlag")
   }
 
 
@@ -82,7 +82,7 @@ export class MessageBoardComponent implements OnInit {
       data => {
         console.log("Answer sending:")
         console.log(data);
-        this.loadMessages();
+        this.loadMessages("flag");
         // const source = timer(4000);
         // source.subscribe(data => this.sent = false);
       }
@@ -99,7 +99,7 @@ export class MessageBoardComponent implements OnInit {
     return myTimestamp.toLocaleString()
   }
 
-  loadMessages(){
+  loadMessages(flag){
     this.projectsService.classesClassIdProjectsProjectIdMessagesGet(this.sender.id, this.myProject.id).subscribe(
       data => {
         console.log("Messages resp:");
@@ -108,9 +108,11 @@ export class MessageBoardComponent implements OnInit {
         this.messages = this.messages.sort( (a, b) => {
           return Number(a.timestamp) - Number(b.timestamp)
         });
-        this.sending = false;
-        this.sent = true;
-        const source = timer(4000);
+        if (flag != "noFlag"){
+          this.sending = false;
+          this.sent = true;
+        }
+        const source = timer(3000);
         source.subscribe(data => this.sent = false);
       }
     );
