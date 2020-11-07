@@ -1,1 +1,50 @@
-<p>games-view works!</p>
+<!-- <p>games-view works!</p> -->
+<!--
+    Types of Tasks:
+    Quizzes
+    Alias Games
+    Draw-It Games
+    2T1L
+    Simple Tasks
+
+    @Sinan + @Nathalie: Functionality of "Play X" buttons
+-->
+<h2 style="text-align:center"> {{ title }}</h2>
+
+<!-- QUIZZES -->
+<div *ngIf="quizzes.length > 0">
+    <p><b>Quizzes</b></p>
+    <ul style="list-style-type:none; margin:0; padding: 0;">
+        <li *ngFor="let quiz of quizzes"><input type="checkbox"> {{quiz}}</li>
+        <button class="playBtn btn btn-outline-primary btn-lg btn-block btn-user" type="button">
+            Play Quiz
+        </button>
+    </ul>
+    <br>
+</div>
+
+<!-- ALIAS GAMES -->
+<div *ngIf="aliasGames.length > 0">
+    <p> <b>Alias Games</b></p>
+    <ul style="list-style-type:none; margin:0; padding: 0;">
+        <li *ngFor="let aliasGame of aliasGames" ><input type="checkbox"> {{aliasGame}}
+            <button class="playBtn btn btn-outline-primary btn-lg btn-block btn-user" type="button">
+                Play Alias
+            </button>
+        </li>
+    </ul>
+    <br>
+</div>
+
+<!-- ALIAS GAMES -->
+<div *ngIf="drawItGames.length > 0">
+    <p> <b>Draw-It Games</b></p>
+    <ul style="list-style-type:none; margin:0; padding: 0;">
+        <li *ngFor="let drawItGame of drawItGames" ><input type="checkbox"> {{drawItGame}}
+            <button class="playBtn btn btn-outline-primary btn-lg btn-block btn-user" type="button">
+                Play Draw-It
+            </button>
+        </li>
+    </ul>
+    <br>
+</div>
