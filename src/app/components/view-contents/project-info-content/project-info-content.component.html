@@ -10,6 +10,9 @@
                 <form [formGroup]="projectForm" (ngSubmit)="acceptOffer()">
                     <button class="btn btn-outline-success btn-lg" [disabled]="btnAcceptable">Accept Project</button>
                 </form>
+                <div class="btn-group mr-2" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)">Decline Project</button>
+                </div>
                 <div *ngIf=accepted>
                     <br>
                     <div class="alert alert-success" role="alert">
@@ -21,10 +24,16 @@
         <div *ngIf="actProject.startedBy.id == me.id">
             <h1>Waiting for other teacher to accept project...</h1>
             <app-display-partner-class-info [project]="actProject"></app-display-partner-class-info>
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+                <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)">Finish Project</button>
+            </div>
         </div>
     </div>
     <div *ngIf="actProject.state == 'ongoing'">
         <h1>Talk to your partner teacher...</h1>
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)">Finish Project</button>
+        </div>
         <app-display-partner-class-info [project]="actProject"></app-display-partner-class-info>
         <br>
         <app-message-board [sender]="actSender" [recipient]="actProject.partnerClass.teacher" [myClass]="actClass" [myProject]="actProject"></app-message-board>

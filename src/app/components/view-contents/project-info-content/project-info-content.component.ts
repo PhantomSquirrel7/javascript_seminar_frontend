@@ -69,5 +69,8 @@ export class ProjectInfoContentComponent {
   //   );
   // }
 
+  deleteProject(prjct){
+    console.log("DELETED");
+  }
 
 }
