@@ -23,17 +23,60 @@ export class ClassContactContentComponent{
   contactTeacherForm: FormGroup;
   sent = false;
   messageTextValue = "";
+  requested = false;
+
+  countryFlagId = ""
+
+  addMessageError = false;
 
   timeLeft: number = 60;
   interval;
   subscribeTimer: any;
 
+  user_projct_duration = [
+		{
+			"name": "1 Week",
+			"val": 1
+		},
+		{
+			"name": "2 Weeks",
+			"val": 2
+		},
+		{
+			"name": "1 Month",
+			"val": 4
+		},
+		{
+			"name": "More than 1 Month",
+			"val": 10
+		}
+	];
+	selectedDuration: any;
+	
+	
+	user_meeting_frequency = [
+		{
+			"name": "Once per Week",
+			"val": 1
+		},
+		{
+			"name": "Once in 2 Weeks",
+			"val": 2
+		},
+		{
+			"name": "Once per Month",
+			"val": 4
+		}
+  ];
+  
+ 
   ngOnInit() {
     this.contactTeacherForm = this.fb.group({
       messageText: [""]
     });
-    console.log("Self in modal:");
-    console.log(this.selfClass);
+    console.log(this.actClass);
+    this.requested = false;
+    this.sent = false;
   }
 
   teacherInfo(){ // TODO: redirect to teacher profile
@@ -41,34 +84,62 @@ export class ClassContactContentComponent{
   }
 
   onSubmit(){ // sent notification to other teacher
-    console.log("Sending:");
+    this.addMessageError = false;
+    console.log("msg:");
     console.log(this.contactTeacherForm.value.messageText);
-    // this.sent = true;
 
-    console.log("Classes for Project:");
-    console.log(this.actClass);
-    console.log(this.selfClass);
+    if (this.contactTeacherForm.value.messageText == ""){
+      this.addMessageError = true;
+    }
+    else{
+      let myBody: Body10= {
+        "_class": this.actClass.id.toString(),
+        "initialMessage": this.contactTeacherForm.value.messageText
+      };
 
-    let myBody: Body10= {
-      "_class": this.actClass.id.toString(),
-      "initialMessage": this.contactTeacherForm.value.messageText
-    };
+      this.projectsService.classesClassIdProjectsPost(myBody, this.selfClass.id.toString()).subscribe(
+        data => {
+          console.log(data);
+          this.sent = true;
+          this.requested = true;
+        }
+      );
 
-
-    this.projectsService.classesClassIdProjectsPost(myBody, this.selfClass.id.toString()).subscribe(
-      data => {
-        console.log(data);
-        this.sent = true;
-      }
-    );
-
-    const source = timer(4000);
-    source.subscribe(data => this.sent = false);
-
-    this.contactTeacherForm.value.messageText = '';
-    this.contactTeacherForm.value.messageText = null;
-    this.messageTextValue = '';
+      this.contactTeacherForm.value.messageText = '';
+      this.contactTeacherForm.value.messageText = null;
+      this.messageTextValue = '';
+    }
   }
 
+
+  mapFrequency(val){
+    for(let p of this.user_meeting_frequency){
+      if(p.val == val){
+        return p.name;
+      }
+    }
+    return val;
+  }
+
+  mapDuration(val){
+    for(let p of this.user_projct_duration){
+      if(p.val == val){
+        return p.name;
+      }
+    }
+    return val + "x/week";
+  }
+
+  ngOnChanges(){
+    console.log("changes again:");
+    console.log(this.actClass);
+    this.requested = false;
+    this.sent = false;
+    if (this.actClass.country != undefined){
+      this.countryFlagId = this.actClass.country.toLowerCase();
+      console.log("Flag:");
+      console.log(this.countryFlagId);
+    }    
+  }
 }
 
