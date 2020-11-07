@@ -10,7 +10,7 @@ import { MessageService } from '@app/services/custom/messages/message.service';
 })
 export class SimpleTaskConfigComponent implements OnInit {
 
-  games: SimpleTask[];
+  games: SimpleTask[] = [{id : "-1", name: "Task1", description:"desc"}];
   selectedTasks : SimpleTask[] = [];
 
   newTask: SimpleTask = {
@@ -22,10 +22,10 @@ export class SimpleTaskConfigComponent implements OnInit {
   constructor(private api: GamesApiService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.api.getSimpleTasks().subscribe(data => {
+    /*this.api.getSimpleTasks().subscribe(data => {
       //console.log("fetch alias", data)
       this.games = data;
-    });
+    });*/
   }
 
   deleteGame(game: SimpleTask) {

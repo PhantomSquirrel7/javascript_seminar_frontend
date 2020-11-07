@@ -19,6 +19,24 @@
             </mat-expansion-panel>
         </mat-accordion>
     </div>
+    <mat-card-subtitle class="mt-3">Simple Tasks</mat-card-subtitle>
+    <mat-accordion class="headers-align">
+        <div *ngIf="games; else loadingAliasContent">
+            <mat-expansion-panel *ngFor="let game of games" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-checkbox> {{ game.name }} </mat-checkbox>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{ game.description }}
+                        <mat-icon class="headers-align-right" title="delete game"
+                            (click)="$event.stopPropagation(); deleteGame(game)">delete_forever</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <app-simple-task-form [game]="game" (gameChange)="onGameChange($event)"></app-simple-task-form>
+            </mat-expansion-panel>
+        </div>
+    </mat-accordion>
 </mat-card-content>
 <ng-template #loadingAliasContent>
     <mat-card-content>

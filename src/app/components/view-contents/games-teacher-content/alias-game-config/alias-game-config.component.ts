@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { Alias } from '@app/models/game-models/alias';
 import { MessageService } from '@app/services/custom/messages/message.service';
+import { EventEmitter } from '@angular/core';
+import { Quiz } from '@app/models/game-models/quiz';
 
 @Component({
   selector: 'app-alias-game-config',
@@ -9,6 +11,9 @@ import { MessageService } from '@app/services/custom/messages/message.service';
   styleUrls: ['./alias-game-config.component.less']
 })
 export class AliasGameConfigComponent implements OnInit {
+  
+  @Output() selectedAliasesEvent: EventEmitter<Alias[]> = new EventEmitter<Alias[]>();
+
   games: Alias[];
   selectedAliases: Alias[]=[];
 
@@ -37,6 +42,8 @@ export class AliasGameConfigComponent implements OnInit {
         this.messageService.add("Game '" + game.name + "' was deleted.", "success");
       }
     });
+    this.selectedAliases = this.selectedAliases.filter(x => x !== game);
+    this.selectedAliasesEvent.emit(this.selectedAliases);
   }
 
   onCreateGame(game: Alias) {
@@ -57,9 +64,13 @@ export class AliasGameConfigComponent implements OnInit {
         this.games[this.games.findIndex(g => {
           return g.id === data.id
         })] = data;
+        this.selectedAliases[this.selectedAliases.findIndex(g => {
+          return g.id === data.id
+        })] = data;
         this.messageService.add("Game '" + game.name + "' updated successfully.", "success");
       }
     });
+    this.selectedAliasesEvent.emit(this.selectedAliases);
   }
 
   resetNewGame() {
@@ -81,5 +92,6 @@ export class AliasGameConfigComponent implements OnInit {
       this.selectedAliases.push(tempGame) ;
     else
       this.selectedAliases = this.selectedAliases.filter(x => x !== tempGame);
+    this.selectedAliasesEvent.emit(this.selectedAliases);
   }
 }

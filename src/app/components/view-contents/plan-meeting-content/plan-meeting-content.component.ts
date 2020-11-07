@@ -10,7 +10,6 @@ import { Quiz } from '@app/models/game-models/quiz';
 import { Alias } from '@app/models/game-models/alias';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { TaskList } from '@app/models/game-models/task-list';
-import { Question } from '@app/models/game-models/question';
 import { DrawIt } from '@app/models/game-models/drawIt';
 
 
@@ -30,6 +29,8 @@ export class PlanMeetingContentComponent implements OnInit {
   aliases: Alias[];
   quizzes: Quiz[];
   drawIts: DrawIt[];
+  public selectedAliases: Alias[] = [];
+  //public selectedAliases: Alias[]; //TODO get them somehow
   // end of task list attributes
 
   projectList = [];
@@ -159,11 +160,12 @@ export class PlanMeetingContentComponent implements OnInit {
     this.taskList.quizzes = this.quizzes;
     this.taskList.aliases = this.aliases;
     this.taskList.drawits = this.drawIts;
-    console.log(this.taskList);
+    console.log(this.selectedAliases);
+    /*console.log(this.taskList);
     console.log(this.date);
     console.log(this.selectedDuration);
     console.log(this.selectedArrangement)
-    console.log(this.selectedProject.id);
+    console.log(this.selectedProject.id);*/
   }
 
   onDateSelected(event) {

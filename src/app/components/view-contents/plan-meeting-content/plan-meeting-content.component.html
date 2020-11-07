@@ -86,7 +86,7 @@
             <div *ngIf="selectedTypeOfTask === 'alias'" style="width: 70vmax;">
                 <!-- CREATE ALIAS FORM -->
                 <div class="card-body">
-                    <app-alias-game-config></app-alias-game-config>
+                    <app-alias-game-config (selectedAliasesEvent)="selectedAliases=($event)"></app-alias-game-config>
                 </div>
             </div>
 
@@ -109,8 +109,30 @@
                     <app-simple-task-config></app-simple-task-config>
                 </div>
             </div>
-        </div>
 
+            <div class="card-body" *ngIf="selectedAliases.length>0">
+                <mat-card-header>
+                    <mat-card-title>This Meeting's Tasks:</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-card-subtitle class="mt-3">Alias Games</mat-card-subtitle>
+                    <mat-accordion class="headers-align">
+                        <div *ngIf="selectedAliases"> <!--else loadingAliasContent">-->
+                            <mat-expansion-panel *ngFor="let selectedAlias of selectedAliases" hideToggle>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{ selectedAlias.name }}
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        {{ selectedAlias.description }}
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                            </mat-expansion-panel>
+                        </div>
+                    </mat-accordion>
+                </mat-card-content>
+            </div>
+        </div>
         <br>
         <button (click)="submitForm()" type="button" class="btn btn-primary">Confirm</button>
 
