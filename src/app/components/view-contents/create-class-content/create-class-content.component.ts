@@ -40,6 +40,9 @@ export class CreateClassContentComponent implements OnInit {
     this.languageList = LANGUAGE_LIST;
     this.countryList = COUNTRY_LIST;
     this.languageLevelList = LANGUAGE_LEVEL_LIST;
+    this.selectedLanguageLevel = this.languageLevelList[0];
+    this.selectedLanguage = this.languageList[0].value;
+    this.selectedClassCountry = this.countryList[0].code;
 
     this.createClassForm = this.formBuilder.group({
       name: ['', Validators.required],
