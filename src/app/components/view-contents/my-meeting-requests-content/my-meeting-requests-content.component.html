@@ -12,7 +12,7 @@
             Please Choose Project: 
             <select formControlName="selectedProject" (change)="projectSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
                 <option [ngValue]="null" disabled>Select your Project</option>
-                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">{{selectedProject.id}}</option>
+                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">{{selectedProject.classname}}: {{selectedProject.schoolName}}
             </select>
         </form>
     </div>

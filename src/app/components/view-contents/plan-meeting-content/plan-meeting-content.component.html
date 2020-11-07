@@ -13,7 +13,7 @@
             Please Choose Project: 
             <select formControlName="selectedProject" (change)="projectSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
                 <option [ngValue]="null" disabled>Select your Project</option>
-                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">{{selectedProject.id}}
+                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">{{selectedProject.classname}}: {{selectedProject.schoolName}}
                 </option>
             </select>
         </form>
@@ -31,7 +31,7 @@
             <div class="card-body">
                 <h3 class="card-title">
                     You're planning for: <span class="text-primary">{{selectedClass.name}}</span>
-                    and Project: <span class="text-primary">{{selectedProject.id}}</span>
+                    and Project: <span class="text-primary">{{selectedProject.classname}}: {{selectedProject.schoolName}}</span>
                 </h3>
 
                 <div class="planning-section-form">
