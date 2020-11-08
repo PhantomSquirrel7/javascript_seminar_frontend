@@ -351,7 +351,8 @@ export class ClassInformationContentComponent implements OnInit {
     this.concatStudentsLoaded = true;
   };
 
-  toggleStudentCheckBox(index){
+  toggleStudentCheckBox(studentId){
+    let index = this.studentsOfTeacher.findIndex((item) => item.id == studentId);
     this.studentsOfTeacher[index].flag = ! this.studentsOfTeacher[index].flag;
     if(this.studentsOfTeacher[index].flag)
         this.addStudentToClass(this.studentsOfTeacher[index]);
