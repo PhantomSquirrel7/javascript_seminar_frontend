@@ -152,7 +152,7 @@ export class PlanMeetingContentComponent implements OnInit {
       "date": postDate,
       "duration": this.selectedDuration,
       "taskList": [],
-      // "groupAssignment": this.getGroupAssignment(),
+      "groupAssignment": this.getGroupAssignment(),
     };
 
     // Send POST REQUEST
