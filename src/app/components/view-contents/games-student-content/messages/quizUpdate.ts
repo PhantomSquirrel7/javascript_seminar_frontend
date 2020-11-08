@@ -11,4 +11,6 @@ export interface QuizUpdate {
     countDownStarted: boolean;
     quizOver: boolean;
     taskId: string;
+    timeleft: number;
+    timelimit: number;
 }
