@@ -60,11 +60,18 @@
         </div>
       </div>
       <div *ngIf="isJoinedToMeeting">
-        <button (click)="returnMeetingList()" class="btn btn-outline-primary btn-lg btn-block btn-user" type="submit">
-          Return Meeting List Meeting
-        </button>
-        <app-games-student-content></app-games-student-content>
-        <app-bbb-view [moderatorUrl]="selectedMeeting"></app-bbb-view>
+          <br>
+        <button mat-raised-button class="fas fa-arrow-left back-button" (click)="returnMeetingList()" type="submit" ></button>   
+        <br>
+        <br>
+        <mat-tab-group>
+            <mat-tab label="Games">
+                <app-games-student-content></app-games-student-content>
+            </mat-tab>
+            <mat-tab label="Chat">
+                <app-bbb-view [moderatorUrl]="selectedMeeting"></app-bbb-view>
+            </mat-tab>            
+        </mat-tab-group>               
       </div>
     </div>
     <app-footer></app-footer>
