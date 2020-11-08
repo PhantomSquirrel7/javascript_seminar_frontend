@@ -174,11 +174,11 @@ export class PlanMeetingContentComponent implements OnInit {
     this.selectedDuration = this.planningSectionForm.value.selectedDuration;
   }
 
-  getGroupAssignment() : Body9.GroupAssignmentsEnum {
+  getGroupAssignment() : Body9.GroupAssignmentEnum {
     if(this.selectedArrangement == 'tandem') {
-      return Body9.GroupAssignmentsEnum.Tandem
+      return Body9.GroupAssignmentEnum.Tandem
     } else {
-      return Body9.GroupAssignmentsEnum.WholeClass
+      return Body9.GroupAssignmentEnum.WholeClass
     }
   }
 

@@ -15,18 +15,18 @@ export interface Body9 {
     id?: string;
     project?: string;
     date?: Date;
-    groupAssignments?: Body9.GroupAssignmentsEnum;
+    groupAssignment?: Body9.GroupAssignmentEnum;
     groups?: Array<ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups>;
     taskList?: Array<string>;
     duration?: number;
     joinUrl?: string;
 }
 export namespace Body9 {
-    export type GroupAssignmentsEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';
-    export const GroupAssignmentsEnum = {
-        Tandem: 'tandem' as GroupAssignmentsEnum,
-        Group3: 'group3' as GroupAssignmentsEnum,
-        Group4: 'group4' as GroupAssignmentsEnum,
-        WholeClass: 'whole_class' as GroupAssignmentsEnum
+    export type GroupAssignmentEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';
+    export const GroupAssignmentEnum = {
+        Tandem: 'tandem' as GroupAssignmentEnum,
+        Group3: 'group3' as GroupAssignmentEnum,
+        Group4: 'group4' as GroupAssignmentEnum,
+        WholeClass: 'whole_class' as GroupAssignmentEnum
     };
 }
