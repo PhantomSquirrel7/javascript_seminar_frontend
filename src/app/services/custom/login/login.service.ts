@@ -42,14 +42,14 @@ export class CustomLoginService {
     loginWithToken(token: string, refreshToken: string){
         console.log("Store Token");
         let now = new Date();
-        let myTokens: AuthTokens = {
+        let myTokens: AuthTokens = {  // change 60 accordingly
             "access": {
                 "token": token,
-                "expires": new Date(now.getTime() + 2*60000)
+                "expires": new Date(now.getTime() + 60*60000)
             },
             "refresh": {
                 "token": refreshToken,
-                "expires": new Date(now.getTime() + 2*60000)
+                "expires": new Date(now.getTime() + 60*60000)
             }
         }
 
@@ -77,7 +77,7 @@ export class CustomLoginService {
             },
           })
         console.log("Refresh Token");
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
     }
 
     login(credentials: Body1) {
