@@ -251,9 +251,9 @@ export class GamesApiService {
 
   // ------------------ SELECTED ITEMS FOR TASK LIST -------------------
   private taskList: TaskList = {
-    id : "-1",
-    quizzes : [],
-    aliases : [],
+    id: "-1",
+    quizzes: [],
+    aliases: [],
     drawits: []
   };
   getSelectedAliases() {
@@ -262,15 +262,23 @@ export class GamesApiService {
   getSelectedQuizzes() {
     return this.taskList.quizzes;
   }
+  getSelectedDrawIts() {
+    return this.taskList.drawits;
+  }
   createSelectedAlias(game: Alias) {
     var elementPos = this.taskList.aliases.map(function (x) { return x.id; }).indexOf(game.id);
     if (elementPos === -1)
-    this.taskList.aliases.push(game);
+      this.taskList.aliases.push(game);
   }
   createSelectedQuiz(quiz: Quiz) {
     var elementPos = this.taskList.quizzes.map(function (x) { return x.id; }).indexOf(quiz.id);
     if (elementPos === -1)
-    this.taskList.quizzes.push(quiz);
+      this.taskList.quizzes.push(quiz);
+  }
+  createSelectedDrawIt(game: DrawIt) {
+    var elementPos = this.taskList.drawits.map(function (x) { return x.id; }).indexOf(game.id);
+    if (elementPos === -1)
+      this.taskList.drawits.push(game);
   }
   deleteSelectedAlias(game: Alias) {
     this.taskList.aliases = this.taskList.aliases.filter(x => x.id !== game.id);
@@ -278,10 +286,13 @@ export class GamesApiService {
   deleteSelectedQuiz(quiz: Quiz) {
     this.taskList.quizzes = this.taskList.quizzes.filter(x => x.id !== quiz.id);
   }
-  updateSelectedAlias(game: Alias, updatedGame: Alias) {
+  deleteSelectedDrawIt(game: DrawIt) {
+    this.taskList.drawits = this.taskList.drawits.filter(x => x.id !== game.id);
+  }
+  updateSelectedAlias(game: Alias) {
     var elementPos = this.taskList.aliases.map(function (x) { return x.id; }).indexOf(game.id);
     if (elementPos > -1)
-      this.taskList.aliases[elementPos] = updatedGame;
+      this.taskList.aliases[elementPos] = game;
   }
   updateSelectedQuiz(quiz: Quiz, updatedQuiz: Quiz) {
     var elementPos = this.taskList.quizzes.map(function (x) { return x.id; }).indexOf(quiz.id);

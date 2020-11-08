@@ -93,7 +93,7 @@
             <div *ngIf="selectedTypeOfTask === 'draw-it'" style="width: 70vmax;">
                 <!-- CREATE DRAW-IT GAME FORM -->
                 <div class="card-body">
-                    <app-draw-it-game-config></app-draw-it-game-config>
+                    <app-draw-it-game-config (selectedDrawItsEvent)="selectedDrawIts=($event)"></app-draw-it-game-config>
                 </div>
             </div>
 
@@ -148,6 +148,24 @@
                                         </mat-panel-title>
                                         <mat-panel-description>
                                             {{ selectedAlias.description }}
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                    <div *ngIf="selectedDrawIts.length>0">
+                        <mat-card-subtitle class="mt-3">Draw-It Games</mat-card-subtitle>
+                        <mat-accordion class="headers-align">
+                            <div *ngIf="selectedAliases">
+                                <!--else loadingAliasContent">-->
+                                <mat-expansion-panel *ngFor="let selectedDrawIt of selectedDrawIts" hideToggle>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            {{ selectedDrawIt.name }}
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            {{ selectedDrawIt.description }}
                                         </mat-panel-description>
                                     </mat-expansion-panel-header>
                                 </mat-expansion-panel>

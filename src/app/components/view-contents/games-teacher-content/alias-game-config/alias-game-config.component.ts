@@ -15,6 +15,7 @@ export class AliasGameConfigComponent implements OnInit {
 
   games: Alias[];
   selectedGames: Alias[];
+  
   newGame: Alias = {
     id: "-1",
     name: "",
@@ -64,14 +65,13 @@ export class AliasGameConfigComponent implements OnInit {
         this.games[this.games.findIndex(g => {
           return g.id === data.id
         })] = data;
-        // updateSelectedAlias(game, data);
         this.messageService.add("Game '" + game.name + "' updated successfully.", "success");
       }
     });
-    /*
+    // commented bc of this.api.updateAliasGame() bug: this.games is updated only after refresh
+    /*this.api.updateSelectedAlias(game);
     this.selectedGames = this.api.getSelectedAliases();
-    this.selectedAliasesEvent.emit(this.selectedGames);
-    */
+    this.selectedAliasesEvent.emit(this.selectedGames);*/
   }
 
   resetNewGame() {

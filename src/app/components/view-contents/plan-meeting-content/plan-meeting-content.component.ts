@@ -30,6 +30,7 @@ export class PlanMeetingContentComponent implements OnInit {
   drawIts: DrawIt[];
   public selectedAliases: Alias[] = [];
   public selectedQuizzes: Quiz[] = [];
+  public selectedDrawIts: DrawIt[] = [];
   // end of task list attributes
 
   projectList = [];
@@ -156,10 +157,10 @@ export class PlanMeetingContentComponent implements OnInit {
   }
 
   submitForm() {
-    this.taskList.quizzes = this.quizzes;
+    this.taskList.quizzes = this.selectedQuizzes;
     this.taskList.aliases = this.selectedAliases;
-    this.taskList.drawits = this.drawIts;
-    console.log(this.selectedAliases);
+    this.taskList.drawits = this.selectedDrawIts;
+    console.log(this.taskList);
     /*console.log(this.taskList);
     console.log(this.date);
     console.log(this.selectedDuration);
