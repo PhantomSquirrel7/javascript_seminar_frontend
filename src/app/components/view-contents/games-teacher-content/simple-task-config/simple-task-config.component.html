@@ -5,7 +5,7 @@
 
 <app-messages></app-messages>
 
-<mat-card-content>
+<mat-card-content *ngIf= "games; else loadingAliasContent">
     <div class="mt-2">
         <mat-accordion>
             <mat-expansion-panel hideToggle>
@@ -14,8 +14,7 @@
                         Create New Game
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <app-simple-task-form></app-simple-task-form>
-                <!--<app-alias-form [game]="newGame" (gameChange)="onCreateGame($event)"></app-alias-form>-->
+                <app-simple-task-form [game]="newTask" (gameChange)="onCreateGame($event)"></app-simple-task-form>
             </mat-expansion-panel>
         </mat-accordion>
     </div>
@@ -24,8 +23,7 @@
         <div *ngIf="games; else loadingAliasContent">
             <mat-expansion-panel *ngFor="let game of games" hideToggle>
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <mat-checkbox> {{ game.name }} </mat-checkbox>
+                    <mat-panel-title> {{game.name}}
                     </mat-panel-title>
                     <mat-panel-description>
                         {{ game.description }}
@@ -42,7 +40,7 @@
     <mat-card-content>
         <div>
             <mat-spinner class="loading" [diameter]="40"></mat-spinner>
-            <span class="loading">Loading Games...</span>
+            <span class="loading">Loading...</span>
         </div>
     </mat-card-content>
 </ng-template>

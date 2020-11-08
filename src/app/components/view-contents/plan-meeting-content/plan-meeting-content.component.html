@@ -106,7 +106,7 @@
             <div *ngIf="selectedTypeOfTask === 'simple-task'" style="width: 70vmax;">
                 <!-- CREATE SIMPLE TASK FORM -->
                 <div class="card-body">
-                    <app-simple-task-config></app-simple-task-config>
+                    <app-simple-task-config (simpleTasksEvent)="simpleTasks=($event)"></app-simple-task-config>
                 </div>
             </div>
 
@@ -115,7 +115,7 @@
                     <mat-card-title>This Meeting's Tasks:</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                    <div *ngIf="selectedQuizzes.length==0 && selectedAliases.length==0">
+                    <div *ngIf="selectedQuizzes.length==0 && selectedAliases.length==0 && selectedDrawIts.length==0">
                         <mat-card-subtitle>No tasks selected</mat-card-subtitle>
                     </div>
                     <div *ngIf="selectedQuizzes.length>0">

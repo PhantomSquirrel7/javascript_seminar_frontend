@@ -61,36 +61,6 @@ export class GamesApiService {
     }
   }
 
-  // ------------------ SIMPLE TASK -------------------
-  getSimpleTasks(): Observable<SimpleTask[]> {
-    return this.http.get<SimpleTask[]>(this.url + "/games/simpletask/games", { headers: this.getHeaders() })
-      .pipe(
-        catchError(this.handleError<SimpleTask[]>('Loading Simple Tasks', [])
-        ));
-  }
-
-  createSimpleTask(game: SimpleTask): Observable<SimpleTask> {
-    delete game['id'];
-    return this.http.post<SimpleTask>(this.url + "/games/simpletask/create", game, { headers: this.getHeaders() })
-      .pipe(
-        catchError(this.handleError<SimpleTask>('Saving new Simple Task')
-        ));
-  }
-
-  updateSimpleTask(game: SimpleTask): Observable<SimpleTask> {
-    return this.http.put<SimpleTask>(this.url + "/games/simpletask/" + game.id, game, { headers: this.getHeaders() })
-      .pipe(
-        catchError(this.handleError<SimpleTask>('Updating Simple Task')
-        ));
-  }
-
-  deleteSimpleTask(game: SimpleTask): Observable<any> {
-    return this.http.delete(this.url + "/games/simpletask/" + game.id, { headers: this.getHeaders("text"), responseType: 'text' })
-      .pipe(
-        catchError(this.handleError<any>('Deleting Simple Task')
-        ));
-  }
-
   // ------------------ ALIAS -------------------
   getAliasGames(): Observable<Alias[]> {
     return this.http.get<Alias[]>(this.url + "/games/alias/games", { headers: this.getHeaders() })
@@ -248,13 +218,42 @@ export class GamesApiService {
         ));
   }
 
+  // ------------------ SIMPLE TASK -------------------
+  getSimpleTasks() {
+    return this.taskList.simpleTasks;
+  }
+
+  getMaxTaskId(){
+    let max = -1;
+    this.taskList.simpleTasks.forEach(task => {
+      if (+task.id > max) {
+        max = +task.id;
+      }
+    });
+    return max;
+  }
+
+  createSimpleTask(game: SimpleTask) {
+    this.taskList.simpleTasks.push(game);
+  }
+
+  updateSimpleTask(game: SimpleTask) {
+    var elementPos = this.taskList.simpleTasks.map(function (x) { return x.id; }).indexOf(game.id);
+    if (elementPos > -1)
+      this.taskList.simpleTasks[elementPos] = game;
+  }
+
+  deleteSimpleTask(game: SimpleTask) {
+    this.taskList.simpleTasks = this.taskList.simpleTasks.filter(x => x.id !== game.id);
+  }
 
   // ------------------ SELECTED ITEMS FOR TASK LIST -------------------
   private taskList: TaskList = {
     id: "-1",
     quizzes: [],
     aliases: [],
-    drawits: []
+    drawits: [],
+    simpleTasks: []
   };
   getSelectedAliases() {
     return this.taskList.aliases;

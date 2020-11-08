@@ -11,6 +11,7 @@ import { Alias } from '@app/models/game-models/alias';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { TaskList } from '@app/models/game-models/task-list';
 import { DrawIt } from '@app/models/game-models/drawIt';
+import { SimpleTask } from '@app/models/game-models/simpleTask';
 
 @Component({
   selector: 'app-plan-meeting-content',
@@ -23,7 +24,8 @@ export class PlanMeetingContentComponent implements OnInit {
     id : "-1",
     quizzes : [],
     aliases : [],
-    drawits: []
+    drawits: [],
+    simpleTasks: []
   };
   aliases: Alias[];
   quizzes: Quiz[];
@@ -31,6 +33,7 @@ export class PlanMeetingContentComponent implements OnInit {
   public selectedAliases: Alias[] = [];
   public selectedQuizzes: Quiz[] = [];
   public selectedDrawIts: DrawIt[] = [];
+  public simpleTasks: SimpleTask[] = [];
   // end of task list attributes
 
   projectList = [];
@@ -160,6 +163,7 @@ export class PlanMeetingContentComponent implements OnInit {
     this.taskList.quizzes = this.selectedQuizzes;
     this.taskList.aliases = this.selectedAliases;
     this.taskList.drawits = this.selectedDrawIts;
+    this.taskList.simpleTasks = this.simpleTasks;
     console.log(this.taskList);
     /*console.log(this.taskList);
     console.log(this.date);

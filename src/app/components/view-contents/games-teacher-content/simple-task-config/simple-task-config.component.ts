@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SimpleTask } from '@app/models/game-models/simpleTask';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { MessageService } from '@app/services/custom/messages/message.service';
@@ -10,11 +10,13 @@ import { MessageService } from '@app/services/custom/messages/message.service';
 })
 export class SimpleTaskConfigComponent implements OnInit {
 
-  games: SimpleTask[] = [{id : "-1", name: "Task1", description:"desc"}];
-  selectedTasks : SimpleTask[] = [];
+  @Output() simpleTasksEvent: EventEmitter<SimpleTask[]> = new EventEmitter<SimpleTask[]>();
+
+  games: SimpleTask[] = [];
+  id: number = this.api.getMaxTaskId() + 1;
 
   newTask: SimpleTask = {
-    id: "-1",
+    id: this.id.toString(),
     name: "",
     description: ""
   };
@@ -22,51 +24,43 @@ export class SimpleTaskConfigComponent implements OnInit {
   constructor(private api: GamesApiService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    /*this.api.getSimpleTasks().subscribe(data => {
-      //console.log("fetch alias", data)
-      this.games = data;
-    });*/
+    this.games = this.api.getSimpleTasks();
   }
 
   deleteGame(game: SimpleTask) {
-    this.api.deleteSimpleTask(game).subscribe(data => {
-      if (data) {
-        //console.log("delete game", data)
-        this.games = this.games.filter(elem => elem.id !== game.id);
-        this.messageService.add("Simple Task '" + game.name + "' was deleted.", "success");
-      }
-    });
+    this.api.deleteSimpleTask(this.games.filter(x => x.id == game.id)[0]);
+    this.games = this.api.getSimpleTasks();
+    this.simpleTasksEvent.emit(this.games);
   }
 
   onCreateGame(game: SimpleTask) {
-    this.api.createSimpleTask(game).subscribe(data => {
-      if (data) {
-        //console.log("create game", data)
-        this.games.push(data);
-        this.resetNewGame();
-        this.messageService.add("Simple Task '" + game.name + "' was created.", "success");
-      }
-    });
+    this.api.createSimpleTask(game);
+    this.resetNewGame();
+    this.games = this.api.getSimpleTasks();
+    this.simpleTasksEvent.emit(this.games);
   }
 
   onGameChange(game: SimpleTask) {
-    this.api.updateSimpleTask(game).subscribe(data => {
-      if (data) {
-        //console.log("changed game", data)
-        this.games[this.games.findIndex(g => {
-          return g.id === data.id
-        })] = data;
-        this.messageService.add("Simple Task '" + game.name + "' updated successfully.", "success");
-      }
-    });
+    this.api.updateSimpleTask(game);
+    this.games = this.api.getSimpleTasks();
+    this.simpleTasksEvent.emit(this.games);
   }
 
   resetNewGame() {
     this.newTask = {
-      id: "-1",
+      id: this.nextId().toString(),
       name: "",
       description: ""
     }
   }
+
+  /**
+   * generation of task ids (simple tasks are not stored as SimpleTask object in the database)
+   * by incrementing this.id every time the user creates a new simple task
+   */
+  nextId() {
+    this.id++;
+    return this.id;
+  };
 
 }
