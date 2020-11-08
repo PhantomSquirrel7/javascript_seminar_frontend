@@ -12,10 +12,7 @@
           </div>
         </mat-card>
       </div>      
-      <div *ngIf="!loading && meetings">
-
-
-
+      <div *ngIf="!loading && meetings && !isJoinedToMeeting">
         <mat-form-field>
             <mat-label>Filter</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Tandem" #input>
@@ -62,6 +59,13 @@
           
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
           </div> 
+      </div>
+      <div *ngIf="isJoinedToMeeting">
+      <button (click)="returnMeetingList()" class="btn btn-outline-primary btn-lg btn-block btn-user" type="submit">
+        Return Meeting List Meeting
+      </button>
+          <app-bbb-view [moderatorUrl]="selectedMeeting"
+           ></app-bbb-view>
       </div>
     </div>
     <app-footer></app-footer>

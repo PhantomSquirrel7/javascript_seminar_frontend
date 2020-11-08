@@ -33,9 +33,7 @@ export class StudentMeetingsContentComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   
   constructor(
-    private userService: CustomUserService,
     private _snackBar: MatSnackBar,
-    private loginService: CustomLoginService,
     private user2Service: UserService,
     public dialog: MatDialog,
   ) {}
@@ -45,6 +43,9 @@ export class StudentMeetingsContentComponent implements OnInit {
   error: string;
   meetings = null;
   selectedMeetingId = null;
+  isJoinedToMeeting = false;
+  selectedMeeting = null;
+
   ngOnInit() {
     this.loading = true;
     this.user2Service
@@ -69,11 +70,6 @@ export class StudentMeetingsContentComponent implements OnInit {
       });
   }
 
-
-  getMeetingsDetail(): void{
-
-  }
-
   openJoinMeetingDialogBox(meetingId){
 
     const message = `Are you sure you want to join to meeting ?`;
@@ -90,9 +86,27 @@ export class StudentMeetingsContentComponent implements OnInit {
 
   joinMeeting(meetingId) : void {
     this.joinMeetingLoading = true;
+    this.user2Service.meMeetingsMeetingIdGet(meetingId).toPromise().then(response => {
+      this.selectedMeeting = response;
+      this.isJoinedToMeeting = true;
+      this.joinMeetingLoading = false;
+      this._snackBar.open('You Joined Meeting!', 'Close', {
+        duration: 3000,
+      });      
+    }).catch(error => {
+      this.error = error;
+      this.isJoinedToMeeting = false; 
+      this.joinMeetingLoading = false;
+      this._snackBar.open(this.error, 'Close', {
+        duration: 3000,
+      });
+    })
 
   }
 
+  returnMeetingList(){
+    this.isJoinedToMeeting = false; 
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
