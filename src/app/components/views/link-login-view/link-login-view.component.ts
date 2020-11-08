@@ -54,7 +54,6 @@ export class LinkLoginViewComponent {
       console.log(this.token);
       console.log(this.refreshToken);
       console.log(this.refreshPasswordToken);
-      // this.loginService.loginWithToken(this.token, this.refreshToken);
     });
   }
 
@@ -86,6 +85,7 @@ export class LinkLoginViewComponent {
   } 
 
   skip(){
+      this.loginService.loginWithToken(this.token, this.refreshToken);
       this.router.navigate(['/login']);
   }
 
