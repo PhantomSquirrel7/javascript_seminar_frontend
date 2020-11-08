@@ -1,65 +1,53 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentsService } from '@app/services/swagger-api/api';
-import { CustomUserService } from '@app/services/custom';
+import { CustomLoginService, CustomUserService } from '@app/services/custom';
 import { UserService } from '@app/services/swagger-api/api';
-import { flatMap, map, catchError } from 'rxjs/operators';
+import { flatMap, map, catchError, first } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { User, Body14 } from '@app/models';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormGroup, FormBuilder } from '@angular/forms'
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-student-meetings-content',
   templateUrl: './student-meetings-content.component.html',
-  styleUrls: ['./student-meetings-content.component.less']
+  styleUrls: ['./student-meetings-content.component.less'],
 })
 export class StudentMeetingsContentComponent implements OnInit {
-
   constructor(
-    private studentService: StudentsService,
     private userService: CustomUserService,
-    private user2Service: UserService,
     private _snackBar: MatSnackBar,
-    private fb: FormBuilder,
-  ) { }
+    private loginService: CustomLoginService,
+    private user2Service: UserService
+  ) {}
 
-  user_student: any = {};
-	loading = true; // true if waiting for results
-  error = '';
-  noMeetings = true;
-  meetings = [];
+  loading = false;
+  error: string;
+  meetings = null;
+  selectedMeetingId = null;
 
-
-	ngOnInit() {
-    // this.userService.getMe().pipe(
-    //   flatMap( (user) =>
-    //     this.user2Service.meMeetingsGet().pipe(
-    //       map(
-    //         meetings => {
-    //           this.user_student = user;
-    //           console.log(user);
-    //           this.meetings = meetings;
-    //           console.log(meetings);
-    //           if (this.meetings.length > 0){
-    //             this.noMeetings = false;
-    //           }
-    //           return user;
-    //         } 
-    //       )
-    //     )
-    //   )
-    // ).subscribe({
-    //   next: (response) => {
-    //     this.loading = false;
-    //     this.user_student = response;
-    //   },
-    //   error: (error) => {
-    //     this.error = error;
-    //     this._snackBar.open(this.error, 'Close', {
-    //     duration: 3000
-    //     });
-    //     this.loading = false;
-    //   },
-    // });
+  ngOnInit() {
+    this.loading = true;
+    this.user2Service
+      .meMeetingsGet()
+      .toPromise()
+      .then((response) => {
+        this.meetings = response;
+        this.loading = false;
+      })
+      .catch((error) => {
+        this.error = error;
+        this._snackBar.open(this.error, 'Close', {
+          duration: 3000,
+        });
+        this.loading = false;
+        this.meetings = null;
+      });
   }
+
+
+  getMeetingsDetail(): void{
+    
+  }
+
 }

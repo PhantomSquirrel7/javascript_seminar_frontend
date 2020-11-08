@@ -10,34 +10,32 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
-import {
-    HttpClient, HttpHeaders, HttpParams,
-    HttpResponse, HttpEvent
-} from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec } from '../../swagger-configs/encoder';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
 
-import { Observable } from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
-import { Body8 } from '../../models/swagger-model/body8';
+import { Body9 } from '../../models/swagger-model/body9';
 import { InlineResponse20015 } from '../../models/swagger-model/inlineResponse20015';
 import { InlineResponse20016 } from '../../models/swagger-model/inlineResponse20016';
 import { InlineResponse2004 } from '../../models/swagger-model/inlineResponse2004';
+import { InlineResponse2005 } from '../../models/swagger-model/inlineResponse2005';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../../swagger-configs/variables';
-import { Configuration } from '../../swagger-configs/configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
+import { Configuration }                                     from '../../swagger-configs/configuration';
 
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class UserService {
 
-    protected basePath = 'https://api-globy.herokuapp.com/v1';
-
+    protected basePath = 'http://localhost:36640/v1';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -71,7 +69,7 @@ export class UserService {
     public meGet(observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2004>;
     public meGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2004>>;
     public meGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2004>>;
-    public meGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public meGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -95,7 +93,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse2004>('get', `${this.basePath}/me`,
+        return this.httpClient.request<InlineResponse2004>('get',`${this.basePath}/me`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -111,10 +109,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public meMeetingsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<Body8>>;
-    public meMeetingsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Body8>>>;
-    public meMeetingsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Body8>>>;
-    public meMeetingsGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public meMeetingsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<Body9>>;
+    public meMeetingsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Body9>>>;
+    public meMeetingsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Body9>>>;
+    public meMeetingsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -138,7 +136,55 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<Body8>>('get', `${this.basePath}/me/meetings`,
+        return this.httpClient.request<Array<Body9>>('get',`${this.basePath}/me/meetings`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get all your meetings
+     * Logged in users can fetch their meetings
+     * @param meetingId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public meMeetingsMeetingIdGet(meetingId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2005>;
+    public meMeetingsMeetingIdGet(meetingId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2005>>;
+    public meMeetingsMeetingIdGet(meetingId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2005>>;
+    public meMeetingsMeetingIdGet(meetingId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (meetingId === null || meetingId === undefined) {
+            throw new Error('Required parameter meetingId was null or undefined when calling meMeetingsMeetingIdGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<InlineResponse2005>('get',`${this.basePath}/me/meetings/${encodeURIComponent(String(meetingId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -157,7 +203,7 @@ export class UserService {
     public meNotificationsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse20015>>;
     public meNotificationsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse20015>>>;
     public meNotificationsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse20015>>>;
-    public meNotificationsGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public meNotificationsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -181,7 +227,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse20015>>('get', `${this.basePath}/me/notifications`,
+        return this.httpClient.request<Array<InlineResponse20015>>('get',`${this.basePath}/me/notifications`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -201,7 +247,7 @@ export class UserService {
     public meNotificationsIdGet(id: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20016>;
     public meNotificationsIdGet(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20016>>;
     public meNotificationsIdGet(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20016>>;
-    public meNotificationsIdGet(id: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public meNotificationsIdGet(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling meNotificationsIdGet.');
@@ -229,7 +275,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse20016>('get', `${this.basePath}/me/notifications/${encodeURIComponent(String(id))}`,
+        return this.httpClient.request<InlineResponse20016>('get',`${this.basePath}/me/notifications/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -248,7 +294,7 @@ export class UserService {
     public meStudentsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2004>>;
     public meStudentsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2004>>>;
     public meStudentsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2004>>>;
-    public meStudentsGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public meStudentsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -272,7 +318,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse2004>>('get', `${this.basePath}/me/students`,
+        return this.httpClient.request<Array<InlineResponse2004>>('get',`${this.basePath}/me/students`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

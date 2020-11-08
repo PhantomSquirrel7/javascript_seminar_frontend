@@ -10,33 +10,30 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
-import {
-    HttpClient, HttpHeaders, HttpParams,
-    HttpResponse, HttpEvent
-} from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec } from '../../swagger-configs/encoder';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
 
-import { Observable } from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
 import { Body8 } from '../../models/swagger-model/body8';
 import { Body9 } from '../../models/swagger-model/body9';
 import { InlineResponse2005 } from '../../models/swagger-model/inlineResponse2005';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../../swagger-configs/variables';
-import { Configuration } from '../../swagger-configs/configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
+import { Configuration }                                     from '../../swagger-configs/configuration';
 
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class MeetingsService {
 
-    protected basePath = 'https://api-globy.herokuapp.com/v1';
-
+    protected basePath = 'http://localhost:36640/v1';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -62,64 +59,6 @@ export class MeetingsService {
 
 
     /**
-     * Get a specific project
-     * Returns a project
-     * @param classId the class id
-     * @param projectId 
-     * @param meetingId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public classesClassIdProjectsProjectIdMeetingMeetingIdGet(classId: string, projectId: string, meetingId: string, observe?: 'body', reportProgress?: boolean): Observable<Body8>;
-    public classesClassIdProjectsProjectIdMeetingMeetingIdGet(classId: string, projectId: string, meetingId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body8>>;
-    public classesClassIdProjectsProjectIdMeetingMeetingIdGet(classId: string, projectId: string, meetingId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body8>>;
-    public classesClassIdProjectsProjectIdMeetingMeetingIdGet(classId: string, projectId: string, meetingId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-        if (classId === null || classId === undefined) {
-            throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdMeetingMeetingIdGet.');
-        }
-
-        if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling classesClassIdProjectsProjectIdMeetingMeetingIdGet.');
-        }
-
-        if (meetingId === null || meetingId === undefined) {
-            throw new Error('Required parameter meetingId was null or undefined when calling classesClassIdProjectsProjectIdMeetingMeetingIdGet.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<Body8>('get', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meeting/${encodeURIComponent(String(meetingId))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Get all meetings
      * Get all meetings of a project
      * @param classId The id of the current class
@@ -130,7 +69,7 @@ export class MeetingsService {
     public classesClassIdProjectsProjectIdMeetingsGet(classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2005>;
     public classesClassIdProjectsProjectIdMeetingsGet(classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2005>>;
     public classesClassIdProjectsProjectIdMeetingsGet(classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2005>>;
-    public classesClassIdProjectsProjectIdMeetingsGet(classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public classesClassIdProjectsProjectIdMeetingsGet(classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (classId === null || classId === undefined) {
             throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsGet.');
@@ -162,8 +101,193 @@ export class MeetingsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse2005>('get', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
+        return this.httpClient.request<InlineResponse2005>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * delete a meeting
+     * delete a meeting
+     * @param classId Class id
+     * @param projectId 
+     * @param meetingId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdDelete(classId: string, projectId: string, meetingId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2005>;
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdDelete(classId: string, projectId: string, meetingId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2005>>;
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdDelete(classId: string, projectId: string, meetingId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2005>>;
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdDelete(classId: string, projectId: string, meetingId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (classId === null || classId === undefined) {
+            throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsMeetingIdDelete.');
+        }
+
+        if (projectId === null || projectId === undefined) {
+            throw new Error('Required parameter projectId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsMeetingIdDelete.');
+        }
+
+        if (meetingId === null || meetingId === undefined) {
+            throw new Error('Required parameter meetingId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsMeetingIdDelete.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<InlineResponse2005>('delete',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings/${encodeURIComponent(String(meetingId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get a specific project
+     * Returns a project
+     * @param classId the class id
+     * @param projectId 
+     * @param meetingId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdGet(classId: string, projectId: string, meetingId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2005>;
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdGet(classId: string, projectId: string, meetingId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2005>>;
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdGet(classId: string, projectId: string, meetingId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2005>>;
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdGet(classId: string, projectId: string, meetingId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (classId === null || classId === undefined) {
+            throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsMeetingIdGet.');
+        }
+
+        if (projectId === null || projectId === undefined) {
+            throw new Error('Required parameter projectId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsMeetingIdGet.');
+        }
+
+        if (meetingId === null || meetingId === undefined) {
+            throw new Error('Required parameter meetingId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsMeetingIdGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<InlineResponse2005>('get',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings/${encodeURIComponent(String(meetingId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Update a meeting
+     * Update a meeting
+     * @param body 
+     * @param classId The id of the current class
+     * @param projectId the id of the project
+     * @param meetingId the id of the meeting
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdPut(body: Body9, classId: string, projectId: string, meetingId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2005>;
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdPut(body: Body9, classId: string, projectId: string, meetingId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2005>>;
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdPut(body: Body9, classId: string, projectId: string, meetingId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2005>>;
+    public classesClassIdProjectsProjectIdMeetingsMeetingIdPut(body: Body9, classId: string, projectId: string, meetingId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling classesClassIdProjectsProjectIdMeetingsMeetingIdPut.');
+        }
+
+        if (classId === null || classId === undefined) {
+            throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsMeetingIdPut.');
+        }
+
+        if (projectId === null || projectId === undefined) {
+            throw new Error('Required parameter projectId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsMeetingIdPut.');
+        }
+
+        if (meetingId === null || meetingId === undefined) {
+            throw new Error('Required parameter meetingId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsMeetingIdPut.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<InlineResponse2005>('put',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings/${encodeURIComponent(String(meetingId))}`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -181,10 +305,10 @@ export class MeetingsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public classesClassIdProjectsProjectIdMeetingsPost(body: Body9, classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<Body8>;
-    public classesClassIdProjectsProjectIdMeetingsPost(body: Body9, classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body8>>;
-    public classesClassIdProjectsProjectIdMeetingsPost(body: Body9, classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body8>>;
-    public classesClassIdProjectsProjectIdMeetingsPost(body: Body9, classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public classesClassIdProjectsProjectIdMeetingsPost(body: Body8, classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2005>;
+    public classesClassIdProjectsProjectIdMeetingsPost(body: Body8, classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2005>>;
+    public classesClassIdProjectsProjectIdMeetingsPost(body: Body8, classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2005>>;
+    public classesClassIdProjectsProjectIdMeetingsPost(body: Body8, classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling classesClassIdProjectsProjectIdMeetingsPost.');
@@ -225,131 +349,9 @@ export class MeetingsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<Body8>('post', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
+        return this.httpClient.request<InlineResponse2005>('post',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
             {
                 body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Update a meeting
-     * Update a meeting
-     * @param body 
-     * @param classId The id of the current class
-     * @param projectId the id of the project
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public classesClassIdProjectsProjectIdMeetingsPut(body: Body8, classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<Body8>;
-    public classesClassIdProjectsProjectIdMeetingsPut(body: Body8, classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body8>>;
-    public classesClassIdProjectsProjectIdMeetingsPut(body: Body8, classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body8>>;
-    public classesClassIdProjectsProjectIdMeetingsPut(body: Body8, classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling classesClassIdProjectsProjectIdMeetingsPut.');
-        }
-
-        if (classId === null || classId === undefined) {
-            throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsPut.');
-        }
-
-        if (projectId === null || projectId === undefined) {
-            throw new Error('Required parameter projectId was null or undefined when calling classesClassIdProjectsProjectIdMeetingsPut.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<Body8>('put', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/meetings`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * delete a meeting
-     * delete a meeting
-     * @param classId Class id
-     * @param studentId 
-     * @param meetingId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public classesClassIdStudentsStudentIdMeetingsMeetingIdDelete(classId: string, studentId: string, meetingId: string, observe?: 'body', reportProgress?: boolean): Observable<Body8>;
-    public classesClassIdStudentsStudentIdMeetingsMeetingIdDelete(classId: string, studentId: string, meetingId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body8>>;
-    public classesClassIdStudentsStudentIdMeetingsMeetingIdDelete(classId: string, studentId: string, meetingId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body8>>;
-    public classesClassIdStudentsStudentIdMeetingsMeetingIdDelete(classId: string, studentId: string, meetingId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-        if (classId === null || classId === undefined) {
-            throw new Error('Required parameter classId was null or undefined when calling classesClassIdStudentsStudentIdMeetingsMeetingIdDelete.');
-        }
-
-        if (studentId === null || studentId === undefined) {
-            throw new Error('Required parameter studentId was null or undefined when calling classesClassIdStudentsStudentIdMeetingsMeetingIdDelete.');
-        }
-
-        if (meetingId === null || meetingId === undefined) {
-            throw new Error('Required parameter meetingId was null or undefined when calling classesClassIdStudentsStudentIdMeetingsMeetingIdDelete.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<Body8>('delete', `${this.basePath}/classes/${encodeURIComponent(String(classId))}/students/${encodeURIComponent(String(studentId))}/meetings/${encodeURIComponent(String(meetingId))}`,
-            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

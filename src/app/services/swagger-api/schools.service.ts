@@ -10,33 +10,30 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
-import {
-    HttpClient, HttpHeaders, HttpParams,
-    HttpResponse, HttpEvent
-} from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec } from '../../swagger-configs/encoder';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
 
-import { Observable } from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
 import { Body12 } from '../../models/swagger-model/body12';
 import { InlineResponse20013 } from '../../models/swagger-model/inlineResponse20013';
 import { InlineResponse20014 } from '../../models/swagger-model/inlineResponse20014';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../../swagger-configs/variables';
-import { Configuration } from '../../swagger-configs/configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
+import { Configuration }                                     from '../../swagger-configs/configuration';
 
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SchoolsService {
 
-    protected basePath = 'https://api-globy.herokuapp.com/v1';
-
+    protected basePath = 'http://localhost:36640/v1';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -71,10 +68,10 @@ export class SchoolsService {
     public schoolsGet(name?: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20013>;
     public schoolsGet(name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20013>>;
     public schoolsGet(name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20013>>;
-    public schoolsGet(name?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public schoolsGet(name?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
-        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (name !== undefined && name !== null) {
             queryParameters = queryParameters.set('name', <any>name);
         }
@@ -101,7 +98,7 @@ export class SchoolsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse20013>('get', `${this.basePath}/schools`,
+        return this.httpClient.request<InlineResponse20013>('get',`${this.basePath}/schools`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -122,7 +119,7 @@ export class SchoolsService {
     public schoolsPost(body: Body12, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20014>;
     public schoolsPost(body: Body12, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20014>>;
     public schoolsPost(body: Body12, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20014>>;
-    public schoolsPost(body: Body12, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public schoolsPost(body: Body12, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling schoolsPost.');
@@ -155,7 +152,7 @@ export class SchoolsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<InlineResponse20014>('post', `${this.basePath}/schools`,
+        return this.httpClient.request<InlineResponse20014>('post',`${this.basePath}/schools`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -176,7 +173,7 @@ export class SchoolsService {
     public schoolsSchoolIdGet(schoolId: string, observe?: 'body', reportProgress?: boolean): Observable<Body12>;
     public schoolsSchoolIdGet(schoolId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Body12>>;
     public schoolsSchoolIdGet(schoolId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Body12>>;
-    public schoolsSchoolIdGet(schoolId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public schoolsSchoolIdGet(schoolId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (schoolId === null || schoolId === undefined) {
             throw new Error('Required parameter schoolId was null or undefined when calling schoolsSchoolIdGet.');
@@ -204,7 +201,7 @@ export class SchoolsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Body12>('get', `${this.basePath}/schools/${encodeURIComponent(String(schoolId))}`,
+        return this.httpClient.request<Body12>('get',`${this.basePath}/schools/${encodeURIComponent(String(schoolId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

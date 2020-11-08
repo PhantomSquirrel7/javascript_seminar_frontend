@@ -1,25 +1,27 @@
 <div fxLayout="row">
-    <app-student-navigation></app-student-navigation>
-    <div class="home-right-content" fxFlex="1 1 100%">
-        <app-header></app-header>
-        <div class="home-content">
-            <div style="margin-right: 50px; margin-left: 50px;">
-                <div *ngIf="true">
-                    <h1>Your Meetings {{user_student.firstName}}!</h1>
-                    <br>
-                    <div class="card">
-                        <div fxLayout="row" *ngIf=noMeetings>
-                            <div fxFlex="0 0 80%" class="card-body">
-                                <app-bbb-view></app-bbb-view>
-                            </div>
-                            <div class="card-body">
-                                <app-games-view></app-games-view>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <app-footer></app-footer>
+  <app-student-navigation></app-student-navigation>
+  <div class="home-right-content" fxFlex="1 1 100%">
+    <app-header></app-header>
+    <div class="home-content">
+      <!-- Replace this ngIf with appropriate conditon -->
+      <div *ngIf="!loading && meetings">
+
+        <label for="level">Meeting Name</label>
+        <select [(ngModel)]="selectedMeetingId">
+          <option [ngValue]="null" disabled>Meeting Name</option>
+          <option *ngFor="let meeting of meetings" [ngValue]="meeting.id">
+            {{meeting.date}}</option>
+        </select>
+      </div>
     </div>
+    <app-footer></app-footer>
+  </div>
 </div>
+
+
+<ng-template #noMeeting>
+  <div class="card-body">
+    <p>You have no meetings</p>
+    <!-- Your notifications -->
+  </div>
+</ng-template>

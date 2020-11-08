@@ -9,19 +9,24 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups } from './classesclassIdprojectsprojectIdmeetingsmeetingIdGroups';
 
 export interface Body9 { 
+    id?: string;
+    project?: string;
     date?: Date;
-    groupAssignment?: Body9.GroupAssignmentEnum;
+    groupAssignments?: Body9.GroupAssignmentsEnum;
+    groups?: Array<ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups>;
     taskList?: Array<string>;
     duration?: number;
+    joinUrl?: string;
 }
 export namespace Body9 {
-    export type GroupAssignmentEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';
-    export const GroupAssignmentEnum = {
-        Tandem: 'tandem' as GroupAssignmentEnum,
-        Group3: 'group3' as GroupAssignmentEnum,
-        Group4: 'group4' as GroupAssignmentEnum,
-        WholeClass: 'whole_class' as GroupAssignmentEnum
+    export type GroupAssignmentsEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';
+    export const GroupAssignmentsEnum = {
+        Tandem: 'tandem' as GroupAssignmentsEnum,
+        Group3: 'group3' as GroupAssignmentsEnum,
+        Group4: 'group4' as GroupAssignmentsEnum,
+        WholeClass: 'whole_class' as GroupAssignmentsEnum
     };
 }
