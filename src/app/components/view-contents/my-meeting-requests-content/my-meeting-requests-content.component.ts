@@ -127,9 +127,24 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   }
 
   deleteMeeting(meetingId) {
-    // TODO
-    console.log('class'+this.selectedClass.id);
-    console.log('project'+this.selectedProject.id);
-    console.log(meetingId);
+    this.meetingService
+    .classesClassIdProjectsProjectIdMeetingsMeetingIdDelete(this.selectedClass.id, this.selectedProject.id, meetingId)
+    .subscribe({
+      next: (response) => {
+        let index = this.meetingList.find(element => element.id === response.id);
+        this.meetingList.splice(index, 1);
+
+        this._snackBar.open('Meeting Deleted Successfully!', 'Close', {
+          duration: 3000,
+        });
+      },
+      error: (error) => {
+        this.error = error;
+        this._snackBar.open(this.error, 'Close', {
+        duration: 3000
+        });
+        this.loading = false;
+      },
+    });;
   }
 }
