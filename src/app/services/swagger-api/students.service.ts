@@ -27,10 +27,12 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger
 import { Configuration }                                     from '../../swagger-configs/configuration';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class StudentsService {
 
-    protected basePath = 'http://localhost:36640/v1';
+    protected basePath = 'https://api-globy.herokuapp.com/v1';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
