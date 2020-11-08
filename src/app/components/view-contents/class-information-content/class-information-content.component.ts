@@ -17,6 +17,9 @@ import { Router } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { CLASS_LEVEL } from '@app/components/common/backend-util/common-structures/class-level';
+import { MEETING_FREQUENCY } from '@app/components/common/backend-util/common-structures/meeting-frequency';
+import { PROJECT_DURATION } from '@app/components/common/backend-util/common-structures/project-duration';
 
 export interface StudentData {
   id: string;
@@ -76,10 +79,16 @@ export class ClassInformationContentComponent implements OnInit {
   countryList = null;
   languageLevelList = null;
   selectedClassStudentList = null;
+  classLevelList = null;
+  frequencyList = null;
+  projectDurationList = null;  
   selectedLanguageLevel = null;
   selectedLanguage = null;
   selectedClassCountry = null;
   selectedClassIdForStudentList = null;
+  selectedClassLevel = null;
+  selectedFrequency = null;
+  selectedProjectDuration = null;  
   studentsOfTeacher = null;
 
   constructor(
@@ -97,6 +106,9 @@ export class ClassInformationContentComponent implements OnInit {
     this.languageList = LANGUAGE_LIST;
     this.countryList = COUNTRY_LIST;
     this.languageLevelList = LANGUAGE_LEVEL_LIST;
+    this.classLevelList = CLASS_LEVEL;
+    this.frequencyList = MEETING_FREQUENCY;
+    this.projectDurationList = PROJECT_DURATION;
 
     this.getClassInformationForm = this.formBuilder.group({
       selectedClassInformationId: ['', Validators.required],
@@ -164,6 +176,12 @@ export class ClassInformationContentComponent implements OnInit {
           this.selectedClassCountry = this.countryList.find(
             (item) => item.code == this.selectedClass.country
           );
+          let tempFreq =  this.frequencyList.find((item) => item.value == this.selectedClass.meetingFrequency);
+          this.selectedFrequency = tempFreq ? tempFreq.value : null;
+          let tempClassLevel = this.classLevelList.find((item) => item.value == this.selectedClass.level);    
+          this.selectedClassLevel = tempClassLevel ? tempClassLevel.value : null;
+          let tempProjectDuration = this.projectDurationList.find((item) => item.value == this.selectedClass.projectDuration);                  
+          this.selectedProjectDuration = tempProjectDuration ? tempProjectDuration.value : null;
           this.getClassLoading = false;
           this._snackBar.open('Class information retrieved!', 'Close', {
             duration: 3000,
@@ -203,9 +221,9 @@ export class ClassInformationContentComponent implements OnInit {
           language: this.selectedLanguage.value,
           subject: this.f.subject.value,
           country: this.selectedClassCountry.code,
-          projectDuration: this.f.projectDuration.value,
-          meetingFrequency: this.f.meetingFrequency.value,
-          level: this.f.level.value,
+          projectDuration: this.selectedProjectDuration,
+          meetingFrequency: this.selectedFrequency,
+          level: this.selectedClassLevel,
           languageLevel: this.selectedLanguageLevel,
         },
         this.selectedClassInformationId
@@ -333,7 +351,8 @@ export class ClassInformationContentComponent implements OnInit {
     this.concatStudentsLoaded = true;
   };
 
-  toggleStudentCheckBox(index){
+  toggleStudentCheckBox(studentId){
+    let index = this.studentsOfTeacher.findIndex((item) => item.id == studentId);
     this.studentsOfTeacher[index].flag = ! this.studentsOfTeacher[index].flag;
     if(this.studentsOfTeacher[index].flag)
         this.addStudentToClass(this.studentsOfTeacher[index]);

@@ -23,19 +23,18 @@
             </div>
           </div>
 
-
           <div class="form-group">
-            <label for="levet">Class level</label>
-            <input type="number" id="level" formControlName="level" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.level.errors }" />
-            <div *ngIf="submitted && f.level.errors" class="invalid-feedback">
-              <div *ngIf="f.level.errors.required">level is required</div>
-            </div>
-          </div>          
+            <label for="level">Class Level</label>
+            <select formControlName="level" class="form-control" [(ngModel)]="selectedClassLevel">
+              <option [ngValue]="null" disabled>Class Level</option>
+              <option *ngFor="let level of classLevelList" [ngValue]="level.value">
+                {{level.name}}</option>
+            </select>
+          </div>
 
           <div class="form-group">
             <label for="language">Language</label>
-            <select formControlName="language"  class="form-control" [(ngModel)]="selectedLanguage">
+            <select formControlName="language" class="form-control" [(ngModel)]="selectedLanguage">
               <option [ngValue]="null" disabled>Language</option>
               <option *ngFor="let language of languageList" [ngValue]="language.value">
                 {{language.name}}
@@ -51,7 +50,7 @@
               <option *ngFor="let langLvl of languageLevelList" [ngValue]="langLvl">
                 {{langLvl}}</option>
             </select>
-          </div>          
+          </div>
 
 
           <div class="form-group">
@@ -65,23 +64,22 @@
 
           <div class="form-group">
             <label for="projectDuration">Project Duration</label>
-            <input type="number" id="projectDuration" formControlName="projectDuration" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.projectDuration.errors }" />
-            <div *ngIf="submitted && f.projectDuration.errors" class="invalid-feedback">
-              <div *ngIf="f.projectDuration.errors.required">project duration is required</div>
-            </div>
+            <select formControlName="projectDuration" class="form-control" [(ngModel)]="selectedProjectDuration">
+              <option [ngValue]="null" disabled>Project Duration</option>
+              <option *ngFor="let projectDuration of projectDurationList" [ngValue]="projectDuration.value">
+                {{projectDuration.name}}</option>
+            </select>
           </div>
+
 
           <div class="form-group">
             <label for="meetingFrequency">Meeting Frequency</label>
-            <input type="number" id="meetingFrequency" formControlName="meetingFrequency" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.meetingFrequency.errors }" />
-            <div *ngIf="submitted && f.meetingFrequency.errors" class="invalid-feedback">
-              <div *ngIf="f.meetingFrequency.errors.required">meeting frequency is required</div>
-            </div>
+            <select formControlName="meetingFrequency" class="form-control" [(ngModel)]="selectedFrequency">
+              <option [ngValue]="null" disabled>Meeting Frequency</option>
+              <option *ngFor="let freq of frequencyList" [ngValue]="freq.value">
+                {{freq.name}}</option>
+            </select>
           </div>
-
-
 
 
         </div>

@@ -22,10 +22,10 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   gameUpdateSubscriptionEvent;
   quizUpdate: QuizUpdate;
   currentQuiz: Quiz;
-  timeLimit: number = 30;
-  timeLeftSeconds: number = this.timeLimit;
+  timeLeftSeconds: number = 180;
   timeInterval;
   showHelp: boolean = false;
+  updateTimeNextUpdate: boolean = false;
 
   constructor(public gamesService: GamesService) {
     this.quizUpdate = {
@@ -38,7 +38,9 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
       quizIndex: 0,
       countDownStarted: false,
       quizOver: false,
-      taskId: this.taskId
+      taskId: this.taskId,
+      timeleft: 180,
+      timelimit: 180,
     }
   }
 
@@ -52,6 +54,7 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
         event.previousIndex,
         event.currentIndex);
     }
+    this.sendUpdateGame();
   }
 
   ngOnInit(): void {
@@ -70,7 +73,7 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
   onSubmitAnswers(): void {
     this.quizUpdate.getSolution = true;
     this.quizUpdate.quizOver = true;
-    this.gamesService.sendUpdate(this.quizUpdate);
+    this.sendUpdateGame();
   }
 
   onGameOver(): void {
@@ -112,11 +115,10 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
     this.setTimer();
     this.quizUpdate.state = "running";
     this.quizUpdate.countDownStarted = true;
-    this.gamesService.sendUpdate(this.quizUpdate);
+    this.sendUpdateGame();
   }
 
   setTimer(): void {
-    this.timeLeftSeconds = this.timeLimit;
     this.timeInterval = setInterval(() => {
       this.timeLeftSeconds -= 1;
       if (this.timeLeftSeconds <= 0) {
@@ -127,18 +129,32 @@ export class GamesQuizComponent implements OnInit, OnDestroy {
 
   // Updates the current view with a recieved update
   handleRecievedUpdateGame(quizUpdate: QuizUpdate) {
-    //console.log(quizUpdate)
+    if (!quizUpdate.players.includes(this.username)) {
+      // Player disconnected from other device
+      this.disconnectGame()
+      return;
+    }
     if (quizUpdate.quizes.length > 0) {
       this.currentQuiz = quizUpdate.quizes[quizUpdate.quizIndex];
     }
+    if (this.updateTimeNextUpdate) {
+      this.updateTimeNextUpdate = false;
+      this.timeLeftSeconds = quizUpdate.timeleft;
+    }
     if (this.quizUpdate.countDownStarted == false && quizUpdate.countDownStarted) {
-      // Start Countdown Now!
+      // Start with given timeleft
+      this.timeLeftSeconds = quizUpdate.timeleft;
       this.setTimer();
+      this.updateTimeNextUpdate = true;
+    }
+    if (quizUpdate.getSolution) {
+      clearInterval(this.timeInterval);
     }
     this.quizUpdate = quizUpdate;
   }
 
   sendUpdateGame(): void {
+    this.quizUpdate.timeleft = this.timeLeftSeconds;
     this.gamesService.sendUpdate(this.quizUpdate);
   }
 

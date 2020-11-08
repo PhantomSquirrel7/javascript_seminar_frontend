@@ -9,15 +9,17 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups } from './classesclassIdprojectsprojectIdmeetingsmeetingIdGroups';
 
 export interface Meeting { 
     id?: string;
     project?: string;
     date?: Date;
     groupAssignments?: Meeting.GroupAssignmentsEnum;
-    groups?: Array<Array<string>>;
+    groups?: Array<ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups>;
     taskList?: Array<string>;
     duration?: number;
+    joinUrl?: string;
 }
 export namespace Meeting {
     export type GroupAssignmentsEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';

@@ -10,14 +10,12 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
-import {
-    HttpClient, HttpHeaders, HttpParams,
-    HttpResponse, HttpEvent
-} from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec } from '../../swagger-configs/encoder';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
 
-import { Observable } from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
 import { Body13 } from '../../models/swagger-model/body13';
 import { Body14 } from '../../models/swagger-model/body14';
@@ -25,19 +23,20 @@ import { InlineResponse2004 } from '../../models/swagger-model/inlineResponse200
 import { InlineResponse201 } from '../../models/swagger-model/inlineResponse201';
 import { InlineResponse400 } from '../../models/swagger-model/inlineResponse400';
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../../swagger-configs/variables';
-import { Configuration } from '../../swagger-configs/configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
+import { Configuration }                                     from '../../swagger-configs/configuration';
 
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+    providedIn: 'root'
+})
 export class StudentsService {
 
     protected basePath = 'https://api-globy.herokuapp.com/v1';
-
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -72,7 +71,7 @@ export class StudentsService {
     public studentsPost(body: Body13, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse201>;
     public studentsPost(body: Body13, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse201>>;
     public studentsPost(body: Body13, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse201>>;
-    public studentsPost(body: Body13, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public studentsPost(body: Body13, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling studentsPost.');
@@ -105,7 +104,7 @@ export class StudentsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<InlineResponse201>('post', `${this.basePath}/students`,
+        return this.httpClient.request<InlineResponse201>('post',`${this.basePath}/students`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -126,7 +125,7 @@ export class StudentsService {
     public studentsStudentIdGet(studentId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2004>;
     public studentsStudentIdGet(studentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2004>>;
     public studentsStudentIdGet(studentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2004>>;
-    public studentsStudentIdGet(studentId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public studentsStudentIdGet(studentId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (studentId === null || studentId === undefined) {
             throw new Error('Required parameter studentId was null or undefined when calling studentsStudentIdGet.');
@@ -154,7 +153,7 @@ export class StudentsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse2004>('get', `${this.basePath}/students/${encodeURIComponent(String(studentId))}`,
+        return this.httpClient.request<InlineResponse2004>('get',`${this.basePath}/students/${encodeURIComponent(String(studentId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -175,7 +174,7 @@ export class StudentsService {
     public studentsStudentIdPatch(body: Body14, studentId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2004>;
     public studentsStudentIdPatch(body: Body14, studentId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2004>>;
     public studentsStudentIdPatch(body: Body14, studentId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2004>>;
-    public studentsStudentIdPatch(body: Body14, studentId: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public studentsStudentIdPatch(body: Body14, studentId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling studentsStudentIdPatch.');
@@ -212,7 +211,7 @@ export class StudentsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<InlineResponse2004>('patch', `${this.basePath}/students/${encodeURIComponent(String(studentId))}`,
+        return this.httpClient.request<InlineResponse2004>('patch',`${this.basePath}/students/${encodeURIComponent(String(studentId))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

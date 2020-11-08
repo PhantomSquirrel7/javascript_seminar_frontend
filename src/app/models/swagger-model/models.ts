@@ -17,6 +17,7 @@ export * from './body8';
 export * from './body9';
 export * from './classesTeacher';
 export * from './classesclassIdprojectsClasses';
+export * from './classesclassIdprojectsprojectIdmeetingsmeetingIdGroups';
 export * from './inlineResponse200';
 export * from './inlineResponse2001';
 export * from './inlineResponse20010';
