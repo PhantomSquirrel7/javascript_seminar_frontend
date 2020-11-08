@@ -73,7 +73,7 @@
                     <mat-expansion-panel *ngFor="let quiz of quizzes" hideToggle>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                {{ quiz.name }}
+                                <mat-checkbox [checked]="boxChecked(quiz)" (change)="quizSelected($event, quiz)"> {{ quiz.name }} </mat-checkbox>
                             </mat-panel-title>
                             <mat-panel-description>
                                 {{ quiz.description }}

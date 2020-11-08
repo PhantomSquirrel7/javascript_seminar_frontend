@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { Question } from '@app/models/game-models/question';
 import { Quiz } from '@app/models/game-models/quiz';
@@ -11,7 +11,11 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./quiz-game-config.component.less']
 })
 export class QuizGameConfigComponent implements OnInit {
+
+  @Output() selectedQuizEvent: EventEmitter<Quiz[]> = new EventEmitter<Quiz[]>();
+  
   quizzes: Quiz[];
+  selectedQuizzes: Quiz[];
   questions: Question[];
 
   newQuiz: Quiz = {
@@ -145,5 +149,24 @@ export class QuizGameConfigComponent implements OnInit {
       questions: [],
       duration: 300
     }
+  }
+
+  /**
+   * adds/removes quizzes depending on whether the checkbox is checked or not
+   */
+  quizSelected(event, quiz: Quiz) {
+    const tempQuiz: Quiz = this.quizzes.filter(x => x.id == quiz.id)[0];
+    if(event.checked)
+      this.api.createSelectedQuiz(tempQuiz);
+    else
+      this.api.deleteSelectedQuiz(tempQuiz);
+    this.selectedQuizzes = this.api.getSelectedQuizzes();
+    this.selectedQuizEvent.emit(this.selectedQuizzes);
+
+  }
+
+  boxChecked(game: Quiz) {
+    var elementPos = this.api.getSelectedQuizzes().map(function(x) {return x.id;}).indexOf(game.id);
+    return elementPos > -1;
   }
 }

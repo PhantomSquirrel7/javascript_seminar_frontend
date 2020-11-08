@@ -5,7 +5,7 @@
 
 <app-messages></app-messages>
 
-<mat-card-content>
+<mat-card-content *ngIf="games; else loadingDrawitContent">
     <div class="mt-2">
         <mat-accordion>
             <mat-expansion-panel hideToggle>

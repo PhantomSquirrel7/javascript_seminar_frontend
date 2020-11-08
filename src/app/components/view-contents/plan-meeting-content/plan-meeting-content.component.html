@@ -79,7 +79,7 @@
             <div *ngIf="selectedTypeOfTask === 'quiz'" style="width: 70vmax;">
                 <!-- CREATE QUIZ FORM -->
                 <div class="card-body">
-                    <app-quiz-game-config></app-quiz-game-config>
+                    <app-quiz-game-config (selectedQuizEvent)="selectedQuizzes=($event)"></app-quiz-game-config>
                 </div>
             </div>
 
@@ -110,26 +110,50 @@
                 </div>
             </div>
 
-            <div class="card-body" *ngIf="selectedAliases.length>0">
+            <div class="card-body">
                 <mat-card-header>
                     <mat-card-title>This Meeting's Tasks:</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                    <mat-card-subtitle class="mt-3">Alias Games</mat-card-subtitle>
-                    <mat-accordion class="headers-align">
-                        <div *ngIf="selectedAliases"> <!--else loadingAliasContent">-->
-                            <mat-expansion-panel *ngFor="let selectedAlias of selectedAliases" hideToggle>
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                        {{ selectedAlias.name }}
-                                    </mat-panel-title>
-                                    <mat-panel-description>
-                                        {{ selectedAlias.description }}
-                                    </mat-panel-description>
-                                </mat-expansion-panel-header>
-                            </mat-expansion-panel>
-                        </div>
-                    </mat-accordion>
+                    <div *ngIf="selectedQuizzes.length==0 && selectedAliases.length==0">
+                        <mat-card-subtitle>No tasks selected</mat-card-subtitle>
+                    </div>
+                    <div *ngIf="selectedQuizzes.length>0">
+                        <mat-card-subtitle class="mt-3">Quizzes</mat-card-subtitle>
+                        <mat-accordion class="headers-align">
+                            <div *ngIf="selectedAliases">
+                                <!--else loadingAliasContent">-->
+                                <mat-expansion-panel *ngFor="let selectedQuiz of selectedQuizzes" hideToggle>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            {{ selectedQuiz.name }}
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            {{ selectedQuiz.description }}
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                    <div *ngIf="selectedAliases.length>0">
+                        <mat-card-subtitle class="mt-3">Alias Games</mat-card-subtitle>
+                        <mat-accordion class="headers-align">
+                            <div *ngIf="selectedAliases">
+                                <!--else loadingAliasContent">-->
+                                <mat-expansion-panel *ngFor="let selectedAlias of selectedAliases" hideToggle>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            {{ selectedAlias.name }}
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            {{ selectedAlias.description }}
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
                 </mat-card-content>
             </div>
         </div>

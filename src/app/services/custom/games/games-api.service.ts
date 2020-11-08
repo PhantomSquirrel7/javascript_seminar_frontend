@@ -10,6 +10,8 @@ import { DrawIt } from '@app/models/game-models/drawIt';
 import { Configuration } from '@app/swagger-configs/configuration';
 import { BASE_PATH } from '@app/swagger-configs/variables';
 import { SimpleTask } from '@app/models/game-models/simpleTask';
+import { element } from 'protractor';
+import { TaskList } from '@app/models/game-models/task-list';
 
 @Injectable({
   providedIn: 'root'
@@ -244,5 +246,46 @@ export class GamesApiService {
       .pipe(
         catchError(this.handleError<any>('Deleting game')
         ));
+  }
+
+
+  // ------------------ SELECTED ITEMS FOR TASK LIST -------------------
+  private taskList: TaskList = {
+    id : "-1",
+    quizzes : [],
+    aliases : [],
+    drawits: []
+  };
+  getSelectedAliases() {
+    return this.taskList.aliases;
+  }
+  getSelectedQuizzes() {
+    return this.taskList.quizzes;
+  }
+  createSelectedAlias(game: Alias) {
+    var elementPos = this.taskList.aliases.map(function (x) { return x.id; }).indexOf(game.id);
+    if (elementPos === -1)
+    this.taskList.aliases.push(game);
+  }
+  createSelectedQuiz(quiz: Quiz) {
+    var elementPos = this.taskList.quizzes.map(function (x) { return x.id; }).indexOf(quiz.id);
+    if (elementPos === -1)
+    this.taskList.quizzes.push(quiz);
+  }
+  deleteSelectedAlias(game: Alias) {
+    this.taskList.aliases = this.taskList.aliases.filter(x => x.id !== game.id);
+  }
+  deleteSelectedQuiz(quiz: Quiz) {
+    this.taskList.quizzes = this.taskList.quizzes.filter(x => x.id !== quiz.id);
+  }
+  updateSelectedAlias(game: Alias, updatedGame: Alias) {
+    var elementPos = this.taskList.aliases.map(function (x) { return x.id; }).indexOf(game.id);
+    if (elementPos > -1)
+      this.taskList.aliases[elementPos] = updatedGame;
+  }
+  updateSelectedQuiz(quiz: Quiz, updatedQuiz: Quiz) {
+    var elementPos = this.taskList.quizzes.map(function (x) { return x.id; }).indexOf(quiz.id);
+    if (elementPos > -1)
+      this.taskList.quizzes[elementPos] = updatedQuiz;
   }
 }

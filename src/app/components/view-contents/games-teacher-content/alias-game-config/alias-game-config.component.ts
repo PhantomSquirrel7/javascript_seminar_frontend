@@ -3,7 +3,6 @@ import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { Alias } from '@app/models/game-models/alias';
 import { MessageService } from '@app/services/custom/messages/message.service';
 import { EventEmitter } from '@angular/core';
-import { Quiz } from '@app/models/game-models/quiz';
 
 @Component({
   selector: 'app-alias-game-config',
@@ -11,12 +10,11 @@ import { Quiz } from '@app/models/game-models/quiz';
   styleUrls: ['./alias-game-config.component.less']
 })
 export class AliasGameConfigComponent implements OnInit {
-  
+
   @Output() selectedAliasesEvent: EventEmitter<Alias[]> = new EventEmitter<Alias[]>();
 
   games: Alias[];
-  selectedAliases: Alias[]=[];
-
+  selectedGames: Alias[];
   newGame: Alias = {
     id: "-1",
     name: "",
@@ -32,6 +30,7 @@ export class AliasGameConfigComponent implements OnInit {
       //console.log("fetch alias", data)
       this.games = data;
     });
+    this.selectedGames = this.api.getSelectedAliases();
   }
 
   deleteGame(game: Alias) {
@@ -42,8 +41,9 @@ export class AliasGameConfigComponent implements OnInit {
         this.messageService.add("Game '" + game.name + "' was deleted.", "success");
       }
     });
-    this.selectedAliases = this.selectedAliases.filter(x => x !== game);
-    this.selectedAliasesEvent.emit(this.selectedAliases);
+    this.api.deleteSelectedAlias(this.games.filter(x => x.id == game.id)[0]);
+    this.selectedGames = this.api.getSelectedAliases();
+    this.selectedAliasesEvent.emit(this.selectedGames);
   }
 
   onCreateGame(game: Alias) {
@@ -64,13 +64,14 @@ export class AliasGameConfigComponent implements OnInit {
         this.games[this.games.findIndex(g => {
           return g.id === data.id
         })] = data;
-        this.selectedAliases[this.selectedAliases.findIndex(g => {
-          return g.id === data.id
-        })] = data;
+        // updateSelectedAlias(game, data);
         this.messageService.add("Game '" + game.name + "' updated successfully.", "success");
       }
     });
-    this.selectedAliasesEvent.emit(this.selectedAliases);
+    /*
+    this.selectedGames = this.api.getSelectedAliases();
+    this.selectedAliasesEvent.emit(this.selectedGames);
+    */
   }
 
   resetNewGame() {
@@ -87,11 +88,18 @@ export class AliasGameConfigComponent implements OnInit {
    * adds/removes aliases depending on whether the checkbox is checked or not
    */
   aliasSelected(event, game: Alias) {
-    const tempGame : Alias = this.games.filter(x => x.id == game.id)[0];
+    const tempGame: Alias = this.games.filter(x => x.id == game.id)[0];
     if(event.checked)
-      this.selectedAliases.push(tempGame) ;
+      this.api.createSelectedAlias(tempGame);
     else
-      this.selectedAliases = this.selectedAliases.filter(x => x !== tempGame);
-    this.selectedAliasesEvent.emit(this.selectedAliases);
+      this.api.deleteSelectedAlias(tempGame);
+    this.selectedGames = this.api.getSelectedAliases();
+    this.selectedAliasesEvent.emit(this.selectedGames);
+
+  }
+
+  boxChecked(game: Alias) {
+    var elementPos = this.api.getSelectedAliases().map(function(x) {return x.id;}).indexOf(game.id);
+    return elementPos > -1;
   }
 }
