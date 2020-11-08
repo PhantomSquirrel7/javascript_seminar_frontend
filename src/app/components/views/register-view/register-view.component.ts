@@ -48,13 +48,13 @@ export class RegisterViewComponent implements OnInit {
       firstName:  new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(30),
-        Validators.minLength(5),
+        Validators.minLength(1),
       ]))
       ,
       lastName:  new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(30),
-        Validators.minLength(5),
+        Validators.minLength(1),
       ]))
     });
 

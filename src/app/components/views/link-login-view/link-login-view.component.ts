@@ -15,14 +15,27 @@ export class LinkLoginViewComponent {
     private route: ActivatedRoute,
     private router: Router,
     private userService: CustomUserService,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
 
-  token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmE4MTY2ZTk4YmViYTAwMTZkMGUwMzMiLCJpYXQiOjE2MDQ4NTY2NjAsImV4cCI6MTYwNDg2Mzg2MH0.W-OeVJIUPa9D4sG9zk4xBrI9nFsmV6lYmvPaAD9LClc"
-  refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmE4MTY2ZTk4YmViYTAwMTZkMGUwMzMiLCJpYXQiOjE2MDQ4NTY2NjAsImV4cCI6MTYxMDA0MDY2MH0.fenDWFV7MbA1pIAI-f9QY8jRffSunOfWywstm5BVhX8"
+  token = "";
+  refreshToken = "";
+  refreshPasswordToken = "";
+
+
 
   ngOnInit(): void {
-    this.loginService.loginWithToken(this.token, this.refreshToken);
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.token = params['token'];
+      this.refreshToken = params['refresh'];
+      this.refreshPasswordToken = params['refreshPasswordToken']
+
+      console.log(this.token);
+      console.log(this.refreshToken);
+      console.log(this.refreshPasswordToken);
+      this.loginService.loginWithToken(this.token, this.refreshToken);
+    });
   }
 
 }
