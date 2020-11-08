@@ -90,7 +90,7 @@ export class CreateStudentContentComponent implements OnInit {
         flatMap((studentResponse) => {
           return this.classService.classesClassIdStudentsStudentIdPut(
             this.selectedClassInformationId,
-            studentResponse.student.id  // "user" formerly "student"
+            studentResponse.student.id // "user" formerly "student"
           );
         })
       )
