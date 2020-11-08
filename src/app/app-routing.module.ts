@@ -31,11 +31,13 @@ import {
   QuizGameConfigComponent,
   DrawItGameConfigComponent,
   OverviewGamesConfigComponent,
-  StudentMeetingsContentComponent
+  StudentMeetingsContentComponent,
+  LinkLoginViewComponent
 } from './components';
 
 const routes: Routes = [
   { path: '', component: LandingViewComponent },
+  { path: 'link-login', component: LinkLoginViewComponent },
   { path: 'offering', component: LandingViewOfferingComponent },
   { path: 'team', component: LandingViewTeamComponent },
   { path: 'login', component: LoginViewComponent },

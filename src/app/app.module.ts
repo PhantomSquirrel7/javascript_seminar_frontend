@@ -70,7 +70,8 @@ import {
   MessageBoardComponent,
   DisplayPartnerClassInfoComponent,
   ClassInformationContentComponent,
-  ConfirmDialogComponent
+  ConfirmDialogComponent,
+  LinkLoginViewComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -174,8 +175,8 @@ import { MatSortModule } from '@angular/material/sort';
     MessageBoardComponent,
     DisplayPartnerClassInfoComponent,
     ConfirmDialogComponent,
-    MyMeetingRequestsContentComponent
-  ],
+    MyMeetingRequestsContentComponent,
+    LinkLoginViewComponent],
   entryComponents: [ConfirmDialogComponent],
   providers: [
     {
