@@ -136,42 +136,49 @@ export class PlanMeetingContentComponent implements OnInit {
   }
 
   submitForm() {
-    this.submittingFormLoader = true;
-    console.log(this.date.toLocaleDateString('en-CA')
-    );
-    console.log(this.selectedDuration);
-    console.log(this.selectedArrangement)
-    console.log(this.selectedProject.id);
-    this.timeValue = this.planningSectionForm.value.selectedTime;
+    // FORM VALIDATION
+    if(!this.date || !this.selectedDuration || !this.planningSectionForm.value.selectedTime) {
+      this._snackBar.open('All Fields of Form must be filled', 'Close', {
+        duration: 3000
+      });
+    } else {
+      this.submittingFormLoader = true;
 
-    // Format date / time
-    let postDate = this.date;
-    let timeSplit = this.timeValue.split(":")
-    let epochTime = postDate.setHours(Number(timeSplit[0]),Number(timeSplit[1]))
-    postDate = new Date(epochTime)
-    console.log(postDate)
-
-    let myBody: Body9= {
-      "date": postDate,
-      "duration": this.selectedDuration,
-      "taskList": [],
-      "groupAssignment": this.getGroupAssignment(),
-    };
-
-    // Send POST REQUEST
-    this.meetingService.classesClassIdProjectsProjectIdMeetingsPost(myBody, 
-      this.selectedClass.id,
-      this.selectedProject.id,
-      ).subscribe(
-      data => {
-        this._snackBar.open('Meeting created Successfully', 'Close', {
-          duration: 3000
-        });
-        console.log(data);
-      this.submittingFormLoader = false;
-
-      }
-    );
+      console.log(this.date.toLocaleDateString('en-CA'));
+      console.log(this.selectedDuration);
+      console.log(this.selectedArrangement)
+      console.log(this.selectedProject.id);
+      this.timeValue = this.planningSectionForm.value.selectedTime;
+  
+      // Format date / time
+      let postDate = this.date;
+      let timeSplit = this.timeValue.split(":")
+      let epochTime = postDate.setHours(Number(timeSplit[0]),Number(timeSplit[1]))
+      postDate = new Date(epochTime)
+      console.log(postDate)
+  
+      let myBody: Body9= {
+        "date": postDate,
+        "duration": this.selectedDuration,
+        "taskList": [],
+        "groupAssignment": this.getGroupAssignment(),
+      };
+  
+      // Send POST REQUEST
+      this.meetingService.classesClassIdProjectsProjectIdMeetingsPost(myBody, 
+        this.selectedClass.id,
+        this.selectedProject.id,
+        ).subscribe(
+        data => {
+          this._snackBar.open('Meeting created Successfully', 'Close', {
+            duration: 3000
+          });
+          console.log(data);
+        this.submittingFormLoader = false;
+  
+        }
+      );
+    }
   }
 
   onDateSelected(event) {
