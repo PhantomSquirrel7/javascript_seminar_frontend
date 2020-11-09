@@ -30,9 +30,14 @@
             <br>
         </div>
       </div>
-      <div class="newMessage" style="display: flex; align-items: flex-end; justify-content: space-between;">
+      <div *ngIf="myProject.state!='pending'">
+        <div class="newMessage" style="display: flex; align-items: flex-end; justify-content: space-between;">
           <textarea class="form-control" rows="1" id="comment" formControlName="messageText" [(ngModel)]="messageTextValue"></textarea>
-          <button class="btn btn-outline-success btn-lg" style="margin-left: 20px;">Send</button>
+          <button [disabled]="sending" class="btn btn-outline-success btn-lg" style="margin-left: 20px;">
+            <span *ngIf="!sending"> Send</span>
+            <span *ngIf="sending" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </button>
+        </div>
       </div>
     </form>
     <div *ngIf=sent>

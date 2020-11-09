@@ -26,17 +26,15 @@ export class StudentProfileContentComponent implements OnInit {
   error = '';
 
   updateProfile: FormGroup;
-  age: string;
+  age: number;
   hobbies: string;
   notes: string;
-  proficiency_level: string;
 
 
   updateFormValues(){
     this.updateProfile.value.age = this.age;
     this.updateProfile.value.hobbies = this.hobbies;
     this.updateProfile.value.notes = this.notes;
-    this.updateProfile.value.proficiency_level = this.proficiency_level;
   }
 
 	ngOnInit() {
@@ -44,7 +42,6 @@ export class StudentProfileContentComponent implements OnInit {
       age: [this.age],
       hobbies: [this.hobbies],
       notes: [this.notes],
-      proficiency_level: [this.proficiency_level],
 		});
 		this.userService.getMe().subscribe({
 			next: (response) => {
@@ -53,7 +50,6 @@ export class StudentProfileContentComponent implements OnInit {
         this.age = this.user_student.age;
         this.hobbies = this.user_student.hobbies;
         this.notes = this.user_student.notes;
-        this.proficiency_level = this.user_student.proficiency_level;
         this.updateFormValues();
 			},
 			error: (error) => {
@@ -76,15 +72,12 @@ export class StudentProfileContentComponent implements OnInit {
     if(this.updateProfile.value.notes){
       this.notes = this.updateProfile.value.notes;
     }
-    if(this.updateProfile.value.proficiency_level){
-      this.proficiency_level = this.updateProfile.value.proficiency_level;
-    }
     
     var body = {
       "age": this.age,
       "hobbies": this.hobbies,
       "notes": this.notes,
-      "proficiency_level": this.proficiency_level
+      "proficiency_level": "C1" //cant be empty in the backend so this is a workaround
     }
     console.log(body);
     this.updateYourself(body);

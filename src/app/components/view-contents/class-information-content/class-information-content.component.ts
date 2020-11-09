@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { InlineResponse2001 } from '@app/models';
 import { CustomLoginService } from '@app/services/custom/login/login.service';
 import { first } from 'rxjs/operators';
-import { ClassesService, UserService } from '../../../services/swagger-api/api';
+import { ClassesService, StudentsService, UserService } from '../../../services/swagger-api/api';
 import { LANGUAGE_LIST } from '../../common/backend-util/common-structures/languages';
 import { COUNTRY_LIST } from '../../common/backend-util/common-structures/countries';
 import { LANGUAGE_LEVEL_LIST } from '../../common/backend-util/common-structures/language-level';
@@ -13,6 +13,23 @@ import {
   ConfirmDialogComponent,
   ConfirmDialogModel,
 } from '@app/components/common/confirm-dialog/confirm-dialog.component';
+import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+import { CLASS_LEVEL } from '@app/components/common/backend-util/common-structures/class-level';
+import { MEETING_FREQUENCY } from '@app/components/common/backend-util/common-structures/meeting-frequency';
+import { PROJECT_DURATION } from '@app/components/common/backend-util/common-structures/project-duration';
+
+export interface StudentData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  flag: boolean;
+  email :string;
+}
+
+
 
 @Component({
   selector: 'app-class-information-content',
@@ -20,6 +37,13 @@ import {
   styleUrls: ['./class-information-content.component.less'],
 })
 export class ClassInformationContentComponent implements OnInit {
+
+  displayedColumns: string[] = ['Assigned to class ?', 'Name', 'Surname', 'E-mail', 'Delete Button'];
+  dataSource: MatTableDataSource<StudentData>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   getClassLoading = false;
   getClassSubmitted = false;
 
@@ -38,6 +62,9 @@ export class ClassInformationContentComponent implements OnInit {
   updateClassStudentsLoading = false;
   updateClassStudentsSubmitted = false;
 
+  deleteStudentLoading = false;
+
+
   returnUrl: string;
   error = '';
   classList: InlineResponse2001[];
@@ -52,10 +79,16 @@ export class ClassInformationContentComponent implements OnInit {
   countryList = null;
   languageLevelList = null;
   selectedClassStudentList = null;
+  classLevelList = null;
+  frequencyList = null;
+  projectDurationList = null;  
   selectedLanguageLevel = null;
   selectedLanguage = null;
   selectedClassCountry = null;
   selectedClassIdForStudentList = null;
+  selectedClassLevel = null;
+  selectedFrequency = null;
+  selectedProjectDuration = null;  
   studentsOfTeacher = null;
 
   constructor(
@@ -63,14 +96,19 @@ export class ClassInformationContentComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private userService: CustomLoginService,
+    private studentService : StudentsService,
     private userApi: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit() {
     this.languageList = LANGUAGE_LIST;
     this.countryList = COUNTRY_LIST;
     this.languageLevelList = LANGUAGE_LEVEL_LIST;
+    this.classLevelList = CLASS_LEVEL;
+    this.frequencyList = MEETING_FREQUENCY;
+    this.projectDurationList = PROJECT_DURATION;
 
     this.getClassInformationForm = this.formBuilder.group({
       selectedClassInformationId: ['', Validators.required],
@@ -92,6 +130,17 @@ export class ClassInformationContentComponent implements OnInit {
     });
 
     this.retrieveClassListOfTeacher();
+  }
+  ngAfterViewInit() {
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   get f() {
@@ -127,6 +176,12 @@ export class ClassInformationContentComponent implements OnInit {
           this.selectedClassCountry = this.countryList.find(
             (item) => item.code == this.selectedClass.country
           );
+          let tempFreq =  this.frequencyList.find((item) => item.value == this.selectedClass.meetingFrequency);
+          this.selectedFrequency = tempFreq ? tempFreq.value : null;
+          let tempClassLevel = this.classLevelList.find((item) => item.value == this.selectedClass.level);    
+          this.selectedClassLevel = tempClassLevel ? tempClassLevel.value : null;
+          let tempProjectDuration = this.projectDurationList.find((item) => item.value == this.selectedClass.projectDuration);                  
+          this.selectedProjectDuration = tempProjectDuration ? tempProjectDuration.value : null;
           this.getClassLoading = false;
           this._snackBar.open('Class information retrieved!', 'Close', {
             duration: 3000,
@@ -166,9 +221,9 @@ export class ClassInformationContentComponent implements OnInit {
           language: this.selectedLanguage.value,
           subject: this.f.subject.value,
           country: this.selectedClassCountry.code,
-          projectDuration: this.f.projectDuration.value,
-          meetingFrequency: this.f.meetingFrequency.value,
-          level: this.f.level.value,
+          projectDuration: this.selectedProjectDuration,
+          meetingFrequency: this.selectedFrequency,
+          level: this.selectedClassLevel,
           languageLevel: this.selectedLanguageLevel,
         },
         this.selectedClassInformationId
@@ -205,6 +260,29 @@ export class ClassInformationContentComponent implements OnInit {
     });
   }
 
+  openDeleteStudentConfirmationDialog(index) : void {
+    const message = `Are you sure you want to delete student?`;
+    const dialogData = new ConfirmDialogModel('Confirm Action', message);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult == true) this.deleteStudent(this.studentsOfTeacher[index].id);
+    });
+  }
+
+  deleteStudent(studentId):void {
+    this.deleteClassLoading = true;
+    // there is no student delete service to call
+    setTimeout(() => {
+      this.deleteClassLoading = false;
+    }, 5000);
+    // this.studentService.de
+
+  }
+
   deleteClass(): void {
     this.deleteClassLoading = true;
     this.classService
@@ -218,6 +296,7 @@ export class ClassInformationContentComponent implements OnInit {
             duration: 3000,
           });
           this.retrieveClassListOfTeacher();
+          this.selectedClass = false;
         },
         error: (error) => {
           this.error = error;
@@ -261,12 +340,19 @@ export class ClassInformationContentComponent implements OnInit {
       let found = studentsOfClass.find((item) => item.id == element.id);
       if (found) element.flag = true;
       else element.flag = false;
+      delete element.role;
     });
-    this.concatStudentsLoaded = true;
     this.studentsOfTeacher = studentsOfTeacher;
-  }
+    this.dataSource = new MatTableDataSource(this.studentsOfTeacher);
+    setTimeout(() => {
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    }, 0);
+    this.concatStudentsLoaded = true;
+  };
 
-  toggleStudentCheckBox(index){
+  toggleStudentCheckBox(studentId){
+    let index = this.studentsOfTeacher.findIndex((item) => item.id == studentId);
     this.studentsOfTeacher[index].flag = ! this.studentsOfTeacher[index].flag;
     if(this.studentsOfTeacher[index].flag)
         this.addStudentToClass(this.studentsOfTeacher[index]);
@@ -333,5 +419,19 @@ export class ClassInformationContentComponent implements OnInit {
           this.updateClassStudentsLoading = false;
         },
       });
+  }
+
+
+  navigateTo(pageName: string) {
+    switch (pageName) {
+      case "createClassPage": {
+        this.router.navigate(['/create-class']);
+        break
+      }
+      case "createStudentPage": {
+        this.router.navigate(['/create-student']);
+        break
+      }
+    }
   }
 }

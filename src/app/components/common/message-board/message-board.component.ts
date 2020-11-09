@@ -26,6 +26,7 @@ export class MessageBoardComponent implements OnInit {
 
   contactTeacherForm: FormGroup;
   sent = false;
+  sending = false;
   messageTextValue = "";
 
   timeLeft: number = 60;
@@ -56,15 +57,13 @@ export class MessageBoardComponent implements OnInit {
     
     console.log("Recipient:");
     console.log(this.recipient);
+ 
+  }
 
 
-    // console.log("messeges before");
-    // console.log(this.messages)
-    // this.messages = this.messages.sort( (a, b) => {
-    //   return Number(a.timestamp) - Number(b.timestamp)
-    // });
-    // console.log("Messages (sorted):");
-    // console.log(this.messages);    
+  ngOnChanges(){
+    console.log("Changes detected!");
+    this.loadMessages("noFlag")
   }
 
 
@@ -72,7 +71,7 @@ export class MessageBoardComponent implements OnInit {
     console.log("Sending:");
     console.log(this.contactTeacherForm.value.messageText);
     // this.sent = true;
-
+    this.sending = true;
     let msgObj: Body11 = {
       "message": this.contactTeacherForm.value.messageText,
       "from": this.sender.id.toString(),
@@ -83,9 +82,9 @@ export class MessageBoardComponent implements OnInit {
       data => {
         console.log("Answer sending:")
         console.log(data);
-        this.sent = true;
-        const source = timer(4000);
-        source.subscribe(data => this.sent = false);
+        this.loadMessages("flag");
+        // const source = timer(4000);
+        // source.subscribe(data => this.sent = false);
       }
     );
 
@@ -98,6 +97,25 @@ export class MessageBoardComponent implements OnInit {
   getTime(timestamp){
     let myTimestamp = new Date(timestamp);
     return myTimestamp.toLocaleString()
+  }
+
+  loadMessages(flag){
+    this.projectsService.classesClassIdProjectsProjectIdMessagesGet(this.sender.id, this.myProject.id).subscribe(
+      data => {
+        console.log("Messages resp:");
+        console.log(data);
+        this.messages = data;
+        this.messages = this.messages.sort( (a, b) => {
+          return Number(a.timestamp) - Number(b.timestamp)
+        });
+        if (flag != "noFlag"){
+          this.sending = false;
+          this.sent = true;
+        }
+        const source = timer(3000);
+        source.subscribe(data => this.sent = false);
+      }
+    );
   }
 
 }

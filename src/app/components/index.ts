@@ -35,6 +35,7 @@ export * from './views/create-class-view/create-class-view.component';
 export * from './views/class-information-view/class-information-view.component';
 export * from './views/games-student-view/games-student-view.component';
 export * from './views/games-teacher-view/games-teacher-view.component';
+export * from './views/link-login-view/link-login-view.component';
 
 // view-contents
 export * from './view-contents/dashboard-content/dashboard-content.component';

@@ -10,32 +10,31 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
-import {
-    HttpClient, HttpHeaders, HttpParams,
-    HttpResponse, HttpEvent
-} from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec } from '../../swagger-configs/encoder';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../../swagger-configs/encoder';
 
-import { Observable } from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
 import { InlineResponse2006 } from '../../models/swagger-model/inlineResponse2006';
 import { InlineResponse2007 } from '../../models/swagger-model/inlineResponse2007';
 import { InlineResponse2008 } from '../../models/swagger-model/inlineResponse2008';
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../../swagger-configs/variables';
-import { Configuration } from '../../swagger-configs/configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../../swagger-configs/variables';
+import { Configuration }                                     from '../../swagger-configs/configuration';
 
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+    providedIn: 'root'
+})
 export class MetaService {
 
     protected basePath = 'https://api-globy.herokuapp.com/v1';
-
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -69,7 +68,7 @@ export class MetaService {
     public countriesGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2008>>;
     public countriesGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2008>>>;
     public countriesGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2008>>>;
-    public countriesGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public countriesGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -86,7 +85,7 @@ export class MetaService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse2008>>('get', `${this.basePath}/countries`,
+        return this.httpClient.request<Array<InlineResponse2008>>('get',`${this.basePath}/countries`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -105,7 +104,7 @@ export class MetaService {
     public languagesGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2006>>;
     public languagesGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2006>>>;
     public languagesGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2006>>>;
-    public languagesGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public languagesGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -122,7 +121,7 @@ export class MetaService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse2006>>('get', `${this.basePath}/languages`,
+        return this.httpClient.request<Array<InlineResponse2006>>('get',`${this.basePath}/languages`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -141,7 +140,7 @@ export class MetaService {
     public subjectsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<InlineResponse2007>>;
     public subjectsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<InlineResponse2007>>>;
     public subjectsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<InlineResponse2007>>>;
-    public subjectsGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    public subjectsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -158,7 +157,7 @@ export class MetaService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<InlineResponse2007>>('get', `${this.basePath}/subjects`,
+        return this.httpClient.request<Array<InlineResponse2007>>('get',`${this.basePath}/subjects`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

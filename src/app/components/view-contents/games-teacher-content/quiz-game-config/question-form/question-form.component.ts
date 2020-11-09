@@ -65,6 +65,14 @@ export class QuestionFormComponent implements OnInit {
     }
   }
 
+  displayedType(type) {
+    if (type == "select") {
+      return "multiple-choice";
+    } else {
+      return type;
+    }
+  }
+
   // for question type "select"
   deleteOption(index) {
     this.options.removeAt(index);

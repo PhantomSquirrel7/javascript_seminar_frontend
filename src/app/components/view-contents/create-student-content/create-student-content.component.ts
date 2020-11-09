@@ -52,6 +52,7 @@ export class CreateStudentContentComponent implements OnInit {
       .toPromise()
       .then((response) => {
         this.classList = response;
+        this.selectedClassInformationId = this.classList[0].id;
       });
   }
 
@@ -73,11 +74,8 @@ export class CreateStudentContentComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.loading = true;
     this.submitted = true;
     if (this.studentForm.invalid) {
-      this.loading = false;
-      this.submitted = false;
       return;
     }
     this.loading = true;
@@ -92,7 +90,7 @@ export class CreateStudentContentComponent implements OnInit {
         flatMap((studentResponse) => {
           return this.classService.classesClassIdStudentsStudentIdPut(
             this.selectedClassInformationId,
-            studentResponse.user.id  // "user" formerly "student"
+            studentResponse.user.id // "user" formerly "student"
           );
         })
       )

@@ -1,40 +1,42 @@
 <div class="navbar-component">
-    <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-success p-0">
-        <div class="container-fluid d-flex flex-column p-0">
-            <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-                <div class="sidebar-brand-text mx-3"><span>GLOBY</span></div>
-            </a>
-            <hr class="sidebar-divider my-0">
-            <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" [routerLink]="['/student-home']">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>Home</span>
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" [routerLink]="['/student-profile']"><i class="fas fa-user"></i><span>My
-                            Profile</span></a>
-                </li>
-                <li class="nav-item" role="presentation">
+  <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion p-0">
+    <!-- bg-gradient-success -->
+    <div class="container-fluid d-flex flex-column p-0">
+      <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+        <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+        <div class="sidebar-brand-text mx-3"><span>WHALOO</span></div>
+      </a>
+      <hr class="sidebar-divider my-0">
+      <ul class="nav navbar-nav text-light" id="accordionSidebar">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" [routerLink]="['/student-home']">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" [routerLink]="['/student-profile']"><i class="fas fa-user"></i><span>My
+              Profile</span></a>
+        </li>
+        <!-- <li class="nav-item" role="presentation">
                     <a class="nav-link active" [routerLink]="['/student-assignments']"><i
                             class="fas fa-tasks"></i><span>My Assignments</span></a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" [routerLink]="['/student-meetings']"><i class="fas fa-phone"></i><span>My
-                            Meetings</span></a>
-                </li>
-                <li class="nav-item" role="presentation">
+                </li> -->
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" [routerLink]="['/student-meetings']"><i class="fas fa-phone"></i> <i
+              class="fa fa-gamepad"></i>
+            <span>My Meetings / Games</span>
+          </a>
+        </li>
+        <!-- <li class="nav-item" role="presentation">
                     <a class="nav-link active" [routerLink]="['/student-games']"><i
                             class="fa fa-gamepad"></i><span>Games</span></a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" (click)="logout()"><i
-                            class="fas fa-arrow-left"></i><span>Logout</span></a>
-                </li>
-            </ul>
-            <div class="text-center d-none d-md-inline"></div>
-        </div>
-    </nav>
+                </li> -->
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" (click)="logout()"><i class="fas fa-arrow-left"></i><span>Logout</span></a>
+        </li>
+      </ul>
+      <div class="text-center d-none d-md-inline"></div>
+    </div>
+  </nav>
 </div>

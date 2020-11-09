@@ -1,11 +1,12 @@
 <div class="card">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/css/flag-icon.min.css"/>
     <div class="card-header">
       <div class="left-header">
         <img class="" src="../../../assets/pexels-meliani-idriss-2982449.jpg" alt="class profile picture"> 
         <h2>{{project.partnerClass.name}}</h2>
       </div>
       <div class="right-header">
-        <span class="flag-icon flag-icon-{{project.partnerClass.country}} flag-icon"></span>
+        <span class="flag-icon flag-icon-{{getFlag(project.partnerClass)}} flag-icon"></span>
       </div>
     </div>
     
@@ -36,12 +37,12 @@
       
       <li class="list-group-item">
         <div style="display: flex;">
-          <span style="margin-right: 60px;">Project duration (days):</span>
+          <span style="margin-right: 60px;">Project duration:</span>
           <span>Meeting frequency:</span>
         </div>
         <div style="display: flex;">
-          <span style="margin-left: 50px; margin-right: 150px;">{{project.partnerClass.projectDuration}}</span>
-          <span>{{project.partnerClass.meetingFrequency}}x/week</span>
+          <span style="margin-left: 50px; margin-right: 70px;">{{mapDuration(project.partnerClass.projectDuration)}}</span>
+          <span>{{mapFrequency(project.partnerClass.meetingFrequency)}}</span>
         </div>
       </li>
     </ul>

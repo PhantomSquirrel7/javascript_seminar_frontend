@@ -70,7 +70,8 @@ import {
   MessageBoardComponent,
   DisplayPartnerClassInfoComponent,
   ClassInformationContentComponent,
-  ConfirmDialogComponent
+  ConfirmDialogComponent,
+  LinkLoginViewComponent
 } from './components';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -82,10 +83,12 @@ import { UserService, ClassesService } from './services/swagger-api/api';
 import { ClassInformationViewComponent } from './components/views/class-information-view/class-information-view.component';
 import { BbbViewComponent } from './components/views/bbb-view/bbb-view.component';
 import { GamesViewComponent } from './components/views/games-view/games-view.component';
-import { MyMeetingRequestsContentComponent } from './components/view-contents/my-meeting-requests-content/my-meeting-requests-content.component';;
-import { SimpleTaskConfigComponent } from './components/view-contents/games-teacher-content/simple-task-config/simple-task-config.component'
-;
+import { SimpleTaskConfigComponent } from './components/view-contents/games-teacher-content/simple-task-config/simple-task-config.component';
 import { SimpleTaskFormComponent } from './components/view-contents/games-teacher-content/simple-task-config/simple-task-form/simple-task-form.component'
+import { MyMeetingRequestsContentComponent } from './components/view-contents/my-meeting-requests-content/my-meeting-requests-content.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   imports: [
@@ -98,7 +101,11 @@ import { SimpleTaskFormComponent } from './components/view-contents/games-teache
     BrowserAnimationsModule,
     DemoMaterialModule,
     SocketIoModule,
-    CanvasWhiteboardModule
+    CanvasWhiteboardModule,
+    NgxMaterialTimepickerModule,
+    BrowserModule,
+    MatTableModule,
+    MatSortModule
   ],
   declarations: [
     AppComponent,
@@ -172,8 +179,8 @@ import { SimpleTaskFormComponent } from './components/view-contents/games-teache
     ConfirmDialogComponent,
     MyMeetingRequestsContentComponent,
     SimpleTaskConfigComponent,
-    SimpleTaskFormComponent
-  ],
+    SimpleTaskFormComponent,
+    LinkLoginViewComponent],
   entryComponents: [ConfirmDialogComponent],
   providers: [
     {

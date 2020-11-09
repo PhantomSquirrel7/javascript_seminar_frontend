@@ -9,12 +9,18 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { TaskList } from '../game-models/task-list';
+import { ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups } from './classesclassIdprojectsprojectIdmeetingsmeetingIdGroups';
 
 export interface Body9 { 
+    id?: string;
+    project?: string;
     date?: Date;
     groupAssignment?: Body9.GroupAssignmentEnum;
-    taskList?: Array<string>;
+    groups?: Array<ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups>;
+    taskList?: TaskList//Array<string>;
     duration?: number;
+    joinUrl?: string;
 }
 export namespace Body9 {
     export type GroupAssignmentEnum = 'tandem' | 'group3' | 'group4' | 'whole_class';

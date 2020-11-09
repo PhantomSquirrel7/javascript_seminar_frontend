@@ -23,6 +23,7 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   loading = false;
   user_classes = [];
   error = '';
+  isMeetingListEmpty = false;
 
   list1 = [    
     'Episode I - The Phantom Menace',
@@ -70,11 +71,23 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   classSelected(){
     this.selectedClass = this.clsSelecForm.value.selectedClass;
     this.isClassSelected = true;
+    this.projectList = [];
+    this.meetingList = [];
+
     this.isProjectSelected = false;
 
     this.projectService.classesClassIdProjectsGet(this.selectedClass.id).subscribe({
       next: (response) => {
         this.projectList = response;
+        for (let entry of this.projectList) {
+          entry['classname'] = entry['classes'][1]['name']
+
+          if(entry['classes'][1]['teacher']['schoolName'] ) {
+            entry['schoolName'] = entry['classes'][1]['teacher']['schoolName'] 
+          } else {
+            entry['schoolName'] = entry['startedBy']['schoolName'] 
+          }
+        }
         console.log(this.projectList)
       }
     });
@@ -93,6 +106,12 @@ export class MyMeetingRequestsContentComponent implements OnInit {
     this.meetingService.classesClassIdProjectsProjectIdMeetingsGet(classID, projectID).subscribe({
       next: (response) => {
         this.meetingList = response;
+
+        if(this.meetingList.length === 0) {
+          this.isMeetingListEmpty = true;
+        } else {
+          this.isMeetingListEmpty = false;
+        }
         this.loading = false;
         console.log(this.meetingList)
       },
@@ -118,9 +137,27 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   }
 
   deleteMeeting(meetingId) {
-    // TODO
-    console.log(this.selectedClass.id);
-    console.log(this.selectedProject.id);
-    console.log(meetingId);
+    this.meetingService
+    .classesClassIdProjectsProjectIdMeetingsMeetingIdDelete(this.selectedClass.id, this.selectedProject.id, meetingId)
+    .subscribe({
+      next: (response) => {
+        let index = this.meetingList.find(element => element.id === response.id);
+        this.meetingList.splice(index, 1);
+
+        if(this.meetingList.length === 0) {
+          this.isMeetingListEmpty = true;
+        }
+        this._snackBar.open('Meeting Deleted Successfully!', 'Close', {
+          duration: 3000,
+        });
+      },
+      error: (error) => {
+        this.error = error;
+        this._snackBar.open(this.error, 'Close', {
+        duration: 3000
+        });
+        this.loading = false;
+      },
+    });
   }
 }

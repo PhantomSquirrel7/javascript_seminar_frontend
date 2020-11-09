@@ -3,6 +3,7 @@ import { ProjectsService } from '../../../services/swagger-api/api';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
+import { first, flatMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-project-info-content',
@@ -26,6 +27,9 @@ export class ProjectInfoContentComponent {
 
   accepted = false;
   btnAcceptable = false;
+
+  deleted = false;
+  btnDeletable = false;
 
   actSender:any = {};
   actRecipient:any = {};
@@ -52,13 +56,35 @@ export class ProjectInfoContentComponent {
       (response) => {
         console.log(response);
         this.btnAcceptable = false;
+        // this.reloadProject();
         const source = timer(1500);
         source.subscribe(data => {
           this.accepted=false
         });
       });
+  }
 
+  // reloadProject(){
+  //   this.projectsService.classesClassIdProjectsProjectIdGet(this.actClass.id, this.actProject.id).pipe(
+  //     map(prjct => {
+  //       this.actProject = prjct;
+  //     })
+  //   );
+  // }
 
+  deleteProject(prjct){
+    this.deleted = true;
+    this.btnDeletable = true;
+
+    this.projectsService.classesClassIdProjectsProjectIdDelete(this.actClass.id, prjct.id).subscribe(
+      data => {
+        this.btnDeletable = false;
+        // this.reloadProject();
+        const source = timer(1500);
+        source.subscribe(data => {
+          this.deleted=false
+        });
+      });
   }
 
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-bbb-view',
@@ -6,11 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bbb-view.component.less']
 })
 export class BbbViewComponent implements OnInit {
-  moderatorUrl = "";
+  @Input()
+  moderatorUrl;
 
-  constructor() { }
+  sanitizedUrl : SafeResourceUrl;
 
+  constructor(private dom:DomSanitizer) { }
+  
   ngOnInit(): void {
+    this.sanitizedUrl = this.dom.bypassSecurityTrustResourceUrl(this.moderatorUrl.joinUrl);
   }
-
 }

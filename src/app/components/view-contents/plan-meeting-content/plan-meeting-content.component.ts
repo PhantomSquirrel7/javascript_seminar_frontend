@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '@app/models';
+import { Body9, User } from '@app/models';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ClassesService } from 'src/app/services/swagger-api/classes.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ProjectsService } from '@app/services/swagger-api/projects.service';
 import { Quiz } from '@app/models/game-models/quiz';
 import { Alias } from '@app/models/game-models/alias';
@@ -12,6 +11,8 @@ import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { TaskList } from '@app/models/game-models/task-list';
 import { DrawIt } from '@app/models/game-models/drawIt';
 import { SimpleTask } from '@app/models/game-models/simpleTask';
+import { MeetingsService } from '@app/services/swagger-api/meetings.service';
+
 
 @Component({
   selector: 'app-plan-meeting-content',
@@ -21,9 +22,9 @@ import { SimpleTask } from '@app/models/game-models/simpleTask';
 export class PlanMeetingContentComponent implements OnInit {
   // for task list
   taskList: TaskList = { //initialize taskList in body above with this
-    id : "-1",
-    quizzes : [],
-    aliases : [],
+    id: "-1",
+    quizzes: [],
+    aliases: [],
     drawits: [],
     simpleTasks: []
   };
@@ -42,6 +43,7 @@ export class PlanMeetingContentComponent implements OnInit {
   projectSelectForm: FormGroup;
   planningSectionForm: FormGroup;
 
+  timeValue = '';
   user: User;
   error = '';
   isClassSelected = false;
@@ -55,6 +57,7 @@ export class PlanMeetingContentComponent implements OnInit {
   selectedArrangement = '';
   selectedProject: any; // Type Project
   isProjectSelected = false;
+  submittingFormLoader = false;
 
   user_classes = [];
 
@@ -64,7 +67,8 @@ export class PlanMeetingContentComponent implements OnInit {
     private classService: ClassesService,
     private projectService: ProjectsService,
     private _snackBar: MatSnackBar,
-    private api: GamesApiService
+    private api: GamesApiService,
+    private meetingService: MeetingsService,
   ) { }
 
   ngOnInit() {
@@ -76,7 +80,8 @@ export class PlanMeetingContentComponent implements OnInit {
       selectedProject: [null]
     });
     this.planningSectionForm = this.fb.group({
-      selectedDuration: [null]
+      selectedDuration: [null],
+      selectedTime: [null]
     });
     this.classService.classesGet().subscribe({
       next: (response) => {
@@ -104,6 +109,7 @@ export class PlanMeetingContentComponent implements OnInit {
   }
 
   classSelected() {
+    this.projectList = []
     this.selectedClass = this.clsSelecForm.value.selectedClass;
     this.isClassSelected = true;
     this.isProjectSelected = false;
@@ -112,6 +118,17 @@ export class PlanMeetingContentComponent implements OnInit {
     this.projectService.classesClassIdProjectsGet(this.selectedClass.id).subscribe({
       next: (response) => {
         this.projectList = response;
+
+        for (let entry of this.projectList) {
+          entry['classname'] = entry['classes'][1]['name']
+
+          if (entry['classes'][1]['teacher']['schoolName']) {
+            entry['schoolName'] = entry['classes'][1]['teacher']['schoolName']
+          } else {
+            entry['schoolName'] = entry['startedBy']['schoolName']
+          }
+        }
+
         console.log(this.projectList)
       }
     });
@@ -160,16 +177,55 @@ export class PlanMeetingContentComponent implements OnInit {
   }
 
   submitForm() {
-    this.taskList.quizzes = this.selectedQuizzes;
-    this.taskList.aliases = this.selectedAliases;
-    this.taskList.drawits = this.selectedDrawIts;
-    this.taskList.simpleTasks = this.simpleTasks;
-    console.log(this.taskList);
-    /*console.log(this.taskList);
-    console.log(this.date);
-    console.log(this.selectedDuration);
-    console.log(this.selectedArrangement)
-    console.log(this.selectedProject.id);*/
+    // FORM VALIDATION
+    if (!this.date || !this.selectedDuration || !this.planningSectionForm.value.selectedTime) {
+      this._snackBar.open('All Fields of Form must be filled', 'Close', {
+        duration: 3000
+      });
+    } else {
+      this.submittingFormLoader = true;
+
+      console.log(this.date.toLocaleDateString('en-CA'));
+      console.log(this.selectedDuration);
+      console.log(this.selectedArrangement)
+      console.log(this.selectedProject.id);
+      this.timeValue = this.planningSectionForm.value.selectedTime;
+
+      // Format date / time
+      let postDate = this.date;
+      let timeSplit = this.timeValue.split(":")
+      let epochTime = postDate.setHours(Number(timeSplit[0]), Number(timeSplit[1]))
+      postDate = new Date(epochTime)
+      console.log(postDate)
+
+      // Task List
+      this.taskList.quizzes = this.selectedQuizzes;
+      this.taskList.aliases = this.selectedAliases;
+      this.taskList.drawits = this.selectedDrawIts;
+      this.taskList.simpleTasks = this.simpleTasks;
+
+      let myBody: Body9 = {
+        "date": postDate,
+        "duration": this.selectedDuration,
+        "taskList": this.taskList,
+        "groupAssignment": this.getGroupAssignment(),
+      };
+
+      // Send POST REQUEST
+      this.meetingService.classesClassIdProjectsProjectIdMeetingsPost(myBody,
+        this.selectedClass.id,
+        this.selectedProject.id,
+      ).subscribe(
+        data => {
+          this._snackBar.open('Meeting created Successfully', 'Close', {
+            duration: 3000
+          });
+          console.log(data);
+          this.submittingFormLoader = false;
+
+        }
+      );
+    }
   }
 
   onDateSelected(event) {
@@ -179,4 +235,13 @@ export class PlanMeetingContentComponent implements OnInit {
   durationSelected() {
     this.selectedDuration = this.planningSectionForm.value.selectedDuration;
   }
+
+  getGroupAssignment(): Body9.GroupAssignmentEnum {
+    if (this.selectedArrangement == 'tandem') {
+      return Body9.GroupAssignmentEnum.Tandem
+    } else {
+      return Body9.GroupAssignmentEnum.WholeClass
+    }
+  }
+
 }
