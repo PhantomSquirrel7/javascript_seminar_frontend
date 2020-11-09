@@ -23,6 +23,7 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   loading = false;
   user_classes = [];
   error = '';
+  isMeetingListEmpty = false;
 
   list1 = [    
     'Episode I - The Phantom Menace',
@@ -70,6 +71,9 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   classSelected(){
     this.selectedClass = this.clsSelecForm.value.selectedClass;
     this.isClassSelected = true;
+    this.projectList = [];
+    this.meetingList = [];
+
     this.isProjectSelected = false;
 
     this.projectService.classesClassIdProjectsGet(this.selectedClass.id).subscribe({
@@ -102,6 +106,12 @@ export class MyMeetingRequestsContentComponent implements OnInit {
     this.meetingService.classesClassIdProjectsProjectIdMeetingsGet(classID, projectID).subscribe({
       next: (response) => {
         this.meetingList = response;
+
+        if(this.meetingList.length === 0) {
+          this.isMeetingListEmpty = true;
+        } else {
+          this.isMeetingListEmpty = false;
+        }
         this.loading = false;
         console.log(this.meetingList)
       },
@@ -134,6 +144,9 @@ export class MyMeetingRequestsContentComponent implements OnInit {
         let index = this.meetingList.find(element => element.id === response.id);
         this.meetingList.splice(index, 1);
 
+        if(this.meetingList.length === 0) {
+          this.isMeetingListEmpty = true;
+        }
         this._snackBar.open('Meeting Deleted Successfully!', 'Close', {
           duration: 3000,
         });
@@ -145,6 +158,6 @@ export class MyMeetingRequestsContentComponent implements OnInit {
         });
         this.loading = false;
       },
-    });;
+    });
   }
 }

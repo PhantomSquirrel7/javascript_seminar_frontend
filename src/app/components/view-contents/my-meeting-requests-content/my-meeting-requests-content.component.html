@@ -24,7 +24,7 @@
     </ng-template>
 
 
-    <div *ngIf="meetingList; else elseMeetingBlock"> 
+    <div *ngIf="meetingList"> 
         <div *ngFor="let meeting of meetingList" class="card shadow-lg rounded" style="margin: 20px;">
                 <div class="card-header">Date: {{meeting.date}} </div>
                 <div fxLayout="column" class="card-body">
@@ -40,17 +40,17 @@
                 </div>
 
                 <div class="card-footer text-center">
-                    <!-- <button class="btn btn-warning btn-sm">Update Meeting</button> -->
                     <button (click)="deleteMeeting(meeting.id)" class="btn btn-danger btn-sm">Delete Meeting</button>
                 </div>
         </div>
+
+        <div *ngIf="isMeetingListEmpty">
+            <div *ngIf="isProjectSelected">
+                <h1> No Meetings for Selected Project. </h1>
+            </div>
+        </div>
     </div>
 
-    <ng-template #elseMeetingBlock>
-        <div *ngIf="isProjectSelected">
-           <h1> No Meetings for Selected Project. </h1>
-        </div>
-    </ng-template>
 
 
 

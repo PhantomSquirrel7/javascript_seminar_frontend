@@ -75,6 +75,7 @@ export class PlanMeetingContentComponent implements OnInit {
   }
 
   classSelected() {
+    this.projectList = []
     this.selectedClass = this.clsSelecForm.value.selectedClass;
     this.isClassSelected = true;
     this.isProjectSelected = false;
