@@ -28,6 +28,9 @@ export class ProjectInfoContentComponent {
   accepted = false;
   btnAcceptable = false;
 
+  deleted = false;
+  btnDeletable = false;
+
   actSender:any = {};
   actRecipient:any = {};
   actMessages:any[] = [];
@@ -70,7 +73,18 @@ export class ProjectInfoContentComponent {
   // }
 
   deleteProject(prjct){
-    console.log("DELETED");
+    this.deleted = true;
+    this.btnDeletable = true;
+
+    this.projectsService.classesClassIdProjectsProjectIdDelete(this.actClass.id, prjct.id).subscribe(
+      data => {
+        this.btnDeletable = false;
+        // this.reloadProject();
+        const source = timer(1500);
+        source.subscribe(data => {
+          this.deleted=false
+        });
+      });
   }
 
 }

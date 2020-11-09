@@ -4,19 +4,27 @@
             <h1>Want to accept the project offering?</h1>
             <app-display-partner-class-info [project]="actProject"></app-display-partner-class-info>
             <br>
-            <app-message-board [sender]="actSender" [recipient]="actProject.partnerClass" [myClass]="actClass" [myProject]="actProject"></app-message-board>
+            <div *ngIf=!btnDeletable>
+                <app-message-board [sender]="actSender" [recipient]="actProject.partnerClass" [myClass]="actClass" [myProject]="actProject"></app-message-board>
+            </div>
             <br>
             <div class="form-group" style="margin-right: 50px">
                 <form [formGroup]="projectForm" (ngSubmit)="acceptOffer()">
                     <button class="btn btn-outline-success btn-lg" [disabled]="btnAcceptable">Accept Project</button>
                 </form>
                 <div class="btn-group mr-2" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)">Decline Project</button>
+                    <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)" [disabled]="btnDeletable">Decline Project</button>
                 </div>
                 <div *ngIf=accepted>
                     <br>
                     <div class="alert alert-success" role="alert">
                         You accepted the project offering successfully!
+                    </div>
+                </div>
+                <div *ngIf=deleted>
+                    <br>
+                    <div class="alert alert-danger" role="alert">
+                        You deleted the project!
                     </div>
                 </div>
             </div> 
@@ -25,18 +33,33 @@
             <h1>Waiting for other teacher to accept project...</h1>
             <app-display-partner-class-info [project]="actProject"></app-display-partner-class-info>
             <div class="btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)">Finish Project</button>
+                <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)" [disabled]="btnDeletable">Delete Project</button>
+            </div>
+            <br>
+            <div *ngIf=deleted>
+                <br>
+                <div class="alert alert-danger" role="alert">
+                    You deleted the project!
+                </div>
             </div>
         </div>
     </div>
     <div *ngIf="actProject.state == 'ongoing'">
         <h1>Talk to your partner teacher...</h1>
         <div class="btn-group mr-2" role="group" aria-label="First group">
-            <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)">Finish Project</button>
+            <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)" [disabled]="btnDeletable">Delete Project</button>
+        </div>
+        <div *ngIf=deleted>
+            <br>
+            <div class="alert alert-danger" role="alert">
+                You deleted the project!
+            </div>
         </div>
         <app-display-partner-class-info [project]="actProject"></app-display-partner-class-info>
         <br>
-        <app-message-board [sender]="actSender" [recipient]="actProject.partnerClass.teacher" [myClass]="actClass" [myProject]="actProject"></app-message-board>
+        <div *ngIf=!btnDeletable>
+            <app-message-board [sender]="actSender" [recipient]="actProject.partnerClass.teacher" [myClass]="actClass" [myProject]="actProject"></app-message-board>
+        </div>
     </div>
     <div *ngIf="actProject.state == 'done'">
         <h1>Done</h1>

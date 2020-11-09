@@ -23,6 +23,5 @@
 
 ## Disclaimer & Known Bugs
 
-- As of now "finishing" a project hasn't functionallity yet (missing backend support), the button is there but with no effect (only a console log)
 - Login via a Link was only tested locally, no testing with a real link yet
 

@@ -159,9 +159,15 @@ export class ProjectsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
+
+        let myBody = {
+            "class": body._class,
+            "initialMessage": body.initialMessage
+        };        
+
         return this.httpClient.request<InlineResponse20010>('post',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects`,
             {
-                body: body,
+                body: myBody,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -214,6 +220,59 @@ export class ProjectsService {
         ];
 
         return this.httpClient.request<any>('post',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}/accept-invitation`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * delete a specific project by Id
+     * delete a project
+     * @param classId the class id
+     * @param projectId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public classesClassIdProjectsProjectIdDelete(classId: string, projectId: string, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse20010>;
+    public classesClassIdProjectsProjectIdDelete(classId: string, projectId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse20010>>;
+    public classesClassIdProjectsProjectIdDelete(classId: string, projectId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse20010>>;
+    public classesClassIdProjectsProjectIdDelete(classId: string, projectId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (classId === null || classId === undefined) {
+            throw new Error('Required parameter classId was null or undefined when calling classesClassIdProjectsProjectIdDelete.');
+        }
+
+        if (projectId === null || projectId === undefined) {
+            throw new Error('Required parameter projectId was null or undefined when calling classesClassIdProjectsProjectIdDelete.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<InlineResponse20010>('delete',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects/${encodeURIComponent(String(projectId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
