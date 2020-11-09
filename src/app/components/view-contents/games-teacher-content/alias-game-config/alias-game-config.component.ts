@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { Alias } from '@app/models/game-models/alias';
 import { MessageService } from '@app/services/custom/messages/message.service';
@@ -11,6 +11,7 @@ import { EventEmitter } from '@angular/core';
 })
 export class AliasGameConfigComponent implements OnInit {
 
+  @Input() isPlanMeetingView: boolean;
   @Output() selectedAliasesEvent: EventEmitter<Alias[]> = new EventEmitter<Alias[]>();
 
   games: Alias[];
@@ -95,7 +96,6 @@ export class AliasGameConfigComponent implements OnInit {
       this.api.deleteSelectedAlias(tempGame);
     this.selectedGames = this.api.getSelectedAliases();
     this.selectedAliasesEvent.emit(this.selectedGames);
-
   }
 
   boxChecked(game: Alias) {

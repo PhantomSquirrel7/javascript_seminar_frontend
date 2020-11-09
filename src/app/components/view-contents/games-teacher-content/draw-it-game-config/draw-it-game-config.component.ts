@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { DrawIt } from '@app/models/game-models/drawIt';
 import { MessageService } from '@app/services/custom/messages/message.service';
@@ -10,6 +10,7 @@ import { MessageService } from '@app/services/custom/messages/message.service';
 })
 export class DrawItGameConfigComponent implements OnInit {
 
+  @Input() isPlanMeetingView: boolean;
   @Output() selectedDrawItsEvent: EventEmitter<DrawIt[]> = new EventEmitter<DrawIt[]>();
 
   games: DrawIt[];

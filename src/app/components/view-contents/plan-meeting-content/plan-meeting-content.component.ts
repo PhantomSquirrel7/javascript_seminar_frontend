@@ -20,7 +20,7 @@ import { SimpleTask } from '@app/models/game-models/simpleTask';
 })
 export class PlanMeetingContentComponent implements OnInit {
   // for task list
-  taskList: TaskList = {
+  taskList: TaskList = { //initialize taskList in body above with this
     id : "-1",
     quizzes : [],
     aliases : [],
@@ -50,7 +50,7 @@ export class PlanMeetingContentComponent implements OnInit {
   selectedDuration: number;
   durations = [30, 45, 60, 90, 120];
   date: Date;
-  typeOfTasks = ['Quiz', 'Alias', 'Draw-It', '2 Truths 1 Lie', 'Simple Task']
+  typeOfTasks = ['Quiz', 'Alias', 'Draw-It', 'Simple Task'] //TODO add '2 Truths 1 Lie'
   loading = false;
   selectedArrangement = '';
   selectedProject: any; // Type Project

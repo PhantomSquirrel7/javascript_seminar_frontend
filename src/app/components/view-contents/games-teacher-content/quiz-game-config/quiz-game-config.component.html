@@ -1,4 +1,4 @@
-<!-- <button mat-raised-button class="fas fa-arrow-left back-button" [routerLink]="['/games-teacher/overview']"></button> -->
+<button *ngIf="!isPlanMeetingView" mat-raised-button class="fas fa-arrow-left back-button" [routerLink]="['/games-teacher/overview']"></button>
 
 <mat-card-header>
     <mat-card-title>Quiz Settings</mat-card-title>
@@ -72,8 +72,11 @@
                     <mat-card-subtitle class="mt-3">Quizzes</mat-card-subtitle>
                     <mat-expansion-panel *ngFor="let quiz of quizzes" hideToggle>
                         <mat-expansion-panel-header>
-                            <mat-panel-title>
+                            <mat-panel-title *ngIf="isPlanMeetingView">
                                 <mat-checkbox [checked]="boxChecked(quiz)" (change)="quizSelected($event, quiz)"> {{ quiz.name }} </mat-checkbox>
+                            </mat-panel-title>
+                            <mat-panel-title *ngIf="!isPlanMeetingView">
+                                {{ quiz.name }}
                             </mat-panel-title>
                             <mat-panel-description>
                                 {{ quiz.description }}

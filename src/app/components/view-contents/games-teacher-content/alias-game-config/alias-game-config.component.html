@@ -1,11 +1,12 @@
-<!-- <button mat-raised-button class="fas fa-arrow-left back-button" [routerLink]="['/games-teacher/overview']"></button> -->
+<button *ngIf="!isPlanMeetingView" mat-raised-button class="fas fa-arrow-left back-button"
+    [routerLink]="['/games-teacher/overview']"></button>
 <mat-card-header>
     <mat-card-title>Alias Settings</mat-card-title>
 </mat-card-header>
 
 <app-messages></app-messages>
 
-<mat-card-content *ngIf= "games; else loadingAliasContent">
+<mat-card-content *ngIf="games; else loadingAliasContent">
     <div class="mt-2">
         <mat-accordion>
             <mat-expansion-panel hideToggle>
@@ -23,8 +24,12 @@
         <div *ngIf="games; else loadingAliasContent">
             <mat-expansion-panel *ngFor="let game of games" hideToggle>
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <mat-checkbox [checked]="boxChecked(game)" (change)="aliasSelected($event, game)"> {{ game.name }} </mat-checkbox>
+                    <mat-panel-title *ngIf="isPlanMeetingView">
+                        <mat-checkbox [checked]="boxChecked(game)" (change)="aliasSelected($event, game)">
+                            {{ game.name }} </mat-checkbox>
+                    </mat-panel-title>
+                    <mat-panel-title *ngIf="!isPlanMeetingView">
+                            {{ game.name }}
                     </mat-panel-title>
                     <mat-panel-description>
                         {{ game.description }}
@@ -40,7 +45,7 @@
 <ng-template #loadingAliasContent>
     <mat-card-content>
         <div>
-            <mat-spinner class="loading" [diameter]="40"></mat-spinner>
+            <mat-spinner class="loading" [diameter]="50"></mat-spinner>
             <span class="loading">Loading Games...</span>
         </div>
     </mat-card-content>

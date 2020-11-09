@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { Question } from '@app/models/game-models/question';
 import { Quiz } from '@app/models/game-models/quiz';
@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class QuizGameConfigComponent implements OnInit {
 
+  @Input() isPlanMeetingView: boolean;
   @Output() selectedQuizEvent: EventEmitter<Quiz[]> = new EventEmitter<Quiz[]>();
   
   quizzes: Quiz[];

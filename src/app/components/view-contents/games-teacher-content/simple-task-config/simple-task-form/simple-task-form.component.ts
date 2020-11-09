@@ -17,12 +17,6 @@ export class SimpleTaskFormComponent implements OnInit {
     description: ['']
   })
   
-  /*task: SimpleTask = {
-    id: "-1",
-    name: "",
-    description: ""
-  };*/
-  
   constructor(private fb: FormBuilder) { }
 
   ngOnChanges(changes: SimpleChanges) {
