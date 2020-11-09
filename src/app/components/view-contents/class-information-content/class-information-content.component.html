@@ -211,10 +211,10 @@
                     </ng-container>
                 
                      <!-- ID Column -->
-                     <ng-container matColumnDef="ID">
+                     <!-- <ng-container matColumnDef="ID">
                       <th mat-header-cell *matHeaderCellDef>ID</th>
                       <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                    </ng-container>  
+                    </ng-container>   -->
 
                     <ng-container matColumnDef="Name">
                       <th mat-header-cell *matHeaderCellDef >Name</th>
@@ -238,8 +238,8 @@
                       <th mat-header-cell *matHeaderCellDef >Action</th>
                       <td mat-cell *matCellDef="let row; index as i">
                         <button (click)="openDeleteStudentConfirmationDialog(i)" [disabled]="deleteClassLoading" ng
-                        class="btn btn-outline-danger btn-lg btn-block btn-user" type="submit">
-                        Delete Student
+                        class="btn btn-sm" type="submit">
+                          <mat-icon class="red">delete_forever</mat-icon>
                       </button>
                       </td>
                     </ng-container>                    

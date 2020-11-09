@@ -38,7 +38,7 @@ export interface StudentData {
 })
 export class ClassInformationContentComponent implements OnInit {
 
-  displayedColumns: string[] = ['Assigned to class ?','ID', 'Name', 'Surname', 'E-mail', 'Delete Button'];
+  displayedColumns: string[] = ['Assigned to class ?', 'Name', 'Surname', 'E-mail', 'Delete Button'];
   dataSource: MatTableDataSource<StudentData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
