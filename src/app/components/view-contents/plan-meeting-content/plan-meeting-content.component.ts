@@ -34,6 +34,7 @@ export class PlanMeetingContentComponent implements OnInit {
   selectedArrangement = '';
   selectedProject: any; // Type Project
   isProjectSelected = false;
+  submittingFormLoader = false;
 
   user_classes = [];
 
@@ -135,6 +136,7 @@ export class PlanMeetingContentComponent implements OnInit {
   }
 
   submitForm() {
+    this.submittingFormLoader = true;
     console.log(this.date.toLocaleDateString('en-CA')
     );
     console.log(this.selectedDuration);
@@ -162,7 +164,12 @@ export class PlanMeetingContentComponent implements OnInit {
       this.selectedProject.id,
       ).subscribe(
       data => {
+        this._snackBar.open('Meeting created Successfully', 'Close', {
+          duration: 3000
+        });
         console.log(data);
+      this.submittingFormLoader = false;
+
       }
     );
   }

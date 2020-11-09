@@ -109,7 +109,10 @@
         </div> -->
 
 
-        <button (click)="submitForm()" type="button" class="btn btn-primary">Confirm</button>
+        <button [disabled]="submittingFormLoader" (click)="submitForm()" type="button" class="btn btn-primary submit-btn">
+            <span *ngIf="submittingFormLoader" class="spinner-border spinner-border-sm mr-1"></span>
+            Confirm
+        </button>
 
     </div>
 </div>
