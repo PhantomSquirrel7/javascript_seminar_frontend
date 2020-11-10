@@ -9,11 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ClassesclassIdprojectsprojectIdmeetingsTaskList } from './classesclassIdprojectsprojectIdmeetingsTaskList';
 
 export interface Body8 { 
     date?: Date;
     groupAssignment?: Body8.GroupAssignmentEnum;
-    taskList?: Array<string>;
+    taskList?: ClassesclassIdprojectsprojectIdmeetingsTaskList;
     duration?: number;
 }
 export namespace Body8 {

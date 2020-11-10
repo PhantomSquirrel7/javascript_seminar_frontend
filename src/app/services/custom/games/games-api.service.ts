@@ -9,6 +9,9 @@ import { Quiz } from '@app/models/game-models/quiz';
 import { DrawIt } from '@app/models/game-models/drawIt';
 import { Configuration } from '@app/swagger-configs/configuration';
 import { BASE_PATH } from '@app/swagger-configs/variables';
+import { SimpleTask } from '@app/models/game-models/simpleTask';
+import { element } from 'protractor';
+import { TaskList } from '@app/models/game-models/task-list';
 
 @Injectable({
   providedIn: 'root'
@@ -213,5 +216,86 @@ export class GamesApiService {
       .pipe(
         catchError(this.handleError<any>('Deleting game')
         ));
+  }
+
+  // ------------------ SIMPLE TASK -------------------
+  getSimpleTasks() {
+    return this.taskList.simpleTasks;
+  }
+
+  getMaxTaskId(){
+    let max = -1;
+    this.taskList.simpleTasks.forEach(task => {
+      if (+task.id > max) {
+        max = +task.id;
+      }
+    });
+    return max;
+  }
+
+  createSimpleTask(game: SimpleTask) {
+    this.taskList.simpleTasks.push(game);
+  }
+
+  updateSimpleTask(game: SimpleTask) {
+    var elementPos = this.taskList.simpleTasks.map(function (x) { return x.id; }).indexOf(game.id);
+    if (elementPos > -1)
+      this.taskList.simpleTasks[elementPos] = game;
+  }
+
+  deleteSimpleTask(game: SimpleTask) {
+    this.taskList.simpleTasks = this.taskList.simpleTasks.filter(x => x.id !== game.id);
+  }
+
+  // ------------------ SELECTED ITEMS FOR TASK LIST -------------------
+  private taskList: TaskList = {
+    // id: "-1",
+    quizzes: [],
+    aliases: [],
+    drawits: [],
+    simpleTasks: []
+  };
+  getSelectedAliases() {
+    return this.taskList.aliases;
+  }
+  getSelectedQuizzes() {
+    return this.taskList.quizzes;
+  }
+  getSelectedDrawIts() {
+    return this.taskList.drawits;
+  }
+  createSelectedAlias(game: Alias) {
+    var elementPos = this.taskList.aliases.map(function (x) { return x.id; }).indexOf(game.id);
+    if (elementPos === -1)
+      this.taskList.aliases.push(game);
+  }
+  createSelectedQuiz(quiz: Quiz) {
+    var elementPos = this.taskList.quizzes.map(function (x) { return x.id; }).indexOf(quiz.id);
+    if (elementPos === -1)
+      this.taskList.quizzes.push(quiz);
+  }
+  createSelectedDrawIt(game: DrawIt) {
+    var elementPos = this.taskList.drawits.map(function (x) { return x.id; }).indexOf(game.id);
+    if (elementPos === -1)
+      this.taskList.drawits.push(game);
+  }
+  deleteSelectedAlias(game: Alias) {
+    this.taskList.aliases = this.taskList.aliases.filter(x => x.id !== game.id);
+  }
+  deleteSelectedQuiz(quiz: Quiz) {
+    this.taskList.quizzes = this.taskList.quizzes.filter(x => x.id !== quiz.id);
+  }
+  deleteSelectedDrawIt(game: DrawIt) {
+    this.taskList.drawits = this.taskList.drawits.filter(x => x.id !== game.id);
+  }
+  updateSelectedAlias(game: Alias) {
+    var elementPos = this.taskList.aliases.map(function (x) { return x.id; }).indexOf(game.id);
+    if (elementPos > -1)
+      this.taskList.aliases[elementPos] = game;
+  }
+  updateSelectedQuiz(quiz: Quiz, updatedQuiz: Quiz) {
+    var elementPos = this.taskList.quizzes.map(function (x) { return x.id; }).indexOf(quiz.id);
+    if (elementPos > -1)
+      this.taskList.quizzes[elementPos] = updatedQuiz;
   }
 }

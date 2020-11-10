@@ -5,6 +5,12 @@ import { ClassesService } from 'src/app/services/swagger-api/classes.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProjectsService } from '@app/services/swagger-api/projects.service';
+import { Quiz } from '@app/models/game-models/quiz';
+import { Alias } from '@app/models/game-models/alias';
+import { GamesApiService } from '@app/services/custom/games/games-api.service';
+import { TaskList } from '@app/models/game-models/task-list';
+import { DrawIt } from '@app/models/game-models/drawIt';
+import { SimpleTask } from '@app/models/game-models/simpleTask';
 import { MeetingsService } from '@app/services/swagger-api/meetings.service';
 
 
@@ -14,6 +20,23 @@ import { MeetingsService } from '@app/services/swagger-api/meetings.service';
   styleUrls: ['./plan-meeting-content.component.less']
 })
 export class PlanMeetingContentComponent implements OnInit {
+  // for task list
+  taskList: TaskList = { //initialize taskList in body above with this
+    // id: "-1",
+    quizzes: [],
+    aliases: [],
+    drawits: [],
+    simpleTasks: []
+  };
+  aliases: Alias[];
+  quizzes: Quiz[];
+  drawIts: DrawIt[];
+  public selectedAliases: Alias[] = [];
+  public selectedQuizzes: Quiz[] = [];
+  public selectedDrawIts: DrawIt[] = [];
+  public simpleTasks: SimpleTask[] = [];
+  // end of task list attributes
+
   projectList = [];
 
   clsSelecForm: FormGroup;
@@ -25,11 +48,11 @@ export class PlanMeetingContentComponent implements OnInit {
   error = '';
   isClassSelected = false;
   selectedClass: any; // Type Class
-  selectedTypeOfClass = ''
+  selectedTypeOfTask = ''
   selectedDuration: number;
   durations = [30, 45, 60, 90, 120];
   date: Date;
-  typeOfClasses = ['Quiz', 'Ice-Breaker Game', 'Others',]
+  typeOfTasks = ['Quiz', 'Alias', 'Draw-It', 'Simple Task'] //TODO add '2 Truths 1 Lie'
   loading = false;
   selectedArrangement = '';
   selectedProject: any; // Type Project
@@ -44,6 +67,7 @@ export class PlanMeetingContentComponent implements OnInit {
     private classService: ClassesService,
     private projectService: ProjectsService,
     private _snackBar: MatSnackBar,
+    private api: GamesApiService,
     private meetingService: MeetingsService,
   ) { }
 
@@ -73,6 +97,15 @@ export class PlanMeetingContentComponent implements OnInit {
         this.loading = false;
       },
     });
+    this.api.getAliasGames().subscribe(data => {
+      this.aliases = data;
+    });
+    this.api.getQuizzes().subscribe(data => {
+      this.quizzes = data;
+    });
+    this.api.getDrawItGames().subscribe(data => {
+      this.drawIts = data;
+    });
   }
 
   classSelected() {
@@ -85,14 +118,14 @@ export class PlanMeetingContentComponent implements OnInit {
     this.projectService.classesClassIdProjectsGet(this.selectedClass.id).subscribe({
       next: (response) => {
         this.projectList = response;
-        
+
         for (let entry of this.projectList) {
           entry['classname'] = entry['classes'][1]['name']
 
-          if(entry['classes'][1]['teacher']['schoolName'] ) {
-            entry['schoolName'] = entry['classes'][1]['teacher']['schoolName'] 
+          if (entry['classes'][1]['teacher']['schoolName']) {
+            entry['schoolName'] = entry['classes'][1]['teacher']['schoolName']
           } else {
-            entry['schoolName'] = entry['startedBy']['schoolName'] 
+            entry['schoolName'] = entry['startedBy']['schoolName']
           }
         }
 
@@ -113,15 +146,23 @@ export class PlanMeetingContentComponent implements OnInit {
 
     switch (type) {
       case "quiz": {
-        this.selectedTypeOfClass = 'quiz'
+        this.selectedTypeOfTask = 'quiz'
         break
       }
-      case "ice-breaker game": {
-        this.selectedTypeOfClass = 'ice-breaker'
+      case "alias": {
+        this.selectedTypeOfTask = 'alias'
+        break
+      }
+      case "draw-it": {
+        this.selectedTypeOfTask = 'draw-it'
+        break
+      }
+      case "2 truths 1 lie": {
+        this.selectedTypeOfTask = '2t1l'
         break
       }
       default: {
-        this.selectedTypeOfClass = 'other'
+        this.selectedTypeOfTask = 'simple-task'
         break
       }
     }
@@ -137,7 +178,7 @@ export class PlanMeetingContentComponent implements OnInit {
 
   submitForm() {
     // FORM VALIDATION
-    if(!this.date || !this.selectedDuration || !this.planningSectionForm.value.selectedTime) {
+    if (!this.date || !this.selectedDuration || !this.planningSectionForm.value.selectedTime) {
       this._snackBar.open('All Fields of Form must be filled', 'Close', {
         duration: 3000
       });
@@ -149,33 +190,41 @@ export class PlanMeetingContentComponent implements OnInit {
       console.log(this.selectedArrangement)
       console.log(this.selectedProject.id);
       this.timeValue = this.planningSectionForm.value.selectedTime;
-  
+
       // Format date / time
       let postDate = this.date;
       let timeSplit = this.timeValue.split(":")
-      let epochTime = postDate.setHours(Number(timeSplit[0]),Number(timeSplit[1]))
+      let epochTime = postDate.setHours(Number(timeSplit[0]), Number(timeSplit[1]))
       postDate = new Date(epochTime)
       console.log(postDate)
-  
-      let myBody: Body9= {
+
+      // Task List
+      this.taskList.quizzes = this.selectedQuizzes;
+      this.taskList.aliases = this.selectedAliases;
+      this.taskList.drawits = this.selectedDrawIts;
+      this.taskList.simpleTasks = this.simpleTasks;
+
+      let myBody: Body9 = {
         "date": postDate,
         "duration": this.selectedDuration,
-        "taskList": [],
+        "taskList": this.taskList,
         "groupAssignment": this.getGroupAssignment(),
       };
-  
+
+      console.log(myBody.taskList)
+
       // Send POST REQUEST
-      this.meetingService.classesClassIdProjectsProjectIdMeetingsPost(myBody, 
+      this.meetingService.classesClassIdProjectsProjectIdMeetingsPost(myBody,
         this.selectedClass.id,
         this.selectedProject.id,
-        ).subscribe(
+      ).subscribe(
         data => {
           this._snackBar.open('Meeting created Successfully', 'Close', {
             duration: 3000
           });
           console.log(data);
-        this.submittingFormLoader = false;
-  
+          this.submittingFormLoader = false;
+
         }
       );
     }
@@ -189,8 +238,8 @@ export class PlanMeetingContentComponent implements OnInit {
     this.selectedDuration = this.planningSectionForm.value.selectedDuration;
   }
 
-  getGroupAssignment() : Body9.GroupAssignmentEnum {
-    if(this.selectedArrangement == 'tandem') {
+  getGroupAssignment(): Body9.GroupAssignmentEnum {
+    if (this.selectedArrangement == 'tandem') {
       return Body9.GroupAssignmentEnum.Tandem
     } else {
       return Body9.GroupAssignmentEnum.WholeClass

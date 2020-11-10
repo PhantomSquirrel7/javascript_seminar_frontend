@@ -9,6 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ClassesclassIdprojectsprojectIdmeetingsTaskList } from './classesclassIdprojectsprojectIdmeetingsTaskList';
 import { ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups } from './classesclassIdprojectsprojectIdmeetingsmeetingIdGroups';
 
 export interface Meeting { 
@@ -17,7 +18,7 @@ export interface Meeting {
     date?: Date;
     groupAssignment?: Meeting.GroupAssignmentEnum;
     groups?: Array<ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups>;
-    taskList?: Array<string>;
+    taskList?: ClassesclassIdprojectsprojectIdmeetingsTaskList;
     duration?: number;
     joinUrl?: string;
 }

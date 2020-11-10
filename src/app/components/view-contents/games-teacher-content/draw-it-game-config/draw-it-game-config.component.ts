@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GamesApiService } from '@app/services/custom/games/games-api.service';
 import { DrawIt } from '@app/models/game-models/drawIt';
 import { MessageService } from '@app/services/custom/messages/message.service';
@@ -10,7 +10,11 @@ import { MessageService } from '@app/services/custom/messages/message.service';
 })
 export class DrawItGameConfigComponent implements OnInit {
 
+  @Input() isPlanMeetingView: boolean;
+  @Output() selectedDrawItsEvent: EventEmitter<DrawIt[]> = new EventEmitter<DrawIt[]>();
+
   games: DrawIt[];
+  selectedGames: DrawIt[];
 
   newGame: DrawIt = {
     id: "-1",
@@ -27,6 +31,7 @@ export class DrawItGameConfigComponent implements OnInit {
       //console.log("fetch draw it games", data)
       this.games = data;
     });
+    this.selectedGames = this.api.getSelectedDrawIts();
   }
 
   deleteGame(game: DrawIt) {
@@ -37,6 +42,9 @@ export class DrawItGameConfigComponent implements OnInit {
         this.messageService.add("Game '" + game.name + "' was deleted.", "success");
       }
     });
+    this.api.deleteSelectedDrawIt(this.games.filter(x => x.id == game.id)[0]);
+    this.selectedGames = this.api.getSelectedDrawIts();
+    this.selectedDrawItsEvent.emit(this.selectedGames);
   }
 
   onCreateGame(game: DrawIt) {
@@ -70,5 +78,24 @@ export class DrawItGameConfigComponent implements OnInit {
       words: [],
       duration: 120
     }
+  }
+
+  /**
+   * adds/removes aliases depending on whether the checkbox is checked or not
+   */
+  drawItSelected(event, game: DrawIt) {
+    const tempGame: DrawIt = this.games.filter(x => x.id == game.id)[0];
+    if(event.checked)
+      this.api.createSelectedDrawIt(tempGame);
+    else
+      this.api.deleteSelectedDrawIt(tempGame);
+    this.selectedGames = this.api.getSelectedDrawIts();
+    this.selectedDrawItsEvent.emit(this.selectedGames);
+
+  }
+
+  boxChecked(game: DrawIt) {
+    var elementPos = this.api.getSelectedDrawIts().map(function(x) {return x.id;}).indexOf(game.id);
+    return elementPos > -1;
   }
 }

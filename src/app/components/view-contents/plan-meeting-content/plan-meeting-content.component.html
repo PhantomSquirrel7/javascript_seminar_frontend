@@ -79,36 +79,132 @@
             </div>
         </div>
 
-        <!-- <div class="card" style="width: 70vmax; margin-top: 50px;">
+        <div class="card" style="width: 70vmax; margin-top: 50px;">
             <div class="card-header" fxLayout="row" fxLayoutAlign="start center">
-                <div fxFlex="0 0 45%">Please select Type of Class:</div>
+                <div fxFlex="0 0 45%">Create Task List for meeting:</div>
                 <select (change)="typeSelected($event)" class="form-control form-control-sm fa-pull-right"
                     style="max-width: 300px;">
-                    <option [ngValue]="null" disabled>Please Select Type of Class</option>
-                    <option *ngFor="let typeOfClass of typeOfClasses">{{typeOfClass}}</option>
+                    <option [ngValue]="null" disabled>Please Select Type of Task</option>
+                    <option *ngFor="let typeOfTask of typeOfTasks">{{typeOfTask}}</option>
                 </select>
             </div>
 
-            <div *ngIf="selectedTypeOfClass === 'quiz'" style="width: 70vmax;">
+            <div *ngIf="selectedTypeOfTask === 'quiz'" style="width: 70vmax;">
+                <!-- CREATE QUIZ FORM -->
                 <div class="card-body">
-                    Dummy game component Here
+                    <app-quiz-game-config [isPlanMeetingView]="true" (selectedQuizEvent)="selectedQuizzes=($event)"></app-quiz-game-config>
                 </div>
             </div>
 
-            <div *ngIf="selectedTypeOfClass === 'ice-breaker'" style="width: 70vmax;">
+            <div *ngIf="selectedTypeOfTask === 'alias'" style="width: 70vmax;">
+                <!-- CREATE ALIAS FORM -->
                 <div class="card-body">
-                    Ice Breaker game component Here
+                    <app-alias-game-config [isPlanMeetingView]="true" (selectedAliasesEvent)="selectedAliases=($event)"></app-alias-game-config>
                 </div>
             </div>
 
-            <div *ngIf="selectedTypeOfClass === 'other'" style="width: 70vmax;">
+            <div *ngIf="selectedTypeOfTask === 'draw-it'" style="width: 70vmax;">
+                <!-- CREATE DRAW-IT GAME FORM -->
                 <div class="card-body">
-                    Other component Here
+                    <app-draw-it-game-config [isPlanMeetingView]="true" (selectedDrawItsEvent)="selectedDrawIts=($event)"></app-draw-it-game-config>
                 </div>
             </div>
-        </div> -->
 
+            <!--<div *ngIf="selectedTypeOfTask === '2t1l'" style="width: 70vmax;">
+                <div class="card-body">
+                    2 Truths 1 Lie component Here
+                </div>
+            </div>-->
 
+            <div *ngIf="selectedTypeOfTask === 'simple-task'" style="width: 70vmax;">
+                <!-- CREATE SIMPLE TASK FORM -->
+                <div class="card-body">
+                    <app-simple-task-config (simpleTasksEvent)="simpleTasks=($event)"></app-simple-task-config>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <mat-card-header>
+                    <mat-card-title>This Meeting's Tasks:</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div *ngIf="selectedQuizzes.length==0 && selectedAliases.length==0 && selectedDrawIts.length==0 && simpleTasks.length==0">
+                        <mat-card-subtitle>No tasks selected</mat-card-subtitle>
+                    </div>
+                    <div *ngIf="selectedQuizzes.length>0">
+                        <mat-card-subtitle class="mt-3">Quizzes</mat-card-subtitle>
+                        <mat-accordion class="headers-align">
+                            <div *ngIf="selectedAliases"> <!--else loadingAliasContent">-->
+                                <mat-expansion-panel *ngFor="let selectedQuiz of selectedQuizzes" hideToggle>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            {{ selectedQuiz.name }}
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            {{ selectedQuiz.description }}
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                    <div *ngIf="selectedAliases.length>0">
+                        <mat-card-subtitle class="mt-3">Alias Games</mat-card-subtitle>
+                        <mat-accordion class="headers-align">
+                            <div *ngIf="selectedAliases">
+                                <!--else loadingAliasContent">-->
+                                <mat-expansion-panel *ngFor="let selectedAlias of selectedAliases" hideToggle>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            {{ selectedAlias.name }}
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            {{ selectedAlias.description }}
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                    <div *ngIf="selectedDrawIts.length>0">
+                        <mat-card-subtitle class="mt-3">Draw-It Games</mat-card-subtitle>
+                        <mat-accordion class="headers-align">
+                            <div *ngIf="selectedAliases">
+                                <!--else loadingAliasContent">-->
+                                <mat-expansion-panel *ngFor="let selectedDrawIt of selectedDrawIts" hideToggle>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            {{ selectedDrawIt.name }}
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            {{ selectedDrawIt.description }}
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                    <div *ngIf="simpleTasks.length>0">
+                        <mat-card-subtitle class="mt-3">Simple Tasks</mat-card-subtitle>
+                        <mat-accordion class="headers-align">
+                            <div *ngIf="simpleTasks">
+                                <mat-expansion-panel *ngFor="let simpleTask of simpleTasks" hideToggle>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            {{ simpleTask.name }}
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            {{ simpleTask.description }}
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                </mat-card-content>
+            </div>
+        </div>
+        <br>
         <button [disabled]="submittingFormLoader" (click)="submitForm()" type="button" class="btn btn-primary submit-btn">
             <span *ngIf="submittingFormLoader" class="spinner-border spinner-border-sm mr-1"></span>
             Confirm

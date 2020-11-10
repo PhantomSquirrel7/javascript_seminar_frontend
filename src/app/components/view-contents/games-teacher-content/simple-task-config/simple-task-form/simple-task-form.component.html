@@ -1,0 +1,17 @@
+<form [formGroup]="simpletask"(ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="mr-4">
+        <mat-label>Name: </mat-label>
+        <input type="text" matInput formControlName="name" required>
+    </mat-form-field>
+    <div>
+        <mat-form-field appearance="outline" class="w-100 mr-2">
+            <mat-label>Description: </mat-label>
+            <input type="text" matInput formControlName="description" required>
+        </mat-form-field>
+    </div>
+
+    <mat-action-row class="clear">
+        <button class="btn btn-sm" [ngClass]="{'btn-success': simpletask, 'btn-secondary': !simpletask}"
+            type="submit" >Add</button> 
+    </mat-action-row>
+</form>
