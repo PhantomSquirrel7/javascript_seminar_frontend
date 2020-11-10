@@ -158,16 +158,11 @@ export class ProjectsService {
         if (httpContentTypeSelected != undefined) {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
-
-
-        let myBody = {
-            "class": body._class,
-            "initialMessage": body.initialMessage
-        };        
+      
 
         return this.httpClient.request<InlineResponse20010>('post',`${this.basePath}/classes/${encodeURIComponent(String(classId))}/projects`,
             {
-                body: myBody,
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

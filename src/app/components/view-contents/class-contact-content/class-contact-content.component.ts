@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProjectsService } from '../../../services/swagger-api/api';
+import { CustomProjectsService } from '../../../services/custom';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { timer } from 'rxjs';
 import { report } from 'process';
@@ -17,7 +17,7 @@ export class ClassContactContentComponent{
   @Input() selfClass: any; // your class
 	constructor(
     private fb: FormBuilder,
-    private projectsService: ProjectsService
+    private projectsService: CustomProjectsService
   ) { }
 
   contactTeacherForm: FormGroup;
@@ -97,7 +97,7 @@ export class ClassContactContentComponent{
         "initialMessage": this.contactTeacherForm.value.messageText
       };
 
-      this.projectsService.classesClassIdProjectsPost(myBody, this.selfClass.id.toString()).subscribe(
+      this.projectsService.classesClassIdProjectsPostCustom(myBody, this.selfClass.id.toString()).subscribe(
         data => {
           console.log(data);
           this.sent = true;

@@ -5,13 +5,13 @@
                 <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByCreator('all')">All</button>
             </div>               
             <div class="btn-group mr-2" role="group" aria-label="Created by">
-                <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByCreator('me')">My</button>
-                <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByCreator('other')">Other</button>
+                <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByCreator('me')">My Requests</button>
+                <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByCreator('other')">Received Requests</button>
             </div>
             <div class="btn-group mr-2" role="group" aria-label="Status">
                 <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByState('pending')">Pending</button>
                 <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByState('ongoing')">Ongoing</button>
-                <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByState('done')">Done</button>
+                <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByState('done')">Finished</button>
             </div>
         </div>
         <div style="margin-right: 50px;">
@@ -23,7 +23,7 @@
                         <div *ngFor="let project of item.projects" class="card shadow-lg rounded" style="margin: 20px;">
                             <div class="card-header">Partner: {{project.partnerClass.name}}
                                 <span *ngIf="project.state == 'ongoing'" class="badge badge-success">Ongoing</span>
-                                <span *ngIf="project.state == 'done'" class="badge badge-secondary">Done</span>
+                                <span *ngIf="project.state == 'done'" class="badge badge-secondary">Finished</span>
                                 <span *ngIf="project.state == 'pending'" class="badge badge-warning">Pending</span>
                             </div>
                             <div class="card-body">

@@ -76,7 +76,7 @@ import {
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
-import { CustomLoginService } from '@app/services/custom';
+import { CustomLoginService, CustomProjectsService } from '@app/services/custom';
 import { SocketIoModule } from 'ngx-socket-io';
 import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 import { UserService, ClassesService } from './services/swagger-api/api';
@@ -187,7 +187,7 @@ import { MatSortModule } from '@angular/material/sort';
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
       multi: true,
-      deps: [CustomLoginService, UserService, ClassesService],
+      deps: [CustomLoginService, UserService, ClassesService, CustomProjectsService ],
     },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
