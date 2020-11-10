@@ -4,7 +4,7 @@ import {Quiz} from './quiz';
 import { SimpleTask } from './simpleTask';
 
 export interface TaskList {
-    id: string;
+    // id: string;
     quizzes: Array<Quiz>;
     aliases: Array<Alias>;
     drawits: Array<DrawIt>;

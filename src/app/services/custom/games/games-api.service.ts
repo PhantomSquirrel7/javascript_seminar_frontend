@@ -249,7 +249,7 @@ export class GamesApiService {
 
   // ------------------ SELECTED ITEMS FOR TASK LIST -------------------
   private taskList: TaskList = {
-    id: "-1",
+    // id: "-1",
     quizzes: [],
     aliases: [],
     drawits: [],

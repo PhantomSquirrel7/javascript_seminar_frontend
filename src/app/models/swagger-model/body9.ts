@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { TaskList } from '../game-models/task-list';
+import { ClassesclassIdprojectsprojectIdmeetingsTaskList } from './classesclassIdprojectsprojectIdmeetingsTaskList';
 import { ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups } from './classesclassIdprojectsprojectIdmeetingsmeetingIdGroups';
 
 export interface Body9 { 
@@ -18,7 +18,7 @@ export interface Body9 {
     date?: Date;
     groupAssignment?: Body9.GroupAssignmentEnum;
     groups?: Array<ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups>;
-    taskList?: TaskList//Array<string>;
+    taskList?: ClassesclassIdprojectsprojectIdmeetingsTaskList;
     duration?: number;
     joinUrl?: string;
 }

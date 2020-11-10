@@ -9,6 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ClassesclassIdprojectsprojectIdmeetingsTaskList } from './classesclassIdprojectsprojectIdmeetingsTaskList';
 import { ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups } from './classesclassIdprojectsprojectIdmeetingsmeetingIdGroups';
 
 export interface InlineResponse2005 { 
@@ -17,7 +18,7 @@ export interface InlineResponse2005 {
     date?: Date;
     groupAssignment?: InlineResponse2005.GroupAssignmentEnum;
     groups?: Array<ClassesclassIdprojectsprojectIdmeetingsmeetingIdGroups>;
-    taskList?: Array<string>;
+    taskList?: ClassesclassIdprojectsprojectIdmeetingsTaskList;
     duration?: number;
     joinUrl?: string;
 }

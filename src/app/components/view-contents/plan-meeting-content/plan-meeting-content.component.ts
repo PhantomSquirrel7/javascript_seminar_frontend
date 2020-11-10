@@ -22,7 +22,7 @@ import { MeetingsService } from '@app/services/swagger-api/meetings.service';
 export class PlanMeetingContentComponent implements OnInit {
   // for task list
   taskList: TaskList = { //initialize taskList in body above with this
-    id: "-1",
+    // id: "-1",
     quizzes: [],
     aliases: [],
     drawits: [],
@@ -210,6 +210,8 @@ export class PlanMeetingContentComponent implements OnInit {
         "taskList": this.taskList,
         "groupAssignment": this.getGroupAssignment(),
       };
+
+      console.log(myBody.taskList)
 
       // Send POST REQUEST
       this.meetingService.classesClassIdProjectsProjectIdMeetingsPost(myBody,
