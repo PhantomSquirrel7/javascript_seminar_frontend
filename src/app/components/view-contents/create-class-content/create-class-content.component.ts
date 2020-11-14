@@ -15,6 +15,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CLASS_LEVEL } from '../../../components/common/backend-util/common-structures/class-level';
 import { MEETING_FREQUENCY } from '../../../components/common/backend-util/common-structures/meeting-frequency';
 import { PROJECT_DURATION } from '../../../components/common/backend-util/common-structures/project-duration';
+import { SUBJECT } from '@app/components/common/backend-util/common-structures/subject';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-class-content',
@@ -33,19 +35,22 @@ export class CreateClassContentComponent implements OnInit {
   classLevelList = null;
   frequencyList = null;
   projectDurationList = null;
+  subjectList = null;
   selectedClassLevel = null;
   selectedFrequency = null;
   selectedProjectDuration = null;
   selectedLanguageLevel = null;
   selectedLanguage = null;
   selectedClassCountry = null;
+  selectedSubject = null;
 
   constructor(
     private userService: CustomLoginService,
     private classService: ClassesService,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -55,6 +60,8 @@ export class CreateClassContentComponent implements OnInit {
     this.classLevelList = CLASS_LEVEL;
     this.frequencyList = MEETING_FREQUENCY;
     this.projectDurationList = PROJECT_DURATION;
+    this.subjectList = SUBJECT;
+    this.selectedSubject = this.subjectList[0].value;
     this.selectedLanguageLevel = this.languageLevelList[0];
     this.selectedLanguage = this.languageList[0].value;
     this.selectedClassCountry = this.countryList[0].code;
@@ -65,7 +72,7 @@ export class CreateClassContentComponent implements OnInit {
     this.createClassForm = this.formBuilder.group({
       name: ['', Validators.required],
       language: [''],
-      subject: ['', Validators.required],
+      subject: [''],
       selectedCountry: [''],
       projectDuration: ['', Validators.required],
       meetingFrequency: ['', Validators.required],
@@ -108,7 +115,7 @@ export class CreateClassContentComponent implements OnInit {
       .classesPost({
         name: this.f.name.value,
         language: this.selectedLanguage,
-        subject: this.f.subject.value,
+        subject: this.selectedSubject,
         country: this.selectedClassCountry,
         projectDuration: this.selectedProjectDuration,
         meetingFrequency: this.selectedFrequency,
@@ -122,6 +129,7 @@ export class CreateClassContentComponent implements OnInit {
           this._snackBar.open('Class successfully created!', 'Close', {
             duration: 3000,
           });
+          this.router.navigate(['class-information'])
         },
         error: (error) => {
           this.error = error;
