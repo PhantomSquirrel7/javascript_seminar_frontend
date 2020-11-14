@@ -24,9 +24,6 @@ export class FindPartnerClassViewResultsComponent {
           next: (response) => {
             this.loading = false;
             this.user = response;
-            this._snackBar.open('Welcome to find-partner-class page!', 'Close', {
-              duration: 3000
-            });
           },
           error: (error) => {
             this.error = error;
