@@ -13,11 +13,11 @@
     </mat-form-field>
     <div>
         <mat-form-field class="w-100">
-            <mat-select [formControl]="questGroupsCtrl" placeholder="Questions" [multiple]="true" #multiSelect>
+            <mat-select [formControl]="questGroupsCtrl" placeholder="Select questions" [multiple]="true" #multiSelect>
                 <mat-option>
                     <ngx-mat-select-search [formControl]="questGroupsFilterCtrl"></ngx-mat-select-search>
                 </mat-option>
-                <mat-optgroup *ngFor="let group of filteredQuestGroups | async" [label]="group.type">
+                <mat-optgroup *ngFor="let group of filteredQuestGroups | async" [label]="labelnames[group.type]">
                     <mat-option *ngFor="let quest of group.questions" [value]="quest">
                         {{quest.name}}
                     </mat-option>
