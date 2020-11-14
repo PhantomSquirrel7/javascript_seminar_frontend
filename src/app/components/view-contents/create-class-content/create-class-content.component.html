@@ -22,7 +22,7 @@
               <option *ngFor="let subject of subjectList" [ngValue]="subject.value">
                 {{subject.name}}</option>
             </select>
-          </div>          
+          </div>
 
           <div class="form-group">
             <label for="level">Class Level</label>
@@ -33,7 +33,7 @@
             </select>
           </div>
 
-          
+
           <div class="form-group">
             <label for="language">Language</label>
             <select formControlName="language" class="form-control" [(ngModel)]="selectedLanguage">
@@ -65,16 +65,6 @@
           </div>
 
           <div class="form-group">
-            <label for="projectDuration">Project Duration</label>
-            <select formControlName="projectDuration" class="form-control" [(ngModel)]="selectedProjectDuration">
-              <option [ngValue]="null" disabled>Project Duration</option>
-              <option *ngFor="let projectDuration of projectDurationList" [ngValue]="projectDuration.value">
-                {{projectDuration.name}}</option>
-            </select>
-          </div>
-
-
-          <div class="form-group">
             <label for="meetingFrequency">Meeting Frequency</label>
             <select formControlName="meetingFrequency" class="form-control" [(ngModel)]="selectedFrequency">
               <option [ngValue]="null" disabled>Meeting Frequency</option>
@@ -83,6 +73,14 @@
             </select>
           </div>
 
+          <div class="form-group">
+            <label for="projectDuration">Project Duration</label>
+            <select formControlName="projectDuration" class="form-control" [(ngModel)]="selectedProjectDuration">
+              <option [ngValue]="null" disabled>Project Duration</option>
+              <option *ngFor="let projectDuration of projectDurationList" [ngValue]="projectDuration.value">
+                {{projectDuration.name}}</option>
+            </select>
+          </div>
 
         </div>
 
