@@ -201,9 +201,9 @@ export class PlanMeetingContentComponent implements OnInit {
       console.log(postDate)
 
       // Task List
-      this.taskList.quizzes = this.selectedQuizzes;
-      this.taskList.aliases = this.selectedAliases;
-      this.taskList.drawits = this.selectedDrawIts;
+      this.taskList.quizzes = this.getIDs(this.selectedQuizzes);
+      this.taskList.aliases = this.getIDs(this.selectedAliases);
+      this.taskList.drawits = this.getIDs(this.selectedDrawIts);
       this.taskList.simpleTasks = this.simpleTasks;
 
       let myBody: Body9 = {
@@ -248,4 +248,7 @@ export class PlanMeetingContentComponent implements OnInit {
     }
   }
 
+  getIDs(games) {
+    return games.map(game => game.id);
+  }
 }
