@@ -1,7 +1,8 @@
 <div fxLayout="row">
-  <app-student-navigation></app-student-navigation>
+  <div fxFlex="1 1 10%" style="margin: 15px;" *ngIf="!isJoinedToMeeting">
+    <button mat-raised-button class="fas fa-arrow-left back-button" [routerLink]="['/student-home']"type="submit" ></button>   
+  </div>
   <div class="home-right-content" fxFlex="1 1 100%">
-    <app-header></app-header>
     <div class="home-content">
       <!-- Replace this ngIf with appropriate conditon -->
       <div class="get-class-component" *ngIf="!isJoinedToMeeting" style="margin-left: 50px; margin-right: 50px">
@@ -13,11 +14,11 @@
       </div>
       <div *ngIf="!loading && meetings && !isJoinedToMeeting">
         <mat-form-field>
-          <mat-label>Filter</mat-label>
+           <mat-label>Filter</mat-label>
           <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Tandem" #input>
         </mat-form-field>
 
-        <div class="mat-elevation-z8">
+        <div class="mat-elevation-z8" style="margin-right: 50px;">
           <table mat-table [dataSource]="dataSource" matSort>
 
 
@@ -60,21 +61,17 @@
         </div>
       </div>
       <div *ngIf="isJoinedToMeeting">
-          <br>
-        <button mat-raised-button class="fas fa-arrow-left back-button" (click)="returnMeetingList()" type="submit" ></button>   
-        <br>
-        <br>
-        <mat-tab-group>
-            <mat-tab label="Games">
-                <app-games-student-content></app-games-student-content>
-            </mat-tab>
-            <mat-tab label="Chat">
-                <app-bbb-view [moderatorUrl]="selectedMeeting"></app-bbb-view>
-            </mat-tab>            
-        </mat-tab-group>               
+        <button mat-raised-button class="fas fa-arrow-left back-button"
+          style="margin:15px; max-width: 50px; max-height: 50px;"
+        (click)="returnMeetingList()" type="submit" ></button>   
+        <div fxFlex="1 1 100%">
+          <app-games-student-content></app-games-student-content>
+        </div>
+        <div fxFlex="1 1 50%">
+          <app-bbb-view [moderatorUrl]="selectedMeeting"></app-bbb-view>
+        </div> 
       </div>
     </div>
-    <app-footer></app-footer>
   </div>
 </div>
 
