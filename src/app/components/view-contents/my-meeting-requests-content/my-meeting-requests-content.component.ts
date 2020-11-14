@@ -5,6 +5,11 @@ import { MeetingsService } from '@app/services/swagger-api/meetings.service';
 import { ClassesService } from '@app/services/swagger-api/classes.service';
 import { ProjectsService } from '@app/services/swagger-api/projects.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { TaskList } from '@app/models/game-models/task-list';
+import { Alias } from '@app/models/game-models/alias';
+import { Quiz } from '@app/models/game-models/quiz';
+import { DrawIt } from '@app/models/game-models/drawIt';
+import { SimpleTask } from '@app/models/game-models/simpleTask';
 
 @Component({
   selector: 'app-my-meeting-requests-content',
@@ -24,6 +29,16 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   user_classes = [];
   error = '';
   isMeetingListEmpty = false;
+
+  // for task list
+  public selectedAliases: Alias[] = [];
+  public selectedQuizzes: Quiz[] = [];
+  public selectedDrawIts: DrawIt[] = [];
+  public simpleTasks: SimpleTask[] = [];
+  typeOfTasks = ['Quiz', 'Alias', 'Draw-It', 'Simple Task'];
+  selectedTypeOfTask = '';
+  currentMeetingId: any;
+  // end of task list attributes
 
   list1 = [    
     'Episode I - The Phantom Menace',
@@ -136,6 +151,13 @@ export class MyMeetingRequestsContentComponent implements OnInit {
     console.log(this.list2)
   }
 
+  /**
+     * Swornim does his magic
+     * delete task with id=taskId from meeting with id=this.currentMeetingId
+     * */
+  deleteTask(taskId){
+  }
+
   deleteMeeting(meetingId) {
     this.meetingService
     .classesClassIdProjectsProjectIdMeetingsMeetingIdDelete(this.selectedClass.id, this.selectedProject.id, meetingId)
@@ -159,5 +181,48 @@ export class MyMeetingRequestsContentComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  stringFormatter(text: string) {
+    return text.toLowerCase();
+  }
+
+  typeSelected(event) {
+    let type = this.stringFormatter(event.target.value);
+
+    switch (type) {
+      case "quiz": {
+        this.selectedTypeOfTask = 'quiz'
+        break
+      }
+      case "alias": {
+        this.selectedTypeOfTask = 'alias'
+        break
+      }
+      case "draw-it": {
+        this.selectedTypeOfTask = 'draw-it'
+        break
+      }
+      case "2 truths 1 lie": {
+        this.selectedTypeOfTask = '2t1l'
+        break
+      }
+      default: {
+        this.selectedTypeOfTask = 'simple-task'
+        break
+      }
+    }
+  }
+  setCurrentId(id){
+    this.currentMeetingId = id;
+    if(this.meetingList) {
+      const currList = this.meetingList.find(x => x.id == this.currentMeetingId).taskList;
+      if(currList){
+        this.selectedAliases = currList.aliases;
+        this.selectedQuizzes = currList.quizzes;
+        this.selectedDrawIts = currList.drawits;
+        this.simpleTasks = currList.simpleTasks;
+      }
+    }
   }
 }
