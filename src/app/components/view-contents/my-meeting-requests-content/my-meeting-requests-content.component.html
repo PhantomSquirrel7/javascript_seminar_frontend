@@ -30,7 +30,7 @@
                 <div fxLayout="column" class="card-body">
                     <div><span fxFlex="0 0 25%"> Group Assignment: </span> {{meeting.groupAssignment}}</div>
 
-                    <div>
+                    <div *ngIf="meeting.groupAssignment == 'tandem'">
                         <span fxFlex="0 0 25%"> Group Organization: </span>
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
                             View/Edit Group Arrangement

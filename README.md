@@ -9,7 +9,7 @@
 
 - Change "start": "node server.js", to "start": "ng serve --open", in package.json
 - Install dependencies `npm i`
-- Start the application with `npm run start`
+- Start the application with `npm run local`
 
 ## Swagger document can be found
 

@@ -60,6 +60,7 @@ export class PlanMeetingContentComponent implements OnInit {
   submittingFormLoader = false;
 
   user_classes = [];
+  minDate: Date;
 
   constructor(
     private fb: FormBuilder,
@@ -106,6 +107,7 @@ export class PlanMeetingContentComponent implements OnInit {
     this.api.getDrawItGames().subscribe(data => {
       this.drawIts = data;
     });
+    this.minDate = new Date();
   }
 
   classSelected() {
