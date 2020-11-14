@@ -26,7 +26,7 @@
 
     <div *ngIf="meetingList"> 
         <div *ngFor="let meeting of meetingList" class="card shadow-lg rounded" style="margin: 20px;">
-                <div class="card-header">Date: {{meeting.date}} </div>
+                <div class="card-header">Date: {{meeting.date | date :'short'}} </div>
                 <div fxLayout="column" class="card-body">
                     <div><span fxFlex="0 0 25%"> Group Assignment: </span> {{meeting.groupAssignment}}</div>
 
