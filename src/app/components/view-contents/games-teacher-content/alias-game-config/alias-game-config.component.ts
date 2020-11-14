@@ -16,7 +16,7 @@ export class AliasGameConfigComponent implements OnInit {
 
   games: Alias[];
   selectedGames: Alias[];
-  
+
   newGame: Alias = {
     id: "-1",
     name: "",
@@ -90,7 +90,7 @@ export class AliasGameConfigComponent implements OnInit {
    */
   aliasSelected(event, game: Alias) {
     const tempGame: Alias = this.games.filter(x => x.id == game.id)[0];
-    if(event.checked)
+    if (event.checked)
       this.api.createSelectedAlias(tempGame);
     else
       this.api.deleteSelectedAlias(tempGame);
@@ -99,7 +99,7 @@ export class AliasGameConfigComponent implements OnInit {
   }
 
   boxChecked(game: Alias) {
-    var elementPos = this.api.getSelectedAliases().map(function(x) {return x.id;}).indexOf(game.id);
+    var elementPos = this.api.getSelectedAliases().map(function (x) { return x.id; }).indexOf(game.id);
     return elementPos > -1;
   }
 }

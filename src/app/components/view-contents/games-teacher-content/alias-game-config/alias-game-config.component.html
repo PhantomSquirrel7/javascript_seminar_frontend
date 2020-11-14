@@ -9,13 +9,14 @@
 <mat-card-content *ngIf="games; else loadingAliasContent">
     <div class="mt-2">
         <mat-accordion>
-            <mat-expansion-panel hideToggle>
+            <mat-expansion-panel hideToggle #createAliasGamePanel='matExpansionPanel'>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Create New Game
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <app-alias-form [game]="newGame" (gameChange)="onCreateGame($event)"></app-alias-form>
+                <app-alias-form [game]="newGame"
+                    (gameChange)="onCreateGame($event); createAliasGamePanel.expanded = false"></app-alias-form>
             </mat-expansion-panel>
         </mat-accordion>
     </div>
@@ -29,7 +30,7 @@
                             {{ game.name }} </mat-checkbox>
                     </mat-panel-title>
                     <mat-panel-title *ngIf="!isPlanMeetingView">
-                            {{ game.name }}
+                        {{ game.name }}
                     </mat-panel-title>
                     <mat-panel-description>
                         {{ game.description }}
