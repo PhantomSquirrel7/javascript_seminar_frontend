@@ -40,7 +40,7 @@ export class RegisterViewComponent implements OnInit {
       ])),
       password:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('([A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9]*'), // one number and one character
+        Validators.pattern('[A-Za-z0-9!"§$%&/\(\)\\\+\*#:.;><\|,]*([A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9!"§$%&/\(\)\\\+\*#:.;><\|,]*'), // one number and one character
         Validators.maxLength(25),
         Validators.minLength(8),
       ]))
