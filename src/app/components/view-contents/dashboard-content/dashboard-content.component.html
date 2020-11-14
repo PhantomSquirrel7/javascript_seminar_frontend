@@ -10,9 +10,9 @@
 
 
 <div class="card-lists" fxLayout="row wrap" fxLayoutAlign="space-around center">
-    <div fxLayout="row" (click)="navigateTo('classPage')" class="card text-white bg-warning">
+    <div fxLayout="row" [routerLink]="['/class-information']" class="card text-white bg-warning">
         <div class="circle">
-            <div class="circle--text">2</div>
+            <div class="circle--text">{{numClass}}</div>
         </div>
 
         <div class="card-body">
@@ -21,36 +21,36 @@
         </div>
     </div>
 
-    <div fxLayout="row" (click)="navigateTo('myConnectionRequestsPage')" class="card text-white bg-blue">
+    <div fxLayout="row" [routerLink]="['/my-connection-requests']" class="card text-white bg-blue">
         <div class="circle">
-            <div class="circle--text">12</div>
+            <div class="circle--text">{{numProject}}</div>
         </div>
 
         <div class="card-body">
-            <h5 class="card-title">Matches</h5>
-            <p class="card-text">Facilitated so far</p>
+            <h5 class="card-title">Projects</h5>
+            <p class="card-text">You are currently connected with</p>
         </div>
     </div>
 
-    <div fxLayout="row" (click)="navigateTo('planMeetingPage')" class="card text-white bg-blue">
+    <div fxLayout="row" [routerLink]="['/my-meeting-requests']" class="card text-white bg-dark-blue">
         <div class="circle">
-            <div class="circle--text">21</div>
+            <div class="circle--text">{{numMeeting}}</div>
         </div>
 
         <div class="card-body">
             <h5 class="card-title">Meetings</h5>
-            <p class="card-text">Organized till today</p>
+            <p class="card-text">Currently planned</p>
         </div>
     </div>
 
-    <div fxLayout="row" (click)="navigateTo('findPartnerClassPage')" class="card text-white bg-warning">
+    <!-- <div fxLayout="row" [routerLink]="['/my-connection-requests']" class="card text-white bg-warning">
         <div class="circle">
-            <div class="circle--text">4</div>
+            <div class="circle--text">{{numRequest}}</div>
         </div>
 
         <div class="card-body">
-            <h5 class="card-title">Partners</h5>
-            <p class="card-text">You had exchanged with.</p>
+            <h5 class="card-title">Requests</h5>
+            <p class="card-text">Connection requests you currently have</p>
         </div>
-    </div>
+    </div> -->
 </div>
