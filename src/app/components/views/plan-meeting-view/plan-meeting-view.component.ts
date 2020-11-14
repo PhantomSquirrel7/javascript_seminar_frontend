@@ -23,9 +23,6 @@ export class PlanMeetingViewComponent {
           next: (response) => {
             this.loading = false;
             this.user = response;
-            this._snackBar.open('Welcome to plan-meeting page!', 'Close', {
-              duration: 3000
-            });
           },
           error: (error) => {
             this.error = error;

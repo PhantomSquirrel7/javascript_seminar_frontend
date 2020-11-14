@@ -22,9 +22,6 @@ export class StudentAssignmentsViewComponent {
           next: (response) => {
             this.loading = false;
             this.user = response;
-            this._snackBar.open('Welcome to your Assignments!', 'Close', {
-              duration: 3000
-            });
           },
           error: (error) => {
             this.error = error;
