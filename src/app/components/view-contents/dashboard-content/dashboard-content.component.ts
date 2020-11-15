@@ -5,6 +5,7 @@ import {
   ProjectsService,
   UserService,
 } from '@app/services/swagger-api/api';
+import { CustomLoginService } from '@app/services/custom/login/login.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -22,7 +23,8 @@ export class DashboardContentComponent implements OnInit {
     private router: Router,
     private classService: ClassesService,
     private user2Service: UserService,
-    private projectService: ProjectsService
+    private projectService: ProjectsService,
+    public loginService: CustomLoginService
   ) {}
 
   ngOnInit(): void {
