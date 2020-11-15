@@ -29,6 +29,14 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   user_classes = [];
   error = '';
   isMeetingListEmpty = false;
+  additionalColumn = [];
+  isAdditionalColumnMyStudent = false;
+  selectedMeetingObject: any;
+
+  myStudentsList = [];
+
+  partnerStudentsList = [];
+  displayAdditionalColumn = false;
 
   // for task list
   public selectedAliases: Alias[] = [];
@@ -39,18 +47,6 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   selectedTypeOfTask = '';
   currentMeetingId: any;
   // end of task list attributes
-
-  list1 = [    
-    'Episode I - The Phantom Menace',
-    'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith'
-  ];
-
-  list2 = [    
-    'Episode IV - A New Hope',
-    'Episode V - The Empire Strikes Back',
-    'Episode VI - The Empire Strikes Back'
-  ];
  
   constructor(
     private fb: FormBuilder, 
@@ -147,8 +143,53 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   }
 
   saveArrangement() {
-    console.log(this.list1)
-    console.log(this.list2)
+    //Formating of Groups
+    let transposedArray = this.transpose([this.myStudentsList, this.partnerStudentsList, this.additionalColumn]) 
+
+    let newArray = []
+    for (let array of transposedArray ) {
+      var qwer = array.filter(function(v){return v !==''});
+      newArray.push(qwer)
+    }
+
+    for(let groupIndex in this.selectedMeetingObject.groups) {
+      for(let updatedGroupIndex in newArray) {
+        if(groupIndex == updatedGroupIndex) {
+          this.selectedMeetingObject.groups[groupIndex]['participants'] = newArray[updatedGroupIndex]
+        }
+
+      }
+    }
+
+    console.log(this.selectedClass.id)
+    console.log(this.selectedProject.id)
+    console.log(this.selectedMeetingObject.id)
+
+    console.log(this.selectedMeetingObject)
+
+    
+
+    //Send PUT request
+    // this.meetingService.classesClassIdProjectsProjectIdMeetingsMeetingIdPut(this.selectedMeetingObject, 
+    //   this.selectedClass.id, 
+    //   this.selectedProject.id, 
+    //   this.selectedMeetingObject.id).subscribe({
+    //     next: (response) => {
+    //       console.log(response);
+    //     },
+    //     error: (error) => {
+    //       this.error = error;
+    //       this._snackBar.open(this.error, 'Close', {
+    //       duration: 3000
+    //       });
+    //       this.loading = false;
+    //     },
+    //   })
+
+    //Clear temp Arrays
+    // this.resetTempValues()
+
+
   }
 
   /**
@@ -225,4 +266,58 @@ export class MyMeetingRequestsContentComponent implements OnInit {
       }
     }
   }
+
+  loadGroupArrangement(meetingObj) {
+    this.selectedMeetingObject = meetingObj;
+    console.log(meetingObj)
+    let groups = meetingObj.groups;
+    console.log(groups)
+
+    for(let index in groups) {
+      // console.log(groups[index]['participants'])
+      if (groups[index]['participants'].length == 2) {
+        for (let participantIndex in groups[index]['participants']) {
+          if(Number(participantIndex) % 2 == 0) {
+            this.myStudentsList.push(groups[index]['participants'][participantIndex])
+          } else {
+            this.partnerStudentsList.push(groups[index]['participants'][participantIndex])
+          }
+        }
+        this.additionalColumn.push('');
+      }
+    }
+
+    for(let index in groups) {
+      // console.log(groups[index]['participants'])
+      if (groups[index]['participants'].length !== 2) {
+        this.displayAdditionalColumn = true;
+
+        for (let participantIndex in groups[index]['participants']) {
+          if(Number(participantIndex) == 0) {
+            this.myStudentsList.push(groups[index]['participants'][participantIndex])
+          } else if (Number(participantIndex) == 1){
+            this.partnerStudentsList.push(groups[index]['participants'][participantIndex])
+          } else {
+            this.additionalColumn.push(groups[index]['participants'][participantIndex])
+          }
+        }
+      }
+    }
+
+
+
+  }
+
+  transpose = matrix => matrix.reduce(($, row) => row.map((_, i) => [...($[i] || []), row[i]]), [])
+
+  resetTempValues() {
+    console.log('Closing Modal');
+    this.selectedMeetingObject = [];
+    this.myStudentsList = []
+    this.partnerStudentsList = []
+    this.additionalColumn = [];
+    this.isAdditionalColumnMyStudent = false;
+    this.displayAdditionalColumn = false
+  }
+
 }

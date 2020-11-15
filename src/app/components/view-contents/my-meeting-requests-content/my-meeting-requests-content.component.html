@@ -1,55 +1,57 @@
 <div fxLayoutGap="25px" fxLayout="column" style="margin-left: 50px;">
     <form [formGroup]="clsSelecForm" class="class-selection">
         Please Choose Class:
-        <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right"
-            style="margin-right: 10vw; max-width: 300px;">
+        <select formControlName="selectedClass" (change)="classSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
             <option [ngValue]="null" disabled>Select your class</option>
             <option *ngFor="let selectedClass of user_classes" [ngValue]="selectedClass">{{selectedClass.name}}</option>
         </select>
     </form>
 
-    <div *ngIf="isClassSelected && projectList.length > 0; else elseBlock">
-        <form [formGroup]="projectSelectForm" class="project-selection">
-            Please Choose Project:
-            <select formControlName="selectedProject" (change)="projectSelected()" class="form-control fa-pull-right"
-                style="margin-right: 10vw; max-width: 300px;">
+    <div *ngIf="isClassSelected && projectList.length > 0; else elseBlock"> 
+        <form  [formGroup]="projectSelectForm" class="project-selection">
+            Please Choose Project: 
+            <select formControlName="selectedProject" (change)="projectSelected()" class="form-control fa-pull-right" style="margin-right: 10vw; max-width: 300px;">
                 <option [ngValue]="null" disabled>Select your Project</option>
-                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">
-                    {{selectedProject.classname}}: {{selectedProject.schoolName}}
+                <option *ngFor="let selectedProject of projectList" [ngValue]="selectedProject">{{selectedProject.classname}}: {{selectedProject.schoolName}}
             </select>
         </form>
     </div>
 
     <ng-template #elseBlock>
         <div *ngIf="isClassSelected">
-            <h1> No Project for Selected Class. </h1>
+           <h1> No Project for Selected Class. </h1>
         </div>
     </ng-template>
 
 
-    <div *ngIf="meetingList">
+    <div *ngIf="meetingList"> 
         <div *ngFor="let meeting of meetingList" class="card shadow-lg rounded" style="margin: 20px;">
-            <div class="card-header">Date: {{meeting.date | date :'short'}} </div>
-            <div fxLayout="column" class="card-body">
-                <div><span fxFlex="0 0 25%"> Group Assignment: </span> {{meeting.groupAssignment}}</div>
+                <div class="card-header">Date: {{meeting.date | date :'short'}} </div>
+                <div fxLayout="column" class="card-body">
+                    <div><span fxFlex="0 0 25%"> Group Assignment: </span> {{meeting.groupAssignment}}</div>
 
-                <div *ngIf="meeting.groupAssignment == 'tandem'">
-                    <span fxFlex="0 0 25%"> Group Organization: </span>
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                    <div *ngIf="meeting.groupAssignment == 'tandem'">
+                        <span fxFlex="0 0 25%"> Group Organization: </span>
+                        <button (click)="loadGroupArrangement(meeting)" 
+                        type="button" class="btn btn-primary btn-sm" 
+                        data-toggle="modal" 
                         data-target="#exampleModal">
-                        View/Edit Group Arrangement
-                    </button>
+                            View / Edit Group Arrangement
+                        </button>
+                    </div>
+                    <div>
+                        <span fxFlex="0 0 25%"> Task Lists: </span> 
+                        <button (click)="setCurrentId(meeting.id)" type="button" class="btn btn-warning btn-sm"
+                        data-toggle="modal" 
+                        data-target="#exampleModal2">
+                            View/Edit Task Lists
+                        </button>
+                    </div>
                 </div>
-                <div><span fxFlex="0 0 25%"> Task Lists: </span>
-                    <button (click)="setCurrentId(meeting.id)" type="button" class="btn btn-warning btn-sm"
-                        data-toggle="modal" data-target="#exampleModal2">
-                        View/Edit Task Lists
-                    </button></div>
-            </div>
 
-            <div class="card-footer text-center">
-                <button (click)="deleteMeeting(meeting.id)" class="btn btn-danger btn-sm">Delete Meeting</button>
-            </div>
+                <div class="card-footer text-center">
+                    <button (click)="deleteMeeting(meeting.id)" class="btn btn-danger btn-sm">Delete Meeting</button>
+                </div>
         </div>
 
         <div *ngIf="isMeetingListEmpty">
@@ -58,48 +60,44 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
 </div>
 
 
-
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div  data-backdrop="static" data-keyboard="false" 
+ class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">View/Edit Arrangement</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div fxLayout="row" fxLayoutGap="25px" class="modal-body">
-                <div>
-                    Your Class
-                    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, list1)">
-                        <div class="example-box" *ngFor="let list of list1" cdkDrag>{{list}}</div>
-                    </div>
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">View/Edit Arrangement</h5>
+        <button (click)="resetTempValues()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div fxLayout="row" fxLayoutGap="25px" class="modal-body">
+            <div class="students-list">
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, myStudentsList)">
+                    <div [cdkDragDisabled]="!list.isMyClass" class="example-box" *ngFor="let list of myStudentsList" cdkDrag>{{list.firstName}}</div>
                 </div>
+            </div>
 
-                <div>
-                    Partner Class
-                    <div cdkDropList cdkDropListDisabled class="example-list"
-                        (cdkDropListDropped)="drop($event, list2)">
-                        <div class="example-box" *ngFor="let list of list2" cdkDrag>{{list}}</div>
-                    </div>
+            <div class="students-list">
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, partnerStudentsList)">
+                    <div [cdkDragDisabled]="!list.isMyClass" class="example-box" *ngFor="let list of partnerStudentsList" cdkDrag>{{list.firstName}}</div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button (click)="saveArrangement()" type="button" class="btn btn-primary">Save changes</button>
+
+            <div *ngIf="displayAdditionalColumn" class="students-list">
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, additionalColumn)">
+                    <div [cdkDragDisabled]="!list.isMyClass" class="example-box" *ngFor="let list of additionalColumn" cdkDrag>{{list.firstName}}</div>
+                </div>
             </div>
         </div>
+        <div class="modal-footer">
+        <button (click)="resetTempValues()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button (click)="saveArrangement()" type="button" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
     </div>
 </div>
 
@@ -128,7 +126,8 @@
                         </mat-card-header>
                         <br>
                         <mat-card-content>
-                            <div *ngIf="selectedQuizzes.length==0 && selectedAliases.length==0 && selectedDrawIts.length==0 && simpleTasks.length==0">
+                            <div
+                                *ngIf="selectedQuizzes.length==0 && selectedAliases.length==0 && selectedDrawIts.length==0 && simpleTasks.length==0">
                                 <mat-card-subtitle>No tasks in this meeting</mat-card-subtitle>
                             </div>
                             <div *ngIf="selectedTypeOfTask === 'quiz' && selectedQuizzes.length==0">

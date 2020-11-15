@@ -9,13 +9,14 @@
 <mat-card-content *ngIf="games; else loadingDrawitContent">
     <div class="mt-2">
         <mat-accordion>
-            <mat-expansion-panel hideToggle>
+            <mat-expansion-panel hideToggle #createDrawItGamePanel='matExpansionPanel'>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Create New Game
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <app-draw-it-form [game]="newGame" (gameChange)="onCreateGame($event)"></app-draw-it-form>
+                <app-draw-it-form [game]="newGame"
+                    (gameChange)="onCreateGame($event); createDrawItGamePanel.expanded = false"></app-draw-it-form>
             </mat-expansion-panel>
         </mat-accordion>
     </div>

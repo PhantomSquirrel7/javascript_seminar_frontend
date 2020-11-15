@@ -85,7 +85,7 @@ export class DrawItGameConfigComponent implements OnInit {
    */
   drawItSelected(event, game: DrawIt) {
     const tempGame: DrawIt = this.games.filter(x => x.id == game.id)[0];
-    if(event.checked)
+    if (event.checked)
       this.api.createSelectedDrawIt(tempGame);
     else
       this.api.deleteSelectedDrawIt(tempGame);
@@ -95,7 +95,7 @@ export class DrawItGameConfigComponent implements OnInit {
   }
 
   boxChecked(game: DrawIt) {
-    var elementPos = this.api.getSelectedDrawIts().map(function(x) {return x.id;}).indexOf(game.id);
+    var elementPos = this.api.getSelectedDrawIts().map(function (x) { return x.id; }).indexOf(game.id);
     return elementPos > -1;
   }
 }

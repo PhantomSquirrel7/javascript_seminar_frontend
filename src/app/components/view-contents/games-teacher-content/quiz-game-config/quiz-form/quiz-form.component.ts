@@ -24,6 +24,8 @@ export class QuizFormComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() allQuestions: Question[];
   @Output() quizChange: EventEmitter<Quiz> = new EventEmitter<Quiz>();
 
+  public labelnames = { 'match': 'Matching questions:', 'select': 'Multiple-choice questions:' }
+
   questionGroups: QuestionGroup[] = [];
 
   quiz = this.fb.group({
