@@ -194,9 +194,10 @@ export class MyMeetingRequestsContentComponent implements OnInit {
 
   /**
      * Swornim is doing his magic 
-     * TODO: PUT request to BE
      * delete task with id=taskId from meeting with id=this.currentMeetingId
      * */
+    // TODO: PUT request to BE (DONE), fix bug related to sending PUT request
+
   deleteTask(taskObj, type: string){
     console.log(taskObj);
     console.log(type);
@@ -208,6 +209,24 @@ export class MyMeetingRequestsContentComponent implements OnInit {
     }
 
     console.log(this.selectedMeetingObject)
+
+
+    // TODO: Send the PUT Request to Backend here
+    this.meetingService.classesClassIdProjectsProjectIdMeetingsMeetingIdPut(this.selectedMeetingObject, 
+      this.selectedClass.id, 
+      this.selectedProject.id, 
+      this.selectedMeetingObject.id).subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: (error) => {
+          this.error = error;
+          this._snackBar.open(this.error, 'Close', {
+          duration: 3000
+          });
+          this.loading = false;
+        },
+      })
   }
 
   deleteMeeting(meetingId) {
