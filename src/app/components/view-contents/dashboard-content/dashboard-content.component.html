@@ -1,49 +1,55 @@
+<div>
+  <h2>Welcome {{this.loginService.userValue.firstName}} !</h2>
+  <h4>{{this.loginService.userValue.email}}</h4>
+  
+</div>
+
 <div class="card bg-dark text-white">
-    <img class="card-img" />
-    <div fxLayout="column" fxLayoutAlign="space-around center" class="card-img-overlay">
-        <!-- <p class="card-title">Days of Exchange</p>
+  <img class="card-img" />
+  <div fxLayout="column" fxLayoutAlign="space-around center" class="card-img-overlay">
+    <!-- <p class="card-title">Days of Exchange</p>
         <div class="circle">
             <div class="circle--text">50</div>
         </div> -->
-    </div>
+  </div>
 </div>
 
 
 <div class="card-lists" fxLayout="row wrap" fxLayoutAlign="space-around center">
-    <div fxLayout="row" [routerLink]="['/class-information']" class="card text-white bg-warning">
-        <div class="circle">
-            <div class="circle--text">{{numClass}}</div>
-        </div>
-
-        <div class="card-body">
-            <h5 class="card-title">Classes</h5>
-            <p class="card-text">Under your Administration</p>
-        </div>
+  <div fxLayout="row" [routerLink]="['/class-information']" class="card text-white bg-warning">
+    <div class="circle">
+      <div class="circle--text">{{numClass}}</div>
     </div>
 
-    <div fxLayout="row" [routerLink]="['/my-connection-requests']" class="card text-white bg-blue">
-        <div class="circle">
-            <div class="circle--text">{{numProject}}</div>
-        </div>
+    <div class="card-body">
+      <h5 class="card-title">Classes</h5>
+      <p class="card-text">Under your Administration</p>
+    </div>
+  </div>
 
-        <div class="card-body">
-            <h5 class="card-title">Projects</h5>
-            <p class="card-text">You are currently connected with</p>
-        </div>
+  <div fxLayout="row" [routerLink]="['/my-connection-requests']" class="card text-white bg-blue">
+    <div class="circle">
+      <div class="circle--text">{{numProject}}</div>
     </div>
 
-    <div fxLayout="row" [routerLink]="['/my-meeting-requests']" class="card text-white bg-dark-blue">
-        <div class="circle">
-            <div class="circle--text">{{numMeeting}}</div>
-        </div>
+    <div class="card-body">
+      <h5 class="card-title">Projects</h5>
+      <p class="card-text">You are currently connected with</p>
+    </div>
+  </div>
 
-        <div class="card-body">
-            <h5 class="card-title">Meetings</h5>
-            <p class="card-text">Currently planned</p>
-        </div>
+  <div fxLayout="row" [routerLink]="['/my-meeting-requests']" class="card text-white bg-dark-blue">
+    <div class="circle">
+      <div class="circle--text">{{numMeeting}}</div>
     </div>
 
-    <!-- <div fxLayout="row" [routerLink]="['/my-connection-requests']" class="card text-white bg-warning">
+    <div class="card-body">
+      <h5 class="card-title">Meetings</h5>
+      <p class="card-text">Currently planned</p>
+    </div>
+  </div>
+
+  <!-- <div fxLayout="row" [routerLink]="['/my-connection-requests']" class="card text-white bg-warning">
         <div class="circle">
             <div class="circle--text">{{numRequest}}</div>
         </div>
