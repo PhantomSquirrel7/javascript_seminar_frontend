@@ -56,7 +56,7 @@
               <div class="form-group">
                 <label for="subject">Subject</label>
                 <select formControlName="subject" class="form-control" [(ngModel)]="selectedSubject">
-                  <option [ngValue]="null" disabled>Class Level</option>
+                  <option [ngValue]="null" disabled>Subject</option>
                   <option *ngFor="let subject of subjectList" [ngValue]="subject.value">
                     {{subject.name}}</option>
                 </select>
