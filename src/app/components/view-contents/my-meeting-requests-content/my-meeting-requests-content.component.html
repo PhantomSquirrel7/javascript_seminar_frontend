@@ -41,7 +41,7 @@
                     </div>
                     <div>
                         <span fxFlex="0 0 25%"> Task Lists: </span> 
-                        <button (click)="setCurrentId(meeting.id)" type="button" class="btn btn-warning btn-sm"
+                        <button (click)="loadTaskList(meeting)" type="button" class="btn btn-warning btn-sm"
                         data-toggle="modal" 
                         data-target="#exampleModal2">
                             View/Edit Task Lists
@@ -156,7 +156,7 @@
                                                     {{ quiz.description }}
                                                 </mat-panel-description>
                                                 <mat-icon class="headers-align-right" title="delete game"
-                                                    (click)="$event.stopPropagation(); deleteTask(quiz.id)">
+                                                    (click)="$event.stopPropagation(); deleteTask(quiz, 'quizzes')">
                                                     delete_forever</mat-icon>
                                             </mat-expansion-panel-header>
                                         </mat-expansion-panel>
@@ -177,7 +177,7 @@
                                                     {{ alias.description }}
                                                 </mat-panel-description>
                                                 <mat-icon class="headers-align-right" title="delete game"
-                                                    (click)="$event.stopPropagation(); deleteTask(alias.id)">
+                                                    (click)="$event.stopPropagation(); deleteTask(alias, 'aliases')">
                                                     delete_forever</mat-icon>
                                             </mat-expansion-panel-header>
                                         </mat-expansion-panel>
@@ -198,7 +198,7 @@
                                                     {{ drawit.description }}
                                                 </mat-panel-description>
                                                 <mat-icon class="headers-align-right" title="delete game"
-                                                    (click)="$event.stopPropagation(); deleteTask(drawit.id)">
+                                                    (click)="$event.stopPropagation(); deleteTask(drawit, 'drawits')">
                                                     delete_forever</mat-icon>
                                             </mat-expansion-panel-header>
                                         </mat-expansion-panel>
@@ -219,7 +219,7 @@
                                                     {{ simpleTask.description }}
                                                 </mat-panel-description>
                                                 <mat-icon class="headers-align-right" title="delete game"
-                                                    (click)="$event.stopPropagation(); deleteTask(simpleTask.id)">
+                                                    (click)="$event.stopPropagation(); deleteTask(simpleTask, 'simpleTasks')">
                                                     delete_forever</mat-icon>
                                             </mat-expansion-panel-header>
                                         </mat-expansion-panel>

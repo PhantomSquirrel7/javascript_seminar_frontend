@@ -193,10 +193,21 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   }
 
   /**
-     * Swornim does his magic
+     * Swornim is doing his magic 
+     * TODO: PUT request to BE
      * delete task with id=taskId from meeting with id=this.currentMeetingId
      * */
-  deleteTask(taskId){
+  deleteTask(taskObj, type: string){
+    console.log(taskObj);
+    console.log(type);
+    console.log(this.selectedMeetingObject.taskList[type]);
+
+    var index = this.selectedMeetingObject.taskList[type].indexOf(taskObj);
+    if (index !== -1) {
+      this.selectedMeetingObject.taskList[type].splice(index, 1);
+    }
+
+    console.log(this.selectedMeetingObject)
   }
 
   deleteMeeting(meetingId) {
@@ -254,8 +265,10 @@ export class MyMeetingRequestsContentComponent implements OnInit {
       }
     }
   }
-  setCurrentId(id){
-    this.currentMeetingId = id;
+  loadTaskList(meetingObj){
+    this.selectedMeetingObject = meetingObj
+    
+    this.currentMeetingId = meetingObj.id;
     if(this.meetingList) {
       const currList = this.meetingList.find(x => x.id == this.currentMeetingId).taskList;
       if(currList){
