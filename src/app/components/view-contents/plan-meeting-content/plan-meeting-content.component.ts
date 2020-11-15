@@ -52,7 +52,7 @@ export class PlanMeetingContentComponent implements OnInit {
   selectedDuration: number;
   durations = [30, 45, 60, 90, 120];
   date: Date;
-  typeOfTasks = ['Quiz', 'Alias', 'Draw-It', 'Simple Task'] //TODO add '2 Truths 1 Lie'
+  typeOfTasks = ['Quiz', 'Alias', 'Draw-It', 'Simple Task']; //TODO add '2 Truths 1 Lie'
   loading = false;
   selectedArrangement = '';
   selectedProject: any; // Type Project

@@ -41,7 +41,9 @@
                     </div>
                     <div>
                         <span fxFlex="0 0 25%"> Task Lists: </span> 
-                        <button class="btn btn-warning btn-sm">
+                        <button (click)="loadTaskList(meeting)" type="button" class="btn btn-warning btn-sm"
+                        data-toggle="modal" 
+                        data-target="#exampleModal2">
                             View/Edit Task Lists
                         </button>
                     </div>
@@ -58,14 +60,7 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
 </div>
-
 
 
 <!-- Modal -->
@@ -112,5 +107,135 @@
         </button>
         </div>
     </div>
+    </div>
+</div>
+
+<!-- Edit Task List -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Task List for meeting:</h5>
+                <select (change)="typeSelected($event)" class="form-control form-control-sm fa-pull-right"
+                    style="max-width: 200px;">
+                    <option [ngValue]="null" disabled>Please Select Type of Task</option>
+                    <option *ngFor="let typeOfTask of typeOfTasks">{{typeOfTask}}</option>
+                </select>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div fxLayout="row" fxLayoutGap="25px" class="modal-body">
+
+                <div class="card" style="width: 70vmax; margin-top: 50px;">
+                    <div class="card-body">
+                        <mat-card-header>
+                            <mat-card-title>This Meeting's Tasks:</mat-card-title>
+                        </mat-card-header>
+                        <br>
+                        <mat-card-content>
+                            <div *ngIf="selectedTypeOfTask === 'quiz' && selectedQuizzes.length==0">
+                                <mat-card-subtitle>No quizzes in this meeting</mat-card-subtitle>
+                            </div>
+                            <div *ngIf="selectedTypeOfTask === 'alias' && selectedAliases.length==0">
+                                <mat-card-subtitle>No alias games in this meeting</mat-card-subtitle>
+                            </div>
+                            <div *ngIf="selectedTypeOfTask === 'draw-it' && selectedDrawIts.length==0">
+                                <mat-card-subtitle>No draw-it games in this meeting</mat-card-subtitle>
+                            </div>
+                            <div *ngIf="selectedTypeOfTask === 'simple-task' && simpleTasks.length==0">
+                                <mat-card-subtitle>No simple tasks in this meeting</mat-card-subtitle>
+                            </div>
+                            <div *ngIf="selectedTypeOfTask === 'quiz' && selectedQuizzes.length>0">
+                                <mat-card-subtitle class="mt-3">Quizzes</mat-card-subtitle>
+                                <mat-accordion class="headers-align">
+                                    <div *ngIf="selectedQuizzes">
+                                        <!--else loadingAliasContent">-->
+                                        <mat-expansion-panel *ngFor="let quiz of selectedQuizzes" hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{ quiz.name }}
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    {{ quiz.description }}
+                                                </mat-panel-description>
+                                                <mat-icon class="headers-align-right" title="delete game"
+                                                    (click)="$event.stopPropagation(); deleteTask(quiz, 'quizzes')">
+                                                    delete_forever</mat-icon>
+                                            </mat-expansion-panel-header>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+                            <div *ngIf="selectedTypeOfTask === 'alias' && selectedAliases.length>0">
+                                <mat-card-subtitle class="mt-3">Alias Games</mat-card-subtitle>
+                                <mat-accordion class="headers-align">
+                                    <div *ngIf="selectedAliases">
+                                        <!--else loadingAliasContent">-->
+                                        <mat-expansion-panel *ngFor="let alias of selectedAliases" hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{ alias.name }}
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    {{ alias.description }}
+                                                </mat-panel-description>
+                                                <mat-icon class="headers-align-right" title="delete game"
+                                                    (click)="$event.stopPropagation(); deleteTask(alias, 'aliases')">
+                                                    delete_forever</mat-icon>
+                                            </mat-expansion-panel-header>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+                            <div *ngIf="selectedTypeOfTask === 'draw-it' && selectedDrawIts.length>0">
+                                <mat-card-subtitle class="mt-3">Draw-It Games</mat-card-subtitle>
+                                <mat-accordion class="headers-align">
+                                    <div *ngIf="selectedDrawIts">
+                                        <!--else loadingAliasContent">-->
+                                        <mat-expansion-panel *ngFor="let drawit of selectedDrawIts" hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{ drawit.name }}
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    {{ drawit.description }}
+                                                </mat-panel-description>
+                                                <mat-icon class="headers-align-right" title="delete game"
+                                                    (click)="$event.stopPropagation(); deleteTask(drawit, 'drawits')">
+                                                    delete_forever</mat-icon>
+                                            </mat-expansion-panel-header>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+                            <div *ngIf="selectedTypeOfTask === 'simple-task' && simpleTasks.length>0">
+                                <mat-card-subtitle class="mt-3">Simple Tasks</mat-card-subtitle>
+                                <mat-accordion class="headers-align">
+                                    <div *ngIf="simpleTasks">
+                                        <!--else loadingAliasContent">-->
+                                        <mat-expansion-panel *ngFor="let simpleTask of simpleTasks" hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{ simpleTask.name }}
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    {{ simpleTask.description }}
+                                                </mat-panel-description>
+                                                <mat-icon class="headers-align-right" title="delete game"
+                                                    (click)="$event.stopPropagation(); deleteTask(simpleTask, 'simpleTasks')">
+                                                    delete_forever</mat-icon>
+                                            </mat-expansion-panel-header>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+
+                        </mat-card-content>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
