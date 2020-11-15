@@ -32,6 +32,7 @@ export class DashboardContentComponent implements OnInit {
     this.getMeetingCount();
     this.getProjectsCount();
     this.getRequestCount();
+    this.getProjectRequestsCount();
   }
   getRequestCount() {}
 
@@ -73,4 +74,28 @@ export class DashboardContentComponent implements OnInit {
         });
       });
   }
+
+  getProjectRequestsCount(){
+    this.classService
+      .classesGet()
+      .toPromise()
+      .then( (classes) => {
+        classes.forEach( (cls) => {
+          this.projectService
+            .classesClassIdProjectsGet(cls.id)
+            .subscribe((response) => {
+              if (response.length){
+                response.forEach( (prjct) => {
+                  if (prjct.startedBy.id != this.loginService.userValue.id && prjct.state == "pending"){
+                    this.numRequest = this.numRequest + 1;
+                  }
+                });
+              }
+              else{
+                this.numRequest = this.numRequest;
+              }
+            });
+          });
+        });
+    }
 }
