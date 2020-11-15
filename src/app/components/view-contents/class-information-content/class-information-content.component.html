@@ -52,15 +52,15 @@
                   <div *ngIf="f.name.errors.required">Name is required</div>
                 </div>
               </div>
+
               <div class="form-group">
                 <label for="subject">Subject</label>
-                <input type="text" id="subject" formControlName="subject" class="form-control"
-                  [ngClass]="{ 'is-invalid': updateClassSubmitted && f.subject.errors }"
-                  [ngModel]="selectedClass.subject" />
-                <div *ngIf="updateClassSubmitted && f.subject.errors" class="invalid-feedback">
-                  <div *ngIf="f.subject.errors.required">subject is required</div>
-                </div>
-              </div>
+                <select formControlName="subject" class="form-control" [(ngModel)]="selectedSubject">
+                  <option [ngValue]="null" disabled>Subject</option>
+                  <option *ngFor="let subject of subjectList" [ngValue]="subject.value">
+                    {{subject.name}}</option>
+                </select>
+              </div> 
 
 
               <div class="form-group">

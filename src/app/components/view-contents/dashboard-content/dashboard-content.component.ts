@@ -5,6 +5,7 @@ import {
   ProjectsService,
   UserService,
 } from '@app/services/swagger-api/api';
+import { CustomLoginService } from '@app/services/custom/login/login.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -22,7 +23,8 @@ export class DashboardContentComponent implements OnInit {
     private router: Router,
     private classService: ClassesService,
     private user2Service: UserService,
-    private projectService: ProjectsService
+    private projectService: ProjectsService,
+    public loginService: CustomLoginService
   ) {}
 
   ngOnInit(): void {
@@ -31,8 +33,7 @@ export class DashboardContentComponent implements OnInit {
     this.getProjectsCount();
     this.getRequestCount();
   }
-  getRequestCount() {
-  }
+  getRequestCount() {}
 
   retrieveMetadata(): void {
     this.getClassCount();
@@ -57,16 +58,19 @@ export class DashboardContentComponent implements OnInit {
   }
 
   getProjectsCount() {
-    this.classService.classesGet().pipe(
-      map((classes) =>
-        classes.map((cls) =>
+    this.classService
+      .classesGet()
+      .toPromise()
+      .then((response) => {
+        response.forEach((cls) => {
           this.projectService
             .classesClassIdProjectsGet(cls.id)
             .subscribe((response) => {
-              this.numProject = response.length ? this.numProject + response.length : this.numProject;
-            })
-        )
-      )
-    );
+              this.numProject = response.length
+                ? this.numProject + response.length
+                : this.numProject;
+            });
+        });
+      });
   }
 }

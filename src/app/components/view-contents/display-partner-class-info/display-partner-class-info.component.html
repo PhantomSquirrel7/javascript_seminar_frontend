@@ -15,10 +15,11 @@
         <span style="margin-right: 170px;">Year:</span>
         <span>Subject:</span>
       </div>
-      <div style="display: flex; justify-content: space-around">
-        <span>{{mapClassLevel(project.partnerClass.level)}}</span> 
-        <!-- TODO: eventually change "actClass.level" to "actClass.year" -->
-        <span>{{project.partnerClass.subject}}</span>
+      <div class="container">
+        <div class="row">
+          <div class="col">{{mapClassLevel(project.partnerClass.level)}}</div>
+          <div class="col" style="margin-left: 15px;">{{project.partnerClass.subject}}</div>
+        </div>
       </div>
     </div>
     
@@ -29,9 +30,11 @@
           <span style="margin-right: 135px;">Language:</span>
           <span>Language proficiency:</span>
         </div>
-        <div style="display: flex; justify-content: space-around">
-          <span>{{mapLanguage(project.partnerClass.language)}}</span>
-          <span>{{project.partnerClass.languageLevel}}</span>
+        <div class="container">
+          <div class="row">
+            <div class="col">{{mapLanguage(project.partnerClass.language)}}</div>
+            <div class="col" style="margin-left: 15px;">{{project.partnerClass.languageLevel}}</div>
+          </div>
         </div>
       </li>
       
@@ -40,9 +43,11 @@
           <span style="margin-right: 100px;">Project duration:</span>
           <span>Meeting frequency:</span>
         </div>
-        <div style="display: flex; justify-content: center;">
-          <span style="margin-right: 110px;">{{mapDuration(project.partnerClass.projectDuration)}}</span>
-          <span>{{mapFrequency(project.partnerClass.meetingFrequency)}}</span>
+        <div class="container">
+          <div class="row">
+            <div class="col">{{mapDuration(project.partnerClass.projectDuration)}}</div>
+            <div class="col" style="margin-left: 15px;">{{mapFrequency(project.partnerClass.meetingFrequency)}}</div>
+          </div>
         </div>
       </li>
     </ul>

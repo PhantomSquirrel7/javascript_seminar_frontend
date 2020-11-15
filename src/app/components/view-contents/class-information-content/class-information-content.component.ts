@@ -24,6 +24,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CLASS_LEVEL } from '@app/components/common/backend-util/common-structures/class-level';
 import { MEETING_FREQUENCY } from '@app/components/common/backend-util/common-structures/meeting-frequency';
 import { PROJECT_DURATION } from '@app/components/common/backend-util/common-structures/project-duration';
+import { SUBJECT } from '@app/components/common/backend-util/common-structures/subject';
 
 export interface StudentData {
   id: string;
@@ -88,6 +89,7 @@ export class ClassInformationContentComponent implements OnInit {
   classLevelList = null;
   frequencyList = null;
   projectDurationList = null;
+  subjectList = null;
   selectedLanguageLevel = null;
   selectedLanguage = null;
   selectedClassCountry = null;
@@ -95,6 +97,7 @@ export class ClassInformationContentComponent implements OnInit {
   selectedClassLevel = null;
   selectedFrequency = null;
   selectedProjectDuration = null;
+  selectedSubject = null;
   studentsOfTeacher = null;
 
   constructor(
@@ -115,6 +118,7 @@ export class ClassInformationContentComponent implements OnInit {
     this.classLevelList = CLASS_LEVEL;
     this.frequencyList = MEETING_FREQUENCY;
     this.projectDurationList = PROJECT_DURATION;
+    this.subjectList = SUBJECT;
 
     this.getClassInformationForm = this.formBuilder.group({
       selectedClassInformationId: ['', Validators.required],
@@ -127,7 +131,7 @@ export class ClassInformationContentComponent implements OnInit {
     this.selectedClassForm = this.formBuilder.group({
       name: ['', Validators.required],
       language: [''],
-      subject: ['', Validators.required],
+      subject: [''],
       selectedCountry: [''],
       projectDuration: ['', Validators.required],
       meetingFrequency: ['', Validators.required],
@@ -191,6 +195,11 @@ export class ClassInformationContentComponent implements OnInit {
           this.selectedClassLevel = tempClassLevel
             ? tempClassLevel.value
             : null;
+
+          let tempSubject = this.subjectList.find(
+            (item) => item.value == this.selectedClass.subject
+          );
+          this.selectedSubject = tempSubject? tempSubject.value : null;
           let tempProjectDuration = this.projectDurationList.find(
             (item) => item.value == this.selectedClass.projectDuration
           );
@@ -234,7 +243,7 @@ export class ClassInformationContentComponent implements OnInit {
         {
           name: this.f.name.value,
           language: this.selectedLanguage.value,
-          subject: this.f.subject.value,
+          subject: this.selectedSubject,
           country: this.selectedClassCountry.code,
           projectDuration: this.selectedProjectDuration,
           meetingFrequency: this.selectedFrequency,

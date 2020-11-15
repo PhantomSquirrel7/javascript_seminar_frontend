@@ -32,15 +32,13 @@ export class LinkLoginViewComponent {
 
   token = "";
   refreshToken = "";
-  refreshPasswordToken = "";
-
-
+  resetPasswordToken = "";
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       password:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('([A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9]*'), // one number and one character
+        Validators.pattern('([A-Za-z]+(.)*[0-9]+)|([0-9]+(.)*[A-Za-z]+)'), // one number and one character
         Validators.maxLength(25),
         Validators.minLength(8),
       ]))
@@ -49,11 +47,11 @@ export class LinkLoginViewComponent {
     this.activatedRoute.queryParams.subscribe(params => {
       this.token = params['token'];
       this.refreshToken = params['refresh'];
-      this.refreshPasswordToken = params['refreshPasswordToken']
+      this.resetPasswordToken = params['resetPasswordToken']
 
       console.log(this.token);
       console.log(this.refreshToken);
-      console.log(this.refreshPasswordToken);
+      console.log(this.resetPasswordToken);
     });
   }
 
@@ -74,8 +72,11 @@ export class LinkLoginViewComponent {
 
     password: this.f.password.value,
 
-    this.authService.authResetPasswordPost({"password": this.f.password.value}, this.refreshPasswordToken).subscribe(
+    this.loginService.loginWithToken(this.token, this.refreshToken);
+
+    this.authService.authResetPasswordPost({"password": this.f.password.value}, this.resetPasswordToken).subscribe(
       res => {
+        console.log("setting psw:")
         console.log(res);
         this.loading = false;
         this.loginService.logout();
@@ -84,9 +85,9 @@ export class LinkLoginViewComponent {
     );
   } 
 
-  skip(){
-      this.loginService.loginWithToken(this.token, this.refreshToken);
-      this.router.navigate(['/login']);
-  }
+  // skip(){
+  //     this.loginService.loginWithToken(this.token, this.refreshToken);
+  //     this.router.navigate(['/login']);
+  // }
 
 }
