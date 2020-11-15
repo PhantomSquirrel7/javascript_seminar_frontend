@@ -32,11 +32,19 @@
 
                     <div *ngIf="meeting.groupAssignment == 'tandem'">
                         <span fxFlex="0 0 25%"> Group Organization: </span>
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-                            View/Edit Group Arrangement
+                        <button (click)="loadGroupArrangement(meeting)" 
+                        type="button" class="btn btn-primary btn-sm" 
+                        data-toggle="modal" 
+                        data-target="#exampleModal">
+                            View / Edit Group Arrangement
                         </button>
                     </div>
-                    <div><span fxFlex="0 0 25%"> Task Lists: </span> <button class="btn btn-warning btn-sm">View/Edit Task Lists</button></div>
+                    <div>
+                        <span fxFlex="0 0 25%"> Task Lists: </span> 
+                        <button class="btn btn-warning btn-sm">
+                            View/Edit Task Lists
+                        </button>
+                    </div>
                 </div>
 
                 <div class="card-footer text-center">
@@ -61,32 +69,37 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div  data-backdrop="static" data-keyboard="false" 
+ class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">View/Edit Arrangement</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button (click)="resetTempValues()" type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div fxLayout="row" fxLayoutGap="25px" class="modal-body">
-            <div>
-                Your Class
-                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, list1)">
-                    <div class="example-box" *ngFor="let list of list1" cdkDrag>{{list}}</div>
+            <div class="students-list">
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, myStudentsList)">
+                    <div [cdkDragDisabled]="!list.isMyClass" class="example-box" *ngFor="let list of myStudentsList" cdkDrag>{{list.firstName}}</div>
                 </div>
             </div>
 
-            <div>
-                Partner Class
-                <div cdkDropList cdkDropListDisabled class="example-list" (cdkDropListDropped)="drop($event, list2)">
-                    <div class="example-box" *ngFor="let list of list2" cdkDrag>{{list}}</div>
+            <div class="students-list">
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, partnerStudentsList)">
+                    <div [cdkDragDisabled]="!list.isMyClass" class="example-box" *ngFor="let list of partnerStudentsList" cdkDrag>{{list.firstName}}</div>
+                </div>
+            </div>
+
+            <div *ngIf="displayAdditionalColumn" class="students-list">
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, additionalColumn)">
+                    <div [cdkDragDisabled]="!list.isMyClass" class="example-box" *ngFor="let list of additionalColumn" cdkDrag>{{list.firstName}}</div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button (click)="resetTempValues()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button (click)="saveArrangement()" type="button" class="btn btn-primary">Save changes</button>
         </div>
     </div>
