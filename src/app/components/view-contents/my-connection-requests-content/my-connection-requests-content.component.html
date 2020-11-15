@@ -43,10 +43,10 @@
     <div *ngIf="loading">
         <span class="spinner-border spinner-border-sm mr-1"></span>
     </div>
-    <div *ngIf="allDataLoaded" id="projectInfo" class="modal fade" role="dialog">
+    <div *ngIf="allDataLoaded" id="projectInfo" class="modal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <app-project-info-content *ngIf="allDataLoaded" [actClass]="actClass" [actProject]="actProject" [me]="user"></app-project-info-content>
+                <app-project-info-content *ngIf="allDataLoaded" [actClass]="actClass" [actProject]="actProject" [me]="user" [closeAndReload]="closeAndReload"></app-project-info-content>
             </div>
         </div>
     </div>
