@@ -16,8 +16,8 @@
         <span style="margin-right: 170px;">Year:</span>
         <span>Subject:</span>
       </div>
-      <div style="display: flex;">
-        <span style="margin-left: 50px; margin-right: 195px;">{{actClass.level + 3 }}</span>
+      <div style="display: flex; justify-content: space-around;">
+        <span>{{mapClassLevel(actClass.level)}}</span>
         <span>{{actClass.subject}}</span>
       </div>
     </div>
@@ -29,19 +29,19 @@
           <span style="margin-right: 135px;">Language:</span>
           <span>Language proficiency:</span>
         </div>
-        <div style="display: flex;">
-          <span style="margin-left: 50px; margin-right: 155px;">{{actClass.language}}</span>
+        <div style="display: flex; justify-content: space-around;">
+          <span>{{mapLanguage(actClass.language)}}</span>
           <span>{{actClass.languageLevel}}</span>
         </div>
       </li>
       
       <li class="list-group-item">
         <div style="display: flex;">
-          <span style="margin-right: 60px;">Project duration:</span>
+          <span style="margin-right: 100px;">Project duration:</span>
           <span>Meeting frequency:</span>
         </div>
-        <div style="display: flex;">
-          <span style="margin-left: 50px; margin-right: 70px;">{{mapDuration(actClass.projectDuration)}}</span>
+        <div style="display: flex; justify-content: center;">
+          <span style="margin-right: 110px;">{{mapDuration(actClass.projectDuration)}}</span>
           <span>{{mapFrequency(actClass.meetingFrequency)}}</span>
         </div>
       </li>

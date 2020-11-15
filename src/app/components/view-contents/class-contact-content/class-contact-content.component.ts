@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { timer } from 'rxjs';
 import { report } from 'process';
 import { Body10 } from '@app/models';
+import { CLASS_LEVEL } from '@app/components/common/backend-util/common-structures/class-level';
+import { LANGUAGE_LIST } from '../../common/backend-util/common-structures/languages';
 
 @Component({
   selector: 'app-class-contact-content',
@@ -28,6 +30,10 @@ export class ClassContactContentComponent{
   countryFlagId = ""
 
   addMessageError = false;
+
+  classLevelList = null;
+
+  languageList = null;
 
   timeLeft: number = 60;
   interval;
@@ -77,6 +83,8 @@ export class ClassContactContentComponent{
     console.log(this.actClass);
     this.requested = false;
     this.sent = false;
+    this.classLevelList = CLASS_LEVEL;
+    this.languageList = LANGUAGE_LIST;
   }
 
   teacherInfo(){ // TODO: redirect to teacher profile
@@ -130,6 +138,24 @@ export class ClassContactContentComponent{
     return val + "x/week";
   }
 
+  mapClassLevel(level){
+    let tempClassLevel = this.classLevelList.find(
+      (item) => item.value == level
+    );
+    return tempClassLevel
+    ? tempClassLevel.name
+    : null;
+  }
+
+  mapLanguage(lang){
+    let tempLang = this.languageList.find(
+      (item) => item.value == lang
+    );
+    return tempLang
+    ? tempLang.name
+    : null;
+  }
+
   ngOnChanges(){
     console.log("changes again:");
     console.log(this.actClass);
@@ -140,6 +166,8 @@ export class ClassContactContentComponent{
       console.log("Flag:");
       console.log(this.countryFlagId);
     }    
+    this.classLevelList = CLASS_LEVEL;
+    this.languageList = LANGUAGE_LIST;
   }
 }
 
