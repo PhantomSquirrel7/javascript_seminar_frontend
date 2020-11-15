@@ -126,10 +126,6 @@
                         </mat-card-header>
                         <br>
                         <mat-card-content>
-                            <div
-                                *ngIf="selectedQuizzes.length==0 && selectedAliases.length==0 && selectedDrawIts.length==0 && simpleTasks.length==0">
-                                <mat-card-subtitle>No tasks in this meeting</mat-card-subtitle>
-                            </div>
                             <div *ngIf="selectedTypeOfTask === 'quiz' && selectedQuizzes.length==0">
                                 <mat-card-subtitle>No quizzes in this meeting</mat-card-subtitle>
                             </div>

@@ -65,7 +65,7 @@
           style="margin:15px; max-width: 50px; max-height: 50px;"
         (click)="returnMeetingList()" type="submit" ></button>   
         <div fxFlex="1 1 100%">
-          <app-games-student-content></app-games-student-content>
+          <app-games-student-content [selectedMeeting]="selectedMeeting"></app-games-student-content>
         </div>
         <div fxFlex="1 1 50%">
           <app-bbb-view [moderatorUrl]="selectedMeeting"></app-bbb-view>
