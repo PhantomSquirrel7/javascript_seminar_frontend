@@ -26,6 +26,7 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   projectList = [];
   meetingList: any;
   loading = false;
+  sendingPutRequest = false;
   user_classes = [];
   error = '';
   isMeetingListEmpty = false;
@@ -167,24 +168,30 @@ export class MyMeetingRequestsContentComponent implements OnInit {
 
     console.log(this.selectedMeetingObject)
 
+    this.sendingPutRequest = true;
+
     
 
     //Send PUT request
-    // this.meetingService.classesClassIdProjectsProjectIdMeetingsMeetingIdPut(this.selectedMeetingObject, 
-    //   this.selectedClass.id, 
-    //   this.selectedProject.id, 
-    //   this.selectedMeetingObject.id).subscribe({
-    //     next: (response) => {
-    //       console.log(response);
-    //     },
-    //     error: (error) => {
-    //       this.error = error;
-    //       this._snackBar.open(this.error, 'Close', {
-    //       duration: 3000
-    //       });
-    //       this.loading = false;
-    //     },
-    //   })
+    this.meetingService.classesClassIdProjectsProjectIdMeetingsMeetingIdPut(this.selectedMeetingObject, 
+      this.selectedClass.id, 
+      this.selectedProject.id, 
+      this.selectedMeetingObject.id).subscribe({
+        next: (response) => {
+          console.log(response);
+          this._snackBar.open('Group Arrangement Saved Succesfully', 'Close', {
+            duration: 3000,
+          });
+          this.sendingPutRequest = false;
+        },
+        error: (error) => {
+          this.error = error;
+          this._snackBar.open(this.error, 'Close', {
+          duration: 3000
+          });
+          this.loading = false;
+        },
+      })
 
     //Clear temp Arrays
     // this.resetTempValues()

@@ -101,7 +101,10 @@
         </div>
         <div class="modal-footer">
         <button (click)="resetTempValues()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button (click)="saveArrangement()" type="button" class="btn btn-primary">Save changes</button>
+        <button (click)="saveArrangement()" [disabled]="sendingPutRequest" type="button" class="btn btn-primary">
+            <span *ngIf="sendingPutRequest" class="spinner-border spinner-border-sm mr-1"></span>
+            Save changes
+        </button>
         </div>
     </div>
     </div>
