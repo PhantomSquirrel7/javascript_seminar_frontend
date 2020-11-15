@@ -13,7 +13,7 @@
                     <button class="btn btn-outline-success btn-lg" [disabled]="btnAcceptable">Accept Project</button>
                 </form>
                 <div class="btn-group mr-2" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)" [disabled]="btnDeletable">Decline Project</button>
+                    <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)" [disabled]="btnDeletable" data-dismiss="modal">Decline Project</button>
                 </div>
                 <div *ngIf=accepted>
                     <br>
@@ -33,7 +33,7 @@
             <h1>Waiting for other teacher to accept project...</h1>
             <app-display-partner-class-info [project]="actProject"></app-display-partner-class-info>
             <div class="btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)" [disabled]="btnDeletable">Delete Project</button>
+                <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)" [disabled]="btnDeletable" data-dismiss="modal">Delete Project</button>
             </div>
             <br>
             <div *ngIf=deleted>
@@ -47,7 +47,7 @@
     <div *ngIf="actProject.state == 'ongoing'">
         <h1>Talk to your partner teacher...</h1>
         <div class="btn-group mr-2" role="group" aria-label="First group">
-            <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)" [disabled]="btnDeletable">Delete Project</button>
+            <button type="button" class="btn btn-outline-danger" (click)="deleteProject(actProject)" [disabled]="btnDeletable" data-dismiss="modal">Delete Project</button>
         </div>
         <div *ngIf=deleted>
             <br>

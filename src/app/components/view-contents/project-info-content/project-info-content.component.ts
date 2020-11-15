@@ -51,7 +51,7 @@ export class ProjectInfoContentComponent {
   acceptOffer(){
     this.accepted = true;
     this.btnAcceptable = true;
-
+    console.log("accepting");
     // TODO: activate when working on backend-side
     this.projectsService.classesClassIdProjectsProjectIdAcceptInvitationPost(this.actClass.id, this.actProject.id).subscribe(
       (response) => {

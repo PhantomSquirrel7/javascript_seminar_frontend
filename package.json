@@ -26,7 +26,6 @@
     "@angular/router": "^9.1.1",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@types/chart.js": "^2.9.24",
-    "@types/jquery": "^3.5.4",
     "angular-bootstrap-md": "^10.0.0",
     "animate.css": "^4.1.1",
     "chart.js": "^2.5.0",

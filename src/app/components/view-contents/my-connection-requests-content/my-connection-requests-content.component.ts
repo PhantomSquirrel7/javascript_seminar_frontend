@@ -5,7 +5,6 @@ import { CustomUserService } from '@app/services/custom';
 import { ClassesService, ProjectsService } from '@app/services/swagger-api/api';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import * as $ from 'jquery';
 
 
 @Component({
@@ -126,11 +125,9 @@ export class MyConnectionRequestsContentComponent implements OnInit {
   }
 
   closeAndReload(){
-    $('#projecInfo').modal('toggle');
     console.log("called close!");
-    
-    // this.user_projects = [];
-    // this.loadAllProjects();
+    document.getElementById('modalCloseButton').click();
+    document.getElementById('reloadProjectsBtn').click();
   }
 
   detailsFor(cls, prjct){
