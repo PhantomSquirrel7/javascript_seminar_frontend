@@ -85,9 +85,9 @@ export class LinkLoginViewComponent {
     );
   } 
 
-  skip(){
-      this.loginService.loginWithToken(this.token, this.refreshToken);
-      this.router.navigate(['/login']);
-  }
+  // skip(){
+  //     this.loginService.loginWithToken(this.token, this.refreshToken);
+  //     this.router.navigate(['/login']);
+  // }
 
 }
