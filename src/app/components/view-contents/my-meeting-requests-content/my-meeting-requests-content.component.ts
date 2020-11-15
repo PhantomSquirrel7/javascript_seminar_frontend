@@ -5,6 +5,11 @@ import { MeetingsService } from '@app/services/swagger-api/meetings.service';
 import { ClassesService } from '@app/services/swagger-api/classes.service';
 import { ProjectsService } from '@app/services/swagger-api/projects.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { TaskList } from '@app/models/game-models/task-list';
+import { Alias } from '@app/models/game-models/alias';
+import { Quiz } from '@app/models/game-models/quiz';
+import { DrawIt } from '@app/models/game-models/drawIt';
+import { SimpleTask } from '@app/models/game-models/simpleTask';
 
 @Component({
   selector: 'app-my-meeting-requests-content',
@@ -32,7 +37,17 @@ export class MyMeetingRequestsContentComponent implements OnInit {
   myStudentsList = [];
 
   partnerStudentsList = [];
-  displayAdditionalColumn = false
+  displayAdditionalColumn = false;
+
+  // for task list
+  public selectedAliases: Alias[] = [];
+  public selectedQuizzes: Quiz[] = [];
+  public selectedDrawIts: DrawIt[] = [];
+  public simpleTasks: SimpleTask[] = [];
+  typeOfTasks = ['Quiz', 'Alias', 'Draw-It', 'Simple Task'];
+  selectedTypeOfTask = '';
+  currentMeetingId: any;
+  // end of task list attributes
  
   constructor(
     private fb: FormBuilder, 
@@ -184,6 +199,43 @@ export class MyMeetingRequestsContentComponent implements OnInit {
 
   }
 
+  /**
+     * Swornim is doing his magic 
+     * delete task with id=taskId from meeting with id=this.currentMeetingId
+     * */
+    // TODO: PUT request to BE (DONE), fix bug related to sending PUT request
+
+  deleteTask(taskObj, type: string){
+    console.log(taskObj);
+    console.log(type);
+    console.log(this.selectedMeetingObject.taskList[type]);
+
+    var index = this.selectedMeetingObject.taskList[type].indexOf(taskObj);
+    if (index !== -1) {
+      this.selectedMeetingObject.taskList[type].splice(index, 1);
+    }
+
+    console.log(this.selectedMeetingObject)
+
+
+    // TODO: Send the PUT Request to Backend here
+    this.meetingService.classesClassIdProjectsProjectIdMeetingsMeetingIdPut(this.selectedMeetingObject, 
+      this.selectedClass.id, 
+      this.selectedProject.id, 
+      this.selectedMeetingObject.id).subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: (error) => {
+          this.error = error;
+          this._snackBar.open(this.error, 'Close', {
+          duration: 3000
+          });
+          this.loading = false;
+        },
+      })
+  }
+
   deleteMeeting(meetingId) {
     this.meetingService
     .classesClassIdProjectsProjectIdMeetingsMeetingIdDelete(this.selectedClass.id, this.selectedProject.id, meetingId)
@@ -209,6 +261,50 @@ export class MyMeetingRequestsContentComponent implements OnInit {
     });
   }
 
+  stringFormatter(text: string) {
+    return text.toLowerCase();
+  }
+
+  typeSelected(event) {
+    let type = this.stringFormatter(event.target.value);
+
+    switch (type) {
+      case "quiz": {
+        this.selectedTypeOfTask = 'quiz'
+        break
+      }
+      case "alias": {
+        this.selectedTypeOfTask = 'alias'
+        break
+      }
+      case "draw-it": {
+        this.selectedTypeOfTask = 'draw-it'
+        break
+      }
+      case "2 truths 1 lie": {
+        this.selectedTypeOfTask = '2t1l'
+        break
+      }
+      default: {
+        this.selectedTypeOfTask = 'simple-task'
+        break
+      }
+    }
+  }
+  loadTaskList(meetingObj){
+    this.selectedMeetingObject = meetingObj
+    
+    this.currentMeetingId = meetingObj.id;
+    if(this.meetingList) {
+      const currList = this.meetingList.find(x => x.id == this.currentMeetingId).taskList;
+      if(currList){
+        this.selectedAliases = currList.aliases;
+        this.selectedQuizzes = currList.quizzes;
+        this.selectedDrawIts = currList.drawits;
+        this.simpleTasks = currList.simpleTasks;
+      }
+    }
+  }
 
   loadGroupArrangement(meetingObj) {
     this.selectedMeetingObject = meetingObj;

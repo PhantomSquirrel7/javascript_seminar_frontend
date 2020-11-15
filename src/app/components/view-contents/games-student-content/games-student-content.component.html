@@ -1,6 +1,11 @@
 <div classname="games">
     <div *ngIf="!gameJoined" class="gameSelection">
-        <button (click)="onJoinGameButton()">Join Game</button>
+        <br>
+        <button type="button" class="btn btn-warning btn-sm"
+                data-toggle="modal" 
+                data-target="#exampleModal2"> View Task List / Join Games
+        </button>
+        <!--<button (click)="onJoinGameButton()">Join Game</button>
         <br>
         <select name="gameselection" [(ngModel)]="selectedGame" id="game">
             <option value="quiz">Quiz</option>
@@ -10,29 +15,160 @@
         </select>
         <input [(ngModel)]="username">
         <input [(ngModel)]="sessionId">
-        <input [(ngModel)]="taskId">
+        <input [(ngModel)]="taskId">-->
     </div>
 
-    <div *ngIf="gameJoined && isSelected('quiz')" class="gameScreen">
-        <app-quiz (disconnect)="onDisconnect($event)" [username]="username " [taskId]="taskId" [sessionId]="sessionId ">
+    <div *ngIf="gameJoined && isSelected('quiz')" class="gameScreen"> 
+        <app-quiz (disconnect)="onDisconnect($event)" [username]="username" [taskId]="taskId" [sessionId]="sessionId">
         </app-quiz>
     </div>
 
 
-    <div *ngIf="gameJoined && isSelected( 'alias') " class="gameScreen ">
-        <app-alias (disconnect)="onDisconnect($event)" [username]="username " [taskId]="taskId "
+    <div *ngIf="gameJoined && isSelected('alias')" class="gameScreen "> 
+        <app-alias (disconnect)="onDisconnect($event)" [username]="username" [taskId]="taskId"
             [sessionId]="sessionId">
         </app-alias>
     </div>
 
-    <div *ngIf="gameJoined && isSelected( 'drawit') " class="gameScreen ">
-        <app-draw-it (disconnect)="onDisconnect($event)" [username]="username " [taskId]="taskId "
+    <div *ngIf="gameJoined && isSelected('drawit')" class="gameScreen "> 
+        <app-draw-it (disconnect)="onDisconnect($event)" [username]="username" [taskId]="taskId"
             [sessionId]="sessionId"></app-draw-it>
     </div>
 
     <div *ngIf="gameJoined && isSelected('truthlie') " class="gameScreen ">
-        <app-truthlie (disconnect)="onDisconnect($event)" [username]="username " [taskId]="taskId "
+        <app-truthlie (disconnect)="onDisconnect($event)" [username]="username" [taskId]="taskId"
             [sessionId]="sessionId"></app-truthlie>
     </div>
 
+</div>
+
+<!-- Edit Task List -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Task List for meeting:</h5>
+                <select name="gameselection" [(ngModel)]="selectedGame" id="game" class="form-control form-control-sm fa-pull-right">
+                    <option value="quiz">Quiz</option>
+                    <option value="alias">Alias</option>
+                    <option value="drawit">Draw It</option>
+                    <!-- TODO: Add this option when 2t1l games exist in the taskList -->
+                    <!--<option value="truthlie">2 Truths 1 Lie</option> -->
+                    <option value="simpletask">Simple Task</option>
+                </select>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div fxLayout="row" fxLayoutGap="25px" class="modal-body">
+
+                <div class="card" style="width: 70vmax; margin-top: 50px;">
+                    <div class="card-body">
+                        <mat-card-header>
+                            <mat-card-title>This Meeting's Tasks:</mat-card-title>
+                        </mat-card-header>
+                        <br>
+                        <mat-card-content>
+                            <div *ngIf="isSelected('quiz') && selectedQuizzes.length==0">
+                                <mat-card-subtitle>No quizzes in this meeting</mat-card-subtitle>
+                            </div>
+                            <div *ngIf="isSelected('alias') && selectedAliases.length==0">
+                                <mat-card-subtitle>No alias games in this meeting</mat-card-subtitle>
+                            </div>
+                            <div *ngIf="isSelected('drawit') && selectedDrawIts.length==0">
+                                <mat-card-subtitle>No draw-it games in this meeting</mat-card-subtitle>
+                            </div>
+                            <div *ngIf="isSelected('simpletask') && simpleTasks.length==0">
+                                <mat-card-subtitle>No simple tasks in this meeting</mat-card-subtitle>
+                            </div>
+                            <!-- TODO: Add this when 2t1l games exist in the taskList -->
+                            <!--<div *ngIf="isSelected('truthlie')">
+                                <mat-card-subtitle class="mt-3">2 Truths and 1 Lie</mat-card-subtitle>
+                                <mat-accordion class="headers-align">
+                                    <button (click)="onJoinGameButton()" data-dismiss="modal">Join Game</button>
+                                </mat-accordion>
+                            </div>-->
+                            <div *ngIf="isSelected('quiz') && selectedQuizzes.length>0">
+                                <mat-card-subtitle class="mt-3">Quizzes</mat-card-subtitle>
+                                <mat-accordion class="headers-align">
+                                    <div *ngIf="selectedQuizzes">
+                                        <!--else loadingAliasContent">-->
+                                        <mat-expansion-panel *ngFor="let quiz of selectedQuizzes" hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{ quiz.name }}
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    {{ quiz.description }}
+                                                </mat-panel-description>
+                                                <button (click)="onJoinGameButton()" data-dismiss="modal">Join Game</button>
+                                            </mat-expansion-panel-header>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+                            <div *ngIf="isSelected('alias') && selectedAliases.length>0">
+                                <mat-card-subtitle class="mt-3">Alias Games</mat-card-subtitle>
+                                <mat-accordion class="headers-align">
+                                    <div *ngIf="selectedAliases">
+                                        <!--else loadingAliasContent">-->
+                                        <mat-expansion-panel *ngFor="let alias of selectedAliases" hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{ alias.name }}
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    {{ alias.description }}
+                                                </mat-panel-description>
+                                                <button (click)="onJoinGameButton()" data-dismiss="modal" >Join Game</button>
+                                            </mat-expansion-panel-header>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+                            <div *ngIf="isSelected('drawit') && selectedDrawIts.length>0">
+                                <mat-card-subtitle class="mt-3">Draw-It Games</mat-card-subtitle>
+                                <mat-accordion class="headers-align">
+                                    <div *ngIf="selectedDrawIts">
+                                        <!--else loadingAliasContent">-->
+                                        <mat-expansion-panel *ngFor="let drawit of selectedDrawIts" hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{ drawit.name }}
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    {{ drawit.description }}
+                                                </mat-panel-description>
+                                                <button (click)="onJoinGameButton()" data-dismiss="modal" >Join Game</button>
+                                            </mat-expansion-panel-header>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+                            <div *ngIf="isSelected('simpletask') && simpleTasks.length>0">
+                                <mat-card-subtitle class="mt-3">Simple Tasks</mat-card-subtitle>
+                                <mat-accordion class="headers-align">
+                                    <div *ngIf="simpleTasks">
+                                        <!--else loadingAliasContent">-->
+                                        <mat-expansion-panel *ngFor="let simpleTask of simpleTasks" hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{ simpleTask.name }}
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    {{ simpleTask.description }}
+                                                </mat-panel-description>
+                                            </mat-expansion-panel-header>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+                        </mat-card-content>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
