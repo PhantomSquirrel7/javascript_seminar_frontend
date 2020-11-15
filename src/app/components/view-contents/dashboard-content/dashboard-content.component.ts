@@ -33,8 +33,7 @@ export class DashboardContentComponent implements OnInit {
     this.getProjectsCount();
     this.getRequestCount();
   }
-  getRequestCount() {
-  }
+  getRequestCount() {}
 
   retrieveMetadata(): void {
     this.getClassCount();
@@ -59,16 +58,19 @@ export class DashboardContentComponent implements OnInit {
   }
 
   getProjectsCount() {
-    this.classService.classesGet().pipe(
-      map((classes) =>
-        classes.map((cls) =>
+    this.classService
+      .classesGet()
+      .toPromise()
+      .then((response) => {
+        response.forEach((cls) => {
           this.projectService
             .classesClassIdProjectsGet(cls.id)
             .subscribe((response) => {
-              this.numProject = response.length ? this.numProject + response.length : this.numProject;
-            })
-        )
-      )
-    );
+              this.numProject = response.length
+                ? this.numProject + response.length
+                : this.numProject;
+            });
+        });
+      });
   }
 }
