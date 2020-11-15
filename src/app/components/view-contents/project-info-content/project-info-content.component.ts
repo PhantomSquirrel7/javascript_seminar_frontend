@@ -15,6 +15,7 @@ export class ProjectInfoContentComponent {
   @Input() actClass: any;
   @Input() actProject: any;
   @Input() me: any;
+  @Input() closeAndReload: () => void;
   constructor(
     private fb: FormBuilder,
     private projectsService: ProjectsService,
@@ -50,13 +51,13 @@ export class ProjectInfoContentComponent {
   acceptOffer(){
     this.accepted = true;
     this.btnAcceptable = true;
-
+    console.log("accepting");
     // TODO: activate when working on backend-side
     this.projectsService.classesClassIdProjectsProjectIdAcceptInvitationPost(this.actClass.id, this.actProject.id).subscribe(
       (response) => {
         console.log(response);
         this.btnAcceptable = false;
-        // this.reloadProject();
+        this.closeAndReload()
         const source = timer(1500);
         source.subscribe(data => {
           this.accepted=false
@@ -79,7 +80,7 @@ export class ProjectInfoContentComponent {
     this.projectsService.classesClassIdProjectsProjectIdDelete(this.actClass.id, prjct.id).subscribe(
       data => {
         this.btnDeletable = false;
-        // this.reloadProject();
+        this.closeAndReload()
         const source = timer(1500);
         source.subscribe(data => {
           this.deleted=false

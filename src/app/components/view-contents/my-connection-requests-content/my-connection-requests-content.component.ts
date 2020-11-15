@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { first, flatMap, map } from 'rxjs/operators';
 import { User } from '@app/models';
 import { CustomUserService } from '@app/services/custom';
 import { ClassesService, ProjectsService } from '@app/services/swagger-api/api';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { FormGroup, FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-my-connection-requests-content',
@@ -35,7 +36,6 @@ export class MyConnectionRequestsContentComponent implements OnInit {
   actClass: any = {};
   actProject: any = {};
   exchangeTeacher: any = {};
-
 
   ngOnInit() {
       this.requestInfoForm = this.fb.group({
@@ -122,6 +122,12 @@ export class MyConnectionRequestsContentComponent implements OnInit {
                 this.loading = false;
               },
             });
+  }
+
+  closeAndReload(){
+    console.log("called close!");
+    document.getElementById('modalCloseButton').click();
+    document.getElementById('reloadProjectsBtn').click();
   }
 
   detailsFor(cls, prjct){

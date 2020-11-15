@@ -2,7 +2,7 @@
     <div *ngIf="!loading && allDataLoaded">
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <div class="btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByCreator('all')">All</button>
+                <button id="reloadProjectsBtn" type="button" class="btn btn-link btn-outline-primary" (click)="filterByCreator('all')">All</button>
             </div>               
             <div class="btn-group mr-2" role="group" aria-label="Created by">
                 <button type="button" class="btn btn-link btn-outline-primary" (click)="filterByCreator('me')">My Requests</button>
@@ -43,10 +43,13 @@
     <div *ngIf="loading">
         <span class="spinner-border spinner-border-sm mr-1"></span>
     </div>
-    <div *ngIf="allDataLoaded" id="projectInfo" class="modal fade" role="dialog">
+    <div *ngIf="allDataLoaded" id="projectInfo" class="modal" role="document">
         <div class="modal-dialog">
             <div class="modal-content">
-                <app-project-info-content *ngIf="allDataLoaded" [actClass]="actClass" [actProject]="actProject" [me]="user"></app-project-info-content>
+                <button id="modalCloseButton" type="button" class="close" data-dismiss="modal" aria-label="Close" hidden="true">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <app-project-info-content *ngIf="allDataLoaded" [actClass]="actClass" [actProject]="actProject" [me]="user" [closeAndReload]="closeAndReload"></app-project-info-content>
             </div>
         </div>
     </div>
